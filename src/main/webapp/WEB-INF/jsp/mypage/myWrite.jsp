@@ -39,6 +39,19 @@
 				</table>
 			</div>
 		</div>
+		<div align="center">
+			<c:if test="${map.startpag>1}">
+				<a
+					href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag-2}">이전</a>
+			</c:if>
+			<c:forEach var="i" begin="${map.startpag }" end="${map.endpage }">
+				<a href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${i}">[${i}]</a>
+			</c:forEach>
+			<c:if test="${smap.endpage<smap.maxpag}">
+				<a
+					href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag+2}">다음</a>
+			</c:if>
+		</div>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>

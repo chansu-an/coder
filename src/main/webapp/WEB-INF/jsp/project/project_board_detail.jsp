@@ -43,7 +43,7 @@
                 </nav>
                 <!-- Page content-->
 	<h2>게시판 상세보기</h2>
-	<table class=project_board_list">
+	<table class=project_board_list>
 		<colgroup>
 			<col width="10%" />
 			<col width="*%" />
@@ -53,7 +53,6 @@
 			<col width="10%" />
 			<col width="10%" />
 		</colgroup>
-		<caption>프로젝트 상세보기</caption>
 		<thead>
 			<tr>
 				<th scope="col">프로젝트 번호</th>
@@ -82,6 +81,16 @@
 						<th scope="row">첨부파일</th>
 						<td colspan="3">
 						
+						<c:forEach var="row" items="${list }">
+						<p>
+							<input type="hidden" id="PROJECT_NO" value="${row.PROJECT_NO }">
+							<a href="#this" name="file">${row.PBO_NAME}</a> 
+							(${row.PBF_SIZE }kb)
+						</p>
+					</c:forEach>
+						
+					
+					
 				</c:when>
 				<c:otherwise>
 					<tr>
@@ -93,7 +102,7 @@
 		</tbody>
 	</table>
 	<a href="/net/Project/Modify.do?PROJECT_NO=${map.PROJECT_NO}" class="btn" id="write">수정하기</a>
-
+	<a href="/net/Project/Project.do" class="btn" id="list">목록으로</a>
 	<br />
 	
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>

@@ -1,4 +1,4 @@
-package coders.common.common;
+package coders.common.util;
 
 import java.io.UnsupportedEncodingException;
 

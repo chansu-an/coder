@@ -100,9 +100,9 @@
 				</div> 
 				<br />
 				<br /> 
-				<a href="/net//project/ProjectFile.do" class="btn" id="addFile">파일 추가</a> 
+				<a href="/net/project/ProjectFile.do" class="btn" id="addFile">파일 추가</a> 
 				<input type="submit" value = "작성하기"> 
-				<a href="/net//Project.do" class="btn" id="list">목록으로</a>
+				<a href="/net/Project/Project.do" class="btn" id="list">목록으로</a>
 			</form>
 		</div>
 

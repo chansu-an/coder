@@ -73,7 +73,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public void updateProject(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		projectDAO.updateProject(map);
-		projectDAO.deleteFileList(map);
+	//	projectDAO.deleteFileList(map);
 		List<Map<String,Object>>list = fileUtils.parseInsertFileInfo(map, request);
 		Map<String,Object>tempMap = null;
 		for(int i =0,size = list.size(); i<size; i++) {

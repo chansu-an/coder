@@ -66,9 +66,9 @@ public class ProjectDAO extends AbstractDAO {
 		public List<Map<String, Object>> insertProjectFileList(Map<String,Object>map)throws Exception{
 			return(List<Map<String, Object>>)selectList("project.selectProjectFile",map);
 		}
-		public void deleteFileList(Map<String,Object>map)throws Exception{
-			update("project.deleteFileList",map);
-		}
+//		public void deleteFileList(Map<String,Object>map)throws Exception{
+//			update("project.deleteFileList",map);
+//		}
 		public void updateFile(Map<String,Object>map)throws Exception{
 			update("project.updateFile",map);
 		}

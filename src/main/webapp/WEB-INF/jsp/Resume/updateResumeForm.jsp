@@ -31,11 +31,16 @@ function zipcode(){
     <div class="row g-5">  
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">이력서 작성</h4>
-        <form method="post"  class="needs-validation" novalidate>
+        <form method="post"  class="needs-validation" enctype="multipart/form-data" novalidate>
           <div class="row g-3">
             <div class="col-md-6">
               <label for="NAME" class="form-label">이름</label>
               <input type = "text" class="form-control" name="NAME" id="NAME" value="${map.NAME }" placeholder="이름">
+              </div>
+               <div class="col-md-6">
+              <label for="NAME" class="form-label">첨부파일</label>
+              <input type = "file" class="form-control" name="FILES" id="FILES" value="${map.FILES}" placeholder="이름">
+              </div>
               <div>
                 <label for="SKILL" class="form-label">자신있는기술</label>
               <input type="text" class="form-control" name="SKILL" id="SKILL" value="${map.SKILL }" placeholder="예:java,javascript...">
@@ -51,7 +56,7 @@ function zipcode(){
             </div>
             <div class="col-md-6">
               <label for="BLOG" class="form-label">포트폴리오</label>
-               <input type="text" class="form-control" name="BLOG" id="BLOG" value="${map.BLOG }" placeholder="포트폴리오" >
+               <input type="URL" class="form-control" name="BLOG" id="BLOG" value="${map.BLOG }" placeholder="포트폴리오" >
             </div>
             <div class="col-md-6">
               <label for="zipcode" class="form-label">우편번호</label>

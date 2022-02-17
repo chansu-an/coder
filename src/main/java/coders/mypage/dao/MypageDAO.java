@@ -71,7 +71,30 @@ public class MypageDAO extends AbstractDAO{
 	public List<Map<String, Object>> selectScrapList(Map<String, Object> map)throws Exception{
 		return (List<Map<String,Object>>)selectList("user.selectScrapList",map);
 	}
-	
+	//작성글 수
+	public int countWriteList(Map<String, Object> map)throws Exception{
+		return (int)selectOne("user.countWriteList", map);
+	}
+	//프로젝스 알림수
+	public int countProjectArList(Map<String, Object> map)throws Exception{
+		return (int)selectOne("user.countProjectArList", map);
+	}
+	//참여 프로젝트 수
+	public int countProjectList(Map<String, Object> map)throws Exception{
+		return (int)selectOne("user.countProjectList", map);
+	}
+	//팔로우 유저수
+	public int countFollowList(Map<String, Object> map)throws Exception{
+		return (int)selectOne("user.countFollowList", map);
+	}
+	//스크랩수
+	public int countScrapList(Map<String, Object> map)throws Exception{
+		return (int)selectOne("user.countScrapList", map);
+	}
+	//작성글 알림 수
+	public int countArlimeList(Map<String, Object> map)throws Exception{
+		return (int)selectOne("user.countArlimeList", map);
+	}
 	
 
 }
