@@ -92,5 +92,39 @@ public class MypageServiceImpl implements MypageService {
 		mypageDAO.insertFollow(map);
 		
 	}
+
+	@Override
+	public int countWriteList(Map<String, Object> map) throws Exception {
+		return mypageDAO.countWriteList(map);
+	}
+
+	@Override
+	public int countProjectArList(Map<String, Object> map) throws Exception {
+		
+		return mypageDAO.countProjectArList(map);
+	}
+
+	@Override
+	public int countProjectList(Map<String, Object> map) throws Exception {
+		return mypageDAO.countProjectList(map);
+	}
+
+	@Override
+	public int countFollowList(Map<String, Object> map) throws Exception {
+		return mypageDAO.countFollowList(map);
+	}
+
+	@Override
+	public int countScrapList(Map<String, Object> map) throws Exception {
+		return mypageDAO.countScrapList(map);
+	}
+
+	@Override
+	public int countArlimeList(Map<String, Object> map) throws Exception {
+		return mypageDAO.countArlimeList(map);
+	}
+	
+	
+	
 }
 
