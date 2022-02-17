@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="board">
+<!-- 메인 공지사항 최근글 Notice=1 -->
+<select id="selectNoticeList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT USERS.NICK_NAME,BOARD.TITLE,TO_CHAR(BOARD.BOARD_DATE,'yy/MM/dd(hh:mm)') "BOARD_DATE" FROM BOARD INNER JOIN USERS ON BOARD.WRITER = USERS.USER_NO WHERE BOARD.IDENTI_TYPE= '1' AND ROWNUM <=3 ORDER BY BOARD_DATE DESC
+]]></select>
+<!-- 메인 QnA 인기글 QnA=2 -->
+<select id="selectQnaBestList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT USERS.NICK_NAME,BOARD.TITLE,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh:mm)') "BOARD_DATE",BOARD.RECOMMEND_COUNT FROM BOARD INNER JOIN USERS ON BOARD.WRITER = USERS.USER_NO WHERE BOARD.IDENTI_TYPE= '2' AND RECOMMEND_COUNT >= '0' AND ROWNUM <=3 ORDER BY BOARD_DATE DESC
+]]></select>
+<!-- 메인 자유게시판 인기글 FreeBoard=3-->
+<select id="selectFreeBestList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT USERS.NICK_NAME,BOARD.TITLE,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh:mm)') "BOARD_DATE",BOARD.RECOMMEND_COUNT FROM BOARD INNER JOIN USERS ON BOARD.WRITER = USERS.USER_NO WHERE BOARD.IDENTI_TYPE= '3' AND RECOMMEND_COUNT >= '0' AND ROWNUM <=3 ORDER BY BOARD_DATE DESC
+]]></select>
+
+<!-- 게시글 리스트  -->
+<select id="selectBoardList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT USERS.NICK_NAME,BOARD.TITLE,BOARD.READ_COUNT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh:mm)') "BOARD_DATE",ROWNUM FROM BOARD INNER JOIN USERS ON BOARD.WRITER = USERS.USER_NO WHERE BOARD.IDENTI_TYPE= '1' AND BOARD.DEL_GB = 'N' AND BOARD.REPORT_COUNT<'20' ORDER BY BOARD.BOARD_NO DESC
+]]></select>
+
+<!-- 게시글 상세보기 -->
+<select id="selectBoardDetail" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT USERS.NICK_NAME,BOARD.TITLE,BOARD.WRITER,BOARD.CONTEXT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh:mm)') "BOARD_DATE",BOARD.BOARD_NO,BOARD.READ_COUNT,BOARD.RECOMMEND_COUNT FROM BOARD INNER JOIN USERS ON BOARD.WRITER = USERS.USER_NO WHERE BOARD.IDENTI_TYPE= 1 AND BOARD.BOARD_NO = 13
+]]></select>
+<!-- 조회수 증가 -->
+<update id="upReadCount" parameterType="hashmap"><![CDATA[UPDATE BOARD SET READ_COUNT =+ 1 WHERE BOARD_NO=#{BOARD_NO}]]></update>
+<!-- 삭제글 리스트 -->
+<select id="selectDeleteList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT USERS.NICK_NAME,BOARD.TITLE,BOARD.READ_COUNT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh:mm)') "BOARD_DATE",ROWNUM FROM BOARD INNER JOIN USERS ON BOARD.WRITER = USERS.USER_NO WHERE BOARD.DEL_GB = 'Y'
+]]></select>
+<!-- 삭제글 복구 -->
+<update id="returnDelete" parameterType="hashmap"><![CDATA[UPDATE BOARD SET DEL_GB = 'N' WHERE BOARD_NO = #{BOARD_NO}]]></update>
+<!-- 신고글 리스트 -->
+<select id="selectReportList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT USERS.NICK_NAME,BOARD.TITLE,BOARD.READ_COUNT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh:mm)') "BOARD_DATE",ROWNUM FROM BOARD INNER JOIN USERS ON BOARD.WRITER = USERS.USER_NO WHERE BOARD.REPORT_COUNT >= '20'
+]]></select>
+<!-- 신고글 복원 -->
+<update id="returnReport" parameterType="hashmap"><![CDATA[UPDATE BOARD SET REPORT_COUNT = 0 WHERE BOARD_NO = #{BOARD_NO}]]></update>
+<!-- 게시글 수정 -->
+<update id="updateBoard" parameterType="hashmap"><![CDATA[UPDATE BOARD SET TITLE= #{TITLE} ,CONTEXT = #{CONTEXT}, IDENTI_TYPE =#{IDENTI_TYPE} WHERE BOARD_NO = #{BOARD_NO}]]></update>
+<!-- 게시글 신고 -->
+<update id="reportBoard" parameterType="hashmap"><![CDATA[UPDATE BOARD SET REPORT_COUNT =+ 1 WHERE BOARD_NO = #{BOARD_NO}]]></update>
+<!-- 게시글 종아요 -->
+<update id="recommendBoard" parameterType="hashmap"><![CDATA[UPDATE BOARD SET RECOMMEND_COUNT =+1 WHERE BOARD_NO = #{BOARD_NO}]]></update>
+<!-- 게시글 삭제 -->
+<update id="deleteBoard" parameterType="hashmap"><![CDATA[UPDATE BOARD SET DEL_GB='Y' WHERE BOARD_NO = #{BOARD_NO}]]></update>
+
+<!-- 답글수 -->
+<select id="commentCount" parameterType="hashmap" resultType="hashmap"><![CDATA[SELECT COUNT(*) FROM REPLY WHERE BOARDNO=#{BOARD_NO} AND DEL_GB='N']]></select>
+<!-- 게시글 작성 -->
+<insert id="insertBoard" parameterType="hashmap" ><![CDATA[INSERT INTO BOARD (BOARD_NO,TITLE,CONTEXT,WRITER,IDENTI_TYPE) 
+	    VALUES(BOARD_SEQ.NEXTVAL,#{TITLE},#{CONTEXT},#{WRITER},#{IDENTI_TYPE})]]></insert>
+<!-- 게시글 파일 업로드 -->
+<insert id="boardFile" parameterType="hashmap" ><![CDATA[INSERT INTO FILES (FILENO,BOARDNO,ORIGINAI_FILE_NAME,FILE_SIZE,STORED_FILE_NAME)
+	  VALUES(FILES_SEQ.NEXTVAL,#{BOARDNO},#{ORGINAI_FILE_NAME},#{FILE_SIZE},#{SRORED_FILE_NAME})]]></insert>
+<!-- 게시글 파일 -->
+<select id="boardFileList" parameterType="hashmap" resultType="hashmap"><![CDATA[SELECT ORGINAI_FILE_NAME,FILE_SIZE,STORED_FILE_NAME FROM FILES WHERE FILENO = #{FILENO}]]></select>
+<!-- 답글 알림 -->
+<update id="boardNotice" parameterType="hashmap"><![CDATA[UPDATE BOARD SET BOARD_AR = '1' WHERE BOARD_NO = #{BOARD_NO}]]></update>
+
+<!-- 답글작성 -->
+<insert id="insertComment" parameterType="hashmap" ><![CDATA[INSERT INTO REPLY (COMNO,BOARDNO,WRITER,CONTEXT,REF_NO,REF_STEP)
+	VALUES(REPLY_SEQ.NEXTVAL,#{BOARDNO},#{WRITER},#{CONTEXT},#{REF_NO},#{REF_NO})]]></insert>
+
+<!-- 답글 삭제 -->
+<update id="commentDelete" parameterType="hashmap"><![CDATA[UPDATE REPLY SET DEL_GB = 'Y' WHERE COMNO=#{COMNO}]]></update>
+<!-- 인기 답글 -->
+<select id="bestComment" parameterType="hashmap" resultType="hashmap"><![CDATA[SELECT WRITER,CONTEXT,REPLY_DATE FROM(SELECT WRITER,CONTEXT,REPLY_DATE FROM REPLY WHERE BOARDNO = #{BOARDNO} AND DEL_GB='N' ORDER BY RECOMMAND_COUNT DESC)WHERE ROWNUM = '1']]></select>
+<!-- 답글 리스트  -->
+<select id="commentList" parameterType="hashmap" resultType="hashmap"><![CDATA[SELECT WRITER,CONTEXT,REPLY_DATE,ROWNUM FROM REPLY WHERE BOARDNO = #{BOARDNO} ORDER BY REF_NO DESC ,REF_STEP]]></select>
+
+
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="project">
+<!-- 프로젝트 생성 -->
+<insert id="insertProject" parameterType="hashmap" >
+<selectKey keyProperty="PROJECT_NO" resultType="string" order="BEFORE">
+	SELECT PROJECT_BOARD_SEQ.NEXTVAL FROM DUAL
+</selectKey>
+<![CDATA[
+INSERT INTO PROJECTBOARD (PROJECT_NO,USER_NO,PROJECT_NAME,PROJECT_START,PROJECT_END,PROJECT_MEMBER,PROJECT_CONTEXT)
+VALUES(#{PROJECT_NO},#{USER_NO},#{PROJECT_NAME},#{PROJECT_START},#{PROJECT_END},#{PROJECT_MEMBER},#{PROJECT_CONTEXT})]]></insert>
+
+<!-- 프로젝트 수정 -->
+<update id="updateProject" parameterType="hashmap"><![CDATA[
+UPDATE PROJECTBOARD SET PROJECT_NAME = #{PROJECT_NAME} ,PROJECT_START = #{PROJECT_START},PROJECT_END=#{PROJECT_END},PROJECT_MEMBER=#{PROJECT_MEMBER},PROJECT_CONTEXT=#{PROJECT_CONTEXT} WHERE PROJECT_NO = #{PROJECT_NO}
+]]></update>
+<!-- 프로젝트 삭제 -->
+<delete id="deleteProject" parameterType="hashmap"><![CDATA[
+DELETE PROJECTBOARD WHERE PROJECT_NO = #{PROJECT_NO}
+]]></delete>
+<!-- 프로젝트 파일 -->
+<select id="selectProjectFile" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT PBO_NAME,PBF_SIZE,PBS_NAME FROM PROJECTBOARDFILES WHERE PROJECT_NO = #{PROJECT_NO}
+]]></select>
+<!-- 현재 진행중인 프로젝트 리스트 -->
+<select id="selectProjectList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT PROJECT_NO,PROJECTBOARD.PROJECT_NAME,TO_CHAR(PROJECTBOARD.PROJECT_START,'yyyy-MM-dd') "PROJECT_START",TO_CHAR(PROJECTBOARD.PROJECT_END,'yyyy-MM-dd') "PROJECT_END",PROJECTBOARD.PROJECT_MEMBER,PROJECTBOARD.USER_NO,USERS.NICK_NAME,ROWNUM FROM PROJECTBOARD INNER JOIN USERS ON users.user_no = PROJECTBOARD.USER_NO WHERE SYSDATE BETWEEN PROJECT_START AND PROJECT_END
+]]></select>
+<!-- 시작 예정 프로젝트 리스트 -->
+<select id="selectProjectSList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT PROJECT_NO,PROJECTBOARD.PROJECT_NAME,TO_CHAR(PROJECTBOARD.PROJECT_START,'yyyy-MM-dd') "PROJECT_START",TO_CHAR(PROJECTBOARD.PROJECT_END,'yyyy-MM-dd') "PROJECT_END",PROJECTBOARD.PROJECT_MEMBER,PROJECTBOARD.USER_NO,USERS.NICK_NAME,ROWNUM FROM PROJECTBOARD INNER JOIN USERS ON users.user_no = PROJECTBOARD.USER_NO WHERE SYSDATE < PROJECT_START 
+]]></select>
+<!-- 종료된 프로젝트 리스트 -->
+<select id="selectProjectEList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT PROJECT_NO,PROJECTBOARD.PROJECT_NAME,TO_CHAR(PROJECTBOARD.PROJECT_START,'yyyy-MM-dd') "PROJECT_START",TO_CHAR(PROJECTBOARD.PROJECT_END,'yyyy-MM-dd') "PROJECT_END",PROJECTBOARD.PROJECT_MEMBER,PROJECTBOARD.USER_NO,USERS.NICK_NAME,ROWNUM FROM PROJECTBOARD INNER JOIN USERS ON users.user_no = PROJECTBOARD.USER_NO WHERE SYSDATE > PROJECT_END 
+]]></select>
+<!-- 프로젝트 상세보기 -->
+<select id="selectProjectDetail" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT PROJECT_NO,PROJECT_NAME,TO_CHAR(PROJECT_START,'yyyy-MM-dd') "PROJECT_START",TO_CHAR(PROJECT_END,'yyyy-MM-dd') "PROJECT_END",PROJECT_MEMBER,PROJECTBOARD.USER_NO,NICK_NAME,PROJECT_CONTEXT FROM PROJECTBOARD INNER JOIN USERS ON users.user_no = PROJECTBOARD.USER_NO WHERE PROJECT_NO = #{PROJECT_NO}
+]]></select>
+<!-- 프로젝트 파일 추가 -->
+<insert id="insertProjectFile" parameterType="hashmap" ><![CDATA[
+INSERT INTO PROJECTBOARDFILES (PBF_NO,PROJECT_NO,PBO_NAME,PBF_SIZE,PBS_NAME)
+			VALUES(PBF_SEQ.NEXTVAL,#{PROJECT_NO},#{PBO_NAME},#{PBF_SIZE},#{PBS_NAME})]]></insert>
+
+
+<!-- 프로젝트 작업일지 작성 -->
+<select id="insertTeam" parameterType="hashmap"><![CDATA[
+INSERT INTO PROJECTDETAIL (PROJECT_NO,PD_BOARD_NO,PD_TITLE,USER_NO,PD_CONTEXT,PD_ING,PD_IMPORT,PD_START,PD_END) VALUES(#{PROJECT_NO},PROJECT_DETAIL_SEQ.NEXTVAL,#{PD_TITLE},#{USER_NO},#{PD_CONTEXT},#{PD_ING},#{PD_IMPORT},#{PD_START},#{PD_END})
+]]></select>		
+<!-- 프로젝트 작업일지 리스트 -->
+<select id="selectTeamList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT PD_TITLE,PD_ING,PROJECTDETAIL.USER_NO,NICK_NAME,TO_CHAR(PD_END,'yyyy-MM-dd') "PD_END",PD_IMPORT,ROWNUM FROM PROJECTDETAIL INNER JOIN USERS ON USERS.USER_NO = PROJECTDETAIL.USER_NO WHERE PROJECT_NO= #{PROJECT_NO}
+]]></select>
+<!-- 작업일지 상세 보기  -->
+<select id="selectTeamDetail" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT PD_TITLE,PD_CONTEXT,PROJECTDETAIL.USER_NO,NICK_NAME,PD_ING,PD_IMPORT,TO_CHAR(PD_START,'yyyy-MM-dd') "PD_START",TO_CHAR(PD_END,'yyyy-MM-dd') "PD_END" FROM PROJECTDETAIL INNER JOIN USERS ON USERS.USER_NO = PROJECTDETAIL.USER_NO WHERE PD_BOARD_NO = #{PD_BOARD_NO}
+]]></select>
+<!-- 작업일지 수정 -->
+<update id="updateTeam" parameterType="hashmap"><![CDATA[
+UPDATE PROJECTDETAIL SET PD_TITLE=#{PD_TITLE},PD_CONTEXT=#{PD_CONTEXT},PD_ING=#{PD_ING},PD_IMPORT=#{PD_IMPORT},PD_END=#{PD_END} WHERE PD_BOARD_NO = #{PD_BOARD_NO}
+]]></update>
+<!-- 작업일지 삭제 -->
+<update id="deleteTeam" parameterType="hashmap"><![CDATA[
+UPDATE PROJECTDETAIL SET PD_DEL_GB = 'Y' WHERE PD_BOARD_NO=#{PD_BOARD_NO}
+]]></update>
+<!-- 프로젝트 참가 신청 -->
+<insert id="insertProjectApp" parameterType="hashmap" ><![CDATA[
+INSERT INTO APPLICATION (PROJECT_NO,USER_NO) VALUES (#{PROJECT_NO},#{USER_NO})
+]]></insert>
+<!-- 프로젝트 진행자 참가자 자동 등록 -->
+<insert id="autoProjectApp" parameterType="hashmap" ><![CDATA[
+INSERT INTO APPLICATION (PROJECT_NO,APPLICATION_ACCEPT,USER_NO) VALUES(#{PROJECT_NO},'Y',#{USER_NO})
+]]></insert>
+<!-- 프로젝트 신청자 리스트 -->
+<select id="selectApplicationList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT APPLICATION.USER_NO,NICK_NAME,ROWNUM FROM APPLICATION INNER JOIN USERS ON USERS.USER_NO = APPLICATION.USER_NO WHERE PROJECT_NO = #{PORJECT_NO} AND APPLICATION_ACCEPT = 'N'
+]]></select>
+<!-- 프로젝트 참가자 리스트 -->
+<select id="selectMemberList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT  APPLICATION.USER_NO,NICK_NAME,ROWNUM FROM APPLICATION INNER JOIN USERS ON USERS.USER_NO = APPLICATION.USER_NO  WHERE PROJECT_NO =#{PROJECT_NO} AND APPLICATION_ACCEPT = 'Y'
+]]></select>
+<!-- 프로젝트 참가 허용 -->
+<update id="ProjectApp" parameterType="hashmap"><![CDATA[
+UPDATE APPLICATION SET APPLICATION_ACCEPT = 'Y' WHERE USER_NO =#{USER_NO}
+]]></update>
+<!-- 작업일지 작성시 알림 보내기  -->
+<update id="ProjectAr" parameterType="hashmap"><![CDATA[
+UPDATE APPLICATION SET APPLICATION_AR = 1 WHERE PROJECT_NO=#{PROJECT_NO} AND APPLICATION_ACCEPT='Y' AND USER_NO != #{USER_NO}
+]]></update>
+
+
+<!-- 작업일지 파일 첨부 -->
+<insert id="insertTeamFile" parameterType="hashmap" ><![CDATA[
+INSERT INTO PROJECTFILES (PF_NO,PD_BOARD_NO,POF_NAME,PF_SIZE,PSF_NAME)
+		VALUES(PROJECT_FILES_SEQ.NEXTVAL,#{PD_BOARD_NO},#{POF_NAME},#{PF_SIZE},#{PSF_NAME})
+			]]></insert>
+<!-- 작업일지 파일 -->
+<select id="selectTeamFile" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT POF_NAME,PF_SIZE,PSF_NAME FROM PROJECTFILES WHERE PF_NO=#{PF_NO}
+]]></select>
+
+
+</mapper>
