@@ -8,16 +8,34 @@
 <body>
 <div class="d-flex" id="wrapper">
             <!-- Sidebar-->
-            <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light">Coders</div>
-                <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">공지사항</a>
-		            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">QnA 게시판</a>
-		            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">자유게시판</a>
-		            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">프로젝트</a>
-		            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">건의사항</a>
-                </div>
-            </div>
+            <c:choose>
+				<c:when test="${sessionScope.session.ADMIN == 'Y'}">
+	            	<div class="border-end bg-white" id="sidebar-wrapper">
+		                <div class="sidebar-heading border-bottom bg-light">Coders</div>
+		                <div class="list-group list-group-flush">
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do">공지사항</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">QnA 게시판</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">자유게시판</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">프로젝트</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">건의사항</a>		                    
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">신고관리</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">회원관리</a>
+		                </div>
+            		</div>
+	            </c:when>
+	            <c:otherwise>
+	            	<div class="border-end bg-white" id="sidebar-wrapper">
+		                <div class="sidebar-heading border-bottom bg-light">Coders</div>
+		                <div class="list-group list-group-flush">
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do?IDENTI_TYPE=1">공지사항</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do?IDENTI_TYPE=2">QnA 게시판</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do?IDENTI_TYPE=3">자유게시판</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">프로젝트</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">건의사항</a>
+		                </div>
+            		</div>
+	            </c:otherwise>
+            </c:choose>
             <!-- Page content wrapper-->
             <div id="page-content-wrapper">
                 <!-- Top navigation-->
@@ -71,14 +89,54 @@
 				<tr>
 					<td colspan="4"><textarea rows="20" cols="100" title="내용" id="CONTEXT" name="CONTEXT">${map.CONTEXT }</textarea></td>
 				</tr>
+				<tr> 
+					<th scope="row">첨부파일</th> 
+					<td colspan="3"> 
+					<c:forEach var="row" items="${filelist }"> 
+						<input type="hidden" id="FILE_NO" value="${row.FILE_NO }"> 
+						<a href="/net/common/downloadFile.do?FILE_NO=${row.FILE_NO }" name="file_${row.FILE_NO }">${row.ORIGINAL_FILE_NAME }</a> 
+						(${row.FILE_SIZE }kb)
+						<a href="#this" class="btn" id="delete_${row.FILE_NO  }" name="delete_${row.FILE_NO  }">삭제</a> 
+						<br/>						 
+					</c:forEach>
+					<div id="fileDiv" class="fileDiv">
+				
+					</div> 
+					</td> 
+				</tr>
 			</tbody>
 			</table>
-			<a href="./openBoardList.do?IDENTI_TYPE=${map.IDENTI_TYPE }" class="btn" id="list">목록으로</a>
-			<input type="submit" value="수정하기"/>
+			<div class="addInput">
+				<button type="button" class="btnAdd">파일추가</button>
+				<input type="submit" value="수정하기"/>				
+				<a href="javascript:window.history.back();" class="btn" id="list">목록으로</a>
+			</div>
 		</form>
 	</div>
 </div>
 	<br/>
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
+	<script type="text/javascript">
+		var file_count = 0;
+		$(document).ready (function(){
+			$('.btnAdd').click(function(){
+				$('.fileDiv').append(					
+					'<input type="file" id="file" name="file_'+(file_count++)+'" >\<button type="button" class="btnRemove">삭제</button><br>'
+				);
+				$('.btnRemove').on('click', function(){
+					$(this).prev().remove();
+					$(this).next().remove();
+					$(this).remove();
+				})
+			});
+			
+			$("a[name^='delete']").on("click", function(e){
+				e.preventDefault();
+				fn_deleteFile($(this));
+			});
+		});
+		
+		
+	</script>
 </body>
 </html>

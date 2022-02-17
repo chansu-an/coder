@@ -151,8 +151,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Map<String, Object>> selectFileList(Map<String, Object> map) throws Exception {
 		return boardDAO.selectFileList(map);
-	}
-	
+	}	
 	
 	
 }

@@ -149,12 +149,17 @@ INSERT INTO FILES (FILE_NO,BOARD_NO,ORIGINAL_FILE_NAME,FILE_SIZE,STORED_FILE_NAM
 VALUES(FILES_SEQ.NEXTVAL,#{BOARD_NO},#{ORIGINAL_FILE_NAME},#{FILE_SIZE},#{STORED_FILE_NAME})
 ]]>
 </insert>
-	<!-- 게시글 파일 -->
+<!-- 게시글 파일리스트 -->
 <select id="selectFileList" parameterType="hashmap"	resultType="hashmap"><![CDATA[
 SELECT FILE_NO,ORIGINAL_FILE_NAME,ROUND(FILE_SIZE/1024,1) AS FILE_SIZE,STORED_FILE_NAME FROM FILES WHERE BOARD_NO = #{BOARD_NO}
 ]]></select>
-	<!-- 댓글 알림 -->
-	<update id="boardNotice" parameterType="hashmap"><![CDATA[
+<!-- 게시글 파일 다운로드 -->
+<select id="downloadFile" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT FILE_NO,ORIGINAL_FILE_NAME,FILE_SIZE,STORED_FILE_NAME FROM FILES WHERE FILE_NO = #{FILE_NO}
+]]></select>
+
+<!-- 댓글 알림 -->
+<update id="boardNotice" parameterType="hashmap"><![CDATA[
 UPDATE BOARD SET BOARD_AR = '1' WHERE BOARD_NO = #{BOARD_NO}
 ]]></update>
 
