@@ -1,4 +1,4 @@
-package coders.common.common;
+package coders.common.util;
 
 import java.io.File;
 import java.util.Iterator;
@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-@Component("ReFileutils")
-public class ReFileutils {
-	private String filePath = "C:\\Codes\\resume\\";
+@Component("ProfileUtils")
+public class ProFileUtils {
+	private String filePath = "D:\\bak\\src\\main\\webapp\\img\\profile\\";
 	
 	public Map<String,Object> parseInsertFileInfo(Map<String, Object> map, HttpServletRequest request)throws Exception{
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
@@ -32,7 +32,7 @@ public class ReFileutils {
 			if(multipartFile.isEmpty() ==false) {
 				originalFileName = multipartFile.getOriginalFilename();//원본이름
 				originalFileExtension=originalFileName.substring(originalFileName.lastIndexOf("."));
-				storeFileName = "업로드 테스트"+originalFileExtension;
+				storeFileName = CommonUtils.getRandomString()+originalFileExtension;
 				file = new File(filePath+storeFileName);
 				multipartFile.transferTo(file);//이부분에서 파일 업로드 됨
 				

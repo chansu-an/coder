@@ -58,26 +58,100 @@ UPDATE USERS SET ACTIVE_SCORE = + '' WHERE USER_NO=#{USERS_NO}
 ]]></update>
 
 <!-- 작성글 리스트 -->
-<select id="selectWriteList"  parameterType="hashmap" resultType="hashmap" ><![CDATA[
+<select id="selectWriteList"  parameterType="hashmap" resultType="hashmap" >
+<include refid="common.pagingPre"/>
+<![CDATA[
 SELECT BOARD_NO,USERS.NICK_NAME,BOARD.TITLE,BOARD.READ_COUNT,TO_CHAR(BOARD.BOARD_DATE,'YY/DD/mm(hh24:mm)') "BOARD_DATE",ROWNUM FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.USER_NO = #{USER_NO} AND BOARD.DEL_GB = 'N' AND BOARD.REPORT_COUNT<'20'  ORDER BY board.board_date DESC
-]]></select>
+]]>
+<include refid="common.pagingPost"/>
+</select>
 <!-- 프로젝트 알림 -->
-<select id="selectProjectArList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+<select id="selectProjectArList" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre"/>
+<![CDATA[
 SELECT PROJECTBOARD.PROJECT_NAME,PROJECTBOARD.PROJECT_NO  FROM PROJECTBOARD INNER JOIN APPLICATION ON APPLICATION.PROJECT_NO = PROJECTBOARD.PROJECT_NO WHERE APPLICATION.APPLICATION_AR='Y' AND APPLICATION.USER_NO = ${USER_NO}
-]]></select>
+]]>
+<include refid="common.pagingPost"/>
+</select>
+<!-- 참여 프로젝트 리스트 -->
+<select id="selectProjectList" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre"/>
+<![CDATA[
+SELECT PROJECTBOARD.PROJECT_NO,PROJECTBOARD.PROJECT_NAME,to_char(PROJECTBOARD.PROJECT_START,'YY-MM-dd') "PROJECT_START",to_char(PROJECTBOARD.PROJECT_END,'YY-MM-dd') "PROJECT_END"  FROM PROJECTBOARD INNER JOIN APPLICATION ON APPLICATION.PROJECT_NO = PROJECTBOARD.PROJECT_NO WHERE APPLICATION.USER_NO = #{USER_NO}
+]]>
+<include refid="common.pagingPost"/>
+</select>
+<!-- 팔로우 리스트 -->
+<select id="selectFollowList" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre"/>
+<![CDATA[
+SELECT USERS.NICK_NAME,ROWNUM,FOLLOWER FROM FOLLOW INNER JOIN USERS ON FOLLOW.FOLLOWER = USERS.USER_NO WHERE FOLLOW.USER_NO = #{USER_NO}
+]]>
+<include refid="common.pagingPost"/>
+</select>
+
+<!-- 스크랩 리스트 -->
+<select id="selectScrapList" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre"/>
+<![CDATA[
+SELECT BOARD.BOARD_NO,BOARD.TITLE,BOARD.USER_NO,BOARD.BOARD_DATE,ROWNUM FROM SCRAP INNER JOIN BOARD ON SCRAP.BOARD_NO = BOARD.BOARD_NO WHERE SCRAP.USER_NO = #{USER_NO}
+]]>
+<include refid="common.pagingPost"/>
+</select>
+
+<!-- 작성글 알림보기 -->
+<select id="selectArlimeList" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre"/>
+<![CDATA[
+SELECT TITLE,BOARD_NO from board where BOARD_AR = 'Y' AND USER_NO = #{USER_NO}
+]]>
+<include refid="common.pagingPost"/>
+</select>
+
+
+<!-- 작성글 갯수 -->
+<select id="countWriteList"  parameterType="hashmap" resultType="_int" >
+<![CDATA[
+SELECT COUNT(*) FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.USER_NO = #{USER_NO} AND BOARD.DEL_GB = 'N' AND BOARD.REPORT_COUNT<'20'  ORDER BY board.board_date DESC
+]]>
+</select>
+<!-- 프로젝트 알림 갯수 -->
+<select id="countProjectArList" parameterType="hashmap" resultType="_int">
+<![CDATA[
+SELECT COUNT(*) WHERE APPLICATION.APPLICATION_AR='Y' AND APPLICATION.USER_NO = ${USER_NO}
+]]>
+</select>
+<!-- 참여 프로젝트 갯수 -->
+<select id="countProjectList" parameterType="hashmap" resultType="_int">
+<![CDATA[
+SELECT COUNT(*) "PROJECT_END"  FROM PROJECTBOARD INNER JOIN APPLICATION ON APPLICATION.PROJECT_NO = PROJECTBOARD.PROJECT_NO WHERE APPLICATION.USER_NO = #{USER_NO}
+]]>
+</select>
+<!-- 팔로우 갯수 -->
+<select id="countFollowList" parameterType="hashmap" resultType="_int">
+<![CDATA[
+SELECT COUNT(*) FROM FOLLOW INNER JOIN USERS ON FOLLOW.FOLLOWER = USERS.USER_NO WHERE FOLLOW.USER_NO = #{USER_NO}
+]]>
+</select>
+<!-- 스크랩 갯수 -->
+<select id="countScrapList" parameterType="hashmap" resultType="_int">
+<![CDATA[
+SELECT COUNT(*) FROM SCRAP INNER JOIN BOARD ON SCRAP.BOARD_NO = BOARD.BOARD_NO WHERE SCRAP.USER_NO = #{USER_NO}
+]]>
+</select>
+<!-- 작성글 알림 갯수 -->
+<select id="countArlimeList" parameterType="hashmap" resultType="_int">
+<![CDATA[
+SELECT COUNT(*) from board where BOARD_AR = 'Y' AND USER_NO = #{USER_NO}
+]]>
+</select>
+
 <!-- 알림삭제 -->
 <update id="clickProjectAr" parameterType="hashmap">
 UPDATE APPLICATION SET  APPLICATION_AR = 'N' WHERE PROJECT_NO = #{PROJECT_NO} AND USER_NO = #{USER_NO}
 </update>
 
-<!-- 참여 프로젝트 리스트 -->
-<select id="selectProjectList" parameterType="hashmap" resultType="hashmap"><![CDATA[
-SELECT PROJECTBOARD.PROJECT_NO,PROJECTBOARD.PROJECT_NAME,to_char(PROJECTBOARD.PROJECT_START,'YY-MM-dd') "PROJECT_START",to_char(PROJECTBOARD.PROJECT_END,'YY-MM-dd') "PROJECT_END"  FROM PROJECTBOARD INNER JOIN APPLICATION ON APPLICATION.PROJECT_NO = PROJECTBOARD.PROJECT_NO WHERE APPLICATION.USER_NO = #{USER_NO}
-]]></select>
-<!-- 작성글 알림보기 -->
-<select id="selectArlimeList" parameterType="hashmap" resultType="hashmap"><![CDATA[
-SELECT TITLE,BOARD_NO from board where BOARD_AR = 'Y' AND USER_NO = #{USER_NO}
-]]></select>
+
 <!-- 알림삭제 -->
 <update id="clickArlist" parameterType="hashmap">
 UPDATE BOARD SET  BOARD_AR = 'N' WHERE BOARD_NO = #{BOARD_NO}
@@ -103,18 +177,12 @@ SELECT USER_NO,NAME,TELL,EMAIL,ADDRESS,ADDRESS1,SKILL,BLOG,FILES,ZIPCODE FROM RE
 <insert id="insertFollow" parameterType="hashmap"><![CDATA[
 INSERT INTO FOLLOW VALUES(#{USER_NO},#{FOLLOWER})
 ]]></insert>
-<!-- 팔로우 리스트 -->
-<select id="selectFollowList" parameterType="hashmap" resultType="hashmap"><![CDATA[
-SELECT USERS.NICK_NAME,ROWNUM,FOLLOWER FROM FOLLOW INNER JOIN USERS ON FOLLOW.FOLLOWER = USERS.USER_NO WHERE FOLLOW.USER_NO = #{USER_NO}
-]]></select>
+
 <!-- 스크랩 추가 -->
 <insert id="insertScrap" parameterType="hashmap"><![CDATA[
 INSERT INTO SCRAP VALUES(#{USER_NO},#{BOARD_NO})
 ]]></insert>
-<!-- 스크랩 리스트 -->
-<select id="selectScrapList" parameterType="hashmap" resultType="hashmap"><![CDATA[
-SELECT BOARD.BOARD_NO,BOARD.TITLE,BOARD.USER_NO,BOARD.BOARD_DATE,ROWNUM FROM SCRAP INNER JOIN BOARD ON SCRAP.BOARD_NO = BOARD.BOARD_NO WHERE SCRAP.USER_NO = #{USER_NO}
-]]></select>
+
 
 </mapper>
 

@@ -69,14 +69,14 @@
 		<div align="center">
 			<c:if test="${smap.startpag>1}">
 				<a
-					href="../Mypage/MypageDetail.do?USER_NO=${USER_NO}&PAG_NUM=${smap.startpag-2}">이전</a>
+					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&PAG_NUM=${smap.startpag-2}">이전</a>
 			</c:if>
 			<c:forEach var="i" begin="${smap.startpag }" end="${smap.endpage }">
-				<a href="../Mypage/MypageDetail.do?USER_NO=${USER_NO}&PAG_NUM=${i}">[${i}]</a>
+				<a href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&PAG_NUM=${i}">[${i}]</a>
 			</c:forEach>
 			<c:if test="${smap.endpage<smap.maxpag}">
 				<a
-					href="../Mypage/MypageDetail.do?USER_NO=${USER_NO}&PAG_NUM=${smap.startpag+2}">다음</a>
+					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&PAG_NUM=${smap.startpag+2}">다음</a>
 			</c:if>
 		</div>
 	</div>

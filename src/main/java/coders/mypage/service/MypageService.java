@@ -31,4 +31,16 @@ public interface MypageService {
 	public void insertScrap(Map<String, Object> map)throws Exception;
 	
 	public void insertFollow(Map<String, Object> map)throws Exception;
+	
+	public int countWriteList(Map<String, Object> map)throws Exception;
+	
+	public int countProjectArList(Map<String, Object> map)throws Exception;
+	
+	public int countProjectList(Map<String, Object> map)throws Exception;
+	
+	public int countFollowList(Map<String, Object> map)throws Exception;
+	
+	public int countScrapList(Map<String, Object> map)throws Exception;
+	
+	public int countArlimeList(Map<String, Object> map)throws Exception;
 }

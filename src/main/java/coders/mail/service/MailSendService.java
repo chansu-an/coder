@@ -8,7 +8,7 @@ import javax.mail.MessagingException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
-import coders.common.common.MailUtils;
+import coders.common.util.MailUtils;
 
 @Service("mss")
 public class MailSendService {

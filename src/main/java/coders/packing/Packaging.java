@@ -20,8 +20,8 @@ public class Packaging {
 		if(endpage>maxpag) {
 			endpage = maxpag;
 		}
-		map.put("start", start);
-		map.put("end", end);
+		map.put("START", start);
+		map.put("END", end);
 		map.put("startpag", startpag);
 		map.put("endpage", endpage);
 		map.put("maxpag", maxpag);

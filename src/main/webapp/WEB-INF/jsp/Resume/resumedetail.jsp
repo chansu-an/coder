@@ -32,6 +32,13 @@ function deletere() {
               </div>
               </div>
               <div class="col-md-6">
+              <label for="NAME" class="form-label">첨부파일</label>
+              <div>
+              ${map.FILES}
+              </div>
+              </div>
+              </div>
+              <div class="col-md-6">
                 <label for="SKILL" class="form-label">자신있는기술</label>
                 <div>
               ${map.SKILL}
@@ -52,7 +59,7 @@ function deletere() {
             <div class="col-md-6">
               <label for="BLOG" class="form-label">포트폴리오</label>
               <div>
-               ${map.BLOG}
+               <a href="${map.BLOG}">${map.BLOG}</a>
                </div>
             </div>
             <div class="col-md-6">

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import coders.common.common.CommandMap;
-import coders.common.common.ProFileUtils;
+import coders.common.util.ProFileUtils;
 import coders.mypage.service.MypageService;
 import coders.packing.Packaging;
 
@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -34,34 +35,27 @@ public class MypageController {
 	public ModelAndView mypage(HttpSession session,HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> mapor = new HashMap<String, Object>();
-		String user_no = request.getParameter("USER_NO");
-		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
-		mav.setViewName("mypage/mypage");
-		mapor.put("USER_NO", user_no);
-		System.out.println(mapor);
-		List<Map<String, Object>> flist = mypageService.selectFollowList(mapor);
-		List<Map<String, Object>> slist = mypageService.selectScrapList(mapor);
-		int count = flist.size();
 		int pnum = 1;
-		System.out.println(count);
 		String pnums = request.getParameter("PAG_NUM");
 		if(pnums!=null) {
 			pnum = Integer.parseInt(pnums);
 		}
+		mapor = packaging.Packag(mapor, pnum, 2, 0);
+		String user_no = request.getParameter("USER_NO");
+		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
+		mav.setViewName("mypage/mypage");
+		
+		List<Map<String, Object>> flist = mypageService.selectFollowList(mapor);
+		List<Map<String, Object>> slist = mypageService.selectScrapList(mapor);
+		int count = flist.size();
+		
+		
+		
 		smap = packaging.Packag(smap, pnum, 2, count);
 		mav.addObject("flist",flist);
 		mav.addObject("slist",slist);
-		mav.addObject("USER_NO",user_no);
 		mav.addObject("smap", smap);
 		mav.addObject("PAG_NUM", pnums);
-		System.out.println(count);
-		
-		if(smap !=null) {
-			String suser_no = String.valueOf(smap.get("USER_NO"));
-		if(user_no.equals(suser_no) ) {
-			mav.addObject("CHECK","Y");
-			return mav;}}
-		mav.addObject("CHECK","N");
 		return mav;
 	}
 	//유저 상세정보
@@ -75,13 +69,6 @@ public class MypageController {
 		Map<String, Object> map = mypageService.selectMypageDetail(mapor);
 		mav.addObject("map",map);
 		mav.setViewName("/mypage/mypagedetail");
-		mav.addObject("USER_NO",user_no);
-		if(smap !=null) {
-			String suser_no = String.valueOf(smap.get("USER_NO"));
-		if(user_no.equals(suser_no) ) {
-			mav.addObject("CHECK","Y");
-			return mav;}}
-		mav.addObject("CHECK","N");
 		return mav;
 	}
 	//수정get
@@ -107,26 +94,8 @@ public ModelAndView mypageModify(HttpServletRequest request,CommandMap commandMa
 			return mav;
 		}
 		fileUtils.parseInsertFileInfo(commandMap.getMap(), request);
-		System.out.println(commandMap.getMap());
 		mypageService.updateMypage(commandMap.getMap());
 		mav.setViewName("redirect:/main/Mypage.do?USER_NO="+map2.get("USER_NO"));
-		return mav;
-}
-	//팔로우리스트
-	@RequestMapping(value = "/Mypage/Follow.do")
-public ModelAndView followList(HttpServletRequest request,HttpSession session) {
-		Map<String, Object> mapor = new HashMap<String, Object>();
-		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
-		String user_no = request.getParameter("USER_NO");
-		mapor.put("USER_NO", user_no);
-		ModelAndView mav = new ModelAndView("/mypage/follow");
-		mav.addObject("USER_NO",user_no);
-		if(smap !=null) {
-			String suser_no = String.valueOf(smap.get("USER_NO"));
-		if(user_no.equals(suser_no) ) {
-			mav.addObject("CHECK","Y");
-			return mav;}}
-		mav.addObject("CHECK","N");
 		return mav;
 }
 	//참가프로젝트리스트
@@ -134,19 +103,19 @@ public ModelAndView followList(HttpServletRequest request,HttpSession session) {
 public ModelAndView projectList(HttpServletRequest request,HttpSession session )throws Exception {
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> mapor = new HashMap<String, Object>();
-		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
 		String user_no = request.getParameter("USER_NO");
 		mapor.put("USER_NO", user_no);
+		int pnum = 1;
+		String pnums = request.getParameter("PAG_NUM");
+		if(pnums!=null) {
+			pnum = Integer.parseInt(pnums);
+		}
+		int count = mypageService.countProjectList(mapor);
+		mapor = packaging.Packag(mapor, pnum, 2, count);
 		List<Map<String, Object>> list = mypageService.selectProjectList(mapor);
+		mav.addObject("map", mapor);
 		mav.addObject("list",list);
 		mav.setViewName("/mypage/myProject");
-		mav.addObject("USER_NO",user_no);
-		if(smap !=null) {
-			String suser_no = String.valueOf(smap.get("USER_NO"));
-		if(user_no.equals(suser_no) ) {
-			mav.addObject("CHECK","Y");
-			return mav;}}
-		mav.addObject("CHECK","N");
 		return mav;
 }
 	//작성글 리스트
@@ -154,20 +123,19 @@ public ModelAndView projectList(HttpServletRequest request,HttpSession session )
 public ModelAndView writeList(HttpServletRequest request,HttpSession session )throws Exception {
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> mapor = new HashMap<String, Object>();
-		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
 		String user_no = request.getParameter("USER_NO");
-		mapor.put("USER_NO",user_no );
+		mapor.put("USER_NO",user_no);
+		int pnum = 1;
+		String pnums = request.getParameter("PAG_NUM");
+		if(pnums!=null) {
+			pnum = Integer.parseInt(pnums);
+		}
+		int count = mypageService.countWriteList(mapor);
+		mapor = packaging.Packag(mapor, pnum, 2, count);
 		List<Map<String, Object>> list = mypageService.selectWriteList(mapor);
-		System.out.println(list);
 		mav.addObject("list",list);
+		mav.addObject("map", mapor);
 		mav.setViewName("/mypage/myWrite");
-		mav.addObject("USER_NO",user_no);
-		if(smap !=null) {
-			String suser_no = String.valueOf(smap.get("USER_NO"));
-		if(user_no.equals(suser_no) ) {
-			mav.addObject("CHECK","Y");
-			return mav;}}
-		mav.addObject("CHECK","N");
 		return mav;
 }
 	//유저삭제
@@ -181,14 +149,31 @@ public ModelAndView mypageDelete(HttpSession session)throws Exception {
 }
 	//알림페이지로
 	@RequestMapping(value = "/Mypage/Notification.do")
-public ModelAndView selectArlimeList(HttpSession session)throws Exception {
+public ModelAndView selectArlimeList(HttpSession session,HttpServletRequest request)throws Exception {
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
+		Map<String, Object> smap2 = smap;
+		int bpnum = 1;
+		String bpnums = request.getParameter("B_PAG_NUM");
+		if(bpnums!=null) {
+			bpnum = Integer.parseInt(bpnums);
+		}
+		int ppnum = 1;
+		String ppnums = request.getParameter("P_PAG_NUM");
+		if(bpnums!=null) {
+			bpnum = Integer.parseInt(bpnums);
+		}
+		int count = mypageService.countFollowList(smap);
+		List<Map<String, Object>> list = mypageService.selectFollowList(smap);
+		smap = packaging.Packag(smap, bpnum, 2, count);
+		smap2 = packaging.Packag(smap, ppnum, 2, count);
+		
 		List<Map<String, Object>> list1 = mypageService.selectArlimeList(smap);
-		List<Map<String, Object>> list2 = mypageService.selectProjetArList(smap);
+		List<Map<String, Object>> list2 = mypageService.selectProjetArList(smap2);
 		mav.addObject("list1", list1);
 		mav.addObject("list2", list2);
 		mav.addObject("smap", smap);
+		mav.addObject("smap2", smap2);	
 		mav.setViewName("/mypage/Notification");
 		return mav;
 }

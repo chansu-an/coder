@@ -53,10 +53,6 @@
 			</colgroup>			
 			<tbody>
 				<tr>
-					<th scope="row">프로젝트 번호</th>
-					<td>${map.PROJECT_NO}</td>
-				</tr>
-				<tr>
 					<th scope="row">작성자</th>
 					<td>${map.USER_NO }</td>
 				</tr>
@@ -77,12 +73,19 @@
 					<td colspan="3"><input type="date" id="PEOJECT_END" name="PROJECT_END" pattern="yyyy/mm/dd" class="wdp_90" value="${map.PROJECT_END }"/></td>
 				</tr>
 				<tr>
-					<td colspan="4"><textarea rows="20" cols="100" title="내용" id="PROJECT_CONTEXT" name="PROJECT_CONTEXT">${map.PROJECT_CONTEXT },${map.PROJECT_NO}</textarea></td>
+					<td colspan="4"><textarea rows="20" cols="100" title="내용" id="PROJECT_CONTEXT" name="PROJECT_CONTEXT">${map.PROJECT_CONTEXT }</textarea></td>
 				</tr>
-			</tbody>
+				<tr>
+				<th scope= "row">첨부파일</th>
+				<td colspan="3"><input type = "file" id="PBO_NAME" name="PBO_NAME" class="wdq_90" value="${map.PBO_NAME }"/></td>
+				
+				</tbody>
 			</table>
-			<a href="./Project.do" class="btn" id="list">목록으로</a>
-			<input type="submit" value="수정하기"/>
+			<a href="/net/Project/Project.do" class="btn" id="list">목록으로</a>
+			
+			<input type ="submit" value="수정하기">			
+		
+		
 		</form>
 	</div>
 </div>

@@ -50,14 +50,16 @@
         <h4 class="mb-3">내정보수정</h4>
         <form method="post"  class="needs-validation" enctype="multipart/form-data" novalidate>
           <div class="row g-3">
-            <div class="col-12">
-              <label for="username" class="form-label">이름</label>
-              <div >
+            <div class="col-md-6">
                 <label for="address2" class="form-label">별명</label>
               <input type="text" class="form-control" name="NICK_NAME" id="NICK_NAME" placeholder="별명" required value="${map.NICK_NAME }">
             <div class="invalid-feedback">필수 입력사항입니다</div>
               </div>
-              <input type="text" name="PROFILE">
+               <div class="col-md-6">
+                <label for="address2" class="form-label">프로필사진</label>
+               <input type="file" name="PROFILE" >
+              </div>
+             
             </div>
             <div class="col-12">
               <label for="email" class="form-label">이메일</label>
