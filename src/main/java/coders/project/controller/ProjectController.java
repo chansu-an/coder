@@ -21,7 +21,7 @@ public class ProjectController {
 	private ProjectService projectService;
 
 //	프로젝트 리스트
-	@RequestMapping(value = "/Project.do")
+	@RequestMapping(value = "/Project/Project.do")
 	public ModelAndView ProjectList(CommandMap commandMap,HttpServletRequest request) throws Exception {
 
 		
@@ -77,7 +77,7 @@ commandMap.put("USER_NO", "1");
 
 //프로젝트 수정폼
 	@RequestMapping(value = "/Project/Modify.do", method = RequestMethod.GET)
-	public ModelAndView ProjectModifyForm(CommandMap commandMap) throws Exception {
+	public ModelAndView ProjectModifyForm(CommandMap commandMap,HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/project/project_board_modify");
 		Map<String, Object> map = projectService.selectProjectDetail(commandMap.getMap());
 		System.out.println(map);
@@ -88,13 +88,13 @@ commandMap.put("USER_NO", "1");
 //프로젝트 수정
 	@RequestMapping(value = "/Project/Modify.do", method = RequestMethod.POST)
 	public ModelAndView ProjectModify(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/Project.do");
+		ModelAndView mav = new ModelAndView("redirect:/Project/Detail.do");
 		
 		projectService.updateProject(commandMap.getMap(),request);
 		mav.addObject("PROJECT_NO",commandMap.get("PROJECT_NO"));
 		
 		
-	System.out.println(commandMap.getMap());
+	System.out.println(commandMap.getMap());  //  --> 값 확인 지워도 무방 
 //		projectService.updateProject(commandMap.getMap());
 	mav.addObject("EMAIL", commandMap.get("EMAIL"));
 		return mav;
