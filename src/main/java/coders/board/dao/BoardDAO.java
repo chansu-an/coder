@@ -119,5 +119,5 @@ public class BoardDAO extends AbstractDAO {
 	public Map<String, Object> selectAdminDetail(Map<String, Object> map) {
 		return (Map<String, Object>)selectOne("board.selectAdminDetail", map);
 	}
-
+	
 }

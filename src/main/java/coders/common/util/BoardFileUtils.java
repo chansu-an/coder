@@ -16,7 +16,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component("boardFileUtils")
 public class BoardFileUtils {
-private static final String filePath = "D:\\dev\\file\\";
+	
+	private static final String filePath = "D:\\dev\\file\\";
 	
 	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, HttpServletRequest request) throws Exception{
 		Enumeration params = request.getParameterNames();

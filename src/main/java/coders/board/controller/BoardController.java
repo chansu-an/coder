@@ -108,8 +108,10 @@ public class BoardController {
 		commandMap.put("IDENTI_TYPE", request.getParameter("IDENTI_TYPE"));
 		
 		Map<String, Object> map = boardService.selectBoardDetail(commandMap.getMap());
+		List<Map<String, Object>> filelist = boardService.selectFileList(commandMap.getMap());
 		
 		mav.addObject("map", map);
+		mav.addObject("filelist", filelist);
 
 		
 		return mav;

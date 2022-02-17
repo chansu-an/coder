@@ -107,7 +107,7 @@ function testttt() {
 				<td colspan="3"> 
 				<c:forEach var="row" items="${filelist }"> 
 					<input type="hidden" id="FILE_NO" value="${row.FILE_NO }"> 
-					<a href="/net/common/downloadFile.do?BOARD_NO=${map.BOARD_NO }" name="file">${row.ORIGINAL_FILE_NAME }</a> 
+					<a href="/net/common/downloadFile.do?FILE_NO=${row.FILE_NO }" name="file">${row.ORIGINAL_FILE_NAME }</a> 
 					(${row.FILE_SIZE }kb) 
 				</c:forEach> 
 				</td> 

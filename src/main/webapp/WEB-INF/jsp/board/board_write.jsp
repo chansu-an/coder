@@ -10,7 +10,8 @@
 <script type="text/javascript">
 	function test(value){
 		 document.getElementById('IDENTI_TYPE').value = value;
-	}
+	}	
+	
 </script>
 <body>
 	<div class="d-flex" id="wrapper">
@@ -107,18 +108,16 @@
 						</tr>
 					</tbody>
 				</table>
-			<!-- 	<div id="fileDiv">
-					<p>
-						<input type="file" id="file" name="file_0"> <a
-							href="#this" class="btn" id="delete" name="delete">삭제</a>
-					</p>
-				</div> -->
 				<br />
-				<input type="file" name="FILE"/>
+				<div id="fileDiv" class="fileDiv">
+				
+				</div>
 				<br /> 
-				<a href="#this" class="btn" id="addFile">파일 추가</a>
-				<input type="submit" value="작성하기"/> 
-				<a href="javascript:window.history.back();" class="btn" id="list">목록으로</a>
+				<div class="addInput">
+					<button type="button" class="btnAdd">파일추가</button>
+					<input type="submit" value="작성하기"/>				
+					<a href="javascript:window.history.back();" class="btn" id="list">목록으로</a>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -126,55 +125,21 @@
 		<br />
 
 		<%@ include file="/WEB-INF/include/include-body.jspf"%>
-		<!-- <script type="text/javascript">
-		var gfv_count = 1;
-	
-		$(document).ready(function(){
-			$("#list").on("click", function(e){ //목록으로 버튼
-				e.preventDefault();
-				fn_openBoardList();
-			});
-			
-			$("#write").on("click", function(e){ //작성하기 버튼
-				e.preventDefault();
-				fn_boardWrite();
-			});
-			
-			$("#addFile").on("click", function(e){ //파일 추가 버튼
-				e.preventDefault();
-				fn_addFile();
-			});
-			
-			$("a[name='delete']").on("click", function(e){ //삭제 버튼
-				e.preventDefault();
-				fn_deleteFile($(this));
+		<script type="text/javascript">
+		var file_count = 0;
+		$(document).ready (function(){
+			$('.btnAdd').click(function(){
+				$('.fileDiv').append(					
+					'<input type="file" id="file" name="file_'+(file_count++)+'" >\<button type="button" class="btnRemove">삭제</button><br>'
+				);
+				$('.btnRemove').on('click', function(){
+					$(this).prev().remove();
+					$(this).next().remove();
+					$(this).remove();
+				})
 			});
 		});
 		
-		function fn_openBoardList(){
-			var comSubmit = new ComSubmit();
-			comSubmit.setUrl("<c:url value='/board/openBoardList.do' />");
-			comSubmit.submit();
-		}
-		
-		function fn_boardWrite(){
-			var comSubmit = new ComSubmit("frm");
-			comSubmit.setUrl("<c:url value='/board/insertBoard.do' />");
-			comSubmit.submit();
-		}
-		
-		function fn_addFile(){
-			var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
-			$("#fileDiv").append(str);
-			$("a[name='delete']").on("click", function(e){ //삭제 버튼
-				e.preventDefault();
-				fn_deleteFile($(this));
-			});
-		}
-		
-		function fn_deleteFile(obj){
-			obj.parent().remove();
-		}
-	</script> -->
+	</script>
 </body>
 </html>
