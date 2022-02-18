@@ -78,15 +78,6 @@
             <div class="invalid-feedback">필수 입력사항입니다</div>
            </div>
             </div>
-          <hr class="my-4">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="same-address">
-            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="save-info">
-            <label class="form-check-label" for="save-info">Save this information for next time</label>
-          </div>
           <div align="center">
           <hr class="my-4">
           <button class=" btn btn-primary btn-lg" type="submit">정보 변경</button>
@@ -98,7 +89,6 @@
   
   </main> 
 </div>
-<%@ include file="/WEB-INF/include/include-body.jspf" %>
-<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>>
 </body>
 </html>

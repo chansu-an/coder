@@ -34,28 +34,32 @@ public class MypageController {
 	@RequestMapping(value = "/Mypage/MypageDetail.do" )
 	public ModelAndView mypage(HttpSession session,HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		Map<String, Object> mapor = new HashMap<String, Object>();
-		int pnum = 1;
-		String pnums = request.getParameter("PAG_NUM");
-		if(pnums!=null) {
-			pnum = Integer.parseInt(pnums);
+		Map<String, Object> fmap = new HashMap<String, Object>();
+		Map<String, Object> smap = new HashMap<String, Object>();
+		fmap.put("USER_NO", request.getParameter("USER_NO"));
+		smap.put("USER_NO", request.getParameter("USER_NO"));
+		int fpnum = 1;
+		String fpnums = request.getParameter("F_PAG_NUM");
+		if(fpnums!=null) {
+			fpnum = Integer.parseInt(fpnums);
 		}
-		mapor = packaging.Packag(mapor, pnum, 2, 0);
-		String user_no = request.getParameter("USER_NO");
-		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
+		int spnum = 1;
+		String spnums = request.getParameter("S_PAG_NUM");
+		if(spnums!=null) {
+			spnum = Integer.parseInt(spnums);
+		}
+		
+		int fcount = mypageService.countFollowList(fmap);
+		int scount = mypageService.countScrapList(smap);
+		smap = packaging.Packag(smap,spnum, 2, scount);
+		fmap = packaging.Packag(fmap,fpnum, 2, fcount);
 		mav.setViewName("mypage/mypage");
-		
-		List<Map<String, Object>> flist = mypageService.selectFollowList(mapor);
-		List<Map<String, Object>> slist = mypageService.selectScrapList(mapor);
-		int count = flist.size();
-		
-		
-		
-		smap = packaging.Packag(smap, pnum, 2, count);
+		List<Map<String, Object>> flist = mypageService.selectFollowList(fmap);
+		List<Map<String, Object>> slist = mypageService.selectScrapList(smap);
 		mav.addObject("flist",flist);
 		mav.addObject("slist",slist);
 		mav.addObject("smap", smap);
-		mav.addObject("PAG_NUM", pnums);
+		mav.addObject("fmap", fmap);
 		return mav;
 	}
 	//유저 상세정보
@@ -86,7 +90,6 @@ public ModelAndView mypageModifyForm(HttpSession session) {
 public ModelAndView mypageModify(HttpServletRequest request,CommandMap commandMap,HttpSession session)throws Exception {
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> map2  = (Map<String, Object>)session.getAttribute("session");
-		Map<String, Object> map = new HashMap<String, Object>();
 		commandMap.put("USER_NO", map2.get("USER_NO"));;
 		if(!commandMap.get("PASSWORD").equals(commandMap.get("PASSWORD2"))) {
 			mav.setViewName("redirect:/Mypage/Modify.do");
@@ -94,6 +97,10 @@ public ModelAndView mypageModify(HttpServletRequest request,CommandMap commandMa
 			return mav;
 		}
 		fileUtils.parseInsertFileInfo(commandMap.getMap(), request);
+		if(commandMap.get("PROFILE")==null) 
+		commandMap.put("PROFILE", "없음");
+		
+		System.out.println(commandMap.getMap());
 		mypageService.updateMypage(commandMap.getMap());
 		mav.setViewName("redirect:/main/Mypage.do?USER_NO="+map2.get("USER_NO"));
 		return mav;
@@ -149,31 +156,25 @@ public ModelAndView mypageDelete(HttpSession session)throws Exception {
 }
 	//알림페이지로
 	@RequestMapping(value = "/Mypage/Notification.do")
-public ModelAndView selectArlimeList(HttpSession session,HttpServletRequest request)throws Exception {
+public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception {
 		ModelAndView mav = new ModelAndView();
-		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
-		Map<String, Object> smap2 = smap;
-		int bpnum = 1;
-		String bpnums = request.getParameter("B_PAG_NUM");
-		if(bpnums!=null) {
-			bpnum = Integer.parseInt(bpnums);
-		}
-		int ppnum = 1;
-		String ppnums = request.getParameter("P_PAG_NUM");
-		if(bpnums!=null) {
-			bpnum = Integer.parseInt(bpnums);
-		}
-		int count = mypageService.countFollowList(smap);
-		List<Map<String, Object>> list = mypageService.selectFollowList(smap);
-		smap = packaging.Packag(smap, bpnum, 2, count);
-		smap2 = packaging.Packag(smap, ppnum, 2, count);
+		Map<String, Object> bmap = new HashMap<String, Object>();
+		Map<String, Object> pmap = new HashMap<String, Object>();
+		bmap.put("USER_NO", request.getParameter("USER_NO"));
+		pmap.put("USER_NO", request.getParameter("USER_NO"));
+		int bpnum = Integer.parseInt(request.getParameter("B_PAG_NUM"));
+		int ppnum = Integer.parseInt(request.getParameter("P_PAG_NUM"));
+		int pcount = mypageService.countProjectArList(pmap);
+		int bcount = mypageService.countArlimeList(bmap);
+		bmap = packaging.Packag(bmap, bpnum, 2, bcount);
+		pmap = packaging.Packag(pmap, ppnum, 2, pcount);
 		
-		List<Map<String, Object>> list1 = mypageService.selectArlimeList(smap);
-		List<Map<String, Object>> list2 = mypageService.selectProjetArList(smap2);
+		List<Map<String, Object>> list1 = mypageService.selectArlimeList(bmap);
+		List<Map<String, Object>> list2 = mypageService.selectProjetArList(pmap);
 		mav.addObject("list1", list1);
 		mav.addObject("list2", list2);
-		mav.addObject("smap", smap);
-		mav.addObject("smap2", smap2);	
+		mav.addObject("bmap", bmap);
+		mav.addObject("pmap", pmap);	
 		mav.setViewName("/mypage/Notification");
 		return mav;
 }

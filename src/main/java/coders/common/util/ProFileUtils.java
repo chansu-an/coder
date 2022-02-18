@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component("ProfileUtils")
 public class ProFileUtils {
-	private String filePath = "D:\\bak\\src\\main\\webapp\\img\\profile\\";
 	
 	public Map<String,Object> parseInsertFileInfo(Map<String, Object> map, HttpServletRequest request)throws Exception{
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
@@ -21,7 +20,8 @@ public class ProFileUtils {
 		String originalFileName = null;
 		String originalFileExtension = null;
 		String storeFileName = null;
-		filePath = filePath+map.get("USER_NO")+"\\";
+		String filePath = request.getSession().getServletContext().getRealPath("/")+"\\img\\profile\\";
+		filePath =filePath+map.get("USER_NO")+"\\";
 		File file = new File(filePath);
 		
 		if(file.exists()==false) {
