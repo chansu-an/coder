@@ -60,15 +60,17 @@
                         </div>
                     </div>
                 </nav>
-        <form method="post">
+        <form id="frm" name="frm" enctype="multipart/form-data">
+        <input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE }"/>
+        <input type="hidden" name="BOARD_NO" value="${map.BOARD_NO }"/>
         <h2>게시글 수정</h2>
-			<table class="board_view">
+		<table class="board_view">
 			<colgroup>
 				<col width="15%"/>
 				<col width="35%"/>
 				<col width="15%"/>
 				<col width="35%"/>
-			</colgroup>			
+			</colgroup>
 			<tbody>
 				<tr>
 					<th scope="row">글 번호</th>
@@ -89,53 +91,89 @@
 				<tr>
 					<td colspan="4"><textarea rows="20" cols="100" title="내용" id="CONTEXT" name="CONTEXT">${map.CONTEXT }</textarea></td>
 				</tr>
-				<tr> 
-					<th scope="row">첨부파일</th> 
-					<td colspan="3"> 
-					<c:forEach var="row" items="${filelist }"> 
-						<input type="hidden" id="FILE_NO" value="${row.FILE_NO }"> 
-						<a href="/net/common/downloadFile.do?FILE_NO=${row.FILE_NO }" name="file_${row.FILE_NO }">${row.ORIGINAL_FILE_NAME }</a> 
-						(${row.FILE_SIZE }kb)
-						<a href="#this" class="btn" id="delete_${row.FILE_NO  }" name="delete_${row.FILE_NO  }">삭제</a> 
-						<br/>						 
-					</c:forEach>
-					<div id="fileDiv" class="fileDiv">
-				
-					</div> 
-					</td> 
+				<tr>
+					<th scope="row">첨부파일</th>
+					<td colspan="3">
+						<div id="fileDiv">				
+							<c:forEach var="row" items="${filelist }" varStatus="var">
+								<p>
+									<input type="hidden" id="FILE_NO" name="FILE_NO_${var.index }" value="${row.FILE_NO }">
+									<a href="#this" id="name_${var.index }" name="name_${var.index }">${row.ORIGINAL_FILE_NAME }</a>
+									<input type="file" id="file_${var.index }" name="file_${var.index }"> 
+									(${row.FILE_SIZE }kb)
+									<a href="#this" class="btn" id="delete_${var.index }" name="delete_${var.index }">삭제</a>
+								</p>
+							</c:forEach>
+						</div>
+					</td>
 				</tr>
 			</tbody>
-			</table>
-			<div class="addInput">
-				<button type="button" class="btnAdd">파일추가</button>
-				<input type="submit" value="수정하기"/>				
-				<a href="javascript:window.history.back();" class="btn" id="list">목록으로</a>
-			</div>
-		</form>
+		</table>
+	</form>
+	
+	<a href="#this" class="btn" id="addFile">파일 추가</a>
+	<a href="javascript:window.history.back();" class="btn" id="list">목록으로</a>
+	<a href="#this" class="btn" id="update">저장하기</a>
+	<a href="#this" class="btn" id="delete">삭제하기</a>
 	</div>
 </div>
 	<br/>
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<script type="text/javascript">
-		var file_count = 0;
-		$(document).ready (function(){
-			$('.btnAdd').click(function(){
-				$('.fileDiv').append(					
-					'<input type="file" id="file" name="file_'+(file_count++)+'" >\<button type="button" class="btnRemove">삭제</button><br>'
-				);
-				$('.btnRemove').on('click', function(){
-					$(this).prev().remove();
-					$(this).next().remove();
-					$(this).remove();
-				})
-			});
-			
-			$("a[name^='delete']").on("click", function(e){
-				e.preventDefault();
-				fn_deleteFile($(this));
-			});
+	var gfv_count = '${fn:length(filelist)+1}';
+	$(document).ready(function(){
+		
+		$("#update").on("click", function(e){ //저장하기 버튼
+			e.preventDefault();
+			fn_updateBoard();
 		});
 		
+		$("#delete").on("click", function(e){ //삭제하기 버튼
+			e.preventDefault();
+			fn_deleteBoard();
+		});
+		
+		$("#addFile").on("click", function(e){ //파일 추가 버튼
+			e.preventDefault();
+			fn_addFile();
+		});
+		
+		$("a[name^='delete']").on("click", function(e){ //삭제 버튼
+			e.preventDefault();
+			fn_deleteFile($(this));
+		});
+	});
+	
+	
+	function fn_updateBoard(){
+		var comSubmit = new ComSubmit("frm");
+		comSubmit.setUrl("<c:url value='/board/modify.do' />");
+		comSubmit.submit();
+	}
+	
+	function fn_deleteBoard(){
+		var comSubmit = new ComSubmit();
+		comSubmit.setUrl("<c:url value='/board/delete.do' />");
+		comSubmit.addParam("BOARD_NO", $("#BOARD_NO").val());
+		comSubmit.submit();
+		
+	}
+	
+	function fn_addFile(){
+		var str = "<p>" +
+				"<input type='file' id='file_"+(gfv_count)+"' name='file_"+(gfv_count)+"'>"+
+				"<a href='#this' class='btn' id='delete_"+(gfv_count)+"' name='delete_"+(gfv_count)+"'>삭제</a>" +
+			"</p>";
+		$("#fileDiv").append(str);
+		$("#delete_"+(gfv_count++)).on("click", function(e){ //삭제 버튼
+			e.preventDefault();
+			fn_deleteFile($(this));
+		});
+	}
+	
+	function fn_deleteFile(obj){
+		obj.parent().remove();
+	}		
 		
 	</script>
 </body>
