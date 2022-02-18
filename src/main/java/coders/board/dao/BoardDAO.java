@@ -120,4 +120,12 @@ public class BoardDAO extends AbstractDAO {
 		return (Map<String, Object>)selectOne("board.selectAdminDetail", map);
 	}
 	
+	public void deleteFileList(Map<String, Object> map) {
+		update("board.deleteFileList", map);
+	}
+	
+	public void updateFile(Map<String, Object> map) {
+		update("board.updateFile", map);
+	}
+	
 }

@@ -1,5 +1,6 @@
 package coders.board.service;
 
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
@@ -38,9 +39,7 @@ public class BoardServiceImpl implements BoardService {
 	public void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		boardDAO.insertBoard(map);		
 
-		System.out.println(map);
 		List<Map<String, Object>> list = boardFileUtils.parseInsertFileInfo(map, request);
-		System.out.println(list);
 		for(int i=0, size=list.size(); i<size; i++) {
 			boardDAO.insertFile(list.get(i)); 
 		}
@@ -48,8 +47,33 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void updateBoard(Map<String, Object> map) throws Exception {
+	public void updateBoard(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		boardDAO.update(map);
+		System.out.println("map : " + map);
+		
+		Enumeration params = request.getParameterNames();
+		while(params.hasMoreElements()) {
+		  String name = (String) params.nextElement();
+		  System.out.println(name + " : " + request.getParameter(name) + "     "); 
+		}
+		List<Map<String,Object>> list = boardFileUtils.parseUpdateFileInfo(map, request);
+		System.out.println("list : " + list);
+		Map<String,Object> tempMap = null;
+		for(int i=0, size=list.size(); i<size; i++){
+			tempMap = list.get(i);
+			if(tempMap.get("IS_NEW").equals("Y")){//신규파일
+				System.out.println("insertFile");
+				boardDAO.insertFile(tempMap);
+				System.out.println("성공1");
+			}
+			else{//기존파일 수정
+				System.out.println("updateFile");
+				System.out.println(tempMap);
+				boardDAO.updateFile(tempMap);
+				System.out.println("성공2");
+			}
+		}
+
 	}
 
 	// 게시글 삭제하기

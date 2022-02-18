@@ -120,23 +120,17 @@ public class BoardController {
 	@RequestMapping(value="/board/modify.do", method = RequestMethod.POST)
 	public ModelAndView updateBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-		
-		commandMap.put("TITLE", request.getParameter("TITLE"));
-		commandMap.put("CONTEXT", request.getParameter("CONTEXT"));
-		commandMap.put("IDENTI_TYPE", request.getParameter("IDENTI_TYPE"));
-		commandMap.put("BOARD_NO", Integer.parseInt(request.getParameter("BOARD_NO")));
-		
-		boardService.updateBoard(commandMap.getMap());
+		System.out.println(commandMap.getMap());
+		boardService.updateBoard(commandMap.getMap(), request);
 		
 		return mav;
 	}
 	
 	//글 삭제하기
-	@RequestMapping(value="/board/delete.do")
+	@RequestMapping(value="/board/delete.do", method = RequestMethod.POST)
 	public ModelAndView deleteBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/board/openBoardList.do");
+		ModelAndView mav = new ModelAndView("redirect:/board/openBoardList.do?IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
 		
-		commandMap.put("IDENTI_TYPE", request.getParameter("IDENTI_TYPE"));
 		boardService.deleteBoard(commandMap.getMap());
 		return mav;
 	}
