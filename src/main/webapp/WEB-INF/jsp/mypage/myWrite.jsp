@@ -9,7 +9,6 @@
 <%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 </head>
-
 <body class="bg-light">
 	<div class="d-flex" id="wrapper">
 			<div class="db-example">
@@ -52,7 +51,6 @@
 					href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag+2}">다음</a>
 			</c:if>
 		</div>
-<%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>
 </html>

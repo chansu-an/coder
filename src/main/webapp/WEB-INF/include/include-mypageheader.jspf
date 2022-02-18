@@ -12,7 +12,7 @@
 					class="list-group-item list-group-item-action list-group-item-light p-3"
 					href="../main/Mypage.do?USER_NO=${param.USER_NO}">정보 보기</a> <a
 					class="list-group-item list-group-item-action list-group-item-light p-3"
-					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}">활동 보기</a>
+					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=1&F_PAG_NUM=1">활동 보기</a>
 			<c:if test="${sessionScope.session!=null}">
 				<c:if test="${param.USER_NO == sessionScope.session.USER_NO}">
 					<form action="../Resume/Detail.do" method="post">

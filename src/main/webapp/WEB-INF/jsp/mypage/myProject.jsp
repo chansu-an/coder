@@ -9,10 +9,10 @@
 <%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 </head>
-<body>
 		<!-- Page content wrapper-->
-		<div id="page-content-wrapper">
-			<div class="db-example">
+	<body class="bg-light">
+	<div class="d-flex" id="wrapper" align="center">
+			<div class="db-example" align="center">
 				<h4 class="mb-3">참가 프로젝트</h4>
 				<hr class="my-4">
 				<table class="table table-striped">
@@ -50,9 +50,6 @@
 					href="../Mypage/ProjectList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag+2}">다음</a>
 			</c:if>
 		</div>
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="../js/scripts.js"></script>
+<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>
 </html>
