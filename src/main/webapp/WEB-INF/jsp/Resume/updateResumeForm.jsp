@@ -39,7 +39,8 @@ function zipcode(){
               </div>
                <div class="col-md-6">
               <label for="NAME" class="form-label">첨부파일</label>
-              <input type = "file" class="form-control" name="FILES" id="FILES" value="${map.FILES}" placeholder="이름">
+              <input type = "file" class="form-control" value="${map.FILES}" placeholder="이름">
+              <input type="hidden" name="FILES"  value="${map.FILES}">
               </div>
               <div>
                 <label for="SKILL" class="form-label">자신있는기술</label>

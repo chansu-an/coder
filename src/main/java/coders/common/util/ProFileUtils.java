@@ -15,7 +15,6 @@ public class ProFileUtils {
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
 		
 		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		
 		MultipartFile multipartFile =null;
 		String originalFileName = null;
 		String originalFileExtension = null;
@@ -29,15 +28,15 @@ public class ProFileUtils {
 		}
 		while(iterator.hasNext()) {
 			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-			if(multipartFile.isEmpty() ==false) {
 				originalFileName = multipartFile.getOriginalFilename();//원본이름
+				if(!originalFileName.equals("")) {
 				originalFileExtension=originalFileName.substring(originalFileName.lastIndexOf("."));
-				storeFileName = CommonUtils.getRandomString()+originalFileExtension;
+				storeFileName = "profile"+originalFileExtension;
 				file = new File(filePath+storeFileName);
-				multipartFile.transferTo(file);//이부분에서 파일 업로드 됨
-				
-				map.put("PROFILE", storeFileName);
-			}
+					multipartFile.transferTo(file);//이부분에서 파일 업로드 됨
+					map.put("PROFILE", storeFileName);}else {
+						map.put("PROFILE", map.get("PROFILE"));
+					}
 			
 		}
 		return map;
