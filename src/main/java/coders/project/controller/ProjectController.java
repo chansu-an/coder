@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import coders.common.common.CommandMap;
+import coders.common.service.CommonProjectService;
 import coders.project.service.ProjectService;
 
 @Controller
@@ -19,6 +20,8 @@ public class ProjectController {
 
 	@Resource(name = "projectService")
 	private ProjectService projectService;
+	
+	
 
 //	프로젝트 리스트
 	@RequestMapping(value = "/Project/Project.do")
@@ -80,8 +83,11 @@ commandMap.put("USER_NO", "1");
 	public ModelAndView ProjectModifyForm(CommandMap commandMap,HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/project/project_board_modify");
 		Map<String, Object> map = projectService.selectProjectDetail(commandMap.getMap());
+		List<Map<String, Object>> list = projectService.selectProjectFileList(map);
+		System.out.println(list);
 		System.out.println(map);
 		mav.addObject("map", map);
+		mav.addObject("list", list);
 		return mav;
 	}
 

@@ -63,7 +63,7 @@ public class ProjectDAO extends AbstractDAO {
 			insert("project.insertProjectFile",map);
 		}
 		@SuppressWarnings("unchecked")
-		public List<Map<String, Object>> insertProjectFileList(Map<String,Object>map)throws Exception{
+		public List<Map<String, Object>> selectProjectFileList(Map<String,Object>map)throws Exception{
 			return(List<Map<String, Object>>)selectList("project.selectProjectFile",map);
 		}
 //		public void deleteFileList(Map<String,Object>map)throws Exception{

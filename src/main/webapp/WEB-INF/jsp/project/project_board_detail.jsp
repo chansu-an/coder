@@ -84,7 +84,7 @@
 						<c:forEach var="row" items="${list }">
 						<p>
 							<input type="hidden" id="PBF_NO" value="${row.PBF_NO }">
-							<a href="/net/common/downloadProjectFile.do?PBF_NO = ${row.PBF_NO }"  name="file">${row.PBO_NAME}</a> 
+							<a href="../common/downloadProjectFile.do?PBF_NO=${row.PBF_NO }"  >${row.PBF_NO },${row.PBO_NAME}</a> 
 							(${row.PBF_SIZE }kb)
 						</p>
 					</c:forEach>
@@ -101,14 +101,12 @@
 
 		</tbody>
 	</table>
-	<a href="/net/Project/Modify.do?PROJECT_NO=${map.PROJECT_NO}" class="btn" id="write">수정하기</a>
-	<a href="/net/Project/Project.do" class="btn" id="list">목록으로</a>
-	<br />
+	<a href="../Project/Modify.do?PROJECT_NO=${map.PROJECT_NO}" class="btn" id="write">수정하기</a>
+	<a href="../Project/Project.do" class="btn" id="list">목록으로</a>
+	
+		<br />
 	
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
-<script>
-	
-</script>
 
 </body>
 </html>
