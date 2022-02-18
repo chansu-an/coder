@@ -67,7 +67,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public List<Map<String, Object>> selectProjectFileList(Map<String, Object> map) throws Exception {
-		return projectDAO.insertProjectFileList(map);
+		return projectDAO.selectProjectFileList(map);
 	}
 
 	@Override

@@ -20,7 +20,7 @@ DELETE PROJECTBOARD WHERE PROJECT_NO = #{PROJECT_NO}
 ]]></delete>
 <!-- 프로젝트 파일 -->
 <select id="selectProjectFile" parameterType="hashmap" resultType="hashmap"><![CDATA[
-SELECT PBO_NAME,PBF_SIZE,PBS_NAME FROM PROJECTBOARDFILES WHERE PROJECT_NO = #{PROJECT_NO}
+SELECT PBF_NO,PBO_NAME,PBF_SIZE,PBS_NAME FROM PROJECTBOARDFILES WHERE PROJECT_NO = #{PROJECT_NO}
 ]]></select>
 <!-- 현재 진행중인 프로젝트 리스트 -->
 <select id="selectProjectList" parameterType="hashmap" resultType="hashmap"><![CDATA[
@@ -102,7 +102,7 @@ SELECT POF_NAME,PF_SIZE,PSF_NAME FROM PROJECTFILES WHERE PF_NO=#{PF_NO}
 
 <!-- 프로젝트 게시판 파일 다운로드  -->
 <select id="selectProjectFileInfo" parameterType="hashmap" resultType="hashmap"><![CDATA[
-SELECT PBF_NO,PBF_SIZE,PBS_NAME,PBO_NAME FROM PROJECTBOARDFILES WHRER PBF_NO = #{PBF_NO}
+SELECT PBF_NO,PBF_SIZE,PBS_NAME,PBO_NAME FROM PROJECTBOARDFILES WHERE PBF_NO = #{PBF_NO}
 ]]></select>
 
 </mapper>

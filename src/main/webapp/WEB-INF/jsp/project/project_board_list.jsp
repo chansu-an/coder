@@ -107,7 +107,7 @@
 
 		</tbody>
 	</table>
-	<a href="/net/Project/Write.do" class="btn" id="write">프로젝트 생성</a>
+	<a href="../Project/Write.do" class="btn" id="write">프로젝트 생성</a>
 
 	</div>
 	</div>

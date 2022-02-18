@@ -53,6 +53,7 @@ public List<Map<String,Object>>parseInsertFileInfo(Map<String,Object>map,HttpSer
 				listMap.put("PBO_NAME", pbo_Name);
 				listMap.put("PBF_SIZE", multipartFile.getSize());
 				listMap.put("PBS_NAME",pbs_Name);
+				listMap.put("IS_NEW","Y");
 				list.add(listMap);
 		} 
 //		else {
