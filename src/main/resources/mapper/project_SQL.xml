@@ -100,5 +100,9 @@ INSERT INTO PROJECTFILES (PF_NO,PD_BOARD_NO,POF_NAME,PF_SIZE,PSF_NAME)
 SELECT POF_NAME,PF_SIZE,PSF_NAME FROM PROJECTFILES WHERE PF_NO=#{PF_NO}
 ]]></select>
 
+<!-- 프로젝트 게시판 파일 다운로드  -->
+<select id="selectProjectFileInfo" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT PBF_NO,PBF_SIZE,PBS_NAME,PBO_NAME FROM PROJECTBOARDFILES WHRER PBF_NO = #{PBF_NO}
+]]></select>
 
 </mapper>

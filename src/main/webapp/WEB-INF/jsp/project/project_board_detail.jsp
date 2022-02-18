@@ -83,8 +83,8 @@
 						
 						<c:forEach var="row" items="${list }">
 						<p>
-							<input type="hidden" id="PROJECT_NO" value="${row.PROJECT_NO }">
-							<a href="#this" name="file">${row.PBO_NAME}</a> 
+							<input type="hidden" id="PBF_NO" value="${row.PBF_NO }">
+							<a href="/net/common/downloadProjectFile.do?PBF_NO = ${row.PBF_NO }"  name="file">${row.PBO_NAME}</a> 
 							(${row.PBF_SIZE }kb)
 						</p>
 					</c:forEach>
