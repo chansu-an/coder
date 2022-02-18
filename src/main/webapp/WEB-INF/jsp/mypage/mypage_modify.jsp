@@ -57,7 +57,9 @@
               </div>
                <div class="col-md-6">
                 <label for="address2" class="form-label">프로필사진</label>
-               <input type="file" name="PROFILE" >
+                <input type="hidden" name="PROFILE" value="${map.PROFILE }">
+                ${map.PROFILE }
+               <input type="file" name="FILE"  >
               </div>
              
             </div>

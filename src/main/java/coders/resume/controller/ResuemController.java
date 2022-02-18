@@ -3,17 +3,20 @@ package coders.resume.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
-
+import org.apache.commons.io.FileUtils;
 
 
 import coders.resume.service.ResumeService;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.io.File;
+import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.annotation.Resource;
-
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import coders.common.common.CommandMap;
@@ -83,11 +86,11 @@ public class ResuemController {
 	}
 	//이력서 수정
 		@RequestMapping(value = "/Resume/UpdateResume.do", method = RequestMethod.POST)
-		public ModelAndView updateResume(CommandMap commandMap,HttpSession session)throws Exception{
+		public ModelAndView updateResume(CommandMap commandMap,HttpSession session,HttpServletRequest request)throws Exception{
 			ModelAndView mav = new ModelAndView();
 			Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
 			commandMap.put("USER_NO", smap.get("USER_NO"));
-			commandMap.put("FILES", "");
+			fileutils.parseInsertFileInfo(commandMap.getMap(), request);
 			resumeService.updateResume(commandMap.getMap());
 			mav.setViewName("redirect:/main/Mypage.do?USER_NO="+smap.get("USER_NO"));
 			return mav;
@@ -101,10 +104,27 @@ public class ResuemController {
 		public ModelAndView DeleteResume(HttpSession session)throws Exception{
 			ModelAndView mav =new ModelAndView();
 			Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
-			System.out.println(smap);
 			resumeService.deleteResume(smap);
 			mav.setViewName("redirect:/main/Mypage.do?USER_NO="+smap.get("USER_NO"));
 			return mav;
+		}
+		
+		@RequestMapping(value = "/Resume/Filedowload.do")
+		public void dowloadFile(CommandMap commandMap,HttpServletResponse response,HttpServletRequest request)throws Exception{
+			String FileName = String.valueOf(commandMap.getMap().get("FILES")) ;
+			System.out.println(commandMap.getMap());
+			String path = request.getSession().getServletContext().getRealPath("/")+"\\file\\resume\\"+commandMap.getMap().get("USER_NO")+"\\";
+			byte fileByte[] = FileUtils.readFileToByteArray(new File(path+commandMap.getMap().get("FILES")));
+			
+			response.setContentType("application/octet-stream");
+			response.setContentLength(fileByte.length); 
+			response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(FileName,"UTF-8")+"\";"); 
+			response.setHeader("Content-Transfer-Encoding", "binary"); 
+			response.getOutputStream().write(fileByte); 
+			response.getOutputStream().flush(); 
+			response.getOutputStream().close();
+
+		
 		}
 
 }
