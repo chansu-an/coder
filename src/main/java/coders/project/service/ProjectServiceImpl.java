@@ -74,7 +74,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public void updateProject(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		projectDAO.updateProject(map);
 	//	projectDAO.deleteFileList(map);
-		List<Map<String,Object>>list = fileUtils.parseInsertFileInfo(map, request);
+		List<Map<String,Object>>list = fileUtils.parseInsertFileInfo(map, request);  //에러발생
 		Map<String,Object>tempMap = null;
 		for(int i =0,size = list.size(); i<size; i++) {
 			tempMap = list.get(i);

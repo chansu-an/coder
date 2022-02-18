@@ -50,7 +50,7 @@ public class ProjectController {
 //프로젝트 작성
 	@RequestMapping(value = "/Project/Write.do", method = RequestMethod.POST)
 	public ModelAndView ProjectWrite(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/Project.do");
+		ModelAndView mav = new ModelAndView("redirect:/Project/Project.do");
 
 		
 commandMap.put("USER_NO", "1");
@@ -90,7 +90,7 @@ commandMap.put("USER_NO", "1");
 	public ModelAndView ProjectModify(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/Project/Detail.do");
 		
-		projectService.updateProject(commandMap.getMap(),request);
+		projectService.updateProject(commandMap.getMap(),request);  //에러발생 
 		mav.addObject("PROJECT_NO",commandMap.get("PROJECT_NO"));
 		
 		
