@@ -13,7 +13,7 @@ public class Packaging {
 		if(end>count) {
 			end = count - (pagenum-1)*max;
 		}
-		int maxpag = (count%max == 0)? count/max:count/max+1 ;
+		int maxpag =  count/max;
 		int pag = (pagenum%2 == 0)?(pagenum/2):(pagenum/2)+1;
 		int startpag = (pag-1)*2+1;
 		int endpage = startpag+1;

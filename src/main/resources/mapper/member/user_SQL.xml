@@ -118,8 +118,7 @@ SELECT COUNT(*) FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHE
 <!-- 프로젝트 알림 갯수 -->
 <select id="countProjectArList" parameterType="hashmap" resultType="_int">
 <![CDATA[
-SELECT COUNT(*) WHERE APPLICATION.APPLICATION_AR='Y' AND APPLICATION.USER_NO = ${USER_NO}
-]]>
+SELECT COUNT(*)  FROM PROJECTBOARD INNER JOIN APPLICATION ON APPLICATION.PROJECT_NO = PROJECTBOARD.PROJECT_NO WHERE APPLICATION.USER_NO = #{USER_NO}]]>
 </select>
 <!-- 참여 프로젝트 갯수 -->
 <select id="countProjectList" parameterType="hashmap" resultType="_int">
