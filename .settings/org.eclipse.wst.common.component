@@ -49,10 +49,6 @@
 
 
 
-
-
-
-
         <property name="java-output-path" value="target/classes"/>
 
 

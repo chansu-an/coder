@@ -77,9 +77,10 @@ public class MypageController {
 	}
 	//수정get
 	@RequestMapping(value = "/Mypage/Modify.do",method = RequestMethod.GET)
-public ModelAndView mypageModifyForm(HttpSession session) {
+public ModelAndView mypageModifyForm(HttpSession session)throws Exception {
 		ModelAndView mav = new ModelAndView();
-		Map<String,Object> map = (Map<String, Object>)session.getAttribute("session");
+		Map<String,Object> smap = (Map<String, Object>)session.getAttribute("session");
+		Map<String, Object> map = mypageService.selectMypageDetail(smap);
 		mav.addObject("map", map);
 		mav.setViewName("/mypage/mypage_modify");
 		return mav;
@@ -96,11 +97,7 @@ public ModelAndView mypageModify(HttpServletRequest request,CommandMap commandMa
 			mav.addObject("pas", "Y");
 			return mav;
 		}
-		fileUtils.parseInsertFileInfo(commandMap.getMap(), request);
-		if(commandMap.get("PROFILE")==null) 
-		commandMap.put("PROFILE", "없음");
-		
-		System.out.println(commandMap.getMap());
+		fileUtils.parseInsertFileInfo(commandMap.getMap(), request);		
 		mypageService.updateMypage(commandMap.getMap());
 		mav.setViewName("redirect:/main/Mypage.do?USER_NO="+map2.get("USER_NO"));
 		return mav;
