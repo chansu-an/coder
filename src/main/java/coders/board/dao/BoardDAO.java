@@ -127,5 +127,10 @@ public class BoardDAO extends AbstractDAO {
 	public void updateFile(Map<String, Object> map) {
 		update("board.updateFile", map);
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> searchBoard(Map<String, Object> map) {
+		return (List<Map<String, Object>>)selectList("board.searchBoard", map);		
+	}
+
 }

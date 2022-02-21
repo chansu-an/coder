@@ -52,7 +52,7 @@ FROM(SELECT BOARD.BOARD_NO
                 AND BOARD.DEL_GB = 'N'
                 AND (REPLY.DEL_GB = 'N' OR REPLY.DEL_GB IS NULL)
               GROUP BY BOARD.BOARD_NO) TEST ON BOARD.BOARD_NO = TEST.BOARD_NO
- WHERE BOARD.IDENTI_TYPE= #{IDENTI_TYPE} 
+ WHERE BOARD.IDENTI_TYPE= #{IDENTI_TYPE}
    AND BOARD.DEL_GB = 'N' 
    AND BOARD.REPORT_COUNT<'20'
  ORDER BY
@@ -82,6 +82,69 @@ FROM(SELECT BOARD.BOARD_NO
 	) A	
 	]]>
 	</select>
+
+<!-- 게시글 검색-->
+<select id="searchBoard" parameterType="hashmap" resultType="hashmap">
+<![CDATA[
+SELECT A.BOARD_NO
+	 , A.NICK_NAME
+	 , A.TITLE
+     , A.CONTEXT
+     , A.READ_COUNT
+     , A.BOARD_DATE
+     , A.REPLY_COUNT
+     , A.IDENTI_TYPE
+     , A.RECOMMEND_COUNT
+	 , ROWNUM
+FROM(SELECT BOARD.BOARD_NO
+     , USERS.NICK_NAME
+     , BOARD.TITLE
+     , BOARD.CONTEXT
+     , BOARD.READ_COUNT
+     , TO_CHAR(BOARD.BOARD_DATE, 'YY/MM/DD(hh24:MI)') "BOARD_DATE"
+     , TEST.REPLY_COUNT
+     , BOARD.IDENTI_TYPE
+     , BOARD.RECOMMEND_COUNT
+  FROM BOARD 
+ INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO
+ INNER JOIN (SELECT BOARD.BOARD_NO
+ 				  , COUNT(REPLY.BOARD_NO) AS REPLY_COUNT
+               FROM BOARD
+               LEFT OUTER JOIN REPLY ON BOARD.BOARD_NO = REPLY.BOARD_NO 
+              WHERE BOARD.IDENTI_TYPE = #{IDENTI_TYPE}  
+                AND BOARD.DEL_GB = 'N'
+                AND (REPLY.DEL_GB = 'N' OR REPLY.DEL_GB IS NULL)
+              GROUP BY BOARD.BOARD_NO) TEST ON BOARD.BOARD_NO = TEST.BOARD_NO
+ WHERE BOARD.IDENTI_TYPE= #{IDENTI_TYPE}  
+   AND BOARD.DEL_GB = 'N' 
+   AND BOARD.REPORT_COUNT<'20'
+    ]]>
+   		 <!-- 키워드 -->
+			<if test='SEARCH_TYPE == "TITLE"'>
+				<![CDATA[
+					AND BOARD.TITLE LIKE '%'||#{KEYWORD}||'%'
+				]]>
+			</if>
+			<if test='SEARCH_TYPE == "CONTEXT"'>
+				<![CDATA[
+					AND BOARD.CONTEXT LIKE '%'||#{KEYWORD}||'%'
+				]]>
+			</if>
+			<if test='SEARCH_TYPE == "NICKNAME"'>
+				<![CDATA[
+					AND USERS.NICK_NAME LIKE '%'||#{KEYWORD}||'%'
+				]]>
+			</if>
+			<if test='SEARCH_TYPE == "T+C"'>
+				<![CDATA[
+					AND BOARD.TITLE LIKE '%'||#{KEYWORD}||'%' OR BOARD.CONTEXT LIKE '%'||#{KEYWORD}||'%'
+				]]>
+			</if>
+		
+		<![CDATA[
+ ORDER BY BOARD.BOARD_DATE DESC) A
+]]>
+</select>
 
 <!-- 게시글 상세보기 -->
 <select id="selectBoardDetail" parameterType="hashmap" resultType="hashmap"><![CDATA[
