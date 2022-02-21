@@ -36,6 +36,8 @@ public interface BoardService {
 	
 	void insertComment(Map<String, Object> map) throws Exception;
 	
+	void insertComment2(Map<String, Object> map) throws Exception;
+	
 	void deleteComment(Map<String, Object> map) throws Exception;
 
 	void reportBoard(Map<String, Object> map) throws Exception;

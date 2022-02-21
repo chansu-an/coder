@@ -16,4 +16,6 @@ public interface MainService {
 	List<Map<String, Object>> selectStopUserList(Map<String, Object> map) throws Exception;
 	
 	void insertUser(Map<String, Object> map) throws Exception;
+	
+	String confirmUser(String ID) throws Exception;
 }

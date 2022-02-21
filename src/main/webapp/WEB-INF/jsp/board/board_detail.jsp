@@ -79,8 +79,9 @@ function testttt(n) {
 	</table> 
 	<br/>
 	<!-- 작성자만 가능 -->
-	<a href="/net/board/modify.do?IDENTI_TYPE=${map.IDENTI_TYPE}&BOARD_NO=${map.BOARD_NO}" class="btn" id="write">수정하기</a>
-	<a href="/net/board/delete.do?IDENTI_TYPE=${map.IDENTI_TYPE}&BOARD_NO=${map.BOARD_NO}" class="btn" id="delete">삭제하기</a>
+	<c:if test="${sessionScope.session.USER_NO == map.USER_NO}">
+		<a href="/net/board/modify.do?IDENTI_TYPE=${map.IDENTI_TYPE}&BOARD_NO=${map.BOARD_NO}" class="btn" id="write">수정하기</a>
+	</c:if>
 	<a href="/net/board/openBoardList.do?IDENTI_TYPE=${map.IDENTI_TYPE }" class="btn" id="boardList">목록보기</a>
 	
 	<!-- 스크랩하기 -->
@@ -102,8 +103,8 @@ function testttt(n) {
 			작성자 : ${bestcomment.NICK_NAME}<br />
 			작성 날짜 : ${bestcomment.REPLY_DATE } 
 		</p>			
-		<p>${bestcomment.CONTEXT}               		
-			<a href="/net/board/commentDelete.do?RE_NO=${bestcomment.RE_NO }&BOARD_NO=${map.BOARD_NO}" class="btn">삭제</a>	
+		<p>
+			${bestcomment.CONTEXT}	
 		</p>
 	  </div>
 	  </c:if>
@@ -111,28 +112,31 @@ function testttt(n) {
 	    <c:forEach items="${list}" var="row">
 	    		<div  onclick="testttt(${row.RE_NO})">
 			        <p>
-			        작성자 : ${row.NICK_NAME} / ${row.REF_STEP }<br />
+			        작성자 : ${row.NICK_NAME} / ${row.REF_STEP} / ${row.REF_NO}<br />
 			        작성 날짜 : ${row.REPLY_DATE } 
 			        </p>			
-			        <p>${row.CONTEXT}               		
-			        	<a href="/net/board/commentDelete.do?RE_NO=${row.RE_NO }&BOARD_NO=${map.BOARD_NO}" class="btn">삭제</a>	
+			        <p>${row.CONTEXT}
+			        <c:if test="${row.USER_NO == sessionScope.session.USER_NO }">               		
+			        	<a href="/net/board/commentDelete.do?RE_NO=${row.RE_NO }&BOARD_NO=${map.BOARD_NO}&IDENTI_TYPE=${map.IDENTI_TYPE}" class="btn">삭제</a>
+			        </c:if>	
 			        </p>
 			    </div>
 			    <div id="test${row.RE_NO}" class="navbar-collapse collapse " >
-			    	<label for="content">댓글 작성</label>
-        				<form action="../board/commentInsert.do" method="post">
-            			<div class="input-group">
-             		  	<input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}"/>
-               			<input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}"/>
-               			<input type="hidden" name="USER_NO" value="${session.USER_NO}"/>
-               			<input type="hidden" name="REF_NO" value="${row.REF_NO}"/>
-               			<input type="hidden" name="REF_STEP" value="${row.REF_STEP}"/>
-               			<input type="text" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요." style="width:60%;;font-size:15px;"/>
-              			 <span class="input-group-btn">
-                    <button class="btn btn-default" name="commentInsertBtn">등록</button>
-               </span>
-            </div>
-        </form>
+			    	<label for="content">대댓글 작성</label>
+        				<form action="../board/commentInsert2.do" method="post">
+	            			<div class="input-group">
+		             		  	<input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}"/>
+		               			<input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}"/>
+		               			<input type="hidden" name="USER_NO" value="${session.USER_NO}"/>
+		               			<input type="hidden" name="REF_NO" value="${row.REF_NO}"/>
+		               			<input type="hidden" name="REF_STEP" value="${row.REF_STEP}"/>
+		               			<input type="text" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요." style="width:60%;;font-size:15px;"/>
+		              			<span class="input-group-btn">
+		                    		<button class="btn btn-default" name="commentInsertBtn">등록</button>
+				                </span>
+				            </div>
+				            <br/>
+				        </form>
 			    </div>		        
 	    </c:forEach>   
 	  </ol>
