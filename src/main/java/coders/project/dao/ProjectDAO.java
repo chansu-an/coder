@@ -38,7 +38,7 @@ public class ProjectDAO extends AbstractDAO {
 	}
 
 	public void deleteProject(Map<String, Object> map) throws Exception {
-		update("project.deleteProject", map);
+		delete("project.deleteProject", map);
 
 	}
 
