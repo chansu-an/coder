@@ -20,6 +20,8 @@
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
+</head>
+<body>
                 <!-- Page content-->
 	<c:choose>
     	<c:when test="${IDENTI_TYPE eq '1' }">

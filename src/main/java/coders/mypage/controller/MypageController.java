@@ -94,12 +94,7 @@ public ModelAndView mypageModifyForm(HttpSession session)throws Exception {
 public ModelAndView mypageModify(HttpServletRequest request,CommandMap commandMap,HttpSession session)throws Exception {
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> map2  = (Map<String, Object>)session.getAttribute("session");
-		commandMap.put("USER_NO", map2.get("USER_NO"));;
-		if(!commandMap.get("PASSWORD").equals(commandMap.get("PASSWORD2"))) {
-			mav.setViewName("redirect:/Mypage/Modify.do");
-			mav.addObject("pas", "Y");
-			return mav;
-		}
+		commandMap.put("USER_NO", map2.get("USER_NO"));
 		fileUtils.parseInsertFileInfo(commandMap.getMap(), request);		
 		mypageService.updateMypage(commandMap.getMap());
 		session.setAttribute("session", mypageService.selectMypageDetail(map2));
@@ -227,6 +222,12 @@ public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception
 		mypageService.insertFollow(smap);
 		return "redirect:/board/detail.do?BOARD_NO="+BOARD_NO;
 		
+	}
+	@RequestMapping(value = "/Mypage/Delete.do")
+	public String deleteUser(HttpSession session)throws Exception{
+		Map<String, Object> map =(Map<String, Object>)session.getAttribute("session");
+		mypageService.deleteUser(map);
+		return "redirect:/board/mainList.do";
 	}
 
 }

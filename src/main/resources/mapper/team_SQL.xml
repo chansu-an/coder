@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team">
+	<!-- 프로젝트 작업일지 작성 -->
+	<insert id="insertTeam" parameterType="hashmap">
+		<selectKey keyProperty="PD_BOARD_NO" resultType="string"
+			order="BEFORE">
+			SELECT PROJECT_DETAIL_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+<![CDATA[
+INSERT INTO PROJECTDETAIL (PROJECT_NO,PD_BOARD_NO,PD_TITLE,USER_NO,PD_CONTEXT,PD_ING,PD_IMPORT,PD_START,PD_END) VALUES(#{PROJECT_NO},PROJECT_DETAIL_SEQ.NEXTVAL,#{PD_TITLE},#{USER_NO},#{PD_CONTEXT},#{PD_ING},#{PD_IMPORT},#{PD_START},#{PD_END})
+]]></insert>
+<!-- 프로젝트 작업일지 리스트 -->
+	<select id="selectTeamList" parameterType="hashmap"
+		resultType="hashmap"><![CDATA[
+SELECT PD_TITLE,PD_ING,PROJECTDETAIL.USER_NO,NICK_NAME,TO_CHAR(PD_END,'yyyy-MM-dd') "PD_END",PD_IMPORT,ROWNUM FROM PROJECTDETAIL INNER JOIN USERS ON USERS.USER_NO = PROJECTDETAIL.USER_NO WHERE PROJECT_NO= #{PROJECT_NO}
+]]></select>
+	<!-- 작업일지 상세 보기 -->
+	<select id="selectTeamDetail" parameterType="hashmap"
+		resultType="hashmap"><![CDATA[
+SELECT PD_TITLE,PD_CONTEXT,PROJECTDETAIL.USER_NO,NICK_NAME,PD_ING,PD_IMPORT,TO_CHAR(PD_START,'yyyy-MM-dd') "PD_START",TO_CHAR(PD_END,'yyyy-MM-dd') "PD_END" FROM PROJECTDETAIL INNER JOIN USERS ON USERS.USER_NO = PROJECTDETAIL.USER_NO WHERE PD_BOARD_NO = #{PD_BOARD_NO}
+]]></select>
+	<!-- 작업일지 수정 -->
+	<update id="updateTeam" parameterType="hashmap"><![CDATA[
+UPDATE PROJECTDETAIL SET PD_TITLE=#{PD_TITLE},PD_CONTEXT=#{PD_CONTEXT},PD_ING=#{PD_ING},PD_IMPORT=#{PD_IMPORT},PD_END=#{PD_END} WHERE PD_BOARD_NO = #{PD_BOARD_NO}
+]]></update>
+	<!-- 작업일지 삭제 -->
+	<update id="deleteTeam" parameterType="hashmap"><![CDATA[
+UPDATE PROJECTDETAIL SET PD_DEL_GB = 'Y' WHERE PD_BOARD_NO=#{PD_BOARD_NO}
+]]></update>
+	
+	<!-- 작업일지 파일 첨부 -->
+	<insert id="insertTeamFile" parameterType="hashmap"><![CDATA[
+INSERT INTO PROJECTFILES (PF_NO,PD_BOARD_NO,POF_NAME,PF_SIZE,PSF_NAME)
+		VALUES(PROJECT_FILES_SEQ.NEXTVAL,#{PD_BOARD_NO},#{POF_NAME},#{PF_SIZE},#{PSF_NAME})
+			]]></insert>
+	<!-- 작업일지 파일 -->
+	<select id="selectTeamFile" parameterType="hashmap"
+		resultType="hashmap"><![CDATA[
+SELECT PF_NO,POF_NAME,PF_SIZE,PSF_NAME FROM PROJECTFILES WHERE PD_BOARD_NO = #{PD_BOARD_NO} AND DEL_BG = 'N'
+]]></select>
+
+	<!-- 작업일지 게시판 파일 다운로드 -->
+	<select id="selectTeamFileInfo" parameterType="hashmap"
+		resultType="hashmap"><![CDATA[
+		SELECT PF_NO,PF_SIZE,POF_NAME,PSF_NAME,DEL_GB FROM PROJECTFILES WHERE PF_NO = #{PF_NO]]>
+	</select>
+
+	<!-- 작업일지 파일 삭제 -->
+	<update id="deleteTeamFileList" parameterType="hashmap">
+	<![CDATA[
+	UPDATE PROJECTFILES SET DEL_GB 'Y' WHERE PD_BOARD_NO = #{PD_BOARD_NO}
+	]]>
+	</update>
+	
+	<!-- 작업일지 파일 수정 -->
+	<update id="updateTeamFile" parameterType="hashmap">
+	<![CDATA[
+	UPDATE PROJECTFILES SET DEL_GB = 'N' WHERE PF_NO =#{FILE_PF_NO}
+	]]>
+	</update>
+</mapper>

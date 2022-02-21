@@ -8,13 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import coders.common.common.CommandMap;
-import coders.member.service.MainService;
 import coders.mail.service.MailSendService;
+import coders.member.service.MainService;
 
 @Controller
 public class MainController {
@@ -41,13 +43,14 @@ public class MainController {
 	@RequestMapping(value="/main/Login.do", method = RequestMethod.POST)
 	public ModelAndView login(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
+		System.out.println(commandMap.getMap());
 		Map<String, Object> map = mainService.selectLoginUser(commandMap.getMap());
 		
 		if(map == null) {
-			mv = new ModelAndView("redirect:/main/Login.do");
+			mv.setViewName("redirect:/main/Login.do");
 			mv.addObject("checklogin", false);
 		}else {
-			mv = new ModelAndView("redirect:/board/mainList.do");
+			mv.setViewName("redirect:/board/mainList.do");
 		}
 		
 		mv.addObject("user", map);		
@@ -61,6 +64,20 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("/main/register");
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="/main/checkUserNickName.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkUserNickName(@RequestBody String ID) throws Exception{
+		String result2 = null; 
+		String result = mainService.confirmUser(ID);
+		
+		if(result == null) {
+			result2 = "0";//아이디없음
+		}else {
+			result2 = "1";//중복 아이디있음
+		}
+		return result2;
 	}
 	
 	
