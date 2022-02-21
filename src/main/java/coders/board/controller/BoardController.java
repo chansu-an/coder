@@ -27,11 +27,6 @@ public class BoardController {
 	@RequestMapping(value="/board/openBoardList.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView openBoardList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/board_list");
-		
-		commandMap.put("ORDER_TYPE", request.getParameter("ORDER_TYPE"));
-		commandMap.put("IDENTI_TYPE", request.getParameter("IDENTI_TYPE"));
-		commandMap.put("SEARCH_TYPE", request.getParameter("SEARCH_TYPE"));
-		commandMap.put("KEYWORD", request.getParameter("KEYWORD"));
 		String key = request.getParameter("KEYWORD");
 		
 		List<Map<String, Object>> list = boardService.selectBoardList(commandMap.getMap());
