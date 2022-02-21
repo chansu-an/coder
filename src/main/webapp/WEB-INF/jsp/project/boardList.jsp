@@ -3,9 +3,9 @@
 <html>
 <head>
 <title>first</title>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-</head>
+<%@ include file="/WEB-INF/include/include-header2.jspf"%>
+<%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
+<%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 <body>
 <h2>게시판 목록</h2>
 <table style="border:1px solid #ccc">
@@ -44,5 +44,7 @@
 		
 	</tbody>
 </table>
+<%@ include file="/WEB-INF/include/include-body.jspf" %>
+<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>
 </html>

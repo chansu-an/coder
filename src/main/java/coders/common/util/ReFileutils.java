@@ -14,7 +14,7 @@ public class ReFileutils {
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
 		
 		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-		
+		System.out.println(iterator.hasNext());
 		MultipartFile multipartFile =null;
 		String originalFileName = null;
 		String filePath = request.getSession().getServletContext().getRealPath("/")+"\\file\\resume\\";
@@ -27,16 +27,12 @@ public class ReFileutils {
 		while(iterator.hasNext()) {	
 			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
 				originalFileName = multipartFile.getOriginalFilename();//원본이름
-				System.out.println("1"+originalFileName);
-				if(originalFileName.equals("")) {
+				if(!originalFileName.equals("")) {
 					System.out.println(originalFileName);
 				file = new File(filePath+originalFileName);
 				multipartFile.transferTo(file);//이부분에서 파일 업로드 됨
 				map.put("FILES", originalFileName);
-				
 				}else {
-					System.out.println(11);
-
 					map.put("FILES", map.get("FILES"));
 				}
 			

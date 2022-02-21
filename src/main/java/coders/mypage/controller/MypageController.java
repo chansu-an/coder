@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import coders.common.common.CommandMap;
 import coders.common.util.ProFileUtils;
+import coders.member.service.MainService;
 import coders.mypage.service.MypageService;
 import coders.packing.Packaging;
 
@@ -30,6 +31,8 @@ public class MypageController {
 	private Packaging packaging;
 	@Resource(name = "ProfileUtils")
 	private ProFileUtils fileUtils;
+	@Resource(name="mainService")
+	private MainService mainService;
 	
 	@RequestMapping(value = "/Mypage/MypageDetail.do" )
 	public ModelAndView mypage(HttpSession session,HttpServletRequest request) throws Exception {
@@ -99,6 +102,7 @@ public ModelAndView mypageModify(HttpServletRequest request,CommandMap commandMa
 		}
 		fileUtils.parseInsertFileInfo(commandMap.getMap(), request);		
 		mypageService.updateMypage(commandMap.getMap());
+		session.setAttribute("session", mypageService.selectMypageDetail(map2));
 		mav.setViewName("redirect:/main/Mypage.do?USER_NO="+map2.get("USER_NO"));
 		return mav;
 }

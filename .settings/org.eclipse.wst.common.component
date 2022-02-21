@@ -46,21 +46,7 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
 
 
-<<<<<<< HEAD
 
-
-
-
-
-
-
-=======
-   
-        
-        
-        
-        
->>>>>>> 660ee7a6221f413ffe64e19c8933f41ab47a8828
         <property name="java-output-path" value="target/classes"/>
 
 
@@ -90,8 +76,5 @@
 
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 660ee7a6221f413ffe64e19c8933f41ab47a8828
 </project-modules>

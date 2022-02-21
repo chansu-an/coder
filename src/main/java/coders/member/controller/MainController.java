@@ -25,9 +25,11 @@ public class MainController {
 	private MailSendService mailSendService;
 	
 	@RequestMapping(value="/main/Login.do", method = RequestMethod.GET)
-	public ModelAndView loginForm(CommandMap commandMap) throws Exception{
+	public ModelAndView loginForm(CommandMap commandMap,HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView("/main/login");
-		
+		if(session.getAttribute("session")!=null) {
+			mv.setViewName("redirect:/board/mainList.do");
+		}
 		return mv;
 	}
 	
@@ -41,7 +43,9 @@ public class MainController {
 		
 		Map<String, Object> map = mainService.selectLoginUser(commandMap.getMap());
 		
-		
+		if(map==null) {
+			mv.setViewName("redirect:/main/Login.do");
+		}
 		/*Enumeration enumeration = request.getParameterNames(); // submit을 통해 받은 input 값들
 		 
 		while (enumeration.hasMoreElements()) {

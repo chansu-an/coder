@@ -25,7 +25,7 @@ SELECT NICK_NAME,PASSWORD,EMAIL,PROFILE,ROWNUM FROM USERS WHERE USER_STOP = 'Y'
 ]]></select>
 <!-- 내정보 보기 -->
 <select id="selectMypageDetail" parameterType="hashmap" resultType="hashmap"><![CDATA[
-SELECT NICK_NAME,PASSWORD,EMAIL,PROFILE FROM USERS WHERE USER_NO = #{USER_NO}
+SELECT USER_NO,NICK_NAME,PASSWORD,EMAIL,ACTIVE_SCORE,ADMIN,PROFILE FROM USERS WHERE USER_NO = #{USER_NO}
 ]]></select>
 <!-- 내정보 수정 -->
 <update id="updateMypage" parameterType="hashmap"><![CDATA[
