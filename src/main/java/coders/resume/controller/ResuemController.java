@@ -90,6 +90,7 @@ public class ResuemController {
 			ModelAndView mav = new ModelAndView();
 			Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
 			commandMap.put("USER_NO", smap.get("USER_NO"));
+			System.out.println(commandMap.getMap());
 			fileutils.parseInsertFileInfo(commandMap.getMap(), request);
 			resumeService.updateResume(commandMap.getMap());
 			mav.setViewName("redirect:/main/Mypage.do?USER_NO="+smap.get("USER_NO"));

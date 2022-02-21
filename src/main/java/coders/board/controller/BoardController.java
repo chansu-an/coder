@@ -233,13 +233,10 @@ public class BoardController {
 	//댓글 작성하기
 
 	//게시글 댓글 작성
-	@RequestMapping(value="/board/commentInsert.do", method = RequestMethod.POST)
-	public ModelAndView InsertComment(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
+	@RequestMapping(value="/board/commentInsert.do")
+	public ModelAndView InsertComment(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
 		
-		commandMap.put("BOARD_NO", Integer.parseInt(request.getParameter("BOARD_NO")));
-		commandMap.put("USER_NO", Integer.parseInt(request.getParameter("USER_NO")));
-		commandMap.put("CONTEXT", request.getParameter("CONTEXT"));
 		boardService.insertComment(commandMap.getMap());
 		
 		return mav;
