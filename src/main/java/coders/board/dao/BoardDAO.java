@@ -35,7 +35,11 @@ public class BoardDAO extends AbstractDAO {
 	}
 	
 	public void insertComment(Map<String, Object> map) throws Exception{
-		insert("board.insertComment", map);
+		update("board.boardNotice", map);
+		if(map.get("REF_NO")!=null) {
+			insert("board.insertComment2", map);
+		}else
+		{insert("board.insertComment", map);}
 		
 	}
 
@@ -127,5 +131,10 @@ public class BoardDAO extends AbstractDAO {
 	public void updateFile(Map<String, Object> map) {
 		update("board.updateFile", map);
 	}
-	
+
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> searchBoard(Map<String, Object> map) {
+		return (List<Map<String, Object>>)selectList("board.searchBoard", map);		
+	}
+
 }

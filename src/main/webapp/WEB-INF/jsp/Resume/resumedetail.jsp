@@ -33,9 +33,13 @@ function deletere() {
               </div>
               <div class="col-md-6">
               <label for="NAME" class="form-label">첨부파일</label>
+              <form action="../Resume/Filedowload.do" method="post" id="Filedowload">
+              <input type="hidden" value="${map.USER_NO}" name="USER_NO">
+              <input type="hidden" value="${map.FILES}" name="FILES">
               <div>
-              ${map.FILES}
+              <button onclick="document.getElementById('Filedowload').submit()">${map.FILES}</button>
               </div>
+              </form>
               </div>
               </div>
               <div class="col-md-6">
@@ -52,7 +56,7 @@ function deletere() {
             </div>
             <div class="col-md-6">
               <label for="email" class="form-label">이메일</label>
-              <div>
+
               ${map.EMAIL}
               </div>
             </div>

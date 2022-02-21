@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import coders.common.common.CommandMap;
 import coders.common.util.ProFileUtils;
+import coders.member.service.MainService;
 import coders.mypage.service.MypageService;
 import coders.packing.Packaging;
 
@@ -30,6 +31,8 @@ public class MypageController {
 	private Packaging packaging;
 	@Resource(name = "ProfileUtils")
 	private ProFileUtils fileUtils;
+	@Resource(name="mainService")
+	private MainService mainService;
 	
 	@RequestMapping(value = "/Mypage/MypageDetail.do" )
 	public ModelAndView mypage(HttpSession session,HttpServletRequest request) throws Exception {
@@ -77,9 +80,10 @@ public class MypageController {
 	}
 	//수정get
 	@RequestMapping(value = "/Mypage/Modify.do",method = RequestMethod.GET)
-public ModelAndView mypageModifyForm(HttpSession session) {
+public ModelAndView mypageModifyForm(HttpSession session)throws Exception {
 		ModelAndView mav = new ModelAndView();
-		Map<String,Object> map = (Map<String, Object>)session.getAttribute("session");
+		Map<String,Object> smap = (Map<String, Object>)session.getAttribute("session");
+		Map<String, Object> map = mypageService.selectMypageDetail(smap);
 		mav.addObject("map", map);
 		mav.setViewName("/mypage/mypage_modify");
 		return mav;
@@ -96,12 +100,9 @@ public ModelAndView mypageModify(HttpServletRequest request,CommandMap commandMa
 			mav.addObject("pas", "Y");
 			return mav;
 		}
-		fileUtils.parseInsertFileInfo(commandMap.getMap(), request);
-		if(commandMap.get("PROFILE")==null) 
-		commandMap.put("PROFILE", "없음");
-		
-		System.out.println(commandMap.getMap());
+		fileUtils.parseInsertFileInfo(commandMap.getMap(), request);		
 		mypageService.updateMypage(commandMap.getMap());
+		session.setAttribute("session", mypageService.selectMypageDetail(map2));
 		mav.setViewName("redirect:/main/Mypage.do?USER_NO="+map2.get("USER_NO"));
 		return mav;
 }
