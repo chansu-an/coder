@@ -23,7 +23,7 @@ public class BoardController {
 	@Resource(name="boardService")
 	private BoardService boardService;
 	
-	//글목록 보기 /board/openBoardList.do?IDENTI_TYE=1?searchType=TITLE?keyword=검색어
+	//글목록 보기 /board/openBoardList.do?IDENTI_TYE=1
 	@RequestMapping(value="/board/openBoardList.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView openBoardList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/board_list");
@@ -53,7 +53,7 @@ public class BoardController {
 	//메인에 올라갈 최근 공지, qna 인기글, 자유게시판 인기글
 	@RequestMapping(value="/board/mainList.do")
 	public ModelAndView noticeList(CommandMap commandMap, HttpSession session) throws Exception {
-		ModelAndView mav = new ModelAndView("/board/main_list");		
+		ModelAndView mav = new ModelAndView("/board/main_list");
 		
 		List<Map<String, Object>> list1 = boardService.selectNoticeList(commandMap.getMap());
 		List<Map<String, Object>> list2 = boardService.selectQnaBestList(commandMap.getMap());
@@ -128,7 +128,7 @@ public class BoardController {
 	@RequestMapping(value="/board/modify.do", method = RequestMethod.POST)
 	public ModelAndView updateBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-		System.out.println(commandMap.getMap());
+
 		boardService.updateBoard(commandMap.getMap(), request);
 		
 		return mav;
@@ -143,7 +143,7 @@ public class BoardController {
 		return mav;
 	}
 	
-	//신고글, 삭제글 리스트
+	//삭제글, 신고글 리스트
 	@RequestMapping(value="/board/adminList.do")
 	public ModelAndView deleteList(CommandMap commandMap) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/admin_list");
@@ -233,10 +233,13 @@ public class BoardController {
 	//댓글 작성하기
 
 	//게시글 댓글 작성
-	@RequestMapping(value="/board/commentInsert.do")
-	public ModelAndView InsertComment(CommandMap commandMap, HttpServletRequest request) throws Exception {
+	@RequestMapping(value="/board/commentInsert.do", method = RequestMethod.POST)
+	public ModelAndView InsertComment(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
 		
+		commandMap.put("BOARD_NO", Integer.parseInt(request.getParameter("BOARD_NO")));
+		commandMap.put("USER_NO", Integer.parseInt(request.getParameter("USER_NO")));
+		commandMap.put("CONTEXT", request.getParameter("CONTEXT"));
 		boardService.insertComment(commandMap.getMap());
 		
 		return mav;
