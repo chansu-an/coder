@@ -1,8 +1,12 @@
 package coders.board.service;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -51,27 +55,44 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.update(map);
 		System.out.println("map : " + map);
 		
-		Enumeration params = request.getParameterNames();
-		while(params.hasMoreElements()) {
-		  String name = (String) params.nextElement();
-		  System.out.println(name + " : " + request.getParameter(name) + "     "); 
-		}
 		List<Map<String,Object>> list = boardFileUtils.parseUpdateFileInfo(map, request);
 		System.out.println("list : " + list);
+		// List를 Set으로 변경 ->리스트 중복값 제거하는 작업
+		Set<Map<String,Object>> set = new HashSet<Map<String,Object>>(list);
+		// Set을 List로 변경
+		List<Map<String,Object>> newList =new ArrayList<Map<String,Object>>(set);
+		// 결과 출력
+		System.out.println("newList : " + newList);
 		Map<String,Object> tempMap = null;
+		Map<String,Object> tempMap2 = null;
+		
+		
+		for(int j=0, size2=newList.size(); j<size2; j++){
+			tempMap2 = newList.get(j);
+			System.out.println(tempMap2.containsKey("DELETE_NO"));
+			if(tempMap2.containsKey("DELETE_NO")) {				
+				System.out.println(tempMap2);
+				boardDAO.deleteFileList(tempMap2);				
+			}			
+		}
+		
+		
 		for(int i=0, size=list.size(); i<size; i++){
 			tempMap = list.get(i);
-			if(tempMap.get("IS_NEW").equals("Y")){//신규파일
-				System.out.println("insertFile");
-				boardDAO.insertFile(tempMap);
+			System.out.println("list.get : " + list.get(i));
+			if(tempMap.isEmpty() || tempMap.containsKey("DELETE_NO")) {
+				continue;
+			}
+			if(tempMap.get("IS_NEW").equals("Y")){//기존파일 수정
+				System.out.println("updateFile");
+				boardDAO.updateFile(tempMap);
 				System.out.println("성공1");
 			}
-			else{//기존파일 수정
-				System.out.println("updateFile");
-				System.out.println(tempMap);
-				boardDAO.updateFile(tempMap);
-				System.out.println("성공2");
+			else if(tempMap.get("IS_NEW").equals("I")){
+				boardDAO.insertFile(tempMap);
 			}
+			
+			
 		}
 
 	}
@@ -182,6 +203,6 @@ public class BoardServiceImpl implements BoardService {
 	public List<Map<String, Object>> searchBoard(Map<String, Object> map) throws Exception {
 		return boardDAO.searchBoard(map);
 	}
-
-
+	
+	
 }

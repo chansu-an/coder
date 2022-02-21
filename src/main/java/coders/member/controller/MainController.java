@@ -25,40 +25,32 @@ public class MainController {
 	private MailSendService mailSendService;
 	
 	@RequestMapping(value="/main/Login.do", method = RequestMethod.GET)
-	public ModelAndView loginForm(CommandMap commandMap,HttpSession session) throws Exception{
+	public ModelAndView loginForm(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("/main/login");
-		if(session.getAttribute("session")!=null) {
-			mv.setViewName("redirect:/board/mainList.do");
+		
+		if(request.getParameter("checklogin") == null) {
+			mv.addObject("checklogin", true);
+		}else {
+			mv.addObject("checklogin", request.getParameter("checklogin"));			
 		}
+		
 		return mv;
 	}
 	
 	
 	@RequestMapping(value="/main/Login.do", method = RequestMethod.POST)
 	public ModelAndView login(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception{
-		ModelAndView mv = new ModelAndView("redirect:/board/mainList.do");
-		
-		commandMap.put("EMAIL", request.getParameter("EMAIL"));
-		commandMap.put("PASSWORD", request.getParameter("PASSWORD"));
-		
+		ModelAndView mv = new ModelAndView();
 		Map<String, Object> map = mainService.selectLoginUser(commandMap.getMap());
 		
-		if(map==null) {
-			mv.setViewName("redirect:/main/Login.do");
+		if(map == null) {
+			mv = new ModelAndView("redirect:/main/Login.do");
+			mv.addObject("checklogin", false);
+		}else {
+			mv = new ModelAndView("redirect:/board/mainList.do");
 		}
-		/*Enumeration enumeration = request.getParameterNames(); // submit을 통해 받은 input 값들
-		 
-		while (enumeration.hasMoreElements()) {
-		  String key = (String)enumeration.nextElement(); // 요소를 받습니다.
-		  String val[] = request.getParameterValues(key); // 받은 요소의 name 값을 request 로 부터 찾아옵니다.
-		 
-		  for (int i = 0; i < val.length; i++) {
-		    map.put(key, val);	// map에 key : value 형태로 값을 저장합니다.
-		    System.out.println("request : " + key + " = " + val[i]); // 출력하기
-		  }
-		}*/
 		
-		mv.addObject("user", map);
+		mv.addObject("user", map);		
 		session.setAttribute("session", map);//로그인 유저 정보 세션에 저장
 		return mv;
 	}
