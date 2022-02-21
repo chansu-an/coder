@@ -162,6 +162,12 @@ public class BoardServiceImpl implements BoardService {
 	public void insertComment(Map<String, Object> map) throws Exception {
 		boardDAO.insertComment(map);		
 	}
+	
+	//게시글 대댓글 삽입
+	@Override
+	public void insertComment2(Map<String, Object> map) throws Exception {
+		boardDAO.insertComment2(map);		
+	}
 
 	//게시글 댓글 삭제
 	@Override

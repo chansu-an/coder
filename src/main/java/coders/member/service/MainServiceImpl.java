@@ -44,4 +44,9 @@ public class MainServiceImpl implements MainService{
 	public void insertUser(Map<String, Object> map) throws Exception {
 		mainDAO.insertUser(map);
 	}
+	
+	@Override
+	public String confirmUser(String ID) throws Exception {
+		return mainDAO.confirmUser(ID);
+	}
 }
