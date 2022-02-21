@@ -103,6 +103,13 @@ public class BoardFileUtils {
         			listMap.put("IS_NEW", "Y");        			
         			listMap.put("FILE_NO", map.get(idx));
         		}
+        		for(Entry<String, Object> elem : map.entrySet()){
+                	if(elem.getKey().contains("delete")) {//같은키에 값 저장하는 로직
+                		Map<String, Object> listmap = new HashMap<String,Object>();
+                		listmap.put("DELETE_NO" , elem.getValue());
+                		list.add(listmap);
+                	}
+                }
         		listMap.put("ORIGINAL_FILE_NAME", originalFileName);
         		listMap.put("STORED_FILE_NAME", storedFileName);
         		listMap.put("FILE_SIZE", multipartFile.getSize());

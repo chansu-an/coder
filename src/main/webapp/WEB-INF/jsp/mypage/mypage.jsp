@@ -23,7 +23,7 @@
 						<c:forEach items="${slist }" var="row">
 						<tbody>
 							<tr>
-								<td><a href="#">${row.TITLE }</a></td>
+								<td><a href="../board/detail.do?BOARD_NO=${rows.BOARD_NO}&IDENTI_TYPE="${row.IDENTI_TYPE}">${row.TITLE }</a></td>
 							</tr>
 						</tbody>
 						</c:forEach>

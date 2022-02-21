@@ -38,6 +38,11 @@ public class BoardDAO extends AbstractDAO {
 		insert("board.insertComment", map);
 		
 	}
+	
+	public void insertComment2(Map<String, Object> map) throws Exception{
+		insert("board.insertComment2", map);
+		
+	}
 
 	public void insertFile(Map<String, Object> map) throws Exception {
 		insert("board.insertFile", map);
@@ -55,6 +60,7 @@ public class BoardDAO extends AbstractDAO {
 	}
 	
 	public void deleteComment(Map<String, Object> map) throws Exception{
+		System.out.println(map);
 		update("board.commentDelete", map);
 		
 	}

@@ -20,7 +20,7 @@
 							<tbody>
 								<tr>
 									<td><a
-										href="../Mypage/ArlistClick.do?BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a></td>
+										href="../Mypage/ArlistClick.do?BOARD_NO=${row.BOARD_NO}&IDENTI_TYPE="${row.IDENTI_TYPE}">${row.TITLE }</a></td>
 									<td>새로운 댓글이 달렸습니다</td>
 								</tr>
 							</tbody>

@@ -28,7 +28,7 @@
 						<c:forEach var="rows" items="${list}">
 							<tr>
 								<th scope="row">${rows.ROWNUM}</th>
-								<td><a href="../board/detail.do?BOARD_NO=${rows.BOARD_NO}">${rows.TITLE},${rows.BOARD_NO}</a></td>
+								<td><a href="../board/detail.do?BOARD_NO=${rows.BOARD_NO}&IDENTI_TYPE="${row.IDENTI_TYPE}">${rows.TITLE}</a></td>
 								<td>${rows.NICK_NAME}</td>
 								<td>${rows.BOARD_DATE}</td>
 								<td>${rows.READ_COUNT }</td>
