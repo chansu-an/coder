@@ -14,7 +14,8 @@ public class TeamDAO extends AbstractDAO{
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectTeamList(Map<String, Object> map) throws Exception {
-		return (List<Map<String, Object>>) selectList("project.selectTeamList", map);
+		System.out.println("DAO");
+		return (List<Map<String, Object>>) selectList("team.selectTeamList", map);
 	}
 
 	public void insertTeam(Map<String, Object> map) throws Exception {

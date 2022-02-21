@@ -23,9 +23,10 @@ public class TeamController {
 	@RequestMapping(value = "/Project/Team.do")
 	public ModelAndView TeamList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/team/PD_list");
-
+		System.out.println(commandMap.getMap());
 		List<Map<String, Object>> list = teamService.selectTeamList(commandMap.getMap());
-
+		commandMap.put("PROJECT_NO", "59");
+		commandMap.put("USER_NO", "1");
 		mav.addObject("list", list);
 		return mav;
 	}
