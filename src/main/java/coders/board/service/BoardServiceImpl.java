@@ -175,7 +175,13 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Map<String, Object>> selectFileList(Map<String, Object> map) throws Exception {
 		return boardDAO.selectFileList(map);
-	}	
+	}
 	
-	
+	//게시글 검색하기
+	@Override
+	public List<Map<String, Object>> searchBoard(Map<String, Object> map) throws Exception {
+		return boardDAO.searchBoard(map);
+	}
+
+
 }
