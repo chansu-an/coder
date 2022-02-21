@@ -9,9 +9,16 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
                 
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
+>>>>>>> 0c0f557246bcc694553c958860213bc48b543a3f
+=======
 
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
 
+>>>>>>> e65ccd149e2736392e2630c078e5c982117c208a
                 
         <property name="java-output-path" value="target/classes"/>
                 
