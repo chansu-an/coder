@@ -98,7 +98,7 @@
 							<td colspan="4"><textarea rows="20" cols="100" title="내용"
 									id="PROJECT_CONTEXT" name="PROJECT_CONTEXT">${map.PROJECT_CONTEXT }</textarea></td>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td scope="row">첨부파일</td>
 						</tr>
 						<c:forEach var="row" items="${list }">
@@ -108,17 +108,33 @@
 									value="${map.PBO_NAME }" />
 								</td>
 							</tr>
-						</c:forEach>
-
+						</c:forEach> -->
+						<tr>
+							<th scope="row">첨부파일</th>
+							<td colspan="3">
+								<div id="fileDiv">
+									<c:forEach var="row" items="${list }" varStatus="var">
+										<p>
+											<input type="hidden" id="PBF_NO" name="PBF_NO_${var.index }"
+												value="${row.PBF_NO }"> <a href="#this"
+												id="name_${var.index }" name="name_${var.index }">${row.PBO_NAME }</a>
+											<input type="file" id="file_${var.index }"
+												name="file_${var.index }"> (${row.PBF_SIZE }kb) <a
+												href="#this" class="btn" id="delete_${var.index }"
+												name="delete_${var.index }">삭제</a>
+										</p>
+									</c:forEach>
+								</div>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 				<div id="fileDiv">
 					<p>
-						<input type="file" id="file" name="file_0"> <a
-							href="../Project/Project.do" class="btn" id="list">목록으로</a> <a
-							href="../Project/Delete.do" class="btn" id="delete">삭제하기</a> <input
-							type="submit" value="수정하기"> <a onclick="fn_addFile()"
-							class="btn" id="addFile">파일추가</a>
+						<a href="../Project/Project.do" class="btn" id="list">목록으로</a> <input
+							type="submit" value="수정하기"> <a href="#this" class="btn"
+							id="addFile">파일추가</a>
+
 					</p>
 				</div>
 
@@ -132,6 +148,41 @@
 	<script type="text/javascript">
 		var gfv_count = '${fn:length(list)+1}';
 		
+		function fn_addFile() {
+			if (gfv_count >= 6) { //파일 수 제한 
+				alert("파일수를 초과했습니다")
+				return;
+			}
+			
+		$(document).ready(function() {
+
+			$("#addFile").on("click", function(e) { //파일 추가 버튼
+				e.preventDefault();
+				fn_addFile();
+			});
+
+			$("a[name^='delete']").on("click", function(e) { //삭제 버튼
+				e.preventDefault();
+				fn_deleteFile($(this));
+			});
+
+		});
+		
+			var str = "<p>" + "<input type='file' id='file_" + (gfv_count)
+					+ "' name='file_" + (gfv_count) + "'>"
+					+ "<a href='#this' class='btn' id='delete_" + (gfv_count)
+					+ "' name='delete_" + (gfv_count) + "'>삭제</a>" + "</p>";
+			$("#fileDiv").append(str);
+			$("#delete_" + (gfv_count++)).on("click", function(e) { //삭제 버튼
+				e.preventDefault();
+				fn_deleteFile($(this));
+			});
+		}
+
+		function fn_deleteFile(obj) {
+			--gfv_count
+			obj.parent().remove();
+		}
 	</script>
 
 </body>

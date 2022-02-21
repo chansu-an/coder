@@ -58,8 +58,16 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Override
 	public Map<String, Object> selectProjectDetail(Map<String, Object> map) throws Exception {
-
-		return projectDAO.selectProjectDetail(map);
+		Map<String, Object> resultMap = new HashMap<String,Object>();
+		Map<String, Object> tempMap = projectDAO.selectProjectDetail(map);
+		resultMap.put("map", tempMap);
+		
+		List<Map<String,Object>> list = projectDAO.selectProjectFileList(map);
+		resultMap.put("list", list);
+		
+		
+		
+		return resultMap;
 	}
 	
 	
@@ -73,16 +81,19 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public void updateProject(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		projectDAO.updateProject(map);
-	//	projectDAO.deleteFileList(map);
-		List<Map<String,Object>>list = fileUtils.parseInsertFileInfo(map, request);  //에러발생
+		projectDAO.deleteFileList(map);
+		List<Map<String,Object>>list = fileUtils.parseUpdateFileInfo(map, request); //에러발생  --> 완료 
+		System.out.println(list);
 		Map<String,Object>tempMap = null;
 		for(int i =0,size = list.size(); i<size; i++) {
 			tempMap = list.get(i);
-			if(tempMap.get("IS_NEW").equals("Y")) {
+			if(tempMap.get("IS_NEW").equals("Y")) {  //에러발생 0219 
 				projectDAO.insertProjectFile(tempMap);
 			}
 			else {
+				System.out.println(2);
 				projectDAO.updateFile(tempMap);
+				
 			}
 		}
 
@@ -99,7 +110,10 @@ public class ProjectServiceImpl implements ProjectService {
 		projectDAO.insertProjectApp(map);
 	}
 	
-	 
+//	 @Override 
+//	 public void updateFileList(Map<String,Object>map)throws Exception{
+//		 projectDAO.updateFileList(map);
+//	 }
 
 	
 	

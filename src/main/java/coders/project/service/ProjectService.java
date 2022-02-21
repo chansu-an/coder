@@ -32,5 +32,9 @@ public interface ProjectService {
 		
 	// project Controller의 추가 02.15
 		void insertProject(Map<String,Object>map,HttpServletRequest request)throws Exception;
-	
+
+//		void updateFileList(Map<String, Object> map, HttpServletRequest request);
+//
+//		void updateFileList(Map<String, Object> map) throws Exception;
+//	
 }

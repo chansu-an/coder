@@ -116,12 +116,13 @@
 		<%@ include file="/WEB-INF/include/include-body.jspf"%>
 
 		<script type="text/javascript">
+		
 		var gfv_count = 1;
 		
-		function fn_addFile(){if(gfv_count>=4){
-			alert("ㅊㄴㅇㄴ")
+		function fn_addFile(){if(gfv_count>=6){  //파일 수 제한 
+			alert("파일수를 초과했습니다")
 			return;
-		}alert(gfv_count)
+		}
 			var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
 			
 			$("#fileDiv").append(str);
@@ -137,7 +138,7 @@
 		
 		function fn_deleteFile(obj){
 			--gfv_count
-			alert(gfv_count)
+			//alert(gfv_count)
 			obj.parent().remove();
 		}
 	</script>

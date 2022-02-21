@@ -72,4 +72,12 @@ public class ProjectDAO extends AbstractDAO {
 		public void updateFile(Map<String,Object>map)throws Exception{
 			update("project.updateFile",map);
 		}
+
+		public void deleteFileList(Map<String, Object> map) {
+		update("project.deleteFileList",map);
+			
+		}
+//		public void updateFileList(Map<String,Object>map) {
+//			update("proejct.updateFileList",map);
+//		}
 }
