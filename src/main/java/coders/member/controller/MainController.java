@@ -8,13 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import coders.common.common.CommandMap;
-import coders.member.service.MainService;
 import coders.mail.service.MailSendService;
+import coders.member.service.MainService;
 
 @Controller
 public class MainController {
@@ -61,6 +63,20 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("/main/register");
 		
 		return mv;
+	}
+	
+	@RequestMapping(value="/main/checkUserNickName.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkUserNickName(@RequestBody String ID) throws Exception{
+		String result2 = null; 
+		String result = mainService.confirmUser(ID);
+		
+		if(result == null) {
+			result2 = "0";//아이디없음
+		}else {
+			result2 = "1";//중복 아이디있음
+		}
+		return result2;
 	}
 	
 	

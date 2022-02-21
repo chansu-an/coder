@@ -38,4 +38,8 @@ public class MainDAO extends AbstractDAO{
 	public void insertUser(Map<String, Object> map) throws Exception{
 		insert("user.insertUser", map);
 	}
+	
+	public String confirmUser(String ID) throws Exception{
+		return (String) selectOne("user.confirmid", ID);
+	}
 }
