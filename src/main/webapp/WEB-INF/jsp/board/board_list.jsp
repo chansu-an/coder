@@ -11,6 +11,11 @@
 		f.action="/net/board/openBoardList.do?IDENTI_TYPE=" + ${IDENTI_TYPE}
 		f.submit();
 	}
+
+	function test1(f){
+		$('input[name=SEARCH_TYPE]').attr('value',f);
+	}
+
 </script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
@@ -33,8 +38,8 @@
 	<form name="ORDER_TYPE" method="post">
 	<p style="text-align:right;">
 		<select onchange="test(this.form);" id="ORDER_TYPE" name="ORDER_TYPE">
-			<option></option>
-			<option value="DATE" selected="selected">최신순</option>
+			<option>---</option>
+			<option value="DATE">최신순</option>
 			<option value="REPLY">댓글순</option>
 			<option value="READ">조회수</option>
 			<option value="RECOMMEND">추천순</option>
@@ -84,6 +89,22 @@
 
 		</tbody>
 	</table>
+
+	<form action="/net/board/openBoardList.do?IDENTI_TYPE=${IDENTI_TYPE}" method="post">
+		<div class="search-wrap">
+			<select name="form-control search-select" id="SEARCH_TYPE" name="SEARCH_TYPE" onchange="test1(this.value);">
+				<option value="">검색</option>
+				<option value="TITLE">제목</option>
+				<option value="CONTEXT">내용</option>
+				<option value="NICKNAME">작성자</option>
+				<option value="T+C">제목+내용</option> 
+			</select>
+			<input type="hidden" id="SEARCH_TYPE" name="SEARCH_TYPE" value="${SEARCH_TYPE }"/>
+			<input type="text" id="KEYWORD" name="KEYWORD" value="${KEYWORD }"></input>
+			<input type="submit" value="검색" class="btn bin-info search-btn"/>		
+		</div>
+	</form>
+	
 	<p style="text-align:right;"><a href="/net/board/write.do" class="btn" id="write">글쓰기</a>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
