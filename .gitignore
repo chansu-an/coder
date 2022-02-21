@@ -1,4 +1,5 @@
 /target/
 .classpath
 .springBeans
-org.eclipse.wst.common.component
+/.setting/org.eclipse.wst.common.component
+.DS_Store
