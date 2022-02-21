@@ -41,13 +41,14 @@ public class MainController {
 	@RequestMapping(value="/main/Login.do", method = RequestMethod.POST)
 	public ModelAndView login(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView();
+		System.out.println(commandMap.getMap());
 		Map<String, Object> map = mainService.selectLoginUser(commandMap.getMap());
 		
 		if(map == null) {
-			mv = new ModelAndView("redirect:/main/Login.do");
+			mv.setViewName("redirect:/main/Login.do");
 			mv.addObject("checklogin", false);
 		}else {
-			mv = new ModelAndView("redirect:/board/mainList.do");
+			mv.setViewName("redirect:/board/mainList.do");
 		}
 		
 		mv.addObject("user", map);		

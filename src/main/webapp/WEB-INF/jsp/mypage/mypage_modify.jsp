@@ -6,16 +6,7 @@
     <meta name="generator" content="Hugo 0.88.1">
     <title>내정보 수정</title>
     
-    <script type="text/javascript">
-    function  test(){
-    	alert("12312");
-    	var pas = getParameter("pas")
-    	alert("dasdas");
-    	if(${pas.equals("Y")}){
-    		alert('암호와 암호확인이 일치해야 합니다')
-    	}
-    }
-    </script>
+
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
@@ -48,7 +39,7 @@
     <div class="row g-5">  
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">내정보수정</h4>
-        <form method="post"  class="needs-validation" enctype="multipart/form-data" novalidate>
+        <form method="post" onsubmit="return test()" class="needs-validation" enctype="multipart/form-data" novalidate>
           <div class="row g-3">
             <div class="col-md-6">
                 <label for="address2" class="form-label">별명</label>
@@ -92,5 +83,17 @@
   </main> 
 </div>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>>
+    <script type="text/javascript">
+    function  test(){
+    	var password = document.getElementById("PASSWORD").value;
+    	var password2 = document.getElementById("PASSWORD2").value;
+    	
+    	if(password!=password2){
+    		alert('암호와 암호확인이 일치해야 합니다');
+    		document.getElementById("PASSWORD").focus();
+    		return false;
+    	}
+    }
+    </script>
 </body>
 </html>

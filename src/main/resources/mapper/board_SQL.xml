@@ -82,7 +82,37 @@ FROM(SELECT BOARD.BOARD_NO
 	) A	
 	]]>
 	</select>
-
+	<!-- 게시글 숫자 -->
+<select id="cuntborad" parameterType="hashmap" resultType="hashmap">
+<![CDATA[
+SELECT COUNT(*) FORM BOARD WHERE IDENTI_TYPE= #{IDENTI_TYPE}
+]]>
+   		 <!-- 키워드 -->
+			<if test='SEARCH_TYPE == "TITLE"'>
+				<![CDATA[
+					AND BOARD.TITLE LIKE '%'||#{KEYWORD}||'%'
+				]]>
+			</if>
+			<if test='SEARCH_TYPE == "CONTEXT"'>
+				<![CDATA[
+					AND BOARD.CONTEXT LIKE '%'||#{KEYWORD}||'%'
+				]]>
+			</if>
+			<if test='SEARCH_TYPE == "NICKNAME"'>
+				<![CDATA[
+					AND USERS.NICK_NAME LIKE '%'||#{KEYWORD}||'%'
+				]]>
+			</if>
+			<if test='SEARCH_TYPE == "T+C"'>
+				<![CDATA[
+					AND BOARD.TITLE LIKE '%'||#{KEYWORD}||'%' OR BOARD.CONTEXT LIKE '%'||#{KEYWORD}||'%'
+				]]>
+			</if>
+		
+		<![CDATA[
+ ORDER BY BOARD.BOARD_DATE DESC) A
+]]>
+</select>
 <!-- 게시글 검색-->
 <select id="searchBoard" parameterType="hashmap" resultType="hashmap">
 <![CDATA[
@@ -160,6 +190,10 @@ UPDATE BOARD SET READ_COUNT = READ_COUNT + 1 WHERE BOARD_NO=#{BOARD_NO}
 		resultType="hashmap"><![CDATA[
 SELECT BOARD.BOARD_NO,USERS.NICK_NAME,BOARD.TITLE,BOARD.READ_COUNT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh24:MI)') "BOARD_DATE",ROWNUM FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.DEL_GB = 'Y'
 ]]></select>
+<!-- 삭제글 수 -->
+<select id="countDeleteList" parameterType="hashmap" resultType="hashmap">
+SELECT COUNT(*) FROM BOARD WHERE DEL_GB = 'Y'
+</select>
 	<!-- 삭제글 복구 -->
 	<update id="returnDelete" parameterType="hashmap"><![CDATA[
 UPDATE BOARD SET DEL_GB = 'N' WHERE BOARD_NO = #{BOARD_NO}
@@ -169,6 +203,9 @@ UPDATE BOARD SET DEL_GB = 'N' WHERE BOARD_NO = #{BOARD_NO}
 		resultType="hashmap"><![CDATA[
 SELECT BOARD.BOARD_NO,USERS.NICK_NAME,BOARD.TITLE,BOARD.READ_COUNT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh24:MI)') "BOARD_DATE",ROWNUM FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.DEL_GB = 'N' AND BOARD.REPORT_COUNT >= '20'
 ]]></select>
+<select id="countReportList" parameterType="hashmap" resultType="hashmap">
+SELECT count(*) FROM BOARD  WHERE DEL_GB = 'N' AND REPORT_COUNT >= '20'
+</select>
 	<!-- 신고글 복원 -->
 	<update id="returnReport" parameterType="hashmap"><![CDATA[
 UPDATE BOARD SET REPORT_COUNT = 0 WHERE BOARD_NO = #{BOARD_NO}
@@ -270,7 +307,10 @@ SELECT A.*, ROWNUM
 		resultType="hashmap"><![CDATA[
 SELECT REF_NO,REPLY.RE_NO,REPLY.RECOMMAND_COUNT,REPLY.REF_STEP,REPLY.USER_NO,USERS.NICK_NAME,REPLY.CONTEXT,TO_CHAR(REPLY.REPLY_DATE,'YY/MM/DD(hh24:MI)') "REPLY_DATE",ROWNUM FROM REPLY INNER JOIN USERS ON USERS.USER_NO = REPLY.USER_NO WHERE BOARD_NO = #{BOARD_NO} AND REPLY.DEL_GB = 'N' ORDER BY REF_NO DESC ,REF_STEP
 ]]></select>
-
+<select id="CountcommentList" parameterType="hashmap"
+		resultType="hashmap"><![CDATA[
+SELECT Cunt FROM REPLY INNER JOIN USERS ON USERS.USER_NO = REPLY.USER_NO WHERE BOARD_NO = #{BOARD_NO} AND REPLY.DEL_GB = 'N' ORDER BY REF_NO DESC ,REF_STEP
+]]></select>
 <!-- 삭제글,신고글 상세보기 -->
 <select id="selectAdminDetail" parameterType="hashmap" resultType="hashmap"><![CDATA[
 SELECT BOARD.BOARD_NO,USERS.NICK_NAME,BOARD.TITLE,BOARD.USER_NO,BOARD.CONTEXT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh24:MI)') "BOARD_DATE",BOARD.BOARD_NO,BOARD.READ_COUNT,BOARD.RECOMMEND_COUNT,BOARD.REPORT_COUNT FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.BOARD_NO = #{BOARD_NO}

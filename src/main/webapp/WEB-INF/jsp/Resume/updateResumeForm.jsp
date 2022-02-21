@@ -61,14 +61,14 @@ function zipcode(){
             </div>
             <div class="col-md-6">
               <label for="zipcode" class="form-label">우편번호</label>
-               <input type="text" class="form-control" name ="ZIPCODE" id="ZIPCODE" value="${map.ZIPCODE }" placeholder="우편번호" >
+               <input type="text" class="form-control" name ="ZIPCODE" id="ZIPCODE" value="${map.ZIPCODE }" placeholder="우편번호" readonly>
             </div> 
             <div class="col-md-6">
              <input type="button" value="우편번호검색" onclick="zipcode()">
             </div>
            <div class="col-md-6">
               <label for="address" class="form-label">주소</label>
-              <input type="text" class="form-control"  name="ADDRESS" id="ADDRESS" value="${map.ADDRESS }" placeholder="주소" >
+              <input type="text" class="form-control"  name="ADDRESS" id="ADDRESS" value="${map.ADDRESS }" placeholder="주소" readonly>
            </div>
              <div class="col-md-6">
               <label for="address2" class="form-label">상세주소</label>
