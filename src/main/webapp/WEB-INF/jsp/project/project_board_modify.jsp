@@ -147,7 +147,7 @@
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script type="text/javascript">
 		var gfv_count = '${fn:length(list)+1}';
-		
+	
 		$(document).ready(function() {
 
 			$("#addFile").on("click", function(e) { //파일 추가 버튼
@@ -162,6 +162,7 @@
 
 		});
 		
+
 		function fn_addFile() {
 			if (gfv_count >= 6) { //파일 수 제한 
 				alert("파일수를 초과했습니다")
@@ -179,6 +180,7 @@
 				e.preventDefault();
 				fn_deleteFile($(this));
 			});++gfv_count
+
 		}
 
 		function fn_deleteFile(obj) {
