@@ -3,60 +3,23 @@
 <html>
 <script type="text/javascript">
 var test = true
-function testttt() {
-	
-	alert(test);
+function testttt(n) {
 	if(test){
-		document.getElementById('test1').className = 'navbar-collapse collapse show';
+		document.getElementById('test'+n).className = 'navbar-collapse collapse show';
 		 test = false;
 	}else{
-		document.getElementById('test1').className = 'navbar-collapse collapse';
+		document.getElementById('test'+n).className = 'navbar-collapse collapse';
 		 test = true;
 		
 	}
-	
 };
+
+
 </script>
 <head>
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
-</head>
-<body>
-<div class="d-flex" id="wrapper">
-            <!-- Sidebar-->
-            <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light">Coders</div>
-                <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">공지사항</a>
-		            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">QnA 게시판</a>
-		            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">자유게시판</a>
-		            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">프로젝트</a>
-		            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">건의사항</a>
-                </div>
-            </div>
-            <!-- Page content wrapper-->
-            <div id="page-content-wrapper">
-                <!-- Top navigation-->
-                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                    <div class="container-fluid">
-                        <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                                <li class="nav-item active"><a class="nav-link"><c:out value="${session.NICK_NAME}"/>님 환영합니다</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Action</a>
-                                        <a class="dropdown-item" href="#!">Another action</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#!">Something else here</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+<%@ include file="/WEB-INF/include/include-header2.jspf"%>
+<%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
+<%@ include file="/WEB-INF/include/include-navbar.jspf"%>
                 <!-- Page content-->
     <c:choose>
     	<c:when test="${map.IDENTI_TYPE == '1' }">
@@ -146,10 +109,7 @@ function testttt() {
 	  </c:if>
 	  <ol class="replyList">
 	    <c:forEach items="${list}" var="row">
-	    	<c:choose>
-	    	
-	    		<c:when test="${row.REF_STEP == '0' }">
-	    		<div onclick="testttt()">
+	    		<div  onclick="testttt(${row.RE_NO})">
 			        <p>
 			        작성자 : ${row.NICK_NAME} / ${row.REF_STEP }<br />
 			        작성 날짜 : ${row.REPLY_DATE } 
@@ -158,38 +118,22 @@ function testttt() {
 			        	<a href="/net/board/commentDelete.do?RE_NO=${row.RE_NO }&BOARD_NO=${map.BOARD_NO}" class="btn">삭제</a>	
 			        </p>
 			    </div>
-			    <div id="test1" class="navbar-collapse collapse " >
-			    테스트
+			    <div id="test${row.RE_NO}" class="navbar-collapse collapse " >
+			    	<label for="content">댓글 작성</label>
+        				<form action="../board/commentInsert.do" method="post">
+            			<div class="input-group">
+             		  	<input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}"/>
+               			<input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}"/>
+               			<input type="hidden" name="USER_NO" value="${session.USER_NO}"/>
+               			<input type="hidden" name="REF_NO" value="${row.REF_NO}"/>
+               			<input type="hidden" name="REF_STEP" value="${row.REF_STEP}"/>
+               			<input type="text" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요." style="width:60%;;font-size:15px;"/>
+              			 <span class="input-group-btn">
+                    <button class="btn btn-default" name="commentInsertBtn">등록</button>
+               </span>
+            </div>
+        </form>
 			    </div>		        
-		        </c:when>
-	    		<c:when test="${row.REF_STEP == '1' }">
-	    		<div>
-			        <p>
-			        작성자 : ${row.NICK_NAME} / ${row.REF_STEP }<br />
-			        작성 날짜 : ${row.REPLY_DATE } 
-			        </p>			
-			        <img src="../img/arrow.png" width="30" height="30"/>${row.CONTEXT}
-			    </div>			        
-		        </c:when>
-	    		<c:when test="${row.REF_STEP == '2' }">
-	    		<div >
-			        <p>
-			        작성자 : ${row.NICK_NAME} / ${row.REF_STEP }<br />
-			        작성 날짜 : ${row.REPLY_DATE } 
-			        </p>			
-			        <img src="../img/arrow.png" width="30" height="30"/>${row.CONTEXT}	
-			    </div>	        
-		        </c:when>
-	    		<c:when test="${row.REF_STEP == '3' }">
-	    		<div>
-			        <p>
-			        작성자 : ${row.NICK_NAME} / ${row.REF_STEP }<br />
-			        작성 날짜 : ${row.REPLY_DATE } 
-			        </p>			
-			        <img src="../img/arrow.png" width="30" height="30"/>${row.CONTEXT}
-			    </div>		        
-		        </c:when>
-	        </c:choose>
 	    </c:forEach>   
 	  </ol>
 	</div>
@@ -207,15 +151,26 @@ function testttt() {
             </div>
         </form>
     </div>
-	</div>
-</div>
-
-	<br />
-	
-	<%@ include file="/WEB-INF/include/include-body.jspf" %>
-<script>
-	
-</script>
+    <script type="text/javascript">
+    function fn_addFile(){if(gfv_count>=4){
+		alert("ㅊㄴㅇㄴ")
+		return;
+	}alert(gfv_count)
+		var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
+		
+		$("#fileDiv").append(str);
+		
+		
+		$("a[name='delete']").on("click", function(e){ //삭제 버튼
+			e.preventDefault();
+			fn_deleteFile($(this));
+			
+		});
+		++gfv_count
+	}
+    </script>
+<%@ include file="/WEB-INF/include/include-body.jspf" %>
+<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 
 </body>
 </html>

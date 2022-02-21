@@ -14,7 +14,7 @@
 						
 						<li class="nav-item active"><a class="nav-link" href="#!">메인으로</a></li>
 						<c:if test="${sessionScope.session!=null}">
-						<li class="nav-item"><a class="dropdown-item" href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=1&P_PAG_NUM=1">알림()</a></li>
+						<li class="nav-item"><a class="dropdown-item" href="../Mypage/Notification.do?USER_NO=${sessionScope.session.USER_NO}&B_PAG_NUM=1&P_PAG_NUM=1">알림()</a></li>
 							<li class="nav-item"><a class="nav-link" href="#!">${sessionScope.session.NICK_NAME}님 환영합니다.</a></li>
 							
 							<li class="nav-item">

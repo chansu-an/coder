@@ -88,7 +88,7 @@ public class ProjectController {
 	@RequestMapping(value = "/Project/Modify.do", method = RequestMethod.POST)
 	public ModelAndView ProjectModify(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/Project/Detail.do");
-
+		System.out.println(commandMap.getMap());
 		projectService.updateProject(commandMap.getMap(), request); // 에러발생  0219 
 		mav.addObject("PROJECT_NO", commandMap.get("PROJECT_NO"));
 

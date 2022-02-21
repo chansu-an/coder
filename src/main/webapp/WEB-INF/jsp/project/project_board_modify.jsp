@@ -148,12 +148,6 @@
 	<script type="text/javascript">
 		var gfv_count = '${fn:length(list)+1}';
 		
-		function fn_addFile() {
-			if (gfv_count >= 6) { //파일 수 제한 
-				alert("파일수를 초과했습니다")
-				return;
-			}
-			
 		$(document).ready(function() {
 
 			$("#addFile").on("click", function(e) { //파일 추가 버튼
@@ -168,15 +162,23 @@
 
 		});
 		
+		function fn_addFile() {
+			if (gfv_count >= 6) { //파일 수 제한 
+				alert("파일수를 초과했습니다")
+				return;
+			}
+			
+		
+		
 			var str = "<p>" + "<input type='file' id='file_" + (gfv_count)
 					+ "' name='file_" + (gfv_count) + "'>"
 					+ "<a href='#this' class='btn' id='delete_" + (gfv_count)
 					+ "' name='delete_" + (gfv_count) + "'>삭제</a>" + "</p>";
 			$("#fileDiv").append(str);
-			$("#delete_" + (gfv_count++)).on("click", function(e) { //삭제 버튼
+			$("#delete_" + (gfv_count)).on("click", function(e) { //삭제 버튼
 				e.preventDefault();
 				fn_deleteFile($(this));
-			});
+			});++gfv_count
 		}
 
 		function fn_deleteFile(obj) {

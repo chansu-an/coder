@@ -39,7 +39,8 @@ function zipcode(){
               </div>
                <div class="col-md-6">
               <label for="NAME" class="form-label">첨부파일</label>
-              <input type = "file" class="form-control" name="FILES" id="FILES" value="${map.FILES}" placeholder="이름">
+              <input type = "file" class="form-control" name="FILE">
+              <input type="hidden" name="FILES"  value="${map.FILES}">
               </div>
               <div>
                 <label for="SKILL" class="form-label">자신있는기술</label>
@@ -73,17 +74,21 @@ function zipcode(){
               <label for="address2" class="form-label">상세주소</label>
               <input type="text" class="form-control" name="ADDRESS1" id="ADDRESS1" value="${map.ADDRESS1 }" placeholder="상세주소" >
            </div>
+             <button class=" btn btn-primary btn-lg" type="submit">작성완료</button>
+           </form>
+            
             </div>
           <hr class="my-4">
           <div align="center">
           <hr class="my-4">
-          <button class=" btn btn-primary btn-lg" type="submit">작성완료</button>
+        
+          
+        
           </div>
-        </form>
+          </div>
+          </main>
+         
       </div>
-    </div>
-  </main> 
-</div>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>

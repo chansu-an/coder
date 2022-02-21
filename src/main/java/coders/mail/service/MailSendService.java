@@ -27,7 +27,7 @@ public class MailSendService {
             sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
             .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
            .toString());
-            sendMail.setFrom("garde1540@naver.com", "관리자");
+            sendMail.setFrom("dasida2940@gmail.com", "관리자");
             sendMail.setTo(email);
             sendMail.send();
         } catch (MessagingException e) {
