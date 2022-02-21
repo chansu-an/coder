@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,7 @@ public class TeamController {
 	private TeamService teamService;
 
 	@RequestMapping(value = "/Project/Team.do")
-	public ModelAndView TeamList(CommandMap commandMap) throws Exception {
+	public ModelAndView TeamList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/team/PD_list");
 
 		List<Map<String, Object>> list = teamService.selectTeamList(commandMap.getMap());
@@ -37,19 +38,20 @@ public class TeamController {
 	}
 
 	@RequestMapping(value = "/project/Team/Write.do", method = RequestMethod.POST)
-	public ModelAndView TeamWrite(CommandMap commandMap) throws Exception {
+	public ModelAndView TeamWrite(CommandMap commandMap,HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/team/PD_list");
 
-		teamService.insertTeam(commandMap.getMap());
+		teamService.insertTeam(commandMap.getMap(), request);
 		return mav;
 	}
 
 	@RequestMapping(value = "/Project/Team/Detail.do")
-	public ModelAndView TeamDetail(CommandMap commandMap) throws Exception {
+	public ModelAndView TeamDetail(CommandMap commandMap,HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/team/PD_detail");
 		
 		Map<String, Object> map = teamService.selectTeamDetail(commandMap.getMap());
-		mav.addObject("map", map);
+		mav.addObject("map", map.get("map"));
+		mav.addObject("list", map.get("list"));
 
 		return mav;
 
@@ -60,15 +62,17 @@ public class TeamController {
 		ModelAndView mav = new ModelAndView("/team/PD_modify");
 
 		Map<String, Object> map = teamService.selectTeamDetail(commandMap.getMap());
-		mav.addObject("map", map);
+		mav.addObject("map", map.get("map"));
+		mav.addObject("list",map.get("list"));
 		return mav;
 	}
 
 	@RequestMapping(value = "/Project/Team/Modify.do", method = RequestMethod.POST)
-	public ModelAndView TeamModify(CommandMap commandMap) throws Exception {
+	public ModelAndView TeamModify(CommandMap commandMap,HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/team/PD_detail");
 
-		teamService.updateTeam(commandMap.getMap());
+		teamService.updateTeam(commandMap.getMap(), request);
+		mav.addObject("PD_BOARD_NO", commandMap.get("PD_BOARD_NO"));
 		return mav;
 	}
 

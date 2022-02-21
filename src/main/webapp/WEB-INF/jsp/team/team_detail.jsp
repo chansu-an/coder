@@ -7,7 +7,7 @@
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
                 <!-- Page content-->
 	<h2>게시판 상세보기</h2>
-	<table class=project_board_list>
+	<table class=team_list>
 		<colgroup>
 			<col width="10%" />
 			<col width="*%" />
@@ -16,16 +16,18 @@
 			<col width="20%" />
 			<col width="10%" />
 			<col width="10%" />
+			<col width="20%" />
 		</colgroup>
 		<thead>
 			<tr>
-				<th scope="col">프로젝트 번호</th>
-				<th scope="col">프로젝트 제목</th>
+				<th scope="col">작업일지 번호</th>
+				<th scope="col">업무 제목</th>
 				<th scope="col">작성자</th>
-				<th scope="col">내용</th>
+				<th scope="col">진행도</th>
+				<th scope="col">중요도</th>
 				<th scope="col">시작일</th>
 				<th scope="col">종료일</th>
-				<th scope="col">인원수</th>
+				<th scope="col">내용</th>
 			</tr>
 			
 		</thead>
@@ -33,13 +35,14 @@
 			<c:choose>
 				<c:when test="${!empty map}">
 					<tr>
-						<td>${map.PROJECT_NO}</td>
- 						<td>${map.PROJECT_NAME}</td>
+						<td>${map.PD_BOARD_NO}</td>
+ 						<td>${map.PD_TITLE}</td>
 						<td>${map.USER_NO}</td>
-						<td>${map.PROJECT_CONTEXT}</td>
-						<td>${map.PROJECT_START}</td>
-						<td>${map.PROJECT_END}</td>
-						<td>${map.PROJECT_MEMBER}</td>
+						<td>${map.PD_ING}</td>
+						<td>${map.PD_IMPORT}</td>
+						<td>${map.PD_START}</td>
+						<td>${map.PD_END}</td>
+						<td>${map.PD_CONTEXT}</td>
 					</tr>
 					<tr>
 						<th scope="row">첨부파일</th>
@@ -47,9 +50,9 @@
 						
 						<c:forEach var="row" items="${list }">
 						<p>
-							<input type="hidden" id="PBF_NO" value="${row.PBF_NO }">
-							<a href="../common/downloadProjectFile.do?PBF_NO=${row.PBF_NO }"  >${row.PBF_NO },${row.PBO_NAME}</a> 
-							(${row.PBF_SIZE }kb)
+							<input type="hidden" id="PF_NO" value="${row.PF_NO }">
+							<a href="../common/downloadTeamFile.do?PF_NO=${row.PF_NO }"  >${row.PF_NO },${row.POF_NAME}</a> 
+							(${row.PF_SIZE }kb)
 						</p>
 					</c:forEach>
 						
@@ -65,9 +68,9 @@
 
 		</tbody>
 	</table>
-	<a href="../Project/Modify.do?PROJECT_NO=${map.PROJECT_NO}" class="btn" id="write">수정하기</a>
-	<a href="../Project/Project.do" class="btn" id="list">목록으로</a>
-	<a href="../Project/Delete.do?PROJECT_NO=${map.PROJECT_NO}" class="btn" id="delete">삭제하기</a>
+	<a href="../Project/Team/Modify.do?PD_BOARD_NO=${map.PD_BOARD_NO}" class="btn" id="write">수정하기</a>
+	<a href="../Project/Team.do" class="btn" id="list">목록으로</a>
+	<a href="../Project/Team/Delete.do?PD_BOARD_NO=${map.PD_BOARD_NO}" class="btn" id="delete">삭제하기</a>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>
