@@ -22,7 +22,7 @@ public class TeamServiceImpl implements TeamService{
 
 	@Override
 	public List<Map<String, Object>> selectTeamList(Map<String, Object> map) throws Exception {
-
+System.out.println("serviceimpl");
 		return teamDAO.selectTeamList(map);
 	}
 	public void insertTeam(Map<String, Object> map,HttpServletRequest request) throws Exception{
