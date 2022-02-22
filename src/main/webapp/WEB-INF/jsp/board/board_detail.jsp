@@ -37,16 +37,14 @@ function testttt(n) {
 			<col width="15%"/> 
 			<col width="35%"/> 
 			<col width="15%"/> 
-			<col width="25%"/>
-			<col width="10%"/>
+			<col width="35%"/>
 		</colgroup>
-		<tbody>
+		<tbody> 
 			<tr> 
 				<th scope="row">글 번호</th> 
 				<td>${map.BOARD_NO }</td> 
 				<th scope="row">조회수</th> 
-				<td>${map.READ_COUNT }</td>
-				<th rowspan="6" align="center"><a href="#this" id="scrap"><i id="scrap" class="fa fa-bookmark fa-2x" style="color:blue;"></i></a></th>				  			
+				<td>${map.READ_COUNT }</td>				  			
 			</tr>
 			<tr>
 				<th scope="row">추천수</th> 
@@ -93,7 +91,7 @@ function testttt(n) {
 	<!-- 신고하기 누르면 REPORT_COUNT + 1, 추천하기 누르면 RECOMMEND_COUNT + 1 -->
 	<div>
 	<a href="/net/board/recommend.do?IDENTI_TYPE=${map.IDENTI_TYPE}&BOARD_NO=${map.BOARD_NO}" class="btn" id="recommend">추천하기</a>
-	<a href="/net/board/report.do?IDENTI_TYPE=${map.IDENTI_TYPE}&BOARD_NO=${map.BOARD_NO}" onclick="return false;" class="btn" id="report">신고하기</a>	
+	<a href="/net/board/report.do?IDENTI_TYPE=${map.IDENTI_TYPE}&BOARD_NO=${map.BOARD_NO}" class="btn" id="report">신고하기</a>	
 	</div>
 	
 	<!-- 댓글 리스트 -->
@@ -112,8 +110,6 @@ function testttt(n) {
 	  </c:if>
 	  <ol class="replyList">
 	    <c:forEach items="${list}" var="row">
-	    <c:choose>
-	  	<c:when test="${row.DEL_GB == 'N' }">
 	    		<div  onclick="testttt(${row.RE_NO})">
 			        <p>
 			        작성자 : ${row.NICK_NAME} / ${row.REF_STEP} / ${row.REF_NO}<br />
@@ -142,16 +138,7 @@ function testttt(n) {
 				            <br/>
 				        </form>
 			    </div>		        
-	    </c:when>
-	    <c:otherwise>
-	    	<div>
-	    		<p>
-	    			[삭제된 댓글입니다]
-	    		</p>
-	    	</div>
-	    </c:otherwise>
-	    </c:choose>   
-	    </c:forEach>
+	    </c:forEach>   
 	  </ol>
 	</div>
 	<div class="container">
@@ -168,35 +155,11 @@ function testttt(n) {
             </div>
         </form>
     </div>
-    <%@ include file="/WEB-INF/include/include-body.jspf" %>
-	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
     <script type="text/javascript">
-	$(document).ready(function(){
-		
-		$("#scrap").on("click", function(e){ //스크랩 버튼
-			e.preventDefault();
-			$.ajax({
-				 url : "<c:url value='/board/insertScrap.do?USER_NO=${sessionScope.session.USER_NO}&BOARD_NO=${map.BOARD_NO}'/>",
-				 type : "post",
-				 dataType : 'json',
-				 contentType : "application/json; charset=UTF-8",
-				 success : function(){
-					 alert("스크랩 완료");
-				 },
-				 error : function(){
-					 alert("서버요청실패");
-				 }
-			 })
-		});		
-		
-	});
-
-	
-    
     function fn_addFile(){if(gfv_count>=4){
 		alert("ㅊㄴㅇㄴ")
 		return;
-		}alert(gfv_count)
+	}alert(gfv_count)
 		var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
 		
 		$("#fileDiv").append(str);
@@ -210,6 +173,8 @@ function testttt(n) {
 		++gfv_count
 	}
     </script>
+<%@ include file="/WEB-INF/include/include-body.jspf" %>
+<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 
 </body>
 </html>

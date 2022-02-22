@@ -8,10 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import coders.board.service.BoardService;
@@ -250,21 +248,10 @@ public class BoardController {
 	@RequestMapping(value="/board/commentDelete.do")
 	public ModelAndView deleteComment(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-
+		System.out.println(request.getParameter("RE_NO"));
+		System.out.println(request.getParameter("BOARD_NO"));
 		boardService.deleteComment(commandMap.getMap());
 		
 		return mav;
 	}
-	
-	@RequestMapping(value="/board/insertScrap.do")
-	@ResponseBody
-	public void insertScrap(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		System.out.println("USER_NO " + request.getParameter("USER_NO"));
-		System.out.println("BOARD_NO " + request.getParameter("BOARD_NO"));
-		System.out.println(commandMap.getMap());
-		boardService.insertScrap(commandMap.getMap());
-
-	}
-	
-	
 }
