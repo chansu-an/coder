@@ -36,7 +36,7 @@
 						<tr>
 							<td>${row.PD_BOARD_NO }</td>
 							<%-- <td>${row.PROJECT_NAME }</td> --%>
-							<td><a href="../Project/Team/Detail.do?PD_BOARD_NO=${row.PD_BOARD_NO }">${row.PD_TITLE}</a>
+							<td><a href="../Project/Team/Detail.do?PROJECT_NO=${row.PROJECT_NO}&PD_BOARD_NO=${row.PD_BOARD_NO}">${row.PD_TITLE}</a>
 							<td>${row.PD_ING }</td>
 							<td>${row.USER_NO }</td>
 							<td>${row.PD_END  }</td>
