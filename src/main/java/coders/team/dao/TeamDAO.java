@@ -45,7 +45,7 @@ public class TeamDAO extends AbstractDAO{
 
 	public void deleteTeamFileList(Map<String, Object> map) {
 
-		update("project.deleteTeamFile", map);
+		update("team.deleteTeamFileList", map);
 		
 	}
 	public void updateTeamFile(Map<String, Object>map)throws Exception{

@@ -146,14 +146,14 @@ public class BoardServiceImpl implements BoardService {
 
 	//게시글 신고하기
 	@Override
-	public void reportBoard(Map<String, Object> map) throws Exception {
-		boardDAO.reportBoard(map);
+	public int reportBoard(Map<String, Object> map) throws Exception {
+		return boardDAO.reportBoard(map);
 	}
 
 	//게시글 추천하기
 	@Override
-	public void recommendBoard(Map<String, Object> map) throws Exception {
-		boardDAO.recommendBoard(map);
+	public int recommendBoard(Map<String, Object> map) throws Exception {
+		return boardDAO.recommendBoard(map);
 		
 	}
 
@@ -211,6 +211,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+
 	public int commentCount(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return boardDAO.commentCount(map);
@@ -232,6 +233,20 @@ public class BoardServiceImpl implements BoardService {
 	public int countborad(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return boardDAO.countborad(map);
+
+	public int insertScrap(Map<String, Object> map) throws Exception {
+		return boardDAO.insertScrap(map);
+	}
+
+	@Override
+	public Map<String, Object> selectCheckScarp(Map<String, Object> map) throws Exception {
+		return boardDAO.selectCheckScrap(map);
+	}
+
+	@Override
+	public int deleteScrap(Map<String, Object> map) throws Exception {
+		return boardDAO.deleteScrap(map);
+
 	}
 	
 	

@@ -68,9 +68,9 @@
 
 		</tbody>
 	</table>
-	<a href="../Project/Team/Modify.do?PD_BOARD_NO=${map.PD_BOARD_NO}" class="btn" id="write">수정하기</a>
-	<a href="../Project/Team.do" class="btn" id="list">목록으로</a>
-	<a href="../Project/Team/Delete.do?PD_BOARD_NO=${map.PD_BOARD_NO}" class="btn" id="delete">삭제하기</a>
+	<a href="/net/Project/Team/Modify.do?PD_BOARD_NO=${map.PD_BOARD_NO}" class="btn" id="write">수정하기</a>
+	<a href="/net/Project/Team.do" class="btn" id="list">목록으로</a>
+	<a href="/net/Project/Team/Delete.do?PD_BOARD_NO=${map.PD_BOARD_NO}" class="btn" id="delete">삭제하기</a>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>

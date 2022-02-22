@@ -181,7 +181,31 @@ FROM(SELECT BOARD.BOARD_NO
 			</if>
 		
 		<![CDATA[
- ORDER BY BOARD.BOARD_DATE DESC) A
+ ORDER BY 
+ ]]>
+ 	<choose>
+			<when test='ORDER_TYPE == "REPLY"'>
+	<![CDATA[
+		TEST.REPLY_COUNT DESC 
+		]]>
+			</when>
+			<when test='ORDER_TYPE == "READ"'>
+	<![CDATA[
+		BOARD.READ_COUNT DESC
+	]]>
+			</when>
+			<when test='ORDER_TYPE == "RECOMMEND"'>
+	<![CDATA[
+		BOARD.RECOMMEND_COUNT DESC ]]>
+			</when>
+			<otherwise>
+	<![CDATA[
+		BOARD.BOARD_DATE DESC 
+	]]>
+			</otherwise>
+		</choose>
+ <![CDATA[
+ ) A
 ]]>
 </select>
 
@@ -315,6 +339,7 @@ SELECT A.*, ROWNUM
  WHERE ROWNUM = 1
 ]]></select>
 	<!-- 답글 리스트 -->
+
 <select id="commentList" parameterType="hashmap" resultType="hashmap">
 <include refid="common.pagingPre"/>
 <![CDATA[
@@ -322,8 +347,25 @@ SELECT REPLY.RE_NO,REPLY.REF_NO,REPLY.RECOMMAND_COUNT,REPLY.REF_STEP,REPLY.USER_
 ]]>
 <include refid="common.pagingPost"/>
 </select>
+
+
 <!-- 삭제글,신고글 상세보기 -->
 <select id="selectAdminDetail" parameterType="hashmap" resultType="hashmap"><![CDATA[
 SELECT BOARD.BOARD_NO,USERS.NICK_NAME,BOARD.TITLE,BOARD.USER_NO,BOARD.CONTEXT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh24:MI)') "BOARD_DATE",BOARD.BOARD_NO,BOARD.READ_COUNT,BOARD.RECOMMEND_COUNT,BOARD.REPORT_COUNT FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.BOARD_NO = #{BOARD_NO}
 ]]></select>
+
+<!-- 스크랩 추가 -->
+<insert id="insertScrap" parameterType="hashmap"><![CDATA[
+INSERT INTO SCRAP VALUES(#{USER_NO},#{BOARD_NO})
+]]></insert>
+
+<!-- 스크랩 확인여부 -->
+<select id="checkScrap" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT USER_NO,BOARD_NO FROM SCRAP WHERE USER_NO = #{USER_NO} AND BOARD_NO = #{BOARD_NO}
+]]></select>
+
+<!-- 스크랩 취소 -->
+<delete id="deleteScarp" parameterType="hashmap"><![CDATA[
+DELETE FROM SCRAP WHERE USER_NO = #{USER_NO} AND BOARD_NO = #{BOARD_NO}
+]]></delete>
 </mapper>

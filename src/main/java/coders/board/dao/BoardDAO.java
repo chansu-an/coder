@@ -60,7 +60,6 @@ public class BoardDAO extends AbstractDAO {
 	}
 	
 	public void deleteComment(Map<String, Object> map) throws Exception{
-		System.out.println(map);
 		update("board.commentDelete", map);
 		
 	}
@@ -105,12 +104,12 @@ public class BoardDAO extends AbstractDAO {
 		return (Map<String, Object>)selectOne("board.bestComment", map);
 	}
 
-	public void reportBoard(Map<String, Object> map) {
-		update("board.reportBoard", map);	
+	public int reportBoard(Map<String, Object> map) {
+		return (int) update("board.reportBoard", map);	
 	}
 
-	public void recommendBoard(Map<String, Object> map) {
-		update("board.recommendBoard", map);
+	public int recommendBoard(Map<String, Object> map) {
+		return (int) update("board.recommendBoard", map);
 	}
 	
 	public void restoreBoard(Map<String, Object> map) {
@@ -139,6 +138,7 @@ public class BoardDAO extends AbstractDAO {
 		return (List<Map<String, Object>>)selectList("board.searchBoard", map);		
 	}
 	
+
 	public int commentCount(Map<String, Object> map) {
 		return (int)selectOne("board.commentCount",map);
 	}
@@ -154,4 +154,20 @@ public class BoardDAO extends AbstractDAO {
 	public int countborad(Map<String, Object> map) {
 		return (int)selectOne("board.countborad",map);
 	}
+
+	public int insertScrap(Map<String, Object> map) {
+		return (int) insert("board.insertScrap", map);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectCheckScrap(Map<String, Object> map) {
+		return (Map<String, Object>)selectOne("board.checkScrap", map);
+	}
+	
+	public int deleteScrap(Map<String, Object> map) throws Exception{
+		return (int) update("board.deleteScarp", map);
+		
+	}
+	
+
 }

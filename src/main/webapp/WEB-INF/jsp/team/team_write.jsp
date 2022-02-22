@@ -23,10 +23,20 @@
 			</tr>
 
 			<tr>
-				<th>진행도</th>
-				<td><input type="date" name="PD_ING"></td>
-				<th>중요도</th>
-				<td><input type="date" name="PD_IMPORT"></td>
+				
+				<th>진행도 : <select id="PD_ING" name="PD_ING">
+						<option value="start">진행예정</option>
+						<option value="ing">진행중</option>
+						<option value="final">완료</option>
+				</select>
+				
+				</th>
+				<th>중요도 : <select id="PD_IMPORT" name="PD_IMPORT">
+					<option value="waring">긴급</option>
+					<option value="middle">중간</option>
+					<option value="row">낮음</option>
+				</select></th>
+				
 			</tr>
 			<tr>
 				<th>시작일</th>
