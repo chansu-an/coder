@@ -180,11 +180,5 @@ SELECT USER_NO,NAME,TELL,EMAIL,ADDRESS,ADDRESS1,SKILL,BLOG,FILES,ZIPCODE FROM RE
 INSERT INTO FOLLOW VALUES(#{USER_NO},#{FOLLOWER})
 ]]></insert>
 
-<!-- 스크랩 추가 -->
-<insert id="insertScrap" parameterType="hashmap"><![CDATA[
-INSERT INTO SCRAP VALUES(#{USER_NO},#{BOARD_NO})
-]]></insert>
-
-
 </mapper>
 
