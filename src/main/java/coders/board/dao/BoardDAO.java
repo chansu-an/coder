@@ -60,7 +60,6 @@ public class BoardDAO extends AbstractDAO {
 	}
 	
 	public void deleteComment(Map<String, Object> map) throws Exception{
-		System.out.println(map);
 		update("board.commentDelete", map);
 		
 	}
@@ -137,6 +136,10 @@ public class BoardDAO extends AbstractDAO {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> searchBoard(Map<String, Object> map) {
 		return (List<Map<String, Object>>)selectList("board.searchBoard", map);		
+	}
+	
+	public void insertScrap(Map<String, Object> map) {
+		insert("board.insertScrap", map);
 	}
 	
 }

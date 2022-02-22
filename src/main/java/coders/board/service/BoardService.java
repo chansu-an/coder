@@ -53,6 +53,7 @@ public interface BoardService {
 	List<Map<String, Object>> selectFileList(Map<String, Object> map) throws Exception;
 
 	List<Map<String, Object>> searchBoard(Map<String, Object> map) throws Exception;
-
+	
+	void insertScrap(Map<String, Object> map) throws Exception;
 	
 }
