@@ -209,6 +209,11 @@ public class BoardServiceImpl implements BoardService {
 	public List<Map<String, Object>> searchBoard(Map<String, Object> map) throws Exception {
 		return boardDAO.searchBoard(map);
 	}
+
+	@Override
+	public void insertScrap(Map<String, Object> map) throws Exception {
+		boardDAO.insertScrap(map);
+	}
 	
 	
 }
