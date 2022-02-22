@@ -98,7 +98,7 @@ function testttt(n) {
 	
 	<!-- 댓글 리스트 -->
 	<div id="reply">
-	  <div>댓글 <c:out value="${count.COUNT }"></c:out></div>
+	  <div>댓글 <c:out value="${count}"></c:out></div>
 	  <c:if test="${bestcomment.RECOMMAND_COUNT != '0' }">
 	  <div>
 	  	<p>
@@ -168,6 +168,21 @@ function testttt(n) {
             </div>
         </form>
     </div>
+
+    <div align="center">
+			<c:if test="${pmap.startpag>1}">
+				<a
+					href="../board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE }&BOARD_NO=${param.BOARD_NO }&PAG_NUM=${pmap.startpag-2}">이전</a>
+			</c:if>
+			<c:forEach var="i" begin="${pmap.startpag }" end="${pmap.endpage }">
+				<a href="../board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE }&BOARD_NO=${param.BOARD_NO }&PAG_NUM=${i}">[${i}]</a>
+			</c:forEach>
+			<c:if test="${pmap.endpage<pmap.maxpag}">
+				<a
+					href="../board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE }&BOARD_NO=${param.BOARD_NO }&PAG_NUM=${pmap.startpag+2}">다음</a>
+			</c:if>
+		</div>
+
     <%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
     <script type="text/javascript">
@@ -266,6 +281,7 @@ function testttt(n) {
 		++gfv_count
 	}
     </script>
+
 
 </body>
 </html>

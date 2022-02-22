@@ -27,6 +27,8 @@ public interface ProjectService {
 	void deleteProject(Map<String, Object> map) throws Exception;
 
 	void insertProjectApp(Map<String, Object> map) throws Exception;
+	
+	int countProjectList(Map<String, Object> map)throws Exception;
 
 	// 파일 업로드 
 		

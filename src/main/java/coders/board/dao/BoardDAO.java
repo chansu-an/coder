@@ -138,6 +138,23 @@ public class BoardDAO extends AbstractDAO {
 		return (List<Map<String, Object>>)selectList("board.searchBoard", map);		
 	}
 	
+
+	public int commentCount(Map<String, Object> map) {
+		return (int)selectOne("board.commentCount",map);
+	}
+	
+	public int countDeleteList(Map<String, Object> map) {
+		return (int)selectOne("board.countDeleteList",map);
+	}
+	
+	public int countReportList(Map<String, Object> map) {
+		return (int)selectOne("board.countReportList",map);
+	}
+	
+	public int countborad(Map<String, Object> map) {
+		return (int)selectOne("board.countborad",map);
+	}
+
 	public int insertScrap(Map<String, Object> map) {
 		return (int) insert("board.insertScrap", map);
 	}
@@ -152,5 +169,5 @@ public class BoardDAO extends AbstractDAO {
 		
 	}
 	
-	
+
 }

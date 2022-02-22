@@ -211,6 +211,29 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+
+	public int commentCount(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.commentCount(map);
+	}
+
+	@Override
+	public int countDeleteList(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.countDeleteList(map);
+	}
+
+	@Override
+	public int countReportList(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.countReportList(map);
+	}
+
+	@Override
+	public int countborad(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDAO.countborad(map);
+
 	public int insertScrap(Map<String, Object> map) throws Exception {
 		return boardDAO.insertScrap(map);
 	}
@@ -223,6 +246,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int deleteScrap(Map<String, Object> map) throws Exception {
 		return boardDAO.deleteScrap(map);
+
 	}
 	
 	

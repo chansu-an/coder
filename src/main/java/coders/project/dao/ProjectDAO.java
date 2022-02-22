@@ -77,6 +77,9 @@ public class ProjectDAO extends AbstractDAO {
 		update("project.deleteFileList",map);
 			
 		}
+		public int countProjectlist(Map<String, Object> map)throws Exception{
+			return (int)selectOne("project.countProjectList",map);
+		}
 //		public void updateFileList(Map<String,Object>map) {
 //			update("proejct.updateFileList",map);
 //		}

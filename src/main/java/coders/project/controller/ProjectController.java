@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import coders.common.common.CommandMap;
 import coders.common.service.CommonProjectService;
+import coders.packing.Packaging;
 import coders.project.service.ProjectService;
 
 @Controller
@@ -20,13 +21,23 @@ public class ProjectController {
 
 	@Resource(name = "projectService")
 	private ProjectService projectService;
+	
+	@Resource(name="Packaging")
+	private Packaging packaging;
 
 //	프로젝트 리스트
 	@RequestMapping(value = "/Project/Project.do")
 	public ModelAndView ProjectList(CommandMap commandMap, HttpServletRequest request) throws Exception {
-
+		int count;
+		int pag = 1;
+		String pags = request.getParameter("PAG_NUM");
+		if(pags!=null) {
+			pag = Integer.parseInt(pags);
+		}
 		ModelAndView mav = new ModelAndView("/project/project_board_list");
-
+		count = projectService.countProjectList(commandMap.getMap());
+		packaging.Packag(commandMap.getMap(), pag,5, count);
+		
 		// 추가 02.15
 		/* projectService.insertProject(commandMap.getMap(),request); */
 
@@ -36,6 +47,7 @@ public class ProjectController {
 		mav.addObject("list", list);
 		mav.addObject("list1", list1);
 		mav.addObject("list2", list2);
+		mav.addObject("map", commandMap.getMap());
 		return mav;
 	}
 

@@ -4,14 +4,14 @@
 
 <sql id="pagingPre">
 <![CDATA[
-	SELECT AAA.* FROM(SELECT AA.*, COUNT(*) OVER() AS TOTAL_COUNT,ROWNUM num FROM(
+	SELECT AAA.* FROM(SELECT AA.*,ROWNUM num FROM(
 ]]>
 </sql>
 
 
 <sql id="pagingPost">
 <![CDATA[
-	)aa)aaa where num between #{START} and #{END}
+	)aa)aaa where AAA.num between #{START} and #{END}
 ]]>
 </sql>
 </mapper>
