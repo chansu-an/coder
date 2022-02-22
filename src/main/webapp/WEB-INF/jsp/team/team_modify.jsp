@@ -65,6 +65,10 @@
 						<col width="35%" />
 						<col width="15%" />
 						<col width="35%" />
+						<col width="15%" />
+						<col width="35%" />
+						<col width="15%" />
+						<col width="35%" />
 					</colgroup>
 					<tbody>
 						<tr>
@@ -77,16 +81,24 @@
 								name="PD_TITLE" class="wdp_90" value="${map.PD_TITLE}" /></td>
 						</tr>
 						<tr>
-							<th scope="row">진행도</th>
-							<td colspan="3"><input type="text" id="PD_ING"
-								name="PD_ING" class="wdp_90"
-								value="${map..PD_ING }" /></td>
+							<th>진행도 : <select id="PD_ING" name="PD_ING">
+						<option value="start">진행예정</option>
+						<option value="ing">진행중</option>
+						<option value="final">완료</option>
+				</select>
 						</tr>
 						<tr>
-							<th scope="row">중요도</th>
-							<td colspan="3"><input type="date" id="PD_IMPORT"
-								name="PD_IMPORT" class="wdp_90"
-								value="${map.PD_IMPORT }" /></td>
+							<th>중요도 : <select id="PD_IMPORT" name="PD_IMPORT">
+					<option value="waring">긴급</option>
+					<option value="middle">중간</option>
+					<option value="row">낮음</option>
+				</select></th>
+						</tr>
+						<tr>
+							<th scope="row">시작일</th>
+							<td colspan="3"><input type="date" id="PD_START"
+								name="PD_START" pattern="yyyy/mm/dd" class="wdp_90"
+								value="${map.PD_START }" /></td>
 						</tr>
 						<tr>
 							<th scope="row">종료일</th>
@@ -131,7 +143,7 @@
 				</table>
 				<div id="fileDiv">
 					<p>
-						<a href="../Project/Team.do" class="btn" id="list">목록으로</a> <input
+						<a href="/net/Project/Team.do" class="btn" id="list">목록으로</a> <input
 							type="submit" value="수정하기"> <a href="#this" class="btn"
 							id="addFile">파일추가</a>
 
