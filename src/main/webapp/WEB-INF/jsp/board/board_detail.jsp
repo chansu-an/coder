@@ -50,9 +50,9 @@ function testttt(n) {
 			</tr>
 			<tr>
 				<th scope="row">추천수</th> 
-				<td>${map.RECOMMEND_COUNT }</td>
+				<td id="recommend_count">${map.RECOMMEND_COUNT }</td>
 				<th scope="row">신고수</th> 
-				<td>${map.REPORT_COUNT }</td>
+				<td id="report_count">${map.REPORT_COUNT }</td>
 			</tr> 
 			<tr> 
 				<th scope="row">작성자</th> 
@@ -92,8 +92,8 @@ function testttt(n) {
 	<!-- 신고, 추천 -->
 	<!-- 신고하기 누르면 REPORT_COUNT + 1, 추천하기 누르면 RECOMMEND_COUNT + 1 -->
 	<div>
-	<a href="/net/board/recommend.do?IDENTI_TYPE=${map.IDENTI_TYPE}&BOARD_NO=${map.BOARD_NO}" class="btn" id="recommend">추천하기</a>
-	<a href="/net/board/report.do?IDENTI_TYPE=${map.IDENTI_TYPE}&BOARD_NO=${map.BOARD_NO}" onclick="return false;" class="btn" id="report">신고하기</a>	
+	<a href="#this" class="btn" id="recommend">추천하기</a>
+	<a href="#this" class="btn" id="report">신고하기</a>	
 	</div>
 	
 	<!-- 댓글 리스트 -->
@@ -172,22 +172,78 @@ function testttt(n) {
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
     <script type="text/javascript">
 	$(document).ready(function(){
+		if(${scrapcheck} == 1){
+			$("#scrap").bind("click", function(e){ //스크랩 버튼
+				e.preventDefault();
+				$.ajax({
+					 url : "<c:url value='/board/deleteScrap.do?USER_NO=${sessionScope.session.USER_NO}&BOARD_NO=${map.BOARD_NO}'/>",
+					 type : "post",
+					 dataType : 'json',
+					 contentType : "application/json; charset=UTF-8",
+					 success : function(result){
+						 alert("스크랩 취소");
+						 location.reload();
+					 },
+					 error : function(){
+						 alert("서버요청실패");
+					 }
+				 })
+			});
+		}else{
+			$("#scrap").bind("click", function(e){ //스크랩 버튼
+				e.preventDefault();
+				$.ajax({
+					 url : "<c:url value='/board/insertScrap.do?USER_NO=${sessionScope.session.USER_NO}&BOARD_NO=${map.BOARD_NO}'/>",
+					 type : "post",
+					 dataType : 'json',
+					 contentType : "application/json; charset=UTF-8",
+					 success : function(result){
+						 alert("스크랩 완료");
+						 location.reload();
+					 },
+					 error : function(){
+						 alert("서버요청실패");
+					 }
+				 })
+			});			
+		}
 		
-		$("#scrap").on("click", function(e){ //스크랩 버튼
+		$("#recommend").bind("click", function(e){ //추천하기 버튼
 			e.preventDefault();
 			$.ajax({
-				 url : "<c:url value='/board/insertScrap.do?USER_NO=${sessionScope.session.USER_NO}&BOARD_NO=${map.BOARD_NO}'/>",
+				 url : "<c:url value='/board/recommend.do?BOARD_NO=${map.BOARD_NO}'/>",
 				 type : "post",
 				 dataType : 'json',
 				 contentType : "application/json; charset=UTF-8",
 				 success : function(){
-					 alert("스크랩 완료");
+					 alert("추천");
+					 $("#recommend").unbind("click");
+					 $("#recommend_count").load(window.location.href+ " #recommend_count");
 				 },
 				 error : function(){
 					 alert("서버요청실패");
 				 }
 			 })
-		});		
+		});
+		
+		$("#report").bind("click", function(e){ //신고하기 버튼
+			e.preventDefault();
+			$.ajax({
+				 url : "<c:url value='/board/report.do?BOARD_NO=${map.BOARD_NO}'/>",
+				 type : "post",
+				 dataType : 'json',
+				 contentType : "application/json; charset=UTF-8",
+				 success : function(){
+					 alert("신고");
+					 $("#report").unbind("click");
+					 $("#report_count").load(window.location.href+ " #report_count");
+				 },
+				 error : function(){
+					 alert("서버요청실패");
+				 }
+			 })
+		});
+		
 		
 	});
 

@@ -40,9 +40,9 @@ public interface BoardService {
 	
 	void deleteComment(Map<String, Object> map) throws Exception;
 
-	void reportBoard(Map<String, Object> map) throws Exception;
+	int reportBoard(Map<String, Object> map) throws Exception;
 
-	void recommendBoard(Map<String, Object> map) throws Exception;
+	int recommendBoard(Map<String, Object> map) throws Exception;
 	
 	void restoreBoard(Map<String, Object> map) throws Exception;
 
@@ -54,6 +54,10 @@ public interface BoardService {
 
 	List<Map<String, Object>> searchBoard(Map<String, Object> map) throws Exception;
 	
-	void insertScrap(Map<String, Object> map) throws Exception;
+	int insertScrap(Map<String, Object> map) throws Exception;
+	
+	Map<String, Object> selectCheckScarp(Map<String, Object> map) throws Exception;
+	
+	int deleteScrap(Map<String, Object> map) throws Exception;
 	
 }
