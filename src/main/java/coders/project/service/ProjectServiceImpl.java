@@ -109,6 +109,12 @@ public class ProjectServiceImpl implements ProjectService {
 	public void insertProjectApp(Map<String, Object> map) throws Exception {
 		projectDAO.insertProjectApp(map);
 	}
+
+	@Override
+	public int countProjectList(Map<String, Object> map) throws Exception {
+		return projectDAO.countProjectlist(map);
+	}
+	
 	
 //	 @Override 
 //	 public void updateFileList(Map<String,Object>map)throws Exception{

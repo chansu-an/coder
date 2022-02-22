@@ -8,11 +8,11 @@
 	            	<div class="border-end bg-white" id="sidebar-wrapper">
 		                <div class="sidebar-heading border-bottom bg-light">Coders</div>
 		                <div class="list-group list-group-flush">
-		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do?IDENTI_TYPE=1">공지사항</a>
-		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do?IDENTI_TYPE=2">QnA 게시판</a>
-		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do?IDENTI_TYPE=3">자유게시판</a>
-		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">프로젝트</a>
-		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do?IDENTI_TYPE=4">건의사항</a>		                    
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/openBoardList.do?IDENTI_TYPE=1">공지사항</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/openBoardList.do?IDENTI_TYPE=2">QnA 게시판</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/openBoardList.do?IDENTI_TYPE=3">자유게시판</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../Project/Project.do">프로젝트</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/openBoardList.do?IDENTI_TYPE=4">건의사항</a>		                    
 		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">신고관리</a>
 		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">회원관리</a>
 		                </div>
@@ -22,10 +22,10 @@
 	            	<div class="border-end bg-white" id="sidebar-wrapper">
 		                <div class="sidebar-heading border-bottom bg-light">Coders</div>
 		                <div class="list-group list-group-flush">
-		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do?IDENTI_TYPE=1">공지사항</a>
-		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do?IDENTI_TYPE=2">QnA 게시판</a>
-		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do?IDENTI_TYPE=3">자유게시판</a>
-		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">프로젝트</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/openBoardList.do?IDENTI_TYPE=1">공지사항</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/openBoardList.do?IDENTI_TYPE=2">QnA 게시판</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/openBoardList.do?IDENTI_TYPE=3">자유게시판</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../Project/Project.do"">프로젝트</a>
 		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/net/board/openBoardList.do?IDENTI_TYPE=4">건의사항</a>
 		                </div>
             		</div>

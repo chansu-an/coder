@@ -53,6 +53,14 @@ public interface BoardService {
 	List<Map<String, Object>> selectFileList(Map<String, Object> map) throws Exception;
 
 	List<Map<String, Object>> searchBoard(Map<String, Object> map) throws Exception;
+	
+	int commentCount(Map<String, Object> map)throws Exception;
+	
+	int countDeleteList(Map<String, Object> map)throws Exception;
+	
+	int countReportList(Map<String, Object> map)throws Exception;
+	
+	int countborad(Map<String, Object> map)throws Exception;
 
 	
 }

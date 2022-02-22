@@ -17,7 +17,9 @@ SELECT BOARD.BOARD_NO,BOARD.IDENTI_TYPE,USERS.NICK_NAME,BOARD.TITLE,TO_CHAR(BOAR
 		resultType="hashmap"><![CDATA[
 SELECT BOARD.BOARD_NO,BOARD.IDENTI_TYPE,USERS.NICK_NAME,BOARD.TITLE,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh24:MI)') "BOARD_DATE",BOARD.RECOMMEND_COUNT FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.IDENTI_TYPE= '3' AND BOARD.DEL_GB = 'N' AND RECOMMEND_COUNT >= '0' AND BOARD.REPORT_COUNT < '20' AND ROWNUM <=3 ORDER BY BOARD_DATE DESC
 ]]></select>
-<select id="selectBoardList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+<select id="selectBoardList" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre"/>
+<![CDATA[
 SELECT A.BOARD_NO
 	 , A.NICK_NAME
 	 , A.TITLE
@@ -76,12 +78,22 @@ FROM(SELECT BOARD.BOARD_NO
 	<![CDATA[
 	) A	
 	]]>
+	<include refid="common.pagingPost"/>
 	</select>
 
 	<!-- 게시글 숫자 -->
-<select id="cuntborad" parameterType="hashmap" resultType="hashmap">
+<select id="countborad" parameterType="hashmap" resultType="_int">
+
 <![CDATA[
-SELECT COUNT(*) FORM BOARD WHERE IDENTI_TYPE= #{IDENTI_TYPE}
+SELECT COUNT(*) FROM BOARD WHERE IDENTI_TYPE= #{IDENTI_TYPE} AND DEL_GB='N' AND REPORT_COUNT<20
+]]>
+   
+</select>
+
+	<!-- 검색 게시글 숫자 -->
+<select id="countsearchborad" parameterType="hashmap" resultType="_int">
+<![CDATA[
+SELECT COUNT(*) FROM BOARD WHERE IDENTI_TYPE= #{IDENTI_TYPE}
 ]]>
    		 <!-- 키워드 -->
 			<if test='SEARCH_TYPE == "TITLE"'>
@@ -188,7 +200,7 @@ UPDATE BOARD SET READ_COUNT = READ_COUNT + 1 WHERE BOARD_NO=#{BOARD_NO}
 SELECT BOARD.BOARD_NO,USERS.NICK_NAME,BOARD.TITLE,BOARD.READ_COUNT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh24:MI)') "BOARD_DATE",ROWNUM FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.DEL_GB = 'Y'
 ]]></select>
 <!-- 삭제글 수 -->
-<select id="countDeleteList" parameterType="hashmap" resultType="hashmap">
+<select id="countDeleteList" parameterType="hashmap" resultType="_int">
 SELECT COUNT(*) FROM BOARD WHERE DEL_GB = 'Y'
 </select>
 	<!-- 삭제글 복구 -->
@@ -200,7 +212,8 @@ UPDATE BOARD SET DEL_GB = 'N' WHERE BOARD_NO = #{BOARD_NO}
 		resultType="hashmap"><![CDATA[
 SELECT BOARD.BOARD_NO,USERS.NICK_NAME,BOARD.TITLE,BOARD.READ_COUNT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh24:MI)') "BOARD_DATE",ROWNUM FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.DEL_GB = 'N' AND BOARD.REPORT_COUNT >= '20'
 ]]></select>
-<select id="countReportList" parameterType="hashmap" resultType="hashmap">
+<!-- 신고글 갯수 -->
+<select id="countReportList" parameterType="hashmap" resultType="_int">
 SELECT count(*) FROM BOARD  WHERE DEL_GB = 'N' AND REPORT_COUNT >= '20'
 </select>
 	<!-- 신고글 복원 -->
@@ -226,7 +239,7 @@ UPDATE BOARD SET DEL_GB='Y' WHERE BOARD_NO = #{BOARD_NO}
 
 	<!-- 답글수 -->
 	<select id="commentCount" parameterType="hashmap"
-		resultType="hashmap"><![CDATA[
+		resultType="_int"><![CDATA[
 SELECT COUNT(*) AS COUNT FROM REPLY WHERE BOARD_NO=#{BOARD_NO} AND DEL_GB='N'
 ]]></select>
 <!-- 게시글 작성 -->
@@ -302,13 +315,13 @@ SELECT A.*, ROWNUM
  WHERE ROWNUM = 1
 ]]></select>
 	<!-- 답글 리스트 -->
-<select id="commentList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+<select id="commentList" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre"/>
+<![CDATA[
 SELECT REPLY.RE_NO,REPLY.REF_NO,REPLY.RECOMMAND_COUNT,REPLY.REF_STEP,REPLY.USER_NO,USERS.NICK_NAME,REPLY.CONTEXT,TO_CHAR(REPLY.REPLY_DATE,'YY/MM/DD(hh24:MI)') "REPLY_DATE",ROWNUM FROM REPLY INNER JOIN USERS ON USERS.USER_NO = REPLY.USER_NO WHERE BOARD_NO = #{BOARD_NO} AND REPLY.DEL_GB = 'N' ORDER BY REF_NO DESC ,REF_STEP
-]]></select>
-<select id="CountcommentList" parameterType="hashmap"
-		resultType="hashmap"><![CDATA[
-SELECT Cunt FROM REPLY INNER JOIN USERS ON USERS.USER_NO = REPLY.USER_NO WHERE BOARD_NO = #{BOARD_NO} AND REPLY.DEL_GB = 'N' ORDER BY REF_NO DESC ,REF_STEP
-]]></select>
+]]>
+<include refid="common.pagingPost"/>
+</select>
 <!-- 삭제글,신고글 상세보기 -->
 <select id="selectAdminDetail" parameterType="hashmap" resultType="hashmap"><![CDATA[
 SELECT BOARD.BOARD_NO,USERS.NICK_NAME,BOARD.TITLE,BOARD.USER_NO,BOARD.CONTEXT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh24:MI)') "BOARD_DATE",BOARD.BOARD_NO,BOARD.READ_COUNT,BOARD.RECOMMEND_COUNT,BOARD.REPORT_COUNT FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.BOARD_NO = #{BOARD_NO}

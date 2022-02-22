@@ -53,6 +53,19 @@
 
 		</tbody>
 	</table>
+	<div align="center">
+			<c:if test="${map.startpag>1}">
+				<a
+					href="../Project/Project.do?PAG_NUM=${map.startpag-2}">이전</a>
+			</c:if>
+			<c:forEach var="i" begin="${map.startpag }" end="${map.endpage }">
+				<a href="../Project/Project.do?PAG_NUM=${i}">[${i}]</a>
+			</c:forEach>
+			<c:if test="${map.endpage<map.maxpag}">
+				<a
+					href="../Project/Project.do?PAG_NUM=${map.startpag+2}">다음</a>
+			</c:if>
+		</div>
 	<a href="../Project/Write.do" class="btn" id="write">프로젝트 생성</a>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>

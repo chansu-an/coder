@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import coders.board.service.BoardService;
 import coders.common.common.CommandMap;
+import coders.packing.Packaging;
 
 
 
@@ -22,20 +23,28 @@ public class BoardController {
 
 	@Resource(name="boardService")
 	private BoardService boardService;
+	@Resource(name="Packaging")
+	private Packaging packaging;
 	
 	//글목록 보기 /board/openBoardList.do?IDENTI_TYE=1
-	@RequestMapping(value="/board/openBoardList.do", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value="/board/openBoardList.do")
 	public ModelAndView openBoardList(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		String page = request.getParameter("PAG_NUM");
+		int pag = 1;
+		if(page!=null) {
+			pag = Integer.parseInt(page);
+		}
 		ModelAndView mav = new ModelAndView("/board/board_list");
 		String key = request.getParameter("KEYWORD");
-		
+		int count = boardService.countborad(commandMap.getMap());
+		packaging.Packag(commandMap.getMap(), pag, 5, count);
 		List<Map<String, Object>> list = boardService.selectBoardList(commandMap.getMap());
 		if(!list.isEmpty()) {
 			String IDENTI_TYPE = list.get(0).get("IDENTI_TYPE").toString();
 			mav.addObject("IDENTI_TYPE", IDENTI_TYPE);			
 		}
 		mav.addObject("list", list);
-		
+		mav.addObject("map",commandMap.getMap());
 		//검색기능
 		if(key != null) {
 			List<Map<String, Object>> list1 = boardService.searchBoard(commandMap.getMap());
@@ -82,12 +91,20 @@ public class BoardController {
 	@RequestMapping(value="/board/detail.do")
 	public ModelAndView selectBoardDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/board_detail");
-		
+		int count;
+		String page = request.getParameter("PAG_NUM");
+		int pag = 1;
+		if(page!=null) {
+			pag = Integer.parseInt(page);
+		}
+		count = boardService.commentCount(commandMap.getMap());
+		packaging.Packag(commandMap.getMap(), pag, 5, count);
+		System.out.println(count);
+		System.out.println(commandMap.getMap());
 //		commandMap.put("BOARD_NO", Integer.parseInt(request.getParameter("BOARD_NO")));
 //		commandMap.put("IDENTI_TYPE", request.getParameter("IDENTI_TYPE"));
 		
 		Map<String, Object> map = boardService.selectBoardDetail(commandMap.getMap());
-		Map<String, Object> count = boardService.selectCommentCount(commandMap.getMap());//댓글수
 		Map<String, Object> bestcomment = boardService.selectBestComment(commandMap.getMap());//인기 댓글
 		
 		List<Map<String, Object>> list = boardService.selectCommentList(commandMap.getMap());//댓글 리스트
@@ -98,6 +115,7 @@ public class BoardController {
 		mav.addObject("filelist", filelist);
 		mav.addObject("count", count);
 		mav.addObject("bestcomment", bestcomment);
+		mav.addObject("pmap", commandMap.getMap());
 		
 		return mav;
 	}
