@@ -233,7 +233,7 @@ public class BoardServiceImpl implements BoardService {
 	public int countborad(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return boardDAO.countborad(map);
-
+	}
 	public int insertScrap(Map<String, Object> map) throws Exception {
 		return boardDAO.insertScrap(map);
 	}
