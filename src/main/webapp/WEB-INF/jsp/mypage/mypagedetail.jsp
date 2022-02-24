@@ -16,7 +16,7 @@
 							<div class="col-12">
 								<label for="email" class="form-label">프로필 사진</label>
 								<div>
-									<img src="../img/profile/${param.USER_NO}/${map.PROFILE}" width="200" height="200" class="img-thumbnail">
+									<img src="../img/profile/${param.USER_NO}/${map.PROFILE}" class="img-thumbnail">
 								</div>
 							</div>
 
