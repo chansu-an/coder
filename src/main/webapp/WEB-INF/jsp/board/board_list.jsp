@@ -74,7 +74,7 @@
 					<c:forEach items="${list }" var="row">
 						<tr>
 							<td>${row.ROWNUM }</td>
- 							<td><a href="/net/board/detail.do?IDENTI_TYPE=${IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a> [${row.REPLY_COUNT}]</td>
+ 							<td><a href="/net/board/detail.do?IDENTI_TYPE=${IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE}</a> [${row.REPLY_COUNT}]</td>
 							<td>${row.READ_COUNT }</td>
 							<td>${row.RECOMMEND_COUNT }</td>
 							<td>${row.NICK_NAME }</td>

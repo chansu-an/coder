@@ -13,8 +13,6 @@ function testttt(n) {
 		
 	}
 };
-
-
 </script>
 <head>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>

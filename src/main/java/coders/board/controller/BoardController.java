@@ -96,13 +96,10 @@ public class BoardController {
 		int pag = 1;
 		if(page!=null) {
 			pag = Integer.parseInt(page);
+			commandMap.getMap().put("page", page);
 		}
 		count = boardService.commentCount(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 5, count);
-		System.out.println(count);
-		System.out.println(commandMap.getMap());
-//		commandMap.put("BOARD_NO", Integer.parseInt(request.getParameter("BOARD_NO")));
-//		commandMap.put("IDENTI_TYPE", request.getParameter("IDENTI_TYPE"));
 		
 		Map<String, Object> map = boardService.selectBoardDetail(commandMap.getMap());
 		Map<String, Object> bestcomment = boardService.selectBestComment(commandMap.getMap());//인기 댓글
@@ -116,7 +113,6 @@ public class BoardController {
 		mav.addObject("count", count);
 		mav.addObject("bestcomment", bestcomment);
 		mav.addObject("pmap", commandMap.getMap());
-		
 		return mav;
 	}
 	

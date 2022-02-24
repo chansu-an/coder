@@ -34,7 +34,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public Map<String, Object> selectBoardDetail(Map<String, Object> map) throws Exception {
-		boardDAO.updateHitCnt(map);
+		if(map.get("page")==null){
+		boardDAO.updateHitCnt(map);}
 		
 		return boardDAO.selectBoardDetail(map);
 	}
