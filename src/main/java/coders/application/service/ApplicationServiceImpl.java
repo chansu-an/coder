@@ -31,4 +31,9 @@ public class ApplicationServiceImpl implements ApplicationService{
 		
 	}
 	
+	@Override
+	public void ProjectApp(Map<String, Object> map) throws Exception{
+		applicationDAO.ProjectApp(map);
+	}
+	
 }
