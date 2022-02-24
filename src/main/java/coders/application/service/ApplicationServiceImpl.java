@@ -24,4 +24,11 @@ public class ApplicationServiceImpl implements ApplicationService{
 	public List<Map<String, Object>> selectMemberList(Map<String, Object> map) throws Exception {
 		return applicationDAO.selectMemberList(map);
 	}
+
+	@Override
+	public void insertProjectApp(Map<String, Object> map) throws Exception {
+		 applicationDAO.insertProjectApp(map);
+		
+	}
+	
 }

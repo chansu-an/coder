@@ -5,7 +5,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,9 +25,8 @@ public class TeamController {
 	@RequestMapping(value = "/Team/List.do")
 	public ModelAndView TeamList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/team/team_list");
-		commandMap.put("PROJECT_NO", "59");
-		commandMap.put("USER_NO", "1");
-		System.out.println(commandMap.getMap());
+		
+		commandMap.put("PROJECT_NO", request.getParameter("PROJECT_NO"));
 		List<Map<String, Object>> list = teamService.selectTeamList(commandMap.getMap());
 		
 		mav.addObject("list", list);
@@ -33,20 +34,19 @@ public class TeamController {
 	}
 
 	@RequestMapping(value = "/Team/Write.do", method = RequestMethod.GET)
-	public ModelAndView TeamWriteForm(CommandMap commandMap) throws Exception {
+	public ModelAndView TeamWriteForm(HttpServletRequest request,HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("/team/team_write");
-System.out.println(1);
+	
+		
 		return mav;
 	}
 
 	@RequestMapping(value = "/Team/Write.do", method = RequestMethod.POST)
 	public ModelAndView TeamWrite(CommandMap commandMap,HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/Team/List.do");
-
-		commandMap.put("PROJECT_NO", "59");
-		commandMap.put("USER_NO", "1");
-		teamService.insertTeam(commandMap.getMap(), request);
+		ModelAndView mav = new ModelAndView("redirect:/Team/List.do?PROJECT_NO="+commandMap.getMap().get("PROJECT_NO"));
 		System.out.println(commandMap.getMap());
+		teamService.insertTeam(commandMap.getMap(), request);
+		
 		return mav;
 	}
 
@@ -83,8 +83,8 @@ System.out.println(1);
 	}
 
 	@RequestMapping(value = "/Team/Delete.do")
-	public ModelAndView TeamDelete(CommandMap commandMap) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/Team/List.do");
+	public ModelAndView TeamDelete(CommandMap commandMap,HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView("redirect:/Team/List.do?PROJECT_NO="+request.getParameter("PROJECT_NO"));
 
 		teamService.deleteTeam(commandMap.getMap());
 		return mav;

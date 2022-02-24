@@ -39,7 +39,7 @@ public class ProjectDAO extends AbstractDAO {
 	}
 
 	public void deleteProject(Map<String, Object> map) throws Exception {
-		delete("project.deleteProject", map);
+		update("project.deleteProject", map);
 
 	}
 
@@ -63,9 +63,7 @@ public class ProjectDAO extends AbstractDAO {
 		public List<Map<String, Object>> selectProjectFileList(Map<String,Object>map)throws Exception{
 			return(List<Map<String, Object>>)selectList("project.selectProjectFile",map);
 		}
-//		public void deleteFileList(Map<String,Object>map)throws Exception{
-//			update("project.deleteFileList",map);
-//		}
+
 		public void updateFile(Map<String,Object>map)throws Exception{
 			update("project.updateFile",map);
 		}
@@ -77,8 +75,6 @@ public class ProjectDAO extends AbstractDAO {
 		public int countProjectlist(Map<String, Object> map)throws Exception{
 			return (int)selectOne("project.countProjectList",map);
 		}
-//		public void updateFileList(Map<String,Object>map) {
-//			update("proejct.updateFileList",map);
-//		}
+
 
 }
