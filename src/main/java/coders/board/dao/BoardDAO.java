@@ -36,12 +36,12 @@ public class BoardDAO extends AbstractDAO {
 	
 	public void insertComment(Map<String, Object> map) throws Exception{
 		insert("board.insertComment", map);
-		
+		update("board.boardNotice", map);
 	}
 	
 	public void insertComment2(Map<String, Object> map) throws Exception{
 		insert("board.insertComment2", map);
-		
+		update("board.boardNotice", map);
 	}
 
 	public void insertFile(Map<String, Object> map) throws Exception {

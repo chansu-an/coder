@@ -12,20 +12,21 @@
     <div class="row g-5">  
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">회원가입</h4>
-        <form action="./RegisterInsert.do" method="post" class="needs-validation" novalidate>
+        <form id="regitsterform" method="post" novalidate>
+        <input type="hidden" name="check_email" value=""/>
           <div class="row g-3">
             <div class="col-12">
-              <label for="username" class="form-label">이름</label>
+              <label for="email" class="form-label">이메일</label>
               <div class="input-group has-validation">
-                <input type="text" class="form-control focused-email" name="NICK_NAME" id="NICK_NAME" placeholder="이름" required>
-                &nbsp&nbsp&nbsp<a href="#this" id="openModalBtn" class="btn btn-primary">ID 중복체크</a>
-              <div class="invalid-feedback">이름을 입력해주세요</div>
+                <input type="email" class="form-control focused-email" name="EMAIL" id="EMAIL" placeholder="you@example.com" required>
+                &nbsp&nbsp&nbsp<a href="#this" id="openModalBtn" class="btn btn-primary">ID 중복체크</a>          
+              <div class="invalid-feedback">이메일을 입력해주세요</div>
               </div>
             </div>
             <div class="col-12">
-              <label for="email" class="form-label">이메일</label>
-              <input type="email" class="form-control" name="EMAIL" id="EMAIL" placeholder="you@example.com" required>
-              <div class="invalid-feedback">이메일을 작성해주세요</div>
+              <label for="username" class="form-label">이름</label>
+              <input type="text" class="form-control" name="NICK_NAME" id="NICK_NAME" placeholder="이름" required>
+              <div class="invalid-feedback">이름을 작성해주세요</div>
             </div>
             <div class="col-12">
               <label for="password" class="form-label">비밀번호</label>
@@ -58,7 +59,7 @@
             <label class="form-check-label" for="save-info">Save this information for next time</label>
           </div>
           <hr class="my-4">
-          <button class="w-100 btn btn-primary btn-lg" type="submit">회원가입 완료</button>
+          <button class="w-100 btn btn-primary btn-lg" id="register_button">회원가입 완료</button>
         </form>
       </div>
     </div>
@@ -97,12 +98,31 @@
     </div>
   </div>
 </div>
+<div id="modalBox3" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">모달 타이틀</h4>
+      </div> -->
+      <div class="modal-body">
+        ID 중복체크 확인 필수
+      </div>
+      <div class="modal-footer">
+		<button type="button" class="btn btn-primary" id="confirmModalBtn3">확인</button>
+        <button type="button" class="btn btn-default" id="closeModalBtn3">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 	<script type="text/javascript">	
+	$(document).ready(function(){
 	  $('#openModalBtn').on('click', function(){
-			 var userId = $("#NICK_NAME").val();//NICK_NAME에 입력되는 값
+			 var userId = $("#EMAIL").val();//EMAIL에 입력되는 값
+			 $("input[name=check_email]").val('Y');
+			 
 			 $.ajax({
 				 url : "<c:url value='/main/checkUserNickName.do'/>",
 				 type : "post",
@@ -121,8 +141,6 @@
 				 }
 			 })
 	  });
-	  /* 	  $('#openModalBtn').on('click', function(){
-	  }); */
 	  // 모달 안의 취소 버튼에 이벤트를 건다.
 	  $('#closeModalBtn').on('click', function(){
 	    $('#modalBox').modal('hide');
@@ -137,6 +155,28 @@
 	  $('#confirmModalBtn2').on('click', function(){
 	    $('#modalBox2').modal('hide');
 	  });
+	  $('#closeModalBtn3').on('click', function(){
+		 $('#modalBox3').modal('hide');
+	  });
+	  $('#confirmModalBtn3').on('click', function(){
+		 $('#modalBox3').modal('hide');
+	  });
+	  
+	  
+	  $('#register_button').on('click', function(){//회원가입버튼
+		  
+	  	  if($("input[name=check_email]").val() == 'Y'){
+	  		var comSubmit = new ComSubmit('regitsterform');
+			comSubmit.setUrl("<c:url value='/main/RegisterInsert.do'/>");
+			comSubmit.submit();
+			    
+	  	  }else{
+	  		$('#modalBox3').modal('show');
+	  		return false;
+	  	  }
+			 
+	  });
+	});
 			
 	</script>
 </body>
