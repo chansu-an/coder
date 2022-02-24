@@ -18,4 +18,6 @@ public interface MainService {
 	void insertUser(Map<String, Object> map) throws Exception;
 	
 	String confirmUser(String ID) throws Exception;
+	
+	Map<String,Object> selectNaverLogin(Map<String, Object> map) throws Exception;
 }

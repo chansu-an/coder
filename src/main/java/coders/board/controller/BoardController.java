@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -40,8 +39,8 @@ public class BoardController {
 		String key = request.getParameter("KEYWORD");
 
 		int count = boardService.countborad(commandMap.getMap());
-		packaging.Packag(commandMap.getMap(), pag, 5, count);
-
+		packaging.Packag(commandMap.getMap(), pag, 10, count);
+		System.out.println(commandMap.getMap());
 		
 		commandMap.put("ORDER_TYPE", request.getParameter("ORDER_TYPE"));
 
@@ -69,7 +68,7 @@ public class BoardController {
 	}
 	
 	//메인에 올라갈 최근 공지, qna 인기글, 자유게시판 인기글
-	@RequestMapping(value="/board/mainList.do")
+	@RequestMapping(value="/board/mainList.do", method = RequestMethod.GET)
 	public ModelAndView noticeList(CommandMap commandMap, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/main_list");
 		
@@ -114,19 +113,11 @@ public class BoardController {
 		}
 		count = boardService.commentCount(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 5, count);
-		System.out.println(count);
-		System.out.println(commandMap.getMap());
-//		commandMap.put("BOARD_NO", Integer.parseInt(request.getParameter("BOARD_NO")));
-//		commandMap.put("IDENTI_TYPE", request.getParameter("IDENTI_TYPE"));
-
-
 		
 		Map<String, Object> map = boardService.selectBoardDetail(commandMap.getMap());
 		Map<String, Object> bestcomment = boardService.selectBestComment(commandMap.getMap());//인기 댓글
-		
 		List<Map<String, Object>> list = boardService.selectCommentList(commandMap.getMap());//댓글 리스트
-		List<Map<String, Object>> filelist = boardService.selectFileList(commandMap.getMap());
-		
+		List<Map<String, Object>> filelist = boardService.selectFileList(commandMap.getMap());//첨부파일 리스트
 		Map<String, Object> scrapcount = boardService.selectCheckScarp(commandMap.getMap());//스크랩 확인
 		int test = 0;
 		if(scrapcount != null) {//스크랩 있을시
