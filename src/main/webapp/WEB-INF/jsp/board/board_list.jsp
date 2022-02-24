@@ -8,8 +8,10 @@
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
 <script>
 	function test(f){
-		f.action="/net/board/openBoardList.do?IDENTI_TYPE=" + ${IDENTI_TYPE}
-		f.submit();
+		var str = "<input type='hidden' name='ORDER_TYPE' value='" + f + "'/>";
+		$(".search-wrap").append(str);
+		/* f.action="/net/board/openBoardList.do?IDENTI_TYPE=" + ${IDENTI_TYPE}
+		f.submit(); */
 	}
 
 	function test1(f){
@@ -38,16 +40,21 @@
     	</c:when>
     </c:choose> 
 	<form name="ORDER_TYPE" method="post">
-	<p style="text-align:right;">
-		<select onchange="test(this.form);" id="ORDER_TYPE" name="ORDER_TYPE">
-			<option>---</option>
-			<option value="DATE">최신순</option>
-			<option value="REPLY">댓글순</option>
-			<option value="READ">조회수</option>
-			<option value="RECOMMEND">추천순</option>
-		</select>
+		<p style="text-align:right;">
+		<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test(this.value);">
+<!-- 		<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test(this.form);"> -->
+			<option>-----</option>
+			<option value="DATE"
+				<c:if test="${order_type == 'DATE'}">selected</c:if>>최신순</option>
+			<option value="REPLY"
+				<c:if test="${order_type == 'REPLY'}">selected</c:if>>댓글순</option>
+			<option value="READ"
+				<c:if test="${order_type == 'READ'}">selected</c:if>>조회순</option>
+			<option value="RECOMMEND"
+				<c:if test="${order_type == 'RECOMMEND'}">selected</c:if>>추천순</option>
+		</select>			
 		<input type="hidden" name="ORDER_TYPE" value="${ORDER_TYPE }"/>
-	</p>
+		</p>
 	</form>
 	<table class="board_list">
 		<colgroup>
@@ -74,7 +81,10 @@
 					<c:forEach items="${list }" var="row">
 						<tr>
 							<td>${row.ROWNUM }</td>
+
  							<td><a href="/net/board/detail.do?IDENTI_TYPE=${IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE}</a> [${row.REPLY_COUNT}]</td>
+
+
 							<td>${row.READ_COUNT }</td>
 							<td>${row.RECOMMEND_COUNT }</td>
 							<td>${row.NICK_NAME }</td>
@@ -122,8 +132,8 @@
 		</div>
 	
 	<p style="text-align:right;"><a href="/net/board/write.do" class="btn" id="write">글쓰기</a>
-<%@ include file="/WEB-INF/include/include-body.jspf" %>
-<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+	<%@ include file="/WEB-INF/include/include-body.jspf" %>
+	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 
 </body>
 </html>

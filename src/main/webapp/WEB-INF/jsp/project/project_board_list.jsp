@@ -66,7 +66,9 @@
 					href="../Project/Project.do?PAG_NUM=${map.startpag+2}">다음</a>
 			</c:if>
 		</div>
+		<c:if test="${sessionScope.session!=null}">
 	<a href="../Project/Write.do" class="btn" id="write">프로젝트 생성</a>
+    </c:if>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 

@@ -43,6 +43,7 @@
    	</bean>
 
    	
+
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**/write.do"/>
@@ -50,6 +51,9 @@
 		</mvc:interceptor>
 	</mvc:interceptors>
    	
+
+   	<bean id="naverLoginVO" class="coders.member.NaverLoginVO"/>
+
 </beans>
 
 

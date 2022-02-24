@@ -19,6 +19,10 @@ SELECT NICK_NAME,PASSWORD,EMAIL,PROFILE,ROWNUM FROM USERS
 <select id="confirmid" parameterType="String" resultType="String"><![CDATA[
 SELECT USER_NO,NICK_NAME,EMAIL FROM USERS WHERE EMAIL =#{ID}
 ]]></select>
+<!-- 네이버 로그인시 중복ID 체크 -->
+<select id="confirmNaverId" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT USER_NO,NICK_NAME,EMAIL FROM USERS WHERE EMAIL =#{EMAIL}
+]]></select>
 <!-- 삭제 유저 리스트 -->
 <select id="selectDeleteUserList" parameterType="hashmap" resultType="hashmap"><![CDATA[
 SELECT NICK_NAME,PASSWORD,EMAIL,PROFILE,ROWNUM FROM USERS WHERE DEL_GB ='Y'
@@ -107,7 +111,7 @@ SELECT IDENTI_TYPE,BOARD.BOARD_NO,TITLE,BOARD.USER_NO,BOARD_DATE,ROWNUM FROM SCR
 <select id="selectArlimeList" parameterType="hashmap" resultType="hashmap">
 <include refid="common.pagingPre"/>
 <![CDATA[
-SELECT IDENTI_TYPE,TITLE,BOARD_NO FROM BOARD INNER JOIN USERS ON  USERS.USER_NO = BOARD.USER_NO WHERE BOARD_AR = 'Y' AND BOARD.USER_NO = 1]]>
+SELECT IDENTI_TYPE,TITLE,BOARD_NO FROM BOARD INNER JOIN USERS ON  USERS.USER_NO = BOARD.USER_NO WHERE BOARD_AR = 'Y' AND BOARD.USER_NO = 1 AND BOARD.DEL_GB = 'N']]>
 <include refid="common.pagingPost"/>
 </select>
 
@@ -155,9 +159,9 @@ UPDATE APPLICATION SET  APPLICATION_AR = 'N' WHERE PROJECT_NO = #{PROJECT_NO} AN
 
 
 <!-- 알림삭제 -->
-<update id="clickArlist" parameterType="hashmap">
+<update id="clickArlist" parameterType="hashmap"><![CDATA[
 UPDATE BOARD SET  BOARD_AR = 'N' WHERE BOARD_NO = #{BOARD_NO}
-</update>
+]]></update>
 <!-- 이력서 작성 -->
 <insert id="insertResume" parameterType="hashmap" ><![CDATA[
 INSERT INTO RESUME (RESUME_NO,USER_NO,NAME,TELL,EMAIL,ADDRESS,ADDRESS1,SKILL,BLOG,FILES,ZIPCODE) 
@@ -179,12 +183,6 @@ SELECT USER_NO,NAME,TELL,EMAIL,ADDRESS,ADDRESS1,SKILL,BLOG,FILES,ZIPCODE FROM RE
 <insert id="insertFollow" parameterType="hashmap"><![CDATA[
 INSERT INTO FOLLOW VALUES(#{USER_NO},#{FOLLOWER})
 ]]></insert>
-
-<!-- 스크랩 추가 -->
-<insert id="insertScrap" parameterType="hashmap"><![CDATA[
-INSERT INTO SCRAP VALUES(#{USER_NO},#{BOARD_NO})
-]]></insert>
-
 
 </mapper>
 

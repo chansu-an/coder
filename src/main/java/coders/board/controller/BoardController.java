@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import coders.board.service.BoardService;
@@ -36,26 +37,38 @@ public class BoardController {
 		}
 		ModelAndView mav = new ModelAndView("/board/board_list");
 		String key = request.getParameter("KEYWORD");
+
 		int count = boardService.countborad(commandMap.getMap());
-		packaging.Packag(commandMap.getMap(), pag, 5, count);
+		packaging.Packag(commandMap.getMap(), pag, 10, count);
+		System.out.println(commandMap.getMap());
+		
+		commandMap.put("ORDER_TYPE", request.getParameter("ORDER_TYPE"));
+
 		List<Map<String, Object>> list = boardService.selectBoardList(commandMap.getMap());
 		if(!list.isEmpty()) {
 			String IDENTI_TYPE = list.get(0).get("IDENTI_TYPE").toString();
 			mav.addObject("IDENTI_TYPE", IDENTI_TYPE);			
 		}
 		mav.addObject("list", list);
+
 		mav.addObject("map",commandMap.getMap());
+
+
 		//검색기능
 		if(key != null) {
 			List<Map<String, Object>> list1 = boardService.searchBoard(commandMap.getMap());
 			mav.addObject("list", list1);
+		}
+		
+		if(request.getParameter("ORDER_TYPE") != null) {
+			mav.addObject("order_type", request.getParameter("ORDER_TYPE"));
 		}
 
 		return mav;
 	}
 	
 	//메인에 올라갈 최근 공지, qna 인기글, 자유게시판 인기글
-	@RequestMapping(value="/board/mainList.do")
+	@RequestMapping(value="/board/mainList.do", method = RequestMethod.GET)
 	public ModelAndView noticeList(CommandMap commandMap, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/main_list");
 		
@@ -89,8 +102,11 @@ public class BoardController {
 	
 	//글 상세보기
 	@RequestMapping(value="/board/detail.do")
-	public ModelAndView selectBoardDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
+	public ModelAndView selectBoardDetail(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/board_detail");
+		
+		
+		
 		int count;
 		String page = request.getParameter("PAG_NUM");
 		int pag = 1;
@@ -103,10 +119,22 @@ public class BoardController {
 		
 		Map<String, Object> map = boardService.selectBoardDetail(commandMap.getMap());
 		Map<String, Object> bestcomment = boardService.selectBestComment(commandMap.getMap());//인기 댓글
-		
 		List<Map<String, Object>> list = boardService.selectCommentList(commandMap.getMap());//댓글 리스트
-		List<Map<String, Object>> filelist = boardService.selectFileList(commandMap.getMap());
+		List<Map<String, Object>> filelist = boardService.selectFileList(commandMap.getMap());//첨부파일 리스트
+		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
+		int test = 0;
+		if(smap != null) {
+			commandMap.getMap().put("USER_NO", smap.get("USER_NO"));
+			System.out.println(commandMap.getMap());
+			Map<String, Object> scrapcount = boardService.selectCheckScarp(commandMap.getMap());//스크랩 확인
+			if(scrapcount != null) {//스크랩 있을시 
+				test = 1;
+			}
+		}
 		
+		
+		
+		mav.addObject("scrapcheck", test);
 		mav.addObject("map", map);
 		mav.addObject("list", list);
 		mav.addObject("filelist", filelist);
@@ -197,13 +225,13 @@ public class BoardController {
 	}
 	
 	//글 신고하기
-	@RequestMapping(value="/board/report.do" )
-	public ModelAndView reportBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
+	@RequestMapping(value="/board/report.do", method = {RequestMethod.POST, RequestMethod.GET})
+	@ResponseBody
+	public int reportBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		
-		boardService.reportBoard(commandMap.getMap());
+		int report_result = boardService.reportBoard(commandMap.getMap());
 		
-		return mav;
+		return report_result;
 	}
 	
 	//신고글 복구하기
@@ -230,20 +258,30 @@ public class BoardController {
 	
 
 	//글 추천하기
-	@RequestMapping(value="/board/recommend.do" )
+	@RequestMapping(value="/board/recommend.do", method = {RequestMethod.POST, RequestMethod.GET} )
+	@ResponseBody
+	public int recommendBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
+			
+		int recommend_result = boardService.recommendBoard(commandMap.getMap());
+
+		return recommend_result;
+	}
+	
+	/*글 추천하기
+	@RequestMapping(value="/board/recommend.do", method = RequestMethod.POST )
 	public ModelAndView recommendBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-			
+		
 		boardService.recommendBoard(commandMap.getMap());
-			
+		
 		return mav;
-	}
+	}*/
 
 	//게시글 댓글 작성
 	@RequestMapping(value="/board/commentInsert.do", method = RequestMethod.POST)
 	public ModelAndView InsertComment(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-
+		System.out.println("댓글 작성 : " + commandMap.getMap());
 		boardService.insertComment(commandMap.getMap());
 		
 		return mav;
@@ -262,10 +300,31 @@ public class BoardController {
 	@RequestMapping(value="/board/commentDelete.do")
 	public ModelAndView deleteComment(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-		System.out.println(request.getParameter("RE_NO"));
-		System.out.println(request.getParameter("BOARD_NO"));
+
 		boardService.deleteComment(commandMap.getMap());
 		
 		return mav;
 	}
+	
+	//스크랩 추가하기
+	@RequestMapping(value="/board/insertScrap.do")
+	@ResponseBody
+	public int insertScrap(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		
+		int result = boardService.insertScrap(commandMap.getMap());
+		
+		return result;
+	}
+	
+	//스크랩 취소하기
+	@RequestMapping(value="/board/deleteScrap.do")
+	@ResponseBody
+	public int deleteScrap(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		
+		int result = boardService.deleteScrap(commandMap.getMap());
+		
+		return result;		
+	}
+	
+	
 }
