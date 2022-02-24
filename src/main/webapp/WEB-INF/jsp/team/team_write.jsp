@@ -61,7 +61,7 @@
 	</div>
 	<br /> <br /> <a onclick="fn_addFile()" class="btn" id="addFile">파일
 		추가</a> <input type="submit" value="작성하기"> <a
-		href="../Project/Team.do" class="btn" id="list">목록으로</a>
+		href="../Team/List.do?PROJECT_NO=${param.PROJECT_NO }"class="btn" id="list">목록으로</a>
 
 </form>
 <%@ include file="/WEB-INF/include/include-body.jspf"%>

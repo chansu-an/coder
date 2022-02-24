@@ -25,6 +25,9 @@
 					<c:forEach items="${list}" var="row">
 						<tr>
 							<td>${row.NICK_NAME }</td>
+							<c:if test="${sessionScope.session != null }">
+							<a href="/Project/ProjectApp.do">수락</a>
+							</c:if>
 						</tr>
 					</c:forEach>
 				</c:when>

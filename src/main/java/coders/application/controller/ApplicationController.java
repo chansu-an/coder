@@ -39,4 +39,13 @@ public class ApplicationController {
 		return mav;
 	
 	}
+	
+	@RequestMapping(value= "/Project/ProjectApp.do")
+	public ModelAndView ProjectApp(HttpSession session, HttpServletRequest request) throws Exception{
+		ModelAndView mav = new ModelAndView("redirect:/Project/Applist.do");
+		Map<String, Object> map = (Map<String, Object>)session.getAttribute("session");
+		map.put("PROJECT_NO", request.getParameter("PROJECT_NO"));
+		applicationService.ProjectApp(map);
+		return mav;
+	}
 }
