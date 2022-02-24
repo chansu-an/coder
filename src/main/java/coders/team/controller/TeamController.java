@@ -20,7 +20,7 @@ public class TeamController {
 	@Resource(name = "teamService")
 	private TeamService teamService;
 
-	@RequestMapping(value = "/Project/Team.do")
+	@RequestMapping(value = "/Team/List.do")
 	public ModelAndView TeamList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/team/team_list");
 		commandMap.put("PROJECT_NO", "59");
@@ -32,16 +32,16 @@ public class TeamController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/Project/Team/Write.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/Team/Write.do", method = RequestMethod.GET)
 	public ModelAndView TeamWriteForm(CommandMap commandMap) throws Exception {
 		ModelAndView mav = new ModelAndView("/team/team_write");
 System.out.println(1);
 		return mav;
 	}
 
-	@RequestMapping(value = "/Project/Team/Write.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/Team/Write.do", method = RequestMethod.POST)
 	public ModelAndView TeamWrite(CommandMap commandMap,HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/Project/Team.do");
+		ModelAndView mav = new ModelAndView("redirect:/Team/List.do");
 
 		commandMap.put("PROJECT_NO", "59");
 		commandMap.put("USER_NO", "1");
@@ -50,7 +50,7 @@ System.out.println(1);
 		return mav;
 	}
 
-	@RequestMapping(value = "/Project/Team/Detail.do")
+	@RequestMapping(value = "/Team/Detail.do")
 	public ModelAndView TeamDetail(CommandMap commandMap,HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/team/team_detail");
 		
@@ -62,7 +62,7 @@ System.out.println(1);
 
 	}
 
-	@RequestMapping(value = "/Project/Team/Modify.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/Team/Modify.do", method = RequestMethod.GET)
 	public ModelAndView TeamModifyForm(CommandMap commandMap) throws Exception {
 		ModelAndView mav = new ModelAndView("/team/team_modify");
 
@@ -73,18 +73,18 @@ System.out.println(1);
 		return mav;
 	}
 
-	@RequestMapping(value = "/Project/Team/Modify.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/Team/Modify.do", method = RequestMethod.POST)
 	public ModelAndView TeamModify(CommandMap commandMap,HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/Project/Team/Detail.do");
+		ModelAndView mav = new ModelAndView("redirect:/Team/Detail.do");
 
 		teamService.updateTeam(commandMap.getMap(), request);
 		mav.addObject("PD_BOARD_NO", commandMap.get("PD_BOARD_NO"));
 		return mav;
 	}
 
-	@RequestMapping(value = "/Project/Team/Delete.do")
+	@RequestMapping(value = "/Team/Delete.do")
 	public ModelAndView TeamDelete(CommandMap commandMap) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/Project/Team.do");
+		ModelAndView mav = new ModelAndView("redirect:/Team/List.do");
 
 		teamService.deleteTeam(commandMap.getMap());
 		return mav;

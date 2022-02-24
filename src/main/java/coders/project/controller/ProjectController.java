@@ -21,8 +21,8 @@ public class ProjectController {
 
 	@Resource(name = "projectService")
 	private ProjectService projectService;
-	
-	@Resource(name="Packaging")
+
+	@Resource(name = "Packaging")
 	private Packaging packaging;
 
 //	프로젝트 리스트
@@ -31,13 +31,13 @@ public class ProjectController {
 		int count;
 		int pag = 1;
 		String pags = request.getParameter("PAG_NUM");
-		if(pags!=null) {
+		if (pags != null) {
 			pag = Integer.parseInt(pags);
 		}
 		ModelAndView mav = new ModelAndView("/project/project_board_list");
 		count = projectService.countProjectList(commandMap.getMap());
-		packaging.Packag(commandMap.getMap(), pag,5, count);
-		
+		packaging.Packag(commandMap.getMap(), pag, 5, count);
+
 		// 추가 02.15
 		/* projectService.insertProject(commandMap.getMap(),request); */
 
@@ -64,8 +64,6 @@ public class ProjectController {
 	public ModelAndView ProjectWrite(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/Project/Project.do");
 
-		commandMap.put("USER_NO", "1");
-		System.out.println(commandMap.getMap());
 		projectService.insertProject(commandMap.getMap(), request);
 
 		return mav;
@@ -88,7 +86,7 @@ public class ProjectController {
 	public ModelAndView ProjectModifyForm(CommandMap commandMap) throws Exception {
 		ModelAndView mav = new ModelAndView("/project/project_board_modify");
 		Map<String, Object> map = projectService.selectProjectDetail(commandMap.getMap());
-	
+
 //		System.out.println(list);
 //		System.out.println(map);
 		mav.addObject("map", map.get("map"));
@@ -101,7 +99,7 @@ public class ProjectController {
 	public ModelAndView ProjectModify(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/Project/Detail.do");
 
-		projectService.updateProject(commandMap.getMap(), request); // 에러발생  0219 
+		projectService.updateProject(commandMap.getMap(), request); // 에러발생 0219
 		mav.addObject("PROJECT_NO", commandMap.get("PROJECT_NO"));
 
 		return mav;
@@ -113,16 +111,6 @@ public class ProjectController {
 		ModelAndView mav = new ModelAndView("redirect:/project/project_board_list");
 
 		projectService.deleteProject(commandMap.getMap());
-		return mav;
-
-	}
-
-//프로젝트참가신청
-	@RequestMapping(value = "/Project/Application.do")
-	public ModelAndView ProjectApplication(CommandMap commandMap) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/project/project_board_detail");
-
-		projectService.insertProjectApp(commandMap.getMap());
 		return mav;
 
 	}
