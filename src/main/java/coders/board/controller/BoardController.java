@@ -112,7 +112,6 @@ public class BoardController {
 		int pag = 1;
 		if(page!=null) {
 			pag = Integer.parseInt(page);
-			commandMap.getMap().put("page", page);
 		}
 		count = boardService.commentCount(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 5, count);
@@ -141,6 +140,7 @@ public class BoardController {
 		mav.addObject("count", count);
 		mav.addObject("bestcomment", bestcomment);
 		mav.addObject("pmap", commandMap.getMap());
+		
 		return mav;
 	}
 	
