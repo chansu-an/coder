@@ -10,7 +10,7 @@
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
                 <!-- Page content-->
 	<h2>작업일지 게시판</h2>
-	<table class="tema_list">
+	<table class="team_list">
 		<colgroup>
 			<col width="10%" />
 			<col width="*%" />
@@ -36,7 +36,7 @@
 						<tr>
 							<td>${row.PD_BOARD_NO }</td>
 							<%-- <td>${row.PROJECT_NAME }</td> --%>
-							<td><a href="../Project/Team/Detail.do?PROJECT_NO=${row.PROJECT_NO}&PD_BOARD_NO=${row.PD_BOARD_NO}">${row.PD_TITLE}</a>
+							<td><a href="../Team/Detail.do?PROJECT_NO=${row.PROJECT_NO}&PD_BOARD_NO=${row.PD_BOARD_NO}">${row.PD_TITLE}</a>
 							<td>${row.PD_ING }</td>
 							<td>${row.USER_NO }</td>
 							<td>${row.PD_END  }</td>
@@ -53,7 +53,10 @@
 
 		</tbody>
 	</table>
-	<a href="../Project/Team/Write.do" class="btn" id="write">프로젝트 생성</a>
+	<a href="../Team/Write.do?PROJECT_NO=${param.PROJECT_NO}" class="btn" id="write">프로젝트 생성</a>
+	<a href="../Project/Applist.do?PROJECT_NO=${param.PROJECT_NO}">참가자 리스트</a>
+	<a href="../Project/Project.do" class="btn" id="list">게시판목록</a>
+	
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 

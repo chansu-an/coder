@@ -34,7 +34,7 @@
 				<c:when test="${!empty map}">
 					<tr>
 						<td>${map.PROJECT_NO}</td>
- 						<td>${map.PROJECT_NAME}</td>
+ 						<td ><a href="../Team/List.do?PROJECT_NO=${map.PROJECT_NO}">${map.PROJECT_NAME}</a></td>
 						<td>${map.USER_NO}</td>
 						<td>${map.PROJECT_CONTEXT}</td>
 						<td>${map.PROJECT_START}</td>
@@ -68,7 +68,9 @@
 	<a href="../Project/Modify.do?PROJECT_NO=${map.PROJECT_NO}" class="btn" id="write">수정하기</a>
 	<a href="../Project/Project.do" class="btn" id="list">목록으로</a>
 	<a href="../Project/Delete.do?PROJECT_NO=${map.PROJECT_NO}" class="btn" id="delete">삭제하기</a>
-<%@ include file="/WEB-INF/include/include-body.jspf" %>
-<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+	<a href="../Project/Appjoin.do?PROJECT_NO=${map.PROJECT_NO}"class="btn" id="list">참가신청</a>
+	<%@ include file="/WEB-INF/include/include-body.jspf" %>
+	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+	
 </body>
 </html>

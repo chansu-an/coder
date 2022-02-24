@@ -12,12 +12,17 @@ public class ApplicationDAO extends AbstractDAO {
 	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectApplicationList(Map<String, Object> map) throws Exception {
-		return (List<Map<String, Object>>) selectList("project.selectApplicationList");
+		return (List<Map<String, Object>>) selectList("project.selectApplicationList",map);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> selectMemberList(Map<String, Object> map) throws Exception {
-		return (List<Map<String, Object>>) selectList("project.selectMemberList");
+		return (List<Map<String, Object>>) selectList("project.selectMemberList",map);
 	}
+
+	public void insertProjectApp(Map<String, Object> map) {
+		insert("project.insertProjectApp",map);
+	}
+	
 
 }

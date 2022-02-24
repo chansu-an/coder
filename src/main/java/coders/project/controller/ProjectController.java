@@ -63,7 +63,7 @@ public class ProjectController {
 	@RequestMapping(value = "/Project/Write.do", method = RequestMethod.POST)
 	public ModelAndView ProjectWrite(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/Project/Project.do");
-
+		System.out.println(commandMap.getMap());
 		projectService.insertProject(commandMap.getMap(), request);
 
 		return mav;
@@ -87,8 +87,7 @@ public class ProjectController {
 		ModelAndView mav = new ModelAndView("/project/project_board_modify");
 		Map<String, Object> map = projectService.selectProjectDetail(commandMap.getMap());
 
-//		System.out.println(list);
-//		System.out.println(map);
+
 		mav.addObject("map", map.get("map"));
 		mav.addObject("list", map.get("list"));
 		return mav;
@@ -99,7 +98,7 @@ public class ProjectController {
 	public ModelAndView ProjectModify(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/Project/Detail.do");
 
-		projectService.updateProject(commandMap.getMap(), request); // 에러발생 0219
+		projectService.updateProject(commandMap.getMap(), request); 
 		mav.addObject("PROJECT_NO", commandMap.get("PROJECT_NO"));
 
 		return mav;
@@ -108,7 +107,7 @@ public class ProjectController {
 //프로젝트 삭제
 	@RequestMapping(value = "/Project/Delete.do")
 	public ModelAndView ProjectDelete(CommandMap commandMap) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/project/project_board_list");
+		ModelAndView mav = new ModelAndView("redirect:/Project/Project.do");
 
 		projectService.deleteProject(commandMap.getMap());
 		return mav;
