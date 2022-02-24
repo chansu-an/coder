@@ -42,4 +42,9 @@ public class MainDAO extends AbstractDAO{
 	public String confirmUser(String ID) throws Exception{
 		return (String) selectOne("user.confirmid", ID);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> confirmNaverId(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne("user.confirmNaverId", map);
+	}
 }

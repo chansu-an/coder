@@ -234,6 +234,7 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		return boardDAO.countborad(map);
 	}
+
 	public int insertScrap(Map<String, Object> map) throws Exception {
 		return boardDAO.insertScrap(map);
 	}

@@ -1,5 +1,6 @@
 package coders.member.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -7,19 +8,34 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
+
 import coders.common.common.CommandMap;
 import coders.mail.service.MailSendService;
+import coders.member.NaverLoginVO;
 import coders.member.service.MainService;
 
 @Controller
 public class MainController {
+	/* naverLoginVO */
+    private NaverLoginVO naverLoginVO;
+    private String apiResult = null;
+	
+    @Autowired
+    private void setnaverLoginVO(NaverLoginVO naverLoginVO) {
+        this.naverLoginVO = naverLoginVO;
+    }
 	
 	@Resource(name="mainService")
 	private MainService mainService;
@@ -27,14 +43,18 @@ public class MainController {
 	private MailSendService mailSendService;
 	
 	@RequestMapping(value="/main/Login.do", method = RequestMethod.GET)
-	public ModelAndView loginForm(CommandMap commandMap, HttpServletRequest request) throws Exception{
+	public ModelAndView loginForm(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView("/main/login");
+		
+		String naverAuthUrl = naverLoginVO.getAuthorizationUrl(session);
 		
 		if(request.getParameter("checklogin") == null) {
 			mv.addObject("checklogin", true);
 		}else {
 			mv.addObject("checklogin", request.getParameter("checklogin"));			
 		}
+		
+		mv.addObject("url", naverAuthUrl);
 		
 		return mv;
 	}
@@ -56,6 +76,58 @@ public class MainController {
 		mv.addObject("user", map);		
 		session.setAttribute("session", map);//로그인 유저 정보 세션에 저장
 		return mv;
+	}
+	
+	//네이버 로그인시
+	@RequestMapping(value="/main/naverLogin.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView naverLogin(CommandMap commandMap, HttpServletRequest request, @RequestParam String code, @RequestParam String state, HttpSession session) throws Exception{
+		ModelAndView mv = new ModelAndView("redirect:/board/mainList.do");
+        OAuth2AccessToken oauthToken;
+        oauthToken = naverLoginVO.getAccessToken(session, code, state);
+        //로그인 사용자 정보를 읽어온다.
+        apiResult = naverLoginVO.getUserProfile(oauthToken);
+        
+        JSONParser parser = new JSONParser();
+
+		JSONObject jsonObjAll = (JSONObject) parser.parse(apiResult);
+		System.out.println("jsonObjAll: "+jsonObjAll.toJSONString());
+		String result = jsonObjAll.get("response").toString();
+				
+		JSONObject jsonObj = (JSONObject) parser.parse(result);
+		System.out.println("jsonObj: "+jsonObj.toJSONString());
+		
+		String member_nickname = jsonObj.get("nickname").toString();					
+		String member_name = jsonObj.get("name").toString();					
+		String member_email = jsonObj.get("email").toString();
+		String member_profile = jsonObj.get("profile_image").toString();
+		
+		//map객체에 네이버 url에서 가져온 데이터 넣는작업
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("EMAIL", member_email);
+		map.put("NICK_NAME", member_name);
+		map.put("PASSWORD", "1111111");//임의값 넣었음
+		map.put("PROFILE", member_profile);
+		
+		if(mainService.selectNaverLogin(map) == null) {
+			mainService.insertUser(map);			
+		}
+		
+		//데이터베이스에서 사용자 프로필 사진 URL 가져오기
+		Map<String, Object> user_profile_images = mainService.selectLoginUser(map);
+		
+		System.out.println(member_nickname);
+		System.out.println(member_name);
+		System.out.println(member_email);
+		System.out.println(member_profile);
+		
+		mv.addObject("result", apiResult);
+		//프로필 url값
+		mv.addObject("image", member_profile);//네이버 url에서 가져온 사용사 프로필 사진
+		mv.addObject("userimages", user_profile_images.get("PROFILE_IMAGES"));//데이터 베이스에 저장된 사용자 프로필 url
+		
+		session.setAttribute("session", map);
+        /* 네이버 로그인 성공 페이지 View 호출 */
+        return mv;
 	}
 	
 	

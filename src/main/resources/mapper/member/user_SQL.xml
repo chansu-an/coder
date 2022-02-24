@@ -19,6 +19,10 @@ SELECT NICK_NAME,PASSWORD,EMAIL,PROFILE,ROWNUM FROM USERS
 <select id="confirmid" parameterType="String" resultType="String"><![CDATA[
 SELECT USER_NO,NICK_NAME,EMAIL FROM USERS WHERE EMAIL =#{ID}
 ]]></select>
+<!-- 네이버 로그인시 중복ID 체크 -->
+<select id="confirmNaverId" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT USER_NO,NICK_NAME,EMAIL FROM USERS WHERE EMAIL =#{EMAIL}
+]]></select>
 <!-- 삭제 유저 리스트 -->
 <select id="selectDeleteUserList" parameterType="hashmap" resultType="hashmap"><![CDATA[
 SELECT NICK_NAME,PASSWORD,EMAIL,PROFILE,ROWNUM FROM USERS WHERE DEL_GB ='Y'

@@ -27,6 +27,7 @@
 							<br/>
 							<a href="#this" class="btn btn-primary" id="Login">로그인</a>
 						</div>
+						<div id="naver_id_login" style="text-align:center"><a href="${url}"><img width="223" src="${pageContext.request.contextPath}/img/naver_Bn_Green.png"/></a></div>
 					</form>
 						<a href="../main/RegisterForm.do">회원가입</a>
 						<br/>

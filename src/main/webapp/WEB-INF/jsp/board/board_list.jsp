@@ -8,8 +8,10 @@
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
 <script>
 	function test(f){
-		f.action="/net/board/openBoardList.do?IDENTI_TYPE=" + ${IDENTI_TYPE}
-		f.submit();
+		var str = "<input type='hidden' name='ORDER_TYPE' value='" + f + "'/>";
+		$(".search-wrap").append(str);
+		/* f.action="/net/board/openBoardList.do?IDENTI_TYPE=" + ${IDENTI_TYPE}
+		f.submit(); */
 	}
 
 	function test1(f){
@@ -39,7 +41,8 @@
     </c:choose> 
 	<form name="ORDER_TYPE" method="post">
 		<p style="text-align:right;">
-		<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test(this.form);">
+		<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test(this.value);">
+<!-- 		<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test(this.form);"> -->
 			<option>-----</option>
 			<option value="DATE"
 				<c:if test="${order_type == 'DATE'}">selected</c:if>>최신순</option>
@@ -126,8 +129,8 @@
 		</div>
 	
 	<p style="text-align:right;"><a href="/net/board/write.do" class="btn" id="write">글쓰기</a>
-<%@ include file="/WEB-INF/include/include-body.jspf" %>
-<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+	<%@ include file="/WEB-INF/include/include-body.jspf" %>
+	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 
 </body>
 </html>

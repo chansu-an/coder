@@ -1,14 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <%@ include file="/WEB-INF/include/include-header.jspf" %>
 <script>
 	function confirmLogOut(){
-		var result = confirm("로그아웃 하시겠습니다?");
+		var result = confirm("로그아웃 하시겠습니까?");
 		
 		if(result){
 			window.location.href="/net/main/logout.do";
@@ -30,7 +28,7 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th scope="col">제목</th>
+				<th scope="col">제목${sessionScope.session.USER_NO}</th>
 				<th scope="col">작성자</th>
 				<th scope="col">작성일</th>
 			</tr>
@@ -40,7 +38,7 @@
 				<c:when test="${fn:length(list1) > 0}">
 					<c:forEach items="${list1 }" var="row">
 						<tr>
-							<td><a href="/net/board/detail.do?BOARD_NO=${row.BOARD_NO}&IDENTI_TYPE=${row.IDENTI_TYPE}">${row.TITLE }</a></td>
+							<td><a href="#this" id="notification">${row.TITLE }</a></td>
 							<td>${row.NICK_NAME }</td>
 							<td>${row.BOARD_DATE }</td>
 						</tr>
@@ -129,12 +127,12 @@
 			</c:choose>
 		</tbody>
 	</table>
-<%@ include file="/WEB-INF/include/include-body.jspf" %>
-<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 
-	<br />
-	
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
+	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+	<script type="text/javascript">
+	</script>
+
 
 </body>
 </html>

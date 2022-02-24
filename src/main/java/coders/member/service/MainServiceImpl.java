@@ -49,4 +49,9 @@ public class MainServiceImpl implements MainService{
 	public String confirmUser(String ID) throws Exception {
 		return mainDAO.confirmUser(ID);
 	}
+
+	@Override
+	public Map<String, Object> selectNaverLogin(Map<String, Object> map) throws Exception {
+		return mainDAO.confirmNaverId(map);
+	}
 }
