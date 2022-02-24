@@ -25,8 +25,6 @@ public interface ProjectService {
 	void updateProject(Map<String, Object> map, HttpServletRequest request) throws Exception;
 
 	void deleteProject(Map<String, Object> map) throws Exception;
-
-	void insertProjectApp(Map<String, Object> map) throws Exception;
 	
 	int countProjectList(Map<String, Object> map)throws Exception;
 
