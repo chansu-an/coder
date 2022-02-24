@@ -111,7 +111,7 @@ SELECT IDENTI_TYPE,BOARD.BOARD_NO,TITLE,BOARD.USER_NO,BOARD_DATE,ROWNUM FROM SCR
 <select id="selectArlimeList" parameterType="hashmap" resultType="hashmap">
 <include refid="common.pagingPre"/>
 <![CDATA[
-SELECT IDENTI_TYPE,TITLE,BOARD_NO FROM BOARD INNER JOIN USERS ON  USERS.USER_NO = BOARD.USER_NO WHERE BOARD_AR = 'Y' AND BOARD.USER_NO = 1]]>
+SELECT IDENTI_TYPE,TITLE,BOARD_NO FROM BOARD INNER JOIN USERS ON  USERS.USER_NO = BOARD.USER_NO WHERE BOARD_AR = 'Y' AND BOARD.USER_NO = 1 AND BOARD.DEL_GB = 'N']]>
 <include refid="common.pagingPost"/>
 </select>
 
@@ -159,9 +159,9 @@ UPDATE APPLICATION SET  APPLICATION_AR = 'N' WHERE PROJECT_NO = #{PROJECT_NO} AN
 
 
 <!-- 알림삭제 -->
-<update id="clickArlist" parameterType="hashmap">
+<update id="clickArlist" parameterType="hashmap"><![CDATA[
 UPDATE BOARD SET  BOARD_AR = 'N' WHERE BOARD_NO = #{BOARD_NO}
-</update>
+]]></update>
 <!-- 이력서 작성 -->
 <insert id="insertResume" parameterType="hashmap" ><![CDATA[
 INSERT INTO RESUME (RESUME_NO,USER_NO,NAME,TELL,EMAIL,ADDRESS,ADDRESS1,SKILL,BLOG,FILES,ZIPCODE) 

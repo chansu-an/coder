@@ -1,5 +1,6 @@
 package coders.member.controller;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,7 +132,7 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value="/main/RegisterForm.do", method = RequestMethod.GET)
+	@RequestMapping(value="/main/RegisterForm.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView registerForm(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("/main/register");
 		
@@ -157,9 +158,6 @@ public class MainController {
 	public ModelAndView registerInsert(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/main/Login.do");
 		
-		commandMap.put("NICK_NAME", request.getParameter("NICK_NAME"));
-		commandMap.put("EMAIL", request.getParameter("EMAIL"));
-		commandMap.put("PASSWORD", request.getParameter("PASSWORD"));
 		commandMap.put("PROFILE", "https://cdn.discordapp.com/attachments/934773446431346706/940842849874878484/profile.jpg");
 		mailSendService.sendAuthMail((String)request.getParameter("EMAIL"));
 		mainService.insertUser(commandMap.getMap());

@@ -125,6 +125,7 @@ function testttt(n) {
 			        </c:if>	
 			        </p>
 			    </div>
+			    <c:if test="${!empty sessionScope.session.USER_NO }">
 			    <div id="test${row.RE_NO}" class="navbar-collapse collapse " >
 			    	<label for="content">대댓글 작성</label>
         				<form action="../board/commentInsert2.do" method="post">
@@ -141,7 +142,8 @@ function testttt(n) {
 				            </div>
 				            <br/>
 				        </form>
-			    </div>		        
+			    </div>
+			    </c:if>		        
 	    </c:when>
 	    <c:otherwise>
 	    	<div>
@@ -154,6 +156,7 @@ function testttt(n) {
 	    </c:forEach>
 	  </ol>
 	</div>
+	<c:if test="${!empty sessionScope.session.USER_NO }">
 	<div class="container">
         <label for="content">댓글 작성</label>
         <form action="/net/board/commentInsert.do" method="post">
@@ -168,6 +171,7 @@ function testttt(n) {
             </div>
         </form>
     </div>
+    </c:if>
 
     <div align="center">
 			<c:if test="${pmap.startpag>1}">

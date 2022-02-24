@@ -102,9 +102,11 @@ public class BoardController {
 	
 	//글 상세보기
 	@RequestMapping(value="/board/detail.do")
-	public ModelAndView selectBoardDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
+	public ModelAndView selectBoardDetail(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/board_detail");
-
+		
+		
+		
 		int count;
 		String page = request.getParameter("PAG_NUM");
 		int pag = 1;
@@ -118,11 +120,18 @@ public class BoardController {
 		Map<String, Object> bestcomment = boardService.selectBestComment(commandMap.getMap());//인기 댓글
 		List<Map<String, Object>> list = boardService.selectCommentList(commandMap.getMap());//댓글 리스트
 		List<Map<String, Object>> filelist = boardService.selectFileList(commandMap.getMap());//첨부파일 리스트
-		Map<String, Object> scrapcount = boardService.selectCheckScarp(commandMap.getMap());//스크랩 확인
+		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
 		int test = 0;
-		if(scrapcount != null) {//스크랩 있을시
-			test = 1;
+		if(smap != null) {
+			commandMap.getMap().put("USER_NO", smap.get("USER_NO"));
+			System.out.println(commandMap.getMap());
+			Map<String, Object> scrapcount = boardService.selectCheckScarp(commandMap.getMap());//스크랩 확인
+			if(scrapcount != null) {//스크랩 있을시 
+				test = 1;
+			}
 		}
+		
+		
 		
 		mav.addObject("scrapcheck", test);
 		mav.addObject("map", map);
@@ -272,7 +281,7 @@ public class BoardController {
 	@RequestMapping(value="/board/commentInsert.do", method = RequestMethod.POST)
 	public ModelAndView InsertComment(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-
+		System.out.println("댓글 작성 : " + commandMap.getMap());
 		boardService.insertComment(commandMap.getMap());
 		
 		return mav;
