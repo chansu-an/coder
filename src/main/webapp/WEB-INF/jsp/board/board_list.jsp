@@ -99,7 +99,7 @@
 		</tbody>
 	</table>
 
-	<form action="/net/board/openBoardList.do?IDENTI_TYPE=${IDENTI_TYPE}" method="post">
+	<form action="/net/board/openBoardList.do?IDENTI_TYPE=${IDENTI_TYPE}" method="get">
 		<div class="search-wrap">
 			<select name="form-control search-select" id="SEARCH_TYPE" name="SEARCH_TYPE" onchange="test1(this.value);">
 				<option value="">검색</option>
@@ -126,9 +126,10 @@
 				<a
 					href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+2}">다음</a>
 			</c:if>
-		</div>
-	
-	<p style="text-align:right;"><a href="/net/board/write.do" class="btn" id="write">글쓰기</a>
+	</div>
+	<c:if test="${!empty session.USER_NO }">
+		<a href="/net/board/write.do" class="btn" id="write">글쓰기</a>	
+	</c:if>
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 

@@ -169,5 +169,10 @@ public class BoardDAO extends AbstractDAO {
 		
 	}
 	
+	public int updateRecommandComment(Map<String, Object> map) throws Exception{
+		return (int) update("board.recommandComment", map);
+		
+	}
+	
 
 }

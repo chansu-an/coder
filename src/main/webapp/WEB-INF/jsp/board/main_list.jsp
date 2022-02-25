@@ -28,7 +28,7 @@
 		</colgroup>
 		<thead>
 			<tr>
-				<th scope="col">제목${sessionScope.session.USER_NO}</th>
+				<th scope="col">제목</th>
 				<th scope="col">작성자</th>
 				<th scope="col">작성일</th>
 			</tr>
@@ -38,7 +38,7 @@
 				<c:when test="${fn:length(list1) > 0}">
 					<c:forEach items="${list1 }" var="row">
 						<tr>
-							<td><a href="#this" id="notification">${row.TITLE }</a></td>
+							<td><a href="/net/board/detail.do?BOARD_NO=${row.BOARD_NO}&IDENTI_TYPE=${row.IDENTI_TYPE}" id="notification">${row.TITLE }</a></td>
 							<td>${row.NICK_NAME }</td>
 							<td>${row.BOARD_DATE }</td>
 						</tr>

@@ -287,7 +287,7 @@ UPDATE BOARD SET DEL_GB='Y' WHERE BOARD_NO = #{BOARD_NO}
 
 	<!-- 답글수 -->
 	<select id="commentCount" parameterType="hashmap"
-		resultType="_int"><![CDATA[
+		resultType="int"><![CDATA[
 SELECT COUNT(*) AS COUNT FROM REPLY WHERE BOARD_NO=#{BOARD_NO} AND DEL_GB='N'
 ]]></select>
 <!-- 게시글 작성 -->
@@ -345,25 +345,26 @@ INSERT INTO REPLY (RE_NO,BOARD_NO,USER_NO,CONTEXT,REF_NO,REF_STEP)
 	VALUES(REPLY_SEQ.NEXTVAL,#{BOARD_NO},#{USER_NO},#{CONTEXT},#{REF_NO},#{REF_STEP}+'1')
 	]]></insert>
 
-<!-- 답글 삭제 -->
+<!-- 댓글 삭제 -->
 <update id="commentDelete" parameterType="hashmap"><![CDATA[
 UPDATE REPLY SET DEL_GB = 'Y' WHERE RE_NO=#{RE_NO}
 ]]></update>
-	<!-- 인기 답글 SELECT REPLY.USER_NO,USERS.NICK_NAME,REPLY.CONTEXT,TO_CHAR(REPLY.REPLY_DATE,'YY/MM/DD(hh24:mm)') 
-		"REPLY_DATE",ROWNUM FROM REPLY INNER JOIN USERS ON USERS.USER_NO = REPLY.USER_NO 
-		WHERE BOARD_NO = #{BOARD_NO} ORDER BY REF_NO DESC ,REF_STEP -->
+<!-- 댓글 추천 -->
+<update id="recommandComment" parameterType="hashmap"><![CDATA[
+UPDATE REPLY SET RECOMMAND_COUNT = RECOMMAND_COUNT + 1 WHERE REF_NO = #{REF_NO} AND REF_STEP = #{REF_STEP}
+]]></update>
+<!-- 인기 댓글 -->
 <select id="bestComment" parameterType="hashmap" resultType="hashmap"><![CDATA[
 SELECT A.*, ROWNUM
   FROM (SELECT REPLY.RE_NO,REPLY.RECOMMAND_COUNT,REPLY.USER_NO,USERS.NICK_NAME,REPLY.CONTEXT,TO_CHAR(REPLY.REPLY_DATE,'YY/MM/DD(hh24:MI)') "REPLY_DATE" 
       	  FROM REPLY 
       	 INNER JOIN USERS ON USERS.USER_NO = REPLY.USER_NO 
       	 WHERE REPLY.BOARD_NO = #{BOARD_NO}
-       	   AND REPLY.RECOMMAND_COUNT = (SELECT MAX(RECOMMAND_COUNT) FROM REPLY WHERE BOARD_NO = #{BOARD_NO}) 
+       	   AND REPLY.RECOMMAND_COUNT = (SELECT MAX(RECOMMAND_COUNT) FROM REPLY WHERE BOARD_NO = #{BOARD_NO} AND RECOMMAND_COUNT != '0') 
        	 ORDER BY REPLY_DATE DESC) A
  WHERE ROWNUM = 1
 ]]></select>
-	<!-- 답글 리스트 -->
-
+<!-- 답글 리스트 -->
 <select id="commentList" parameterType="hashmap" resultType="hashmap">
 <include refid="common.pagingPre"/>
 <![CDATA[
