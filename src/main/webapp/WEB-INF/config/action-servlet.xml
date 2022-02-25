@@ -41,19 +41,15 @@
     	p:viewClass="org.springframework.web.servlet.view.JstlView" 
     	p:prefix="/WEB-INF/jsp/" p:suffix=".jsp">
    	</bean>
-
    	
-
-	<mvc:interceptors>
+   	<bean id="naverLoginVO" class="coders.member.NaverLoginVO"/>
+   	
+   	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**/write.do"/>
 			<bean class="coders.common.interceptor.WriteInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
-   	
-
-   	<bean id="naverLoginVO" class="coders.member.NaverLoginVO"/>
-
 </beans>
 
 

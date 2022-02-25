@@ -12,9 +12,10 @@ public class WriteInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println(1321321);
+	
 		HttpSession session = request.getSession();
 		if(session.getAttribute("session")==null) {
+			response.sendRedirect("../board/mainList.do");
 		return false;}else {
 			return true;
 		}

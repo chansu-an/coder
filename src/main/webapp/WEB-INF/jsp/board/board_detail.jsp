@@ -4,15 +4,38 @@
 <script type="text/javascript">
 var test = true
 function testttt(n) {
+	alert(test);
+
 	if(test){
-		document.getElementById('test'+n).className = 'navbar-collapse collapse show';
-		 test = false;
+		test = false;
+		
+		var str = "<label for='content'>대댓글 작성</label>";
+		str +="<form action='../board/commentInsert2.do' method='post'>" ;
+		str +="<div class='input-group'>";
+		str +="<input type='hidden' name='BOARD_NO' value='${map.BOARD_NO}'/>"
+		str +="<input type='hidden' name='IDENTI_TYPE' value='${map.IDENTI_TYPE}'/>"
+		str +="<input type='hidden' name='USER_NO' value='${session.USER_NO}'/>"
+		str +="<input type='hidden' name='REF_NO' value='${row.REF_NO}'/>"
+		str +="<input type='hidden' name='REF_STEP' value='${row.REF_STEP}'/>"
+		str +="<input type='text' id='CONTEXT' name='CONTEXT' placeholder='내용을 입력하세요.' style='width:60%;;font-size:15px;'/>"
+		str +="<span class='input-group-btn'>"
+		str +="<button class='btn btn-default' name='commentInsertBtn'>등록</button>"
+		str +="</span>"
+		str +="</div>"
+		str +="<br/>"
+		str +="</form>"
+	$("#test"+n).append(str);
+		/* document.getElementById('test'+n).className = 'navbar-collapse collapse show';
+		 test = false; */	 
 	}else{
-		document.getElementById('test'+n).className = 'navbar-collapse collapse';
-		 test = true;
+		test = true;
+		$("#test"+n).remove(str);
+		 
 		
 	}
 };
+
+
 </script>
 <head>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
@@ -48,9 +71,9 @@ function testttt(n) {
 			</tr>
 			<tr>
 				<th scope="row">추천수</th> 
-				<td id="recommend_count">${map.RECOMMEND_COUNT }</td>
+				<td><div id="recommend_count">${map.RECOMMEND_COUNT }</div></td>
 				<th scope="row">신고수</th> 
-				<td id="report_count">${map.REPORT_COUNT }</td>
+				<td><div id="report_count">${map.REPORT_COUNT }</div></td>
 			</tr> 
 			<tr> 
 				<th scope="row">작성자</th> 
@@ -124,22 +147,8 @@ function testttt(n) {
 			        </p>
 			    </div>
 			    <c:if test="${!empty sessionScope.session.USER_NO }">
-			    <div id="test${row.RE_NO}" class="navbar-collapse collapse " >
-			    	<label for="content">대댓글 작성</label>
-        				<form action="../board/commentInsert2.do" method="post">
-	            			<div class="input-group">
-		             		  	<input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}"/>
-		               			<input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}"/>
-		               			<input type="hidden" name="USER_NO" value="${session.USER_NO}"/>
-		               			<input type="hidden" name="REF_NO" value="${row.REF_NO}"/>
-		               			<input type="hidden" name="REF_STEP" value="${row.REF_STEP}"/>
-		               			<input type="text" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요." style="width:60%;;font-size:15px;"/>
-		              			<span class="input-group-btn">
-		                    		<button class="btn btn-default" name="commentInsertBtn">등록</button>
-				                </span>
-				            </div>
-				            <br/>
-				        </form>
+			    <div id="test${row.RE_NO}"  >
+			    	
 			    </div>
 			    </c:if>		        
 	    </c:when>
@@ -263,25 +272,6 @@ function testttt(n) {
 		
 		
 	});
-
-	
-    
-    function fn_addFile(){if(gfv_count>=4){
-		alert("ㅊㄴㅇㄴ")
-		return;
-		}alert(gfv_count)
-		var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
-		
-		$("#fileDiv").append(str);
-		
-		
-		$("a[name='delete']").on("click", function(e){ //삭제 버튼
-			e.preventDefault();
-			fn_deleteFile($(this));
-			
-		});
-		++gfv_count
-	}
     </script>
 
 
