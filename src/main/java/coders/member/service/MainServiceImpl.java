@@ -54,4 +54,9 @@ public class MainServiceImpl implements MainService{
 	public Map<String, Object> selectNaverLogin(Map<String, Object> map) throws Exception {
 		return mainDAO.confirmNaverId(map);
 	}
+	
+	@Override
+	public void modifyPassword(Map<String, Object> map) throws Exception {
+		mainDAO.modifyPassword(map);
+	}
 }

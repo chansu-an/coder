@@ -26,21 +26,12 @@
 							<input type="password" name="PASSWORD" id="PASSWORD" class="focused-password" size="30">
 							<br/>
 							<a href="#this" class="btn btn-primary" id="Login">로그인</a>
+							<a href="../main/RegisterForm.do" class="btn btn-primary">회원가입</a>
 						</div>
 						<div id="naver_id_login" style="text-align:center"><a href="${url}"><img width="223" src="${pageContext.request.contextPath}/img/naver_Bn_Green.png"/></a></div>
 					</form>
-						<a href="../main/RegisterForm.do">회원가입</a>
-						<br/>
-						<a href="../main/FindId.do">아이디 찾기</a>
 						<br/>
 						<a href="../main/FindPw.do">비밀번호 찾기</a>
-						<br/>
-						<a href="../main/UserList.do">회원 리스트</a>
-						<br/>
-						<a href="../main/StopUserList.do">신고회원 리스트</a>
-						<br/>
-						<a href="../main/DeleteUserList.do">탈퇴회원 리스트</a>
-						<br/>
                 </div>
 
 

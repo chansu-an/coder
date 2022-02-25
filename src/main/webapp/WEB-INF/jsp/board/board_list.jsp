@@ -39,6 +39,8 @@
 			<h2>건의사항</h2>   	
     	</c:when>
     </c:choose> 
+    
+    <!-- 게시판 정렬 -->
 	<form name="ORDER_TYPE" method="post">
 		<p style="text-align:right;">
 		<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test(this.value);">
@@ -56,46 +58,111 @@
 		<input type="hidden" name="ORDER_TYPE" value="${ORDER_TYPE }"/>
 		</p>
 	</form>
+	
+	<!-- 게시판 -->
 	<table class="board_list">
-		<colgroup>
-			<col width="10%" />
-			<col width="*%" />
-			<col width="10%" />
-			<col width="10%" />
-			<col width="20%" />
-			<col width="20%" />
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">글번호</th>
-				<th scope="col">제목</th>
-				<th scope="col">조회수</th>
-				<th scope="col">추천수</th>
-				<th scope="col">작성자</th>
-				<th scope="col">작성일</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:choose>
-				<c:when test="${fn:length(list) > 0}">
-					<c:forEach items="${list }" var="row">
-						<tr>
-							<td>${row.ROWNUM }</td>
- 							<td><a href="/net/board/detail.do?IDENTI_TYPE=${IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}&USER_NO=${sessionScope.session.USER_NO}">${row.TITLE }</a> [${row.REPLY_COUNT}]</td>
-							<td>${row.READ_COUNT }</td>
-							<td>${row.RECOMMEND_COUNT }</td>
-							<td>${row.NICK_NAME }</td>
-							<td>${row.BOARD_DATE }</td>
-						</tr>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
+		<c:choose>
+			<%-- 공지사항, QnA, 자유 게시판 --%>
+			<c:when test="${IDENTI_TYPE != '4'}">
+				<colgroup>
+					<col width="10%" />
+					<col width="*%" />
+					<col width="10%" />
+					<col width="10%" />
+					<col width="20%" />
+					<col width="20%" />
+				</colgroup>
+				<thead>
 					<tr>
-						<td colspan="4">조회된 결과가 없습니다.</td>
+						<th scope="col">글번호</th>
+						<th scope="col">제목</th>
+						<th scope="col">조회수</th>
+						<th scope="col">추천수</th>
+						<th scope="col">작성자</th>
+						<th scope="col">작성일</th>
 					</tr>
-				</c:otherwise>
-			</c:choose>
-
+				</thead>
+				<tbody>
+					<c:choose>
+						<c:when test="${fn:length(list) > 0}">
+							<c:forEach items="${list }" var="row">
+								<tr>
+									<td>${row.ROWNUM }</td>
+									<td><a
+										href="/net/board/detail.do?IDENTI_TYPE=${IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}&USER_NO=${sessionScope.session.USER_NO}">${row.TITLE }</a>
+										[${row.REPLY_COUNT}]</td>
+									<td>${row.READ_COUNT }</td>
+									<td>${row.RECOMMEND_COUNT }</td>
+									<td>${row.NICK_NAME }</td>
+									<td>${row.BOARD_DATE }</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td colspan="4">조회된 결과가 없습니다.</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+			</c:when>
+			<%-- 건의사항 --%>
+			<c:otherwise>
+				<colgroup>
+					<col width="10%" />
+					<col width="*%" />
+					<col width="10%" />
+					<col width="10%" />
+					<col width="10%" />
+					<col width="20%" />
+					<col width="20%" />
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">글번호</th>
+						<th scope="col">제목</th>
+						<th scope="col">관리자답변</th>
+						<th scope="col">조회수</th>
+						<th scope="col">추천수</th>
+						<th scope="col">작성자</th>
+						<th scope="col">작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:choose>
+						<c:when test="${fn:length(list) > 0}">
+							<c:forEach items="${list }" var="row">
+								<tr>
+									<td>${row.ROWNUM }</td>
+									<td><a
+										href="/net/board/detail.do?IDENTI_TYPE=${IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a>
+										[${row.REPLY_COUNT}]</td>
+									<td>
+										<c:choose>
+										<%-- 관리자답변 있을 때 --%>
+											<c:when test="${row.REPLY_COUNT !=0 }">
+												답변완료
+											</c:when>
+										<%-- 관리자답변 없을 때 --%>
+											<c:otherwise>
+												답변대기
+											</c:otherwise>
+										</c:choose>	
+									</td>
+									<td>${row.READ_COUNT }</td>
+									<td>${row.RECOMMEND_COUNT }</td>
+									<td>${row.NICK_NAME }</td>
+									<td>${row.BOARD_DATE }</td>
+								</tr>
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td colspan="4">조회된 결과가 없습니다.</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+			</c:otherwise>
+		</c:choose>
 		</tbody>
 	</table>
 

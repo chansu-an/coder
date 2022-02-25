@@ -184,5 +184,11 @@ SELECT USER_NO,NAME,TELL,EMAIL,ADDRESS,ADDRESS1,SKILL,BLOG,FILES,ZIPCODE FROM RE
 INSERT INTO FOLLOW VALUES(#{USER_NO},#{FOLLOWER})
 ]]></insert>
 
+<!-- 이메일 인증후 6자리 난수로 pw변경 -->
+<update id="modifyPassword" parameterType="hashmap" ><![CDATA[
+UPDATE USERS
+   SET PASSWORD = #{authKey}
+ WHERE EMAIL = #{EMAIL}
+]]></update>
 </mapper>
 

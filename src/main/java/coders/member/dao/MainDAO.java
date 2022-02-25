@@ -47,4 +47,8 @@ public class MainDAO extends AbstractDAO{
 	public Map<String, Object> confirmNaverId(Map<String, Object> map) throws Exception {
 		return (Map<String, Object>) selectOne("user.confirmNaverId", map);
 	}
+	
+	public void modifyPassword(Map<String, Object> map) throws Exception{
+		update("user.modifyPassword", map);
+	}
 }
