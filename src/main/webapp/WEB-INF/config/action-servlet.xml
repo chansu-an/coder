@@ -49,6 +49,14 @@
 			<mvc:mapping path="/**/write.do"/>
 			<bean class="coders.common.interceptor.WriteInterceptor"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/Team/**"/>
+			<bean class="coders.common.interceptor.TeamInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="coders.common.interceptor.NonPageInterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
 </beans>
 

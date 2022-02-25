@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import coders.mypage.dao.MypageDAO;
-@Service("MypageService")
+@Service("mypageService")
 public class MypageServiceImpl implements MypageService {
 	
 	@Resource(name="MypageDAO")

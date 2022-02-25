@@ -2,16 +2,36 @@
 <!DOCTYPE html>
 <html>
 <script type="text/javascript">
-var test = true
+var ch = true
 function testttt(n) {
-	if(test){
-		document.getElementById('test'+n).className = 'navbar-collapse collapse show';
-		 test = false;
-	}else{
-		document.getElementById('test'+n).className = 'navbar-collapse collapse';
-		 test = true;
+	if(ch){
+		 ch=false;
+		var str = "<label for='content'>대댓글 작성</label>";
+		str +="<form action='../board/commentInsert2.do' method='post'>" ;
+		str +="<div class='input-group'>";
+		str +="<input type='hidden' name='BOARD_NO' value='${map.BOARD_NO}'/>"
+		str +="<input type='hidden' name='IDENTI_TYPE' value='${map.IDENTI_TYPE}'/>"
+		str +="<input type='hidden' name='USER_NO' value='${session.USER_NO}'/>"
+		str +="<input type='hidden' name='REF_NO' value='${row.REF_NO}'/>"
+		str +="<input type='hidden' name='REF_STEP' value='${row.REF_STEP}'/>"
+		str +="<input type='text' id='CONTEXT' name='CONTEXT' placeholder='내용을 입력하세요.' style='width:60%;;font-size:15px;'/>"
+		str +="<span class='input-group-btn'>"
+		str +="<button class='btn btn-default' name='commentInsertBtn'>등록</button>"
+		str +="</span>"
+		str +="</div>"
+		str +="<br/>"
+		str +="</form>"
+	$("#test"+n).append(str);
+		/* document.getElementById('test'+n).className = 'navbar-collapse collapse show';
+		 test = false; */	 
 		
 	}
+	else{
+		ch=true;
+		ch-1;
+		$("#test"+n).empty();
+	}
+	
 };
 
 
@@ -50,9 +70,9 @@ function testttt(n) {
 			</tr>
 			<tr>
 				<th scope="row">추천수</th> 
-				<td id="recommend_count">${map.RECOMMEND_COUNT }</td>
+				<td ><div id="recommend_count">${map.RECOMMEND_COUNT }</div></td>
 				<th scope="row">신고수</th> 
-				<td id="report_count">${map.REPORT_COUNT }</td>
+				<td ><div id="report_count">${map.REPORT_COUNT }</div></td>
 			</tr> 
 			<tr> 
 				<th scope="row">작성자</th> 
@@ -84,7 +104,7 @@ function testttt(n) {
 	<c:if test="${sessionScope.session.USER_NO == map.USER_NO}">
 		<a href="/net/board/modify.do?IDENTI_TYPE=${map.IDENTI_TYPE}&BOARD_NO=${map.BOARD_NO}" class="btn" id="write">수정하기</a>
 	</c:if>
-	<a href="/net/board/openBoardList.do?IDENTI_TYPE=${map.IDENTI_TYPE }" class="btn" id="boardList">목록보기</a>
+	<a href="/net/board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE }" class="btn" id="boardList">목록보기</a>
 	
 	<!-- 스크랩하기 -->
 	
@@ -131,22 +151,7 @@ function testttt(n) {
 			    </div>
 				<a href="#this" onclick="fn_recommendComment(${var.index});">추천</a>
 			    <c:if test="${!empty sessionScope.session.USER_NO }">
-				    <div id="test${row.RE_NO}" class="navbar-collapse collapse " >
-				    	<label for="content">대댓글 작성</label>
-	        				<form action="../board/commentInsert2.do" method="post">
-		            			<div class="input-group">
-			             		  	<input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}"/>
-			               			<input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}"/>
-			               			<input type="hidden" name="USER_NO" value="${session.USER_NO}"/>
-			               			<input type="hidden" name="REF_NO" value="${row.REF_NO}"/>
-			               			<input type="hidden" name="REF_STEP" value="${row.REF_STEP}"/>
-			               			<input type="text" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요." style="width:60%;;font-size:15px;"/>
-			              			<span class="input-group-btn">
-			                    		<button class="btn btn-default" name="commentInsertBtn">등록</button>
-					                </span>
-					            </div>
-					            <br/>
-					        </form>
+				    <div id="test${row.RE_NO}">
 				    </div>
 			    </c:if>		        
 	    </c:when>
