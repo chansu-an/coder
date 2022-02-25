@@ -10,5 +10,7 @@ public interface ApplicationService {
 	List<Map<String, Object>> selectMemberList(Map<String, Object> map)throws Exception;
 
 	void insertProjectApp(Map<String, Object> map)throws Exception;
+
+	void ProjectApp(Map<String, Object> map) throws Exception; 
 	
 }

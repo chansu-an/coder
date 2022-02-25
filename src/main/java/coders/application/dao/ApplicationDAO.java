@@ -20,8 +20,13 @@ public class ApplicationDAO extends AbstractDAO {
 		return (List<Map<String, Object>>) selectList("project.selectMemberList",map);
 	}
 
-	public void insertProjectApp(Map<String, Object> map) {
+	public void insertProjectApp(Map<String, Object> map) throws Exception{
 		insert("project.insertProjectApp",map);
+	}
+
+	public void ProjectApp(Map<String, Object> map) throws Exception{
+		update("project.ProjectApp", map);
+		
 	}
 	
 
