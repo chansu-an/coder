@@ -1,6 +1,5 @@
 package coders.member.controller;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +23,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import coders.common.common.CommandMap;
 import coders.mail.service.MailSendService;
+import coders.mail.service.MailSendService2;
 import coders.member.NaverLoginVO;
 import coders.member.service.MainService;
 
@@ -32,6 +32,7 @@ public class MainController {
 	/* naverLoginVO */
     private NaverLoginVO naverLoginVO;
     private String apiResult = null;
+    private String authKey = null;
 	
     @Autowired
     private void setnaverLoginVO(NaverLoginVO naverLoginVO) {
@@ -42,6 +43,8 @@ public class MainController {
 	private MainService mainService;
 	@Resource(name="mss")
 	private MailSendService mailSendService;
+	@Resource(name="mss2")
+	private MailSendService2 mailSendService2;
 	
 	@RequestMapping(value="/main/Login.do", method = RequestMethod.GET)
 	public ModelAndView loginForm(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception{
@@ -166,14 +169,6 @@ public class MainController {
 	}
 	
 	
-	@RequestMapping(value="/main/FindId.do", method = RequestMethod.GET)
-	public ModelAndView findId(CommandMap commandMap) throws Exception{
-		ModelAndView mv = new ModelAndView("/main/id_find");
-		
-		return mv;
-	}
-	
-	
 	@RequestMapping(value="/main/FindPw.do", method = RequestMethod.GET)
 	public ModelAndView findPw(CommandMap commandMap) throws Exception{
 		ModelAndView mv = new ModelAndView("/main/pw_find");
@@ -218,6 +213,36 @@ public class MainController {
 		HttpSession session = request.getSession();
         
         session.invalidate();
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/main/findPassword.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView findPassword(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/main/FindPw.do?authKey=" + authKey);
+		System.out.println(request.getParameter("EMAIL"));
+		System.out.println(request.getParameter("authKey"));		
+		if(request.getParameter("authKey") == null) {
+			authKey = mailSendService2.sendAuthMail((String)request.getParameter("EMAIL"));			
+		}else {
+			if(authKey == (String)request.getParameter("authKey")) {
+				mainService.modifyPassword(commandMap.getMap());
+				
+			}
+		}
+		System.out.println("authKey : " + authKey);
+		
+		return mv;
+	}
+	
+	@RequestMapping(value="/main/findPasswordConfirm.do", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView findPasswordConfirm(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView("redirect:/main/Login.do");
+		
+		System.out.println("인증후1 : " + request.getParameter("EMAIL"));
+		System.out.println("인증후2 : " + request.getParameter("authKey"));
+		
+		mainService.modifyPassword(commandMap.getMap());
 		
 		return mv;
 	}

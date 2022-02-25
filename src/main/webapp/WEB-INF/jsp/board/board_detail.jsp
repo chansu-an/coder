@@ -4,34 +4,33 @@
 <script type="text/javascript">
 var ch = true
 function testttt(n) {
-	if(ch){
-		 ch=false;
-		var str = "<label for='content'>대댓글 작성</label>";
-		str +="<form action='../board/commentInsert2.do' method='post'>" ;
-		str +="<div class='input-group'>";
-		str +="<input type='hidden' name='BOARD_NO' value='${map.BOARD_NO}'/>"
-		str +="<input type='hidden' name='IDENTI_TYPE' value='${map.IDENTI_TYPE}'/>"
-		str +="<input type='hidden' name='USER_NO' value='${session.USER_NO}'/>"
-		str +="<input type='hidden' name='REF_NO' value='${row.REF_NO}'/>"
-		str +="<input type='hidden' name='REF_STEP' value='${row.REF_STEP}'/>"
-		str +="<input type='text' id='CONTEXT' name='CONTEXT' placeholder='내용을 입력하세요.' style='width:60%;;font-size:15px;'/>"
-		str +="<span class='input-group-btn'>"
-		str +="<button class='btn btn-default' name='commentInsertBtn'>등록</button>"
-		str +="</span>"
-		str +="</div>"
-		str +="<br/>"
-		str +="</form>"
-	$("#test"+n).append(str);
-		/* document.getElementById('test'+n).className = 'navbar-collapse collapse show';
-		 test = false; */	 
-		
-	}
-	else{
-		ch=true;
-		ch-1;
-		$("#test"+n).empty();
-	}
-	
+    if(ch){
+         ch=false;
+        var str = "<label for='content'>대댓글 작성</label>";
+        str +="<form action='../board/commentInsert2.do' method='post'>" ;
+        str +="<div class='input-group'>";
+        str +="<input type='hidden' name='BOARD_NO' value='${map.BOARD_NO}'/>"
+        str +="<input type='hidden' name='IDENTI_TYPE' value='${map.IDENTI_TYPE}'/>"
+        str +="<input type='hidden' name='USER_NO' value='${session.USER_NO}'/>"
+        str +="<input type='hidden' name='REF_NO' value='${row.REF_NO}'/>"
+        str +="<input type='hidden' name='REF_STEP' value='${row.REF_STEP}'/>"
+        str +="<input type='text' id='CONTEXT' name='CONTEXT' placeholder='내용을 입력하세요.' style='width:60%;;font-size:15px;'/>"
+        str +="<span class='input-group-btn'>"
+        str +="<button class='btn btn-default' name='commentInsertBtn'>등록</button>"
+        str +="</span>"
+        str +="</div>"
+        str +="<br/>"
+        str +="</form>"
+    $("#test"+n).append(str);
+        /* document.getElementById('test'+n).className = 'navbar-collapse collapse show';
+         test = false; */
+
+    }
+    else{
+        ch=true;
+        ch-1;
+        $("#test"+n).empty();
+    }
 };
 
 
@@ -70,9 +69,9 @@ function testttt(n) {
 			</tr>
 			<tr>
 				<th scope="row">추천수</th> 
-				<td ><div id="recommend_count">${map.RECOMMEND_COUNT }</div></td>
+				<td><div id="recommend_count">${map.RECOMMEND_COUNT }</div></td>
 				<th scope="row">신고수</th> 
-				<td ><div id="report_count">${map.REPORT_COUNT }</div></td>
+				<td><div id="report_count">${map.REPORT_COUNT }</div></td>
 			</tr> 
 			<tr> 
 				<th scope="row">작성자</th> 
@@ -143,13 +142,15 @@ function testttt(n) {
 				        작성자 : ${row.NICK_NAME} / ${row.REF_STEP} / ${row.REF_NO}<br />
 				        작성 날짜 : ${row.REPLY_DATE } 
 			        </div>		
-			        <p>${row.CONTEXT}
+			        <p>${row.CONTEXT}<br/>
 			        <c:if test="${row.USER_NO == sessionScope.session.USER_NO }">               		
 			        	<a href="/net/board/commentDelete.do?RE_NO=${row.RE_NO }&BOARD_NO=${map.BOARD_NO}&IDENTI_TYPE=${map.IDENTI_TYPE}" class="btn">삭제</a>
 			        </c:if>	
+				    <c:if test="${sessionScope.session.USER_NO == map.USER_NO}">
+						<a href="#this" onclick="fn_recommendComment(${var.index});" class="btn">추천</a>
+					</c:if>
 			        </p>
 			    </div>
-				<a href="#this" onclick="fn_recommendComment(${var.index});">추천</a>
 			    <c:if test="${!empty sessionScope.session.USER_NO }">
 				    <div id="test${row.RE_NO}">
 				    </div>
@@ -200,6 +201,7 @@ function testttt(n) {
     <%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
     <script type="text/javascript">
+    let check_recommend = true;
 	$(document).ready(function(){
 		if(${scrapcheck} == 1){
 			$("#scrap").bind("click", function(e){ //스크랩 버튼
@@ -286,20 +288,24 @@ function testttt(n) {
 	function fn_recommendComment(e){
 		let REF_NO = $("#REF_NO_" + e).val();
 		let REF_STEP = $("#REF_STEP_" + e).val();
-		alert(REF_NO);
-		alert(REF_STEP);
-		$.ajax({
-			 url : "<c:url value='/board/recommandComment.do?REF_NO=" + REF_NO + "&REF_STEP=" + REF_STEP + "'/>",
-			 type : "post",
-			 dataType : 'json',
-			 contentType : "application/json; charset=UTF-8",
-			 success : function(result){
-				 alert(result);
-			 },
-			 error : function(){
-				 alert("서버요청실패");
-			 }
-		 })
+		
+		if(check_recommend){
+			$.ajax({
+				 url : "<c:url value='/board/recommandComment.do?REF_NO=" + REF_NO + "&REF_STEP=" + REF_STEP + "'/>",
+				 type : "post",
+				 dataType : 'json',
+				 contentType : "application/json; charset=UTF-8",
+				 success : function(result){
+					 alert("댓글추천");
+					 check_recommend = false;
+				 },
+				 error : function(){
+					 alert("서버요청실패");
+				 }
+			 })			
+		}else{
+			alert("추천은 한번");
+		}
 	}
     
     function fn_addFile(){if(gfv_count>=4){
