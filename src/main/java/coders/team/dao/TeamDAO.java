@@ -20,7 +20,9 @@ public class TeamDAO extends AbstractDAO{
 
 	public void insertTeam(Map<String, Object> map) throws Exception {
 		insert("team.insertTeam", map);
-		insert("team.ProjectAr", map);
+		System.out.println("teamdao");
+		System.out.println(map);
+		update("team.ProjectAr", map);
 	}
 
 	@SuppressWarnings("unchecked")

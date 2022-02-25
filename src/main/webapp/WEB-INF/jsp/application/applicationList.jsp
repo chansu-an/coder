@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko">	
 <head>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
@@ -20,16 +20,27 @@
 			</tr>
 		</thead>
 		<tbody>
+		
 			<c:choose>
 				<c:when test="${fn:length(list) > 0}">
+					
 					<c:forEach items="${list}" var="row">
 						<tr>
 							<td>${row.NICK_NAME }</td>
-							<c:if test="${sessionScope.session != null }">
-							<a href="/Project/ProjectApp.do" class="btn" id="App">수락</a>
+							<c:if test="${sessionScope.session.USER_NO==map.USER_NO}">
+							<form action="../Project/ProjectApp.do">
+							<input type="hidden" name="USER_NO" value="${row.USER_NO}">
+							<input type="hidden" name="PROJECT_NO" value="${row.PROJECT_NO}">
+							<input type="submit" class="btn" value="수락">
+							</form>
+							<form action = "../Resume/Detail.do">
+							<input type="hidden" name="USER_NO" value="${row.USER_NO}">
+							<input type="submit" class="btn" value="이력서 보기">
+							</form>
 							</c:if>
 						</tr>
 					</c:forEach>
+					
 				</c:when>
 				<c:otherwise>
 					<tr>
