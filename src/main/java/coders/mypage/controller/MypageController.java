@@ -138,7 +138,6 @@ public ModelAndView writeList(HttpServletRequest request,HttpSession session )th
 		List<Map<String, Object>> list = mypageService.selectWriteList(mapor);
 		mav.addObject("list",list);
 		mav.addObject("map", mapor);
-		System.out.println(list);
 		mav.setViewName("/mypage/myWrite");
 		return mav;
 }
@@ -181,12 +180,8 @@ public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> mapor = new HashMap<String, Object>();
 		String no = request.getParameter("BOARD_NO");
-		String idno = request.getParameter("IDENTI_TYPE");
-		 mapor.put("BOARD_NO", no); 
-		 mapor.put("IDENTI_TYPE",idno);
-		 mypageService.clickArlist(mapor);
-		 
-		mav.setViewName("redirect:/board/detail.do?BOARD_NO="+no+"&IDENTI_TYPE="+idno);
+		 mapor.put("BOARD_NO", no); mypageService.clickArlist(mapor);
+		mav.setViewName("redirect:/board/detail.do?BOARD_NO="+no);
 		return mav;
 		
 	}
