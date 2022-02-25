@@ -26,7 +26,7 @@
 						<tr>
 							<td>${row.NICK_NAME }</td>
 							<c:if test="${sessionScope.session != null }">
-							<a href="/Project/ProjectApp.do">수락</a>
+							<a href="/Project/ProjectApp.do" class="btn" id="App">수락</a>
 							</c:if>
 						</tr>
 					</c:forEach>
@@ -43,6 +43,23 @@
 	<a href="../Project/Write.do" class="btn" id="write">프로젝트 생성</a>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+<script type="text/javascript">
+${document}.ready(function(){ //수락하기버튼
+	${"#App"}.on("click", function(e){
+		e.preventDefault();
+		fn_ProjectApp();
+	});
+	
+});;
+
+function fn_ProjectApp(){
+	alert(신청되었습니다!);
+	var comSubmit = new ComSubmit();
+	comSubmit.setUrl("<c:url value='/Project/ProjectApp.do' />");
+	comSubmit.submit();
+}
+</script>
+
 
 </body>
 </html>
