@@ -20,6 +20,7 @@ public class TeamDAO extends AbstractDAO{
 
 	public void insertTeam(Map<String, Object> map) throws Exception {
 		insert("team.insertTeam", map);
+		insert("team.ProjectAr", map);
 	}
 
 	@SuppressWarnings("unchecked")

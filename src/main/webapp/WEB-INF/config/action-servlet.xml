@@ -43,6 +43,7 @@
    	</bean>
    	
    	<bean id="naverLoginVO" class="coders.member.NaverLoginVO"/>
+<<<<<<< HEAD
    	
    	<mvc:interceptors>
 		<mvc:interceptor>
@@ -50,6 +51,8 @@
 			<bean class="coders.common.interceptor.WriteInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
+=======
+>>>>>>> 335a13384eae6690ad599f621c8913bc26fbbe2b
 </beans>
 
 
