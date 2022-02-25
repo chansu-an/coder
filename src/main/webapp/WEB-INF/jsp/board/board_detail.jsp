@@ -91,58 +91,63 @@ function testttt(n) {
 	
 	<!-- 신고, 추천 -->
 	<!-- 신고하기 누르면 REPORT_COUNT + 1, 추천하기 누르면 RECOMMEND_COUNT + 1 -->
-	<div>
-	<a href="#this" class="btn" id="recommend">추천하기</a>
-	<a href="#this" class="btn" id="report">신고하기</a>	
-	</div>
+	<c:if test="${sessionScope.session.USER_NO == map.USER_NO}">
+		<div>
+		<a href="#this" class="btn" id="recommend">추천하기</a>
+		<a href="#this" class="btn" id="report">신고하기</a>	
+		</div>
+	</c:if>
 	
 	<!-- 댓글 리스트 -->
 	<div id="reply">
 	  <div>댓글 <c:out value="${count}"></c:out></div>
-	  <c:if test="${bestcomment.RECOMMAND_COUNT != '0' }">
-	  <div>
-	  	<p>
-			작성자 : ${bestcomment.NICK_NAME}<br />
-			작성 날짜 : ${bestcomment.REPLY_DATE } 
-		</p>			
-		<p>
-			${bestcomment.CONTEXT}	
-		</p>
-	  </div>
-	  </c:if>
 	  <ol class="replyList">
-	    <c:forEach items="${list}" var="row">
+	  	<c:if test="${bestcomment.RECOMMAND_COUNT != null }">
+		  <div>
+		  	<p>
+				작성자 : ${bestcomment.NICK_NAME}<br />
+				작성 날짜 : ${bestcomment.REPLY_DATE } 
+			</p>			
+			<p>
+				${bestcomment.CONTEXT}	
+			</p>
+		  </div>
+	  	</c:if>
+	    <c:forEach items="${list}" var="row" varStatus="var">
 	    <c:choose>
 	  	<c:when test="${row.DEL_GB == 'N' }">
 	    		<div  onclick="testttt(${row.RE_NO})">
-			        <p>
-			        작성자 : ${row.NICK_NAME} / ${row.REF_STEP} / ${row.REF_NO}<br />
-			        작성 날짜 : ${row.REPLY_DATE } 
-			        </p>			
+			    <input type="hidden" id="REF_NO_${var.index }" value="${row.REF_NO}"/>
+			    <input type="hidden" id="REF_STEP_${var.index }" value="${row.REF_STEP}"/>
+			        <div>
+				        작성자 : ${row.NICK_NAME} / ${row.REF_STEP} / ${row.REF_NO}<br />
+				        작성 날짜 : ${row.REPLY_DATE } 
+			        </div>		
 			        <p>${row.CONTEXT}
 			        <c:if test="${row.USER_NO == sessionScope.session.USER_NO }">               		
 			        	<a href="/net/board/commentDelete.do?RE_NO=${row.RE_NO }&BOARD_NO=${map.BOARD_NO}&IDENTI_TYPE=${map.IDENTI_TYPE}" class="btn">삭제</a>
 			        </c:if>	
 			        </p>
 			    </div>
+				<a href="#this" onclick="fn_recommendComment(${var.index});">추천</a>
 			    <c:if test="${!empty sessionScope.session.USER_NO }">
-			    <div id="test${row.RE_NO}" class="navbar-collapse collapse " >
-			    	<label for="content">대댓글 작성</label>
-        				<form action="../board/commentInsert2.do" method="post">
-	            			<div class="input-group">
-		             		  	<input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}"/>
-		               			<input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}"/>
-		               			<input type="hidden" name="USER_NO" value="${session.USER_NO}"/>
-		               			<input type="hidden" name="REF_NO" value="${row.REF_NO}"/>
-		               			<input type="hidden" name="REF_STEP" value="${row.REF_STEP}"/>
-		               			<input type="text" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요." style="width:60%;;font-size:15px;"/>
-		              			<span class="input-group-btn">
-		                    		<button class="btn btn-default" name="commentInsertBtn">등록</button>
-				                </span>
-				            </div>
-				            <br/>
-				        </form>
-			    </div>
+				    <div id="test${row.RE_NO}" class="navbar-collapse collapse " >
+				    	<label for="content">대댓글 작성</label>
+	        				<form action="../board/commentInsert2.do" method="post">
+		            			<div class="input-group">
+			             		  	<input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}"/>
+			               			<input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}"/>
+			               			<input type="hidden" name="USER_NO" value="${session.USER_NO}"/>
+			               			<input type="hidden" name="REF_NO" value="${row.REF_NO}"/>
+			               			<input type="hidden" name="REF_STEP" value="${row.REF_STEP}"/>
+			               			<input type="text" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요." style="width:60%;;font-size:15px;"/>
+			              			<span class="input-group-btn">
+			                    		<button class="btn btn-default" name="commentInsertBtn">등록</button>
+					                </span>
+					            </div>
+					            <br/>
+					        </form>
+				    </div>
 			    </c:if>		        
 	    </c:when>
 	    <c:otherwise>
@@ -194,36 +199,44 @@ function testttt(n) {
 		if(${scrapcheck} == 1){
 			$("#scrap").bind("click", function(e){ //스크랩 버튼
 				e.preventDefault();
-				$.ajax({
-					 url : "<c:url value='/board/deleteScrap.do?USER_NO=${sessionScope.session.USER_NO}&BOARD_NO=${map.BOARD_NO}'/>",
-					 type : "post",
-					 dataType : 'json',
-					 contentType : "application/json; charset=UTF-8",
-					 success : function(result){
-						 alert("스크랩 취소");
-						 location.reload();
-					 },
-					 error : function(){
-						 alert("서버요청실패");
-					 }
-				 })
+				if(${!empty session.USER_NO}){
+					$.ajax({
+						 url : "<c:url value='/board/deleteScrap.do?USER_NO=${sessionScope.session.USER_NO}&BOARD_NO=${map.BOARD_NO}'/>",
+						 type : "post",
+						 dataType : 'json',
+						 contentType : "application/json; charset=UTF-8",
+						 success : function(result){
+							 alert("스크랩 취소");
+							 location.reload();
+						 },
+						 error : function(){
+							 alert("");
+						 }
+					 })					
+				}else{
+					alert("로그인후 사용가능합니다.");
+				}	
 			});
 		}else{
 			$("#scrap").bind("click", function(e){ //스크랩 버튼
 				e.preventDefault();
-				$.ajax({
-					 url : "<c:url value='/board/insertScrap.do?USER_NO=${sessionScope.session.USER_NO}&BOARD_NO=${map.BOARD_NO}'/>",
-					 type : "post",
-					 dataType : 'json',
-					 contentType : "application/json; charset=UTF-8",
-					 success : function(result){
-						 alert("스크랩 완료");
-						 location.reload();
-					 },
-					 error : function(){
-						 alert("서버요청실패");
-					 }
-				 })
+				if(${!empty session.USER_NO}){
+					$.ajax({
+						 url : "<c:url value='/board/insertScrap.do?USER_NO=${sessionScope.session.USER_NO}&BOARD_NO=${map.BOARD_NO}'/>",
+						 type : "post",
+						 dataType : 'json',
+						 contentType : "application/json; charset=UTF-8",
+						 success : function(result){
+							 alert("스크랩 완료");
+							 location.reload();
+						 },
+						 error : function(){
+							 alert("서버요청실패");
+						 }
+					 })					
+				}else{
+					alert("로그인후 사용가능합니다.");
+				}
 			});			
 		}
 		
@@ -263,13 +276,28 @@ function testttt(n) {
 			 })
 		});
 		
-		
 	});
-
 	
+	function fn_recommendComment(e){
+		let REF_NO = $("#REF_NO_" + e).val();
+		let REF_STEP = $("#REF_STEP_" + e).val();
+		alert(REF_NO);
+		alert(REF_STEP);
+		$.ajax({
+			 url : "<c:url value='/board/recommandComment.do?REF_NO=" + REF_NO + "&REF_STEP=" + REF_STEP + "'/>",
+			 type : "post",
+			 dataType : 'json',
+			 contentType : "application/json; charset=UTF-8",
+			 success : function(result){
+				 alert(result);
+			 },
+			 error : function(){
+				 alert("서버요청실패");
+			 }
+		 })
+	}
     
     function fn_addFile(){if(gfv_count>=4){
-		alert("ㅊㄴㅇㄴ")
 		return;
 		}alert(gfv_count)
 		var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";

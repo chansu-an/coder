@@ -40,7 +40,6 @@ public class BoardController {
 
 		int count = boardService.countborad(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 10, count);
-		System.out.println(commandMap.getMap());
 		
 		commandMap.put("ORDER_TYPE", request.getParameter("ORDER_TYPE"));
 
@@ -104,9 +103,7 @@ public class BoardController {
 	@RequestMapping(value="/board/detail.do")
 	public ModelAndView selectBoardDetail(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/board_detail");
-		
-		
-		
+			
 		int count;
 		String page = request.getParameter("PAG_NUM");
 		int pag = 1;
@@ -129,10 +126,8 @@ public class BoardController {
 			if(scrapcount != null) {//스크랩 있을시 
 				test = 1;
 			}
-		}
-		
-		
-		
+		}		
+
 		mav.addObject("scrapcheck", test);
 		mav.addObject("map", map);
 		mav.addObject("list", list);
@@ -324,6 +319,17 @@ public class BoardController {
 		int result = boardService.deleteScrap(commandMap.getMap());
 		
 		return result;		
+	}
+	
+	//댓글 추천하기
+	@RequestMapping(value="/board/recommandComment.do", method = RequestMethod.POST)
+	@ResponseBody
+	public int recommandComment(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		
+		int result = boardService.updateRecommandComment(commandMap.getMap());
+		
+		return result;
+	
 	}
 	
 	

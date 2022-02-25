@@ -54,7 +54,6 @@ public interface BoardService {
 
 	List<Map<String, Object>> searchBoard(Map<String, Object> map) throws Exception;
 	
-
 	int commentCount(Map<String, Object> map)throws Exception;
 	
 	int countDeleteList(Map<String, Object> map)throws Exception;
@@ -63,12 +62,13 @@ public interface BoardService {
 	
 	int countborad(Map<String, Object> map)throws Exception;
 
-
 	int insertScrap(Map<String, Object> map) throws Exception;
 	
 	Map<String, Object> selectCheckScarp(Map<String, Object> map) throws Exception;
 	
 	int deleteScrap(Map<String, Object> map) throws Exception;
+	
+	int updateRecommandComment(Map<String, Object> map) throws Exception;
 
 	
 }

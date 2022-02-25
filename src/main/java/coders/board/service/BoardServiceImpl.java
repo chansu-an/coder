@@ -249,6 +249,11 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.deleteScrap(map);
 
 	}
+
+	@Override
+	public int updateRecommandComment(Map<String, Object> map) throws Exception {
+		return boardDAO.updateRecommandComment(map);
+	}
 	
 	
 }
