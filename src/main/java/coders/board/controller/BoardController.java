@@ -37,28 +37,31 @@ public class BoardController {
 		}
 		ModelAndView mav = new ModelAndView("/board/board_list");
 		String key = request.getParameter("KEYWORD");
-
+		if(key==null) {
 		int count = boardService.countborad(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 10, count);
-		
 		commandMap.put("ORDER_TYPE", request.getParameter("ORDER_TYPE"));
-
+		System.out.println(commandMap.getMap());
 		List<Map<String, Object>> list = boardService.selectBoardList(commandMap.getMap());
-		if(!list.isEmpty()) {
-			String IDENTI_TYPE = list.get(0).get("IDENTI_TYPE").toString();
-			mav.addObject("IDENTI_TYPE", IDENTI_TYPE);			
-		}
-		mav.addObject("list", list);
+				if(!list.isEmpty()) {
+					String IDENTI_TYPE = list.get(0).get("IDENTI_TYPE").toString();
+					mav.addObject("IDENTI_TYPE", IDENTI_TYPE);			
+				}
+				mav.addObject("list", list);
 
-		mav.addObject("map",commandMap.getMap());
-
-
-		//검색기능
-		if(key != null) {
+				mav.addObject("map",commandMap.getMap());}
+				//검색기능	
+		if(key!=null) {
+			commandMap.put("SEARCH_TYPE", request.getParameter("SEARCH_TYPE"));
+			commandMap.put("KEYWORD", request.getParameter("KEYWORD"));
 			List<Map<String, Object>> list1 = boardService.searchBoard(commandMap.getMap());
 			mav.addObject("list", list1);
 		}
 		
+		
+
+
+	
 		if(request.getParameter("ORDER_TYPE") != null) {
 			mav.addObject("order_type", request.getParameter("ORDER_TYPE"));
 		}

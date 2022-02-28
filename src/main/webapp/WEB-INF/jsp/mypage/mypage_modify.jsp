@@ -8,8 +8,6 @@
     
 
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
-<%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
-<%@ include file="/WEB-INF/include/include-navbar.jspf"%>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/checkout/">
     <!-- Bootstrap core CSS -->
 <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet"/>
@@ -30,9 +28,38 @@
       }
     </style>   
     <!-- Custom styles for this template -->
-    <link href="<c:url value='/resources/css/form-validation.css'/>" rel="stylesheet"/>
+    <link href="<c:url value='../css/form-validation.css'/>" rel="stylesheet"/>
     
   </head>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+				<div class="container-fluid">
+					<button class="btn btn-primary" id="sidebarToggle">메뉴</button>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+						
+						<li class="nav-item active"><a class="nav-link" href="../board/mainList.do">메인으로</a></li>
+						
+						<li class="nav-item"><a class="nav-link" href="../Mypage/Notification.do?USER_NO=${sessionScope.session.USER_NO }&amp;B_PAG_NUM=1&amp;P_PAG_NUM=1">알림()</a></li>
+							<c:if test="${sessionScope.session!=null}">
+							<li class="nav-item">
+									<img src="../img/profile/${param.USER_NO}/${sessionScope.session.PROFILE}" width="40" height="10" class="img-thumbnail">
+								</li>
+							<li class="nav-item"><a class="nav-link" href="../main/Mypage.do?USER_NO=${sessionScope.session.USER_NO }">테스트3213님 환영합니다.</a></li>
+							
+							<li class="nav-item">
+							<a class="nav-link" href="../main/logout.do">로그아웃</a>								
+							</li>
+							</c:if>
+							<c:if test="${sessionScope.session==null}">
+							<a class="nav-link" href="../main/Login.do">로그인</a>	
+							</c:if>
+						</ul>
+					</div>
+				</div>
+			</nav>
   <body onload="test()" class="bg-light">
 <div class="container">
   <main>
@@ -53,7 +80,7 @@
                <input type="file" name="FILE"  >
               </div>
              
-            </div>
+            
             <div class="col-12">
               <label for="email" class="form-label">이메일</label>
                <div >
@@ -70,18 +97,18 @@
               <input type="password" class="form-control" name="PASSWORD2" id="PASSWORD2" placeholder="암호확인" required value="${map.PASSWORD }">
             <div class="invalid-feedback">필수 입력사항입니다</div>
            </div>
-            </div>
+          
           <div align="center">
           <hr class="my-4">
           <button class=" btn btn-primary btn-lg" type="submit">정보 변경</button>
-          <input class="btn btn-primary btn-lg" type="button" onclick ="lacation.href='/main/Main'" value="변경 취소">
+          <input class="btn btn-primary btn-lg" type="button" onclick ="location.href='../main/Mypage.do?USER_NO=${map.USER_NO}'" value="변경 취소">
+          </div>
           </div>
         </form>
       </div>
+      </div>
+      </main> 
     </div>
-  
-  </main> 
-</div>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>>
     <script type="text/javascript">
     function  test(){

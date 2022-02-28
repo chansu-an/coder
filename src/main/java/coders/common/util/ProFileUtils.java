@@ -21,6 +21,7 @@ public class ProFileUtils {
 		String storeFileName = null;
 		String filePath = request.getSession().getServletContext().getRealPath("/")+"\\img\\profile\\";
 		filePath =filePath+map.get("USER_NO")+"\\";
+		System.out.println(filePath);
 		File file = new File(filePath);
 		
 		if(file.exists()==false) {

@@ -3,37 +3,36 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 				<div class="container-fluid">
 					<button class="btn btn-primary" id="sidebarToggle">메뉴</button>
-					<button class="navbar-toggler" type="button"
-						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent" aria-expanded="false"
-						aria-label="Toggle navigation">
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
 						
-						<li class="nav-item active"><a class="nav-link" href="/net/board/mainList.do">메인으로</a></li>
-						<c:if test="${sessionScope.session!=null}">
-						<li class="nav-item"><a class="dropdown-item" href="../Mypage/Notification.do?USER_NO=${sessionScope.session.USER_NO}&B_PAG_NUM=1&P_PAG_NUM=1">알림()</a></li>
-							<li class="nav-item"><a class="nav-link" href="#!">${sessionScope.session.NICK_NAME}님 환영합니다.</a></li>
+						<li class="nav-item active"><a class="nav-link" href="../board/mainList.do">메인으로</a></li>
+						
+					
+							<c:if test="${sessionScope.session!=null}">
+								<li class="nav-item"><a class="nav-link" href="../Mypage/Notification.do?USER_NO=${sessionScope.session.USER_NO }&amp;B_PAG_NUM=1&amp;P_PAG_NUM=1">알림()</a></li>
+							<c:if test="${sessionScope.session.PROFILE=='TEMP'}">
+							<li class="nav-item">
+									<img src="../img/profile/temp/profile.jpg" width="40" height="10" class="img-thumbnail">
+								</li>
+								</c:if>
+								<c:if test="${sessionScope.session.PROFILE!='TEMP'}">
+							<li class="nav-item">
+									<img src="../img/profile/${sessionScope.session.USER_NO}/${sessionScope.session.PROFILE}" width="40" height="10" class="img-thumbnail">
+								</li>
+								</c:if>
+							<li class="nav-item"><a class="nav-link" href="../main/Mypage.do?USER_NO=${sessionScope.session.USER_NO }">테스트3213님 환영합니다.</a></li>
 							
 							<li class="nav-item">
-							<a class="nav-link"
-								href="../main/logout.do">로그아웃</a>
-								</c:if>
-								<c:if test="${sessionScope.session==null}"><a class="nav-link"
-								href="../main/Login.do">로그인</a>
-								</c:if>
-										
-							<li class="nav-item dropdown"><a
-								class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-								role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">Dropdown</a>
-								<div class="dropdown-menu dropdown-menu-end"
-									aria-labelledby="navbarDropdown">
-									<a class="dropdown-item" href="#!">마이페이지</a> 
-									
-								</div></li>
+							<a class="nav-link" href="../main/logout.do">로그아웃</a>								
+							</li>
+							</c:if>
+							<c:if test="${sessionScope.session==null}">
+							<a class="nav-link" href="../main/Login.do">로그인</a>	
+							</c:if>
 						</ul>
 					</div>
 				</div>
