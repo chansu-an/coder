@@ -28,15 +28,17 @@ public class BoardController {
 	private Packaging packaging;
 	
 	//글목록 보기 /board/openBoardList.do?IDENTI_TYE=1
-	@RequestMapping(value="/board/openBoardList.do")
+	@RequestMapping(value="/board/openBoardList.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView openBoardList(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView("/board/board_list");
 		String page = request.getParameter("PAG_NUM");
 		int pag = 1;
 		if(page!=null) {
 			pag = Integer.parseInt(page);
 		}
-		ModelAndView mav = new ModelAndView("/board/board_list");
+		
 		String key = request.getParameter("KEYWORD");
+
 		if(key==null) {
 		int count = boardService.countborad(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 10, count);
@@ -54,18 +56,28 @@ public class BoardController {
 		if(key!=null) {
 			commandMap.put("SEARCH_TYPE", request.getParameter("SEARCH_TYPE"));
 			commandMap.put("KEYWORD", request.getParameter("KEYWORD"));
+
 			List<Map<String, Object>> list1 = boardService.searchBoard(commandMap.getMap());
 			mav.addObject("list", list1);
+			mav.addObject("searchType", request.getParameter("SEARCH_TYPE"));
+			mav.addObject("keyWord", request.getParameter("KEYWORD"));
 		}
 		
+
 		
 
 
 	
+
+		//정렬
+
 		if(request.getParameter("ORDER_TYPE") != null) {
 			mav.addObject("order_type", request.getParameter("ORDER_TYPE"));
 		}
-
+		
+		mav.addObject("list", list);		
+		mav.addObject("map",commandMap.getMap());
+		
 		return mav;
 	}
 	
@@ -124,7 +136,6 @@ public class BoardController {
 		int test = 0;
 		if(smap != null) {
 			commandMap.getMap().put("USER_NO", smap.get("USER_NO"));
-			System.out.println(commandMap.getMap());
 			Map<String, Object> scrapcount = boardService.selectCheckScarp(commandMap.getMap());//스크랩 확인
 			if(scrapcount != null) {//스크랩 있을시 
 				test = 1;
@@ -193,21 +204,30 @@ public class BoardController {
 	//신고글, 삭제글 상세보기
 	@RequestMapping(value="/board/adminDetail.do")
 	public ModelAndView selectAdminDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView("/board/admin_detail");
-				
-		commandMap.put("BOARD_NO", Integer.parseInt(request.getParameter("BOARD_NO")));
-		Map<String, Object> map = boardService.selectAdminDetail(commandMap.getMap());
-		Map<String, Object> count = boardService.selectCommentCount(commandMap.getMap());//댓글수
-		Map<String, Object> bestcomment = boardService.selectBestComment(commandMap.getMap());//댓글수
-				
-		List<Map<String, Object>> list = boardService.selectCommentList(commandMap.getMap());//댓글 리스트
-				
-		mav.addObject("map", map);
-		mav.addObject("list", list);
-		mav.addObject("count", count);
-		mav.addObject("bestcomment", bestcomment);
-				
-		return mav;
+	   ModelAndView mav = new ModelAndView("/board/admin_detail");
+	      
+	   int count;
+	   String page = request.getParameter("PAG_NUM");
+	   int pag = 1;
+	   if(page!=null) {
+	      pag = Integer.parseInt(page);
+	   }
+	   count = boardService.commentCount(commandMap.getMap());
+	   packaging.Packag(commandMap.getMap(), pag, 5, count);
+	      
+	   Map<String, Object> map = boardService.selectBoardDetail(commandMap.getMap());
+	   Map<String, Object> bestcomment = boardService.selectBestComment(commandMap.getMap());//인기 댓글
+	   List<Map<String, Object>> list = boardService.selectCommentList(commandMap.getMap());//댓글 리스트
+	   List<Map<String, Object>> filelist = boardService.selectFileList(commandMap.getMap());//첨부파일 리스트
+	   
+	   mav.addObject("map", map);
+	   mav.addObject("list", list);
+	   mav.addObject("filelist", filelist);
+	   mav.addObject("count", count);
+	   mav.addObject("bestcomment", bestcomment);
+	   mav.addObject("pmap", commandMap.getMap());
+	      
+	   return mav;
 	}
 		
 	//삭제글 복구하기
@@ -264,16 +284,6 @@ public class BoardController {
 
 		return recommend_result;
 	}
-	
-	/*글 추천하기
-	@RequestMapping(value="/board/recommend.do", method = RequestMethod.POST )
-	public ModelAndView recommendBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-		
-		boardService.recommendBoard(commandMap.getMap());
-		
-		return mav;
-	}*/
 
 	//게시글 댓글 작성
 	@RequestMapping(value="/board/commentInsert.do", method = RequestMethod.POST)

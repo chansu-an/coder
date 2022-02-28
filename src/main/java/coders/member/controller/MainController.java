@@ -170,8 +170,12 @@ public class MainController {
 	
 	
 	@RequestMapping(value="/main/FindPw.do", method = RequestMethod.GET)
-	public ModelAndView findPw(CommandMap commandMap) throws Exception{
+	public ModelAndView findPw(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("/main/pw_find");
+		
+		if(request.getParameter("authKey") != null) {
+			mv.addObject("authKey", request.getParameter("authKey"));
+		}
 		
 		return mv;
 	}
@@ -218,30 +222,20 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/main/findPassword.do", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView findPassword(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("redirect:/main/FindPw.do?authKey=" + authKey);
-		System.out.println(request.getParameter("EMAIL"));
-		System.out.println(request.getParameter("authKey"));		
-		if(request.getParameter("authKey") == null) {
-			authKey = mailSendService2.sendAuthMail((String)request.getParameter("EMAIL"));			
-		}else {
-			if(authKey == (String)request.getParameter("authKey")) {
-				mainService.modifyPassword(commandMap.getMap());
-				
-			}
-		}
-		System.out.println("authKey : " + authKey);
+	public void findPassword(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		authKey = mailSendService2.sendAuthMail((String)request.getParameter("EMAIL"));
 		
-		return mv;
+		System.out.println("authKey : " + authKey);
 	}
 	
 	@RequestMapping(value="/main/findPasswordConfirm.do", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView findPasswordConfirm(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("redirect:/main/Login.do");
+		ModelAndView mv = new ModelAndView("redirect:/main/FindPw.do?authKey=" + request.getParameter("authKey"));
 		
 		System.out.println("인증후1 : " + request.getParameter("EMAIL"));
 		System.out.println("인증후2 : " + request.getParameter("authKey"));
-		
+		System.out.println("인증후3 : " + authKey);
+		System.out.println("인증후4 : " + commandMap.getMap());
 		mainService.modifyPassword(commandMap.getMap());
 		
 		return mv;
