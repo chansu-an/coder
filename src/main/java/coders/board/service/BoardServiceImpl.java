@@ -225,13 +225,11 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int countReportList(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		return boardDAO.countReportList(map);
 	}
 
 	@Override
 	public int countborad(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		return boardDAO.countborad(map);
 	}
 
