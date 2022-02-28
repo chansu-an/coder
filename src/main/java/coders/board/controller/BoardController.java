@@ -45,13 +45,13 @@ public class BoardController {
 		commandMap.put("ORDER_TYPE", request.getParameter("ORDER_TYPE"));
 		System.out.println(commandMap.getMap());
 		List<Map<String, Object>> list = boardService.selectBoardList(commandMap.getMap());
-				if(!list.isEmpty()) {
-					String IDENTI_TYPE = list.get(0).get("IDENTI_TYPE").toString();
-					mav.addObject("IDENTI_TYPE", IDENTI_TYPE);			
-				}
-				mav.addObject("list", list);
-
-				mav.addObject("map",commandMap.getMap());}
+		if(!list.isEmpty()) {
+			String IDENTI_TYPE = list.get(0).get("IDENTI_TYPE").toString();
+			mav.addObject("IDENTI_TYPE", IDENTI_TYPE);			
+		}
+		
+		mav.addObject("list", list);
+		mav.addObject("map",commandMap.getMap());}
 				//검색기능	
 		if(key!=null) {
 			commandMap.put("SEARCH_TYPE", request.getParameter("SEARCH_TYPE"));
@@ -62,21 +62,11 @@ public class BoardController {
 			mav.addObject("searchType", request.getParameter("SEARCH_TYPE"));
 			mav.addObject("keyWord", request.getParameter("KEYWORD"));
 		}
-		
-
-		
-
-
-	
 
 		//정렬
-
 		if(request.getParameter("ORDER_TYPE") != null) {
 			mav.addObject("order_type", request.getParameter("ORDER_TYPE"));
 		}
-		
-		mav.addObject("list", list);		
-		mav.addObject("map",commandMap.getMap());
 		
 		return mav;
 	}
@@ -184,7 +174,7 @@ public class BoardController {
 	@RequestMapping(value="/board/delete.do", method = RequestMethod.POST)
 	public ModelAndView deleteBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/openBoardList.do?IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-		
+
 		boardService.deleteBoard(commandMap.getMap());
 		return mav;
 	}
@@ -299,7 +289,7 @@ public class BoardController {
 	@RequestMapping(value="/board/commentInsert2.do", method = RequestMethod.POST)
 	public ModelAndView InsertComment2(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-
+		
 		boardService.insertComment2(commandMap.getMap());
 		
 		return mav;

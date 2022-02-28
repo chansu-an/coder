@@ -4508,7 +4508,7 @@ textarea.form-control-lg {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  background-color: #ceced0;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
@@ -4587,6 +4587,11 @@ textarea.form-control-lg {
 .card-header-pills {
   margin-right: -0.5rem;
   margin-left: -0.5rem;
+}
+
+.card-plain {
+  background-color: rgba(0, 0, 0, 0.03);
+  box-shadow: none;
 }
 
 .card-img-overlay {
@@ -11362,6 +11367,41 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   margin-top: 10px;
 }
 
+.card .map {
+  border-radius: 0.1875rem;
+}
+
+.card .map.map-big {
+  height: 400px;
+}
+
+.card[data-background-color="orange"] {
+  background-color: #f96332;
+}
+
+.card[data-background-color="orange"] .card-header {
+  background-color: #f96332;
+}
+
+.card[data-background-color="orange"] .card-footer .stats {
+  color: #FFFFFF;
+}
+
+.card[data-background-color="red"] {
+  background-color: #FF3636;
+}
+
+.card[data-background-color="yellow"] {
+  background-color: #FFB236;
+}
+
+.card[data-background-color="blue"] {
+  background-color: #2CA8FF;
+}
+
+.card[data-background-color="green"] {
+  background-color: #18ce0f;
+}
 
 
 .table2 .img-wrapper {

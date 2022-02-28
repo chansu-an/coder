@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
 </head>
 <body>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>

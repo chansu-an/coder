@@ -3,11 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@ include file="/WEB-INF/include/include-header.jspf" %>
-</head>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
+</head>
 <body>
 
         <form id="frm" name="frm" enctype="multipart/form-data">
@@ -102,10 +101,8 @@
 	}
 	
 	function fn_deleteBoard(){
-		var comSubmit = new ComSubmit();
+		var comSubmit = new ComSubmit("frm");
 		comSubmit.setUrl("<c:url value='/board/delete.do' />");
-		comSubmit.addParam("BOARD_NO", ${map.BOARD_NO});
-		comSubmit.addParam("IDENTI_TYPE", ${map.IDENTI_TYPE});
 		comSubmit.submit();
 		
 	}
