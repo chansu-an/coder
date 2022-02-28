@@ -84,7 +84,7 @@ function testttt() {
 	
 	<!-- 댓글 리스트 -->
 	<div id="reply">
-	  <div>댓글 <c:out value="${count.COUNT }"></c:out></div>
+	  <div>댓글 <c:out value="${COUNT }"></c:out></div>
 	  <c:if test="${bestcomment.RECOMMAND_COUNT != '0' }">
 	  <div>
 	  	<p>

@@ -105,12 +105,10 @@ function testttt(n) {
 	</c:if>
 	<a href="/net/board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE }" class="btn" id="boardList">목록보기</a>
 	
-	<!-- 스크랩하기 -->
-	
 	
 	<!-- 신고, 추천 -->
 	<!-- 신고하기 누르면 REPORT_COUNT + 1, 추천하기 누르면 RECOMMEND_COUNT + 1 -->
-	<c:if test="${sessionScope.session.USER_NO == map.USER_NO}">
+	<c:if test="${!empty sessionScope.session.USER_NO}">
 		<div>
 		<a href="#this" class="btn" id="recommend">추천하기</a>
 		<a href="#this" class="btn" id="report">신고하기</a>	
@@ -146,7 +144,7 @@ function testttt(n) {
 			        <c:if test="${row.USER_NO == sessionScope.session.USER_NO }">               		
 			        	<a href="/net/board/commentDelete.do?RE_NO=${row.RE_NO }&BOARD_NO=${map.BOARD_NO}&IDENTI_TYPE=${map.IDENTI_TYPE}" class="btn">삭제</a>
 			        </c:if>	
-				    <c:if test="${sessionScope.session.USER_NO == map.USER_NO}">
+				    <c:if test="${!empty sessionScope.session.USER_NO}">
 						<a href="#this" onclick="fn_recommendComment(${var.index});" class="btn">추천</a>
 					</c:if>
 			        </p>
