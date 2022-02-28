@@ -252,6 +252,14 @@ public class BoardServiceImpl implements BoardService {
 	public int updateRecommandComment(Map<String, Object> map) throws Exception {
 		return boardDAO.updateRecommandComment(map);
 	}
+
+	@Override
+	public int countsearchborad(Map<String, Object> map) throws Exception {
+		
+		return boardDAO.countsearchborad(map);
+	}
+	
+	
 	
 	
 }

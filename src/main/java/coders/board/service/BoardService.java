@@ -69,6 +69,8 @@ public interface BoardService {
 	int deleteScrap(Map<String, Object> map) throws Exception;
 	
 	int updateRecommandComment(Map<String, Object> map) throws Exception;
+	
+	int countsearchborad(Map<String, Object> map )throws Exception;
 
 	
 }

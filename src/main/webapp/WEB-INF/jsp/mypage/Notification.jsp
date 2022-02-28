@@ -7,9 +7,12 @@
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
+<div class="card-header">
 	<h2>게시판 알림</h2>
+	</div>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -40,7 +43,9 @@
 				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${bmap.startpag+2}&P_PAG_NUM=${param.P_PAG_NUM}">다음</a>
 		</c:if>
 	</div>
+	<div class="card-header">
 	<h2>프로젝트 알림</h2>
+	</div>
 				<table class="table table-striped">
 					<thead>
 						<tr>
