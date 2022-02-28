@@ -25,6 +25,7 @@
 								<c:if test="${!empty session.USER_NO }">
 									<a href="../Project/Write.do" class="btn" id="write">글쓰기</a>
 								</c:if>
+							</div>
 							<div align="right">
 							<a href="../Project/ProjectS.do">시작예정</a>
 							<a href="../Project/Project.do">진행중</a>
@@ -53,10 +54,11 @@
 										</thead>
 										<tbody>
 											<c:choose>
-												<c:when test="${fn:length(list) > 0}">
-													<c:forEach items="${list }" var="row">
+
+												<c:when test="${fn:length(list1) > 0}">
+													<!-- 진행예정 프로젝트 -->
+													<c:forEach items="${list1 }" var="row">
 														<tr>
-															<!--  진행중 프로젝트 -->
 															<td>${row.ROWNUM }</td>
 															<%-- <td>${row.PROJECT_NAME }</td> --%>
 															<td><a
@@ -66,7 +68,6 @@
 															<td>${row.PROJECT_MEMBER }</td>
 															<td>${row.USER_NO }</td>
 														</tr>
-
 													</c:forEach>
 												</c:when>
 												<c:otherwise>
@@ -75,8 +76,6 @@
 													</tr>
 												</c:otherwise>
 											</c:choose>
-
-
 										</tbody>
 									</table>
 									<form action="../Project/Project.do" method="get">
@@ -109,7 +108,6 @@
 											<a href="../Project/Project.do?PAG_NUM=${map.startpag+2}">다음</a>
 										</c:if>
 									</div>
-								</div>
 								</div>
 							</div>
 						</div>
