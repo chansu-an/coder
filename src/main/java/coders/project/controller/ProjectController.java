@@ -43,13 +43,59 @@ public class ProjectController {
 
 		List<Map<String, Object>> list = projectService.selectProjectList(commandMap.getMap());
 		List<Map<String, Object>> list1 = projectService.selectProjectSList(commandMap.getMap());
+		System.out.println(list1);
 		List<Map<String, Object>> list2 = projectService.selectProjectEList(commandMap.getMap());
+		System.out.println(list2);
 		mav.addObject("list", list);
 		mav.addObject("list1", list1);
 		mav.addObject("list2", list2);
 		mav.addObject("map", commandMap.getMap());
 		return mav;
 	}
+	@RequestMapping(value = "/Project/ProjectS.do")
+	public ModelAndView ProjectListS(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		int count;
+		int pag = 1;
+		String pags = request.getParameter("PAG_NUM");
+		if (pags != null) {
+			pag = Integer.parseInt(pags);
+		}
+		ModelAndView mav = new ModelAndView("/project/project_board_slist");
+		count = projectService.countProjectList(commandMap.getMap());
+		packaging.Packag(commandMap.getMap(), pag, 5, count);
+
+		// 추가 02.15
+		/* projectService.insertProject(commandMap.getMap(),request); */
+
+		List<Map<String, Object>> list1 = projectService.selectProjectSList(commandMap.getMap());
+		System.out.println(list1);
+		mav.addObject("list1", list1);
+		mav.addObject("map", commandMap.getMap());
+		return mav;
+	}
+	
+	@RequestMapping(value = "/Project/ProjectE.do")
+	public ModelAndView ProjectListeE(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		int count;
+		int pag = 1;
+		String pags = request.getParameter("PAG_NUM");
+		if (pags != null) {
+			pag = Integer.parseInt(pags);
+		}
+		ModelAndView mav = new ModelAndView("/project/project_board_elist");
+		count = projectService.countProjectList(commandMap.getMap());
+		packaging.Packag(commandMap.getMap(), pag, 5, count);
+
+		// 추가 02.15
+		/* projectService.insertProject(commandMap.getMap(),request); */
+
+		List<Map<String, Object>> list2 = projectService.selectProjectEList(commandMap.getMap());
+		System.out.println(list2);
+		mav.addObject("list2", list2);
+		mav.addObject("map", commandMap.getMap());
+		return mav;
+	}
+	
 
 //프로젝트 작성폼
 	@RequestMapping(value = "/Project/Write.do", method = RequestMethod.GET)
