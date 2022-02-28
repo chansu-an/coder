@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<%@ include file="/WEB-INF/include/include-header.jspf"%>
 </head>
 <script type="text/javascript">
 	function test(value){

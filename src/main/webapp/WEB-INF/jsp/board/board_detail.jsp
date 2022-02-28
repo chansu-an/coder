@@ -3,7 +3,9 @@
 <html>
 <script type="text/javascript">
 var ch = true
-function testttt(n) {
+function testttt(n, m) {
+	let REF_NO2 = $("#REF_NO_" + m).val();
+	let REF_STEP2 = $("#REF_STEP_" + m).val();
     if(ch){
          ch=false;
         var str = "<label for='content'>대댓글 작성</label>";
@@ -12,8 +14,8 @@ function testttt(n) {
         str +="<input type='hidden' name='BOARD_NO' value='${map.BOARD_NO}'/>"
         str +="<input type='hidden' name='IDENTI_TYPE' value='${map.IDENTI_TYPE}'/>"
         str +="<input type='hidden' name='USER_NO' value='${session.USER_NO}'/>"
-        str +="<input type='hidden' name='REF_NO' value='${row.REF_NO}'/>"
-        str +="<input type='hidden' name='REF_STEP' value='${row.REF_STEP}'/>"
+        str +="<input type='hidden' name='REF_NO' value='"+REF_NO2+"'/>"
+        str +="<input type='hidden' name='REF_STEP' value='"+REF_STEP2+"'/>"
         str +="<input type='text' id='CONTEXT' name='CONTEXT' placeholder='내용을 입력하세요.' style='width:60%;;font-size:15px;'/>"
         str +="<span class='input-group-btn'>"
         str +="<button class='btn btn-default' name='commentInsertBtn'>등록</button>"
@@ -67,12 +69,14 @@ function testttt(n) {
 				<td>${map.READ_COUNT }</td>
 				<th rowspan="6" align="center"><a href="#this" id="scrap"><i id="scrap" class="fa fa-bookmark fa-2x" style="color:blue;"></i></a></th>				  			
 			</tr>
-			<tr>
-				<th scope="row">추천수</th> 
-				<td><div id="recommend_count">${map.RECOMMEND_COUNT }</div></td>
-				<th scope="row">신고수</th> 
-				<td><div id="report_count">${map.REPORT_COUNT }</div></td>
-			</tr> 
+			<c:if test="${map.IDENTI_TYPE != '4' }">
+				<tr>
+					<th scope="row">추천수</th> 
+					<td><div id="recommend_count">${map.RECOMMEND_COUNT }</div></td>
+					<th scope="row">신고수</th> 
+					<td><div id="report_count">${map.REPORT_COUNT }</div></td>
+				</tr>
+			</c:if> 
 			<tr> 
 				<th scope="row">작성자</th> 
 				<td><a href="../main/Mypage.do?USER_NO=${map.USER_NO }">${map.NICK_NAME }</a></td> 
@@ -108,7 +112,7 @@ function testttt(n) {
 	
 	<!-- 신고, 추천 -->
 	<!-- 신고하기 누르면 REPORT_COUNT + 1, 추천하기 누르면 RECOMMEND_COUNT + 1 -->
-	<c:if test="${!empty sessionScope.session.USER_NO}">
+	<c:if test="${!empty sessionScope.session.USER_NO && map.IDENTI_TYPE != '4' }">
 		<div>
 		<a href="#this" class="btn" id="recommend">추천하기</a>
 		<a href="#this" class="btn" id="report">신고하기</a>	
@@ -133,7 +137,7 @@ function testttt(n) {
 	    <c:forEach items="${list}" var="row" varStatus="var">
 	    <c:choose>
 	  	<c:when test="${row.DEL_GB == 'N' }">
-	    		<div  onclick="testttt(${row.RE_NO})">
+	    		<div  onclick="testttt(${row.RE_NO}, ${var.index })">
 			    <input type="hidden" id="REF_NO_${var.index }" value="${row.REF_NO}"/>
 			    <input type="hidden" id="REF_STEP_${var.index }" value="${row.REF_STEP}"/>
 			        <div>
@@ -165,22 +169,42 @@ function testttt(n) {
 	    </c:forEach>
 	  </ol>
 	</div>
-	<c:if test="${!empty sessionScope.session.USER_NO }">
-	<div class="container">
-        <label for="content">댓글 작성</label>
-        <form action="/net/board/commentInsert.do" method="post">
-            <div class="input-group">
-               <input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}"/>
-               <input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}"/>
-               <input type="hidden" name="USER_NO" value="${session.USER_NO}"/>
-               <input type="text" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요." style="width:60%;;font-size:15px;"/>
-               <span class="input-group-btn">
-                    <button class="btn btn-default" name="commentInsertBtn">등록</button>
-               </span>
-            </div>
-        </form>
-    </div>
-    </c:if>
+	<c:choose>
+	   <c:when test="${map.IDENTI_TYPE != '4' && !empty sessionScope.session.USER_NO}">
+	   <div class="container">
+	        <label for="content">댓글 작성</label>
+	        <form action="/net/board/commentInsert.do" method="post">
+	            <div class="input-group">
+	               <input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}"/>
+	               <input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}"/>
+	               <input type="hidden" name="USER_NO" value="${session.USER_NO}"/>
+	               <input type="text" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요." style="width:60%;;font-size:15px;"/>
+	               <span class="input-group-btn">
+	                    <button class="btn btn-default" name="commentInsertBtn">등록</button>
+	               </span>
+	            </div>
+	        </form>
+	    </div>
+	    </c:when>
+	    <c:otherwise>
+	    <c:if test="${sessionScope.session.ADMIN == 'Y'}">
+	    <div class="container">
+	        <label for="content">댓글 작성</label>
+	        <form action="/net/board/commentInsert.do" method="post">
+	            <div class="input-group">
+	               <input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}"/>
+	               <input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}"/>
+	               <input type="hidden" name="USER_NO" value="${session.USER_NO}"/>
+	               <input type="text" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요." style="width:60%;;font-size:15px;"/>
+	               <span class="input-group-btn">
+	                    <button class="btn btn-default" name="commentInsertBtn">등록</button>
+	               </span>
+	            </div>
+	        </form>
+	    </div>
+	    </c:if>
+	    </c:otherwise>
+	</c:choose>
 
     <div align="center">
 			<c:if test="${pmap.startpag>1}">

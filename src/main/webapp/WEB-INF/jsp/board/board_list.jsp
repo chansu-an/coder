@@ -1,7 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -50,7 +47,7 @@
 						<h4 class="card-title">건의사항</h4>   	
 			    	</c:when>
 			    </c:choose> 
-			    	
+
                 <!-- <h4 class="card-title"> Simple Table</h4> -->
                 <form name="ORDER_TYPE" method="get">
 					<p style="text-align:right;">
@@ -75,6 +72,34 @@
 					<a href="/net/board/write.do" class="btn" id="write">글쓰기</a>	
 				</c:if>
               </div>
+
+			    <!-- 상단바 -->
+			    <div class=nav>
+			   		 <div class="col-md-6">
+						<form action="/net/board/openBoardList.do" method="get" align="left">
+						<div class="search-wrap">
+							<select id="SEARCH_TYPE" name="SEARCH_TYPE" onchange="test1(this.value);">
+								<option>검색</option>
+								<option value="TITLE"
+									<c:if test="${searchType == 'TITLE'}">selected</c:if>>제목</option>
+								<option value="CONTEXT"
+									<c:if test="${searchType == 'CONTEXT'}">selected</c:if>>내용</option>
+								<option value="NICKNAME"
+									<c:if test="${searchType == 'NICKNAME'}">selected</c:if>>작성자</option>
+								<option value="T+C"
+									<c:if test="${searchType == 'T+C'}">selected</c:if>>제목+내용</option>
+							</select>
+							<input type="hidden" id="IDENTI_TYPE" name="IDENTI_TYPE" value="${IDENTI_TYPE }"/>
+							<input type="text" id="KEYWORD" name="KEYWORD" value="${keyWord }"></input>
+							<input type="submit" value="검색" class="btn bin-info search-btn"/>		
+						</div>
+						</form>
+					</div>
+			    
+			  
+			    
+               <!-- 게시판 --> 
+
               <div class="card-body">
                 <div class="table2-responsive">
                   <table class="table">
@@ -129,7 +154,6 @@
 								<col width="*%" />
 								<col width="10%" />
 								<col width="10%" />
-								<col width="10%" />
 								<col width="20%" />
 								<col width="20%" />
 							</colgroup>
@@ -139,7 +163,6 @@
 									<th scope="col">제목</th>
 									<th scope="col">관리자답변</th>
 									<th scope="col">조회수</th>
-									<th scope="col">추천수</th>
 									<th scope="col">작성자</th>
 									<th scope="col">작성일</th>
 								</tr>
@@ -165,9 +188,10 @@
 														</c:otherwise>
 													</c:choose>	
 												</td>
-												<td>${row.READ_COUNT }</td>
+												<td>${row.READ_COUNT }</td><<<<<<< master
 												<td>${row.RECOMMEND_COUNT }</td>
 												<td><a href="../main/Mypage.do?USER_NO=${row.USER_NO }">${row.NICK_NAME }</a></td>
+
 												<td>${row.BOARD_DATE }</td>
 											</tr>
 										</c:forEach>
@@ -182,6 +206,7 @@
 					</c:choose>
 					</tbody>
 					</table>
+
 					<form action="../board/openBoardList.do" method="get">
 						<div class="search-wrap">
 							<select id="SEARCH_TYPE" name="SEARCH_TYPE" onchange="test1(this.value);">
@@ -200,6 +225,10 @@
 						</div>
 					</form>
 					
+
+					
+					<!-- 페이징 -->
+
 					<div align="center">
 					<c:if test="${param.KEYWORD==null}">
 							<c:if test="${map.startpag>1}">
