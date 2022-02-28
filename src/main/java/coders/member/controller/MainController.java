@@ -161,7 +161,7 @@ public class MainController {
 	public ModelAndView registerInsert(CommandMap commandMap, HttpServletRequest request) throws Exception{
 		ModelAndView mv = new ModelAndView("redirect:/main/Login.do");
 		
-		commandMap.put("PROFILE", "https://cdn.discordapp.com/attachments/934773446431346706/940842849874878484/profile.jpg");
+		commandMap.put("PROFILE", "TEMP");
 		mailSendService.sendAuthMail((String)request.getParameter("EMAIL"));
 		mainService.insertUser(commandMap.getMap());
 		

@@ -16,7 +16,12 @@
 							<div class="col-12">
 								<label for="email" class="form-label">프로필 사진</label>
 								<div>
-									<img src="../img/profile/${param.USER_NO}/${map.PROFILE}" class="img-thumbnail">
+									<c:if test="${sessionScope.session.PROFILE=='TEMP'}">
+									<img src="../img/profile/temp/profile.jpg" width="40" height="10" class="img-thumbnail">
+								</c:if>
+								<c:if test="${sessionScope.session.PROFILE!='TEMP'}">
+									<img src="../img/profile/${sessionScope.session.USER_NO}/${sessionScope.session.PROFILE}" width="40" height="10" class="img-thumbnail">
+								</c:if>
 								</div>
 							</div>
 

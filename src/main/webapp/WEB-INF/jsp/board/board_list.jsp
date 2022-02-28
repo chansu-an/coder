@@ -22,6 +22,7 @@
 <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
+
 	<div class="wrapper ">
     
     <div class="main-panel" id="main-panel">
