@@ -88,7 +88,7 @@
 			fn_addFile();
 		});
 		
-		$("a[name^='delete']").on("click", function(e){ //삭제 버튼
+		$("#delete").on("click", function(e){ //삭제 버튼
 			e.preventDefault();
 			fn_deleteFile($(this));
 		});
@@ -102,10 +102,8 @@
 	}
 	
 	function fn_deleteBoard(){
-		var comSubmit = new ComSubmit();
+		var comSubmit = new ComSubmit("frm");
 		comSubmit.setUrl("<c:url value='/board/delete.do' />");
-		comSubmit.addParam("BOARD_NO", ${map.BOARD_NO});
-		comSubmit.addParam("IDENTI_TYPE", ${map.IDENTI_TYPE});
 		comSubmit.submit();
 		
 	}

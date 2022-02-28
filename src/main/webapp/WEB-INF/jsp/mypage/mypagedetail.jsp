@@ -8,12 +8,13 @@
 <%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 </head>
-			<div class="container">
+<body>
+			<div align="center">
 				<main>
-					<div class="row g-5">
+					<div>
 						<div class="col-md-7 col-lg-8">
-							<h4 class="mb-3">내정보</h4>
-							<div class="col-12">
+							<h4 class="mb-3" align="left">내정보</h4>
+							<div class="col-12"  align="left">
 								<label for="email" class="form-label">프로필 사진</label>
 								<div>
 									<c:if test="${sessionScope.session.PROFILE=='TEMP'}">
@@ -25,19 +26,19 @@
 								</div>
 							</div>
 
-							<div class="row g-3">
+							<div class="row g-3"  align="left">
 								<div class="col-12">
-									<label for="username" class="form-label">별명</label>
+									<label for="username" class="form-label" >별명</label>
 									<div class="input-group has-validation">
 										<div>${map.NICK_NAME}</div>
 									</div>
 								</div>
 								<div class="col-md-6">
-									<label for="email" class="form-label">이메일</label>
+									<label for="email" class="form-label" align="left">이메일</label>
 									<div>${map.EMAIL}</div>
 								</div>
 								<div class="col-md-6">
-									<label for="email" class="form-label">암호</label>
+									<label for="email" class="form-label" align="left">암호</label>
 									<div>${map.PASSWORD}</div>
 								</div>
 
@@ -49,7 +50,7 @@
 							<button onclick="location.href='../Mypage/Modify.do'" class=" btn btn-primary btn-lg"
 								type="button">내정보수정</button>
 								</c:if>
-								<c:if test="${sessionScope.session==null&&param.USER_NO!=sessionScope.session.USER_NO}">
+								<c:if test="${sessionScope.session!=null&&param.USER_NO!=sessionScope.session.USER_NO}">
 							<button onclick="location.href = '../Mypage/insertFollow.do?USER_NO=${USER_NO}'" class=" btn btn-primary btn-lg"
 								type="button">팔로우하기</button>
 								</c:if>
@@ -59,6 +60,7 @@
 				</main>
 
 			</div>
+			
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>
 </html>

@@ -8,11 +8,15 @@
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+
 </head>
-<body class="bg-light">
+<body  >
 	<div class="d-flex" id="wrapper">
 			<div class="db-example">
+			<div class="card-header">
 				<h4 class="mb-3">작성글</h4>
+			</div>
 				<hr class="my-4">
 				<table class="table table-striped">
 					<thead>

@@ -33,47 +33,42 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView("/board/board_list");
 		String page = request.getParameter("PAG_NUM");
 		int pag = 1;
+		int count;
 		if(page!=null) {
 			pag = Integer.parseInt(page);
 		}
+		//정렬
+				if(request.getParameter("ORDER_TYPE") != null) {
+					commandMap.put("ORDER_TYPE", request.getParameter("ORDER_TYPE"));
+					mav.addObject("order_type", request.getParameter("ORDER_TYPE"));
+				}
 		
 		String key = request.getParameter("KEYWORD");
-
+		List<Map<String, Object>> list = null;
 		if(key==null) {
-		int count = boardService.countborad(commandMap.getMap());
+		count = boardService.countborad(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 10, count);
-		commandMap.put("ORDER_TYPE", request.getParameter("ORDER_TYPE"));
-		System.out.println(commandMap.getMap());
-		List<Map<String, Object>> list = boardService.selectBoardList(commandMap.getMap());
+		
+		 list = boardService.selectBoardList(commandMap.getMap());
 				if(!list.isEmpty()) {
 					String IDENTI_TYPE = list.get(0).get("IDENTI_TYPE").toString();
 					mav.addObject("IDENTI_TYPE", IDENTI_TYPE);			
 				}
-				mav.addObject("list", list);
-
-				mav.addObject("map",commandMap.getMap());}
+}
 				//검색기능	
 		if(key!=null) {
 			commandMap.put("SEARCH_TYPE", request.getParameter("SEARCH_TYPE"));
-			commandMap.put("KEYWORD", request.getParameter("KEYWORD"));
+			commandMap.put("KEYWORD", key);
+			System.out.println(commandMap.getMap());
+			count = boardService.countsearchborad(commandMap.getMap());
+			packaging.Packag(commandMap.getMap(), pag, 10, count);
+			
 
-			List<Map<String, Object>> list1 = boardService.searchBoard(commandMap.getMap());
-			mav.addObject("list", list1);
+			list = boardService.searchBoard(commandMap.getMap());
 			mav.addObject("searchType", request.getParameter("SEARCH_TYPE"));
 			mav.addObject("keyWord", request.getParameter("KEYWORD"));
-		}
+		}			
 		
-
-		
-
-
-	
-
-		//정렬
-
-		if(request.getParameter("ORDER_TYPE") != null) {
-			mav.addObject("order_type", request.getParameter("ORDER_TYPE"));
-		}
 		
 		mav.addObject("list", list);		
 		mav.addObject("map",commandMap.getMap());

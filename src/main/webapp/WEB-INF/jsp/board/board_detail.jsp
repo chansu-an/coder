@@ -75,7 +75,7 @@ function testttt(n) {
 			</tr> 
 			<tr> 
 				<th scope="row">작성자</th> 
-				<td>${map.NICK_NAME }</td> 
+				<td><a href="../main/Mypage.do?USER_NO=${map.USER_NO }">${map.NICK_NAME }</a></td> 
 				<th scope="row">작성시간</th> 
 				<td>${map.BOARD_DATE }</td> 
 			</tr> 

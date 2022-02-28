@@ -52,9 +52,9 @@
 			    </c:choose> 
 			    	
                 <!-- <h4 class="card-title"> Simple Table</h4> -->
-                <form name="ORDER_TYPE" method="post">
+                <form name="ORDER_TYPE" method="get">
 					<p style="text-align:right;">
-			 		<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test(this.form);">
+			 		<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test(this.form);" >
 						<option>-----</option>
 						<option value="DATE"
 							<c:if test="${order_type == 'DATE'}">selected</c:if>>최신순</option>
@@ -64,10 +64,10 @@
 							<c:if test="${order_type == 'READ'}">selected</c:if>>조회순</option>
 						<option value="RECOMMEND"
 							<c:if test="${order_type == 'RECOMMEND'}">selected</c:if>>추천순</option>
-					</select>			
-					<input type="hidden" name="ORDER_TYPE" value="${ORDER_TYPE }"/>
-					<input type="hidden" name="KEYWORD" value="${keyWord }"/>
-					<input type="hidden" name="SEARCH_TYPE" value="${searchType }"/>
+					</select>		
+					<input type="hidden" name="IDENTI_TYPE" value=${param.IDENTI_TYPE }>	
+					<input type="hidden" name="KEYWORD" value="${param.KEYWORD }"/>
+					<input type="hidden" name="SEARCH_TYPE" value="${param.SEARCH_TYPE }"/>
 					</p>
 				</form>
 				
@@ -110,7 +110,7 @@
 													[${row.REPLY_COUNT}]</td>
 												<td>${row.READ_COUNT }</td>
 												<td>${row.RECOMMEND_COUNT }</td>
-												<td>${row.NICK_NAME }</td>
+												<td><a href="../main/Mypage.do?USER_NO=${row.USER_NO }">${row.NICK_NAME }</a></td>
 												<td>${row.BOARD_DATE }</td>
 											</tr>
 										</c:forEach>
@@ -167,7 +167,7 @@
 												</td>
 												<td>${row.READ_COUNT }</td>
 												<td>${row.RECOMMEND_COUNT }</td>
-												<td>${row.NICK_NAME }</td>
+												<td><a href="../main/Mypage.do?USER_NO=${row.USER_NO }">${row.NICK_NAME }</a></td>
 												<td>${row.BOARD_DATE }</td>
 											</tr>
 										</c:forEach>
@@ -182,10 +182,9 @@
 					</c:choose>
 					</tbody>
 					</table>
-					<form action="/net/board/openBoardList.do" method="get">
+					<form action="../board/openBoardList.do" method="get">
 						<div class="search-wrap">
 							<select id="SEARCH_TYPE" name="SEARCH_TYPE" onchange="test1(this.value);">
-								<option>검색</option>
 								<option value="TITLE"
 									<c:if test="${searchType == 'TITLE'}">selected</c:if>>제목</option>
 								<option value="CONTEXT"
@@ -195,23 +194,40 @@
 								<option value="T+C"
 									<c:if test="${searchType == 'T+C'}">selected</c:if>>제목+내용</option>
 							</select>
-							<input type="hidden" id="IDENTI_TYPE" name="IDENTI_TYPE" value="${IDENTI_TYPE }"/>
+							<input type="hidden" id="IDENTI_TYPE" name="IDENTI_TYPE" value="${param.IDENTI_TYPE }"/>
 							<input type="text" id="KEYWORD" name="KEYWORD" value="${keyWord }"></input>
 							<input type="submit" value="검색" class="btn bin-info search-btn"/>		
 						</div>
 					</form>
+					
 					<div align="center">
+					<c:if test="${param.KEYWORD==null}">
 							<c:if test="${map.startpag>1}">
 								<a
-									href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-2}">이전</a>
+									href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-2}&ORDER_TYPE=${param.ORDER_TYPE}">이전</a>
 							</c:if>
 							<c:forEach var="i" begin="${map.startpag }" end="${map.endpage }">
-								<a href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}">[${i}]</a>
+								<a href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}">[${i}]</a>
 							</c:forEach>
 							<c:if test="${map.endpage<map.maxpag}">
 								<a
-									href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+2}">다음</a>
+									href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+2}&ORDER_TYPE=${param.ORDER_TYPE}">다음</a>
 							</c:if>
+					</c:if>
+					<c:if test="${param.KEYWORD!=null}">
+							<c:if test="${map.startpag>1}">
+								<a
+									href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-2}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE==${param.SEARCH_TYPE}">이전</a>
+							</c:if>
+							<c:forEach var="i" begin="${map.startpag }" end="${map.endpage }">
+								<a href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE=${param.SEARCH_TYPE}">[${i}]</a>
+							</c:forEach>
+							<c:if test="${map.endpage<map.maxpag}">
+								<a
+									href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+2}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE=${param.SEARCH_TYPE}">다음</a>
+							</c:if>
+					</c:if>
+							
 					</div>
                 </div>
               </div>
