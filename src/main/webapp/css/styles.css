@@ -4590,8 +4590,20 @@ textarea.form-control-lg {
 }
 
 .card-plain {
-  background-color: rgba(0, 0, 0, 0.03);
+  background: transparent;
   box-shadow: none;
+}
+
+.card-plain .card-header,
+.card-plain .card-footer {
+  margin-left: 0;
+  margin-right: 0;
+  background-color: transparent;
+}
+
+.card-plain:not(.card-subcategories).card-body {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .card-img-overlay {
@@ -11339,6 +11351,16 @@ body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
   box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
 }
 
+.card2 {
+  border: 0;
+  border-radius: 0.1875rem;
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 15px 1px rgba(39, 39, 39, 0.1);
+}
+
 .card [data-notify="container"].alert {
   min-width: auto;
   left: unset !important;
@@ -11650,7 +11672,3 @@ a.text2-primary:hover {
 .panel-header-lg {
   height: 380px;
 }
-
-
-
-

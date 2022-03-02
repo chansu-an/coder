@@ -51,4 +51,13 @@ public class MainDAO extends AbstractDAO{
 	public void modifyPassword(Map<String, Object> map) throws Exception{
 		update("user.modifyPassword", map);
 	}
+	
+	public int countAlarm(Map<String, Object> map) throws Exception{
+		return (int) selectOne("user.countArlimeList", map);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> arlimeList(Map<String, Object> map) throws Exception{
+		return (List<Map<String, Object>>)selectList("user.arlimeList", map);
+	}
 }
