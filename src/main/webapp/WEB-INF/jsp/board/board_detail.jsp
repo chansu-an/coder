@@ -3,11 +3,16 @@
 <html>
 <script type="text/javascript">
 var ch = true
-function testttt(n, m) {
+function com(n, m) {
 	let REF_NO2 = $("#REF_NO_" + m).val();
 	let REF_STEP2 = $("#REF_STEP_" + m).val();
-    if(ch){
-         ch=false;
+	$("[id*='coms']").empty();
+	if(document.getElementById('coms'+n+'commet') != null){
+	$('#coms'+n+'commet').empty();
+	document.getElementById('coms'+n+'commet').id = 'coms'+n}else{
+	
+	
+	
         var str = "<label for='content'>대댓글 작성</label>";
         str +="<form action='../board/commentInsert2.do' method='post'>" ;
         str +="<div class='input-group'>";
@@ -23,16 +28,10 @@ function testttt(n, m) {
         str +="</div>"
         str +="<br/>"
         str +="</form>"
-    $("#test"+n).append(str);
+    $("#coms"+n).append(str);
+        document.getElementById('coms'+n).id = 'coms'+n+'commet'}
         /* document.getElementById('test'+n).className = 'navbar-collapse collapse show';
          test = false; */
-
-    }
-    else{
-        ch=true;
-        ch-1;
-        $("#test"+n).empty();
-    }
 };
 
 
@@ -137,7 +136,7 @@ function testttt(n, m) {
 	    <c:forEach items="${list}" var="row" varStatus="var">
 	    <c:choose>
 	  	<c:when test="${row.DEL_GB == 'N' }">
-	    		<div  onclick="testttt(${row.RE_NO}, ${var.index })">
+	    		<div  onclick="com(${row.RE_NO}, ${var.index })">
 			    <input type="hidden" id="REF_NO_${var.index }" value="${row.REF_NO}"/>
 			    <input type="hidden" id="REF_STEP_${var.index }" value="${row.REF_STEP}"/>
 			        <div>
@@ -145,16 +144,16 @@ function testttt(n, m) {
 				        작성 날짜 : ${row.REPLY_DATE } 
 			        </div>		
 			        <p>${row.CONTEXT}<br/>
-			        <c:if test="${row.USER_NO == sessionScope.session.USER_NO }">               		
+			        </p>
+			    </div>
+			    <c:if test="${row.USER_NO == sessionScope.session.USER_NO }">               		
 			        	<a href="/net/board/commentDelete.do?RE_NO=${row.RE_NO }&BOARD_NO=${map.BOARD_NO}&IDENTI_TYPE=${map.IDENTI_TYPE}" class="btn">삭제</a>
 			        </c:if>	
 				    <c:if test="${!empty sessionScope.session.USER_NO}">
 						<a href="#this" onclick="fn_recommendComment(${var.index});" class="btn">추천</a>
 					</c:if>
-			        </p>
-			    </div>
 			    <c:if test="${!empty sessionScope.session.USER_NO }">
-				    <div id="test${row.RE_NO}">
+				    <div id="coms${row.RE_NO}">
 				    </div>
 			    </c:if>		        
 	    </c:when>
