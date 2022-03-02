@@ -22,4 +22,8 @@ public interface MainService {
 	Map<String,Object> selectNaverLogin(Map<String, Object> map) throws Exception;
 	
 	void modifyPassword(Map<String, Object> map) throws Exception;
+	
+	int countAlarm(Map<String, Object> map) throws Exception;
+	
+	List<Map<String, Object>> arlimeList(Map<String, Object> map) throws Exception;
 }

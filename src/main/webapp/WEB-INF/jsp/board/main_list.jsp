@@ -75,7 +75,7 @@
       <div class="content">
         <div class="row">
           <div class="col-md-12">
-            <div class="card card-plain">
+            <div class="card2 card-plain">
               <div class="card-header">
               	<br/>
                 <h4 class="card-title">QnA</h4>

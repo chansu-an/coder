@@ -59,4 +59,14 @@ public class MainServiceImpl implements MainService{
 	public void modifyPassword(Map<String, Object> map) throws Exception {
 		mainDAO.modifyPassword(map);
 	}
+
+	@Override
+	public int countAlarm(Map<String, Object> map) throws Exception {
+		return mainDAO.countAlarm(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> arlimeList(Map<String, Object> map) throws Exception {
+		return mainDAO.arlimeList(map);
+	}
 }

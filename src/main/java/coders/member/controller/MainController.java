@@ -26,6 +26,7 @@ import coders.mail.service.MailSendService;
 import coders.mail.service.MailSendService2;
 import coders.member.NaverLoginVO;
 import coders.member.service.MainService;
+import coders.mypage.service.MypageService;
 
 @Controller
 public class MainController {
@@ -41,6 +42,8 @@ public class MainController {
 	
 	@Resource(name="mainService")
 	private MainService mainService;
+	@Resource(name="mypageService")
+	private MypageService mypageService;
 	@Resource(name="mss")
 	private MailSendService mailSendService;
 	@Resource(name="mss2")
@@ -69,7 +72,9 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 		
 		Map<String, Object> map = mainService.selectLoginUser(commandMap.getMap());
-		
+		int pcount = mainService.countAlarm(map);//알림갯수
+		List<Map<String, Object>> list1 = mainService.arlimeList(map);
+		System.out.println("list1 : " + list1);
 		if(map == null) {
 			mv.setViewName("redirect:/main/Login.do");
 			mv.addObject("checklogin", false);
@@ -79,6 +84,8 @@ public class MainController {
 		
 		mv.addObject("user", map);		
 		session.setAttribute("session", map);//로그인 유저 정보 세션에 저장
+		session.setAttribute("pcount", pcount);
+		session.setAttribute("list1", list1);
 		return mv;
 	}
 	
