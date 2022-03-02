@@ -16,7 +16,6 @@
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
-<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -32,48 +31,58 @@
         <div class="row">
           <div class="col-md-12">
             <div class="card">
-              <div class="card-header">
-              	<c:choose>
-			    	<c:when test="${IDENTI_TYPE eq '1' }">
-						<h4 class="card-title">공지사항</h4>   	
-			    	</c:when>
-			    	<c:when test="${IDENTI_TYPE eq '2' }">
-						<h4 class="card-title">QnA</h4>   	
-			    	</c:when>
-			    	<c:when test="${IDENTI_TYPE eq '3' }">
-						<h4 class="card-title">자유게시판</h4>   	
-			    	</c:when>
-			    	<c:when test="${IDENTI_TYPE eq '4' }">
-						<h4 class="card-title">건의사항</h4>   	
-			    	</c:when>
-			    </c:choose> 
+							<div class="card-header">
+								<c:choose>
+									<c:when test="${IDENTI_TYPE eq '1' }">
+										<h4 class="card-title">공지사항</h4>
+									</c:when>
+									<c:when test="${IDENTI_TYPE eq '2' }">
+										<h4 class="card-title">QnA</h4>
+									</c:when>
+									<c:when test="${IDENTI_TYPE eq '3' }">
+										<h4 class="card-title">자유게시판</h4>
+									</c:when>
+									<c:when test="${IDENTI_TYPE eq '4' }">
+										<h4 class="card-title">건의사항</h4>
+									</c:when>
+								</c:choose>
 
-                <!-- <h4 class="card-title"> Simple Table</h4> -->
-                <form name="ORDER_TYPE" method="get">
-					<p style="text-align:right;">
-			 		<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test(this.form);" >
-						<option>-----</option>
-						<option value="DATE"
-							<c:if test="${order_type == 'DATE'}">selected</c:if>>최신순</option>
-						<option value="REPLY"
-							<c:if test="${order_type == 'REPLY'}">selected</c:if>>댓글순</option>
-						<option value="READ"
-							<c:if test="${order_type == 'READ'}">selected</c:if>>조회순</option>
-						<option value="RECOMMEND"
-							<c:if test="${order_type == 'RECOMMEND'}">selected</c:if>>추천순</option>
-					</select>		
-					<input type="hidden" name="IDENTI_TYPE" value=${param.IDENTI_TYPE }>	
-					<input type="hidden" name="KEYWORD" value="${param.KEYWORD }"/>
-					<input type="hidden" name="SEARCH_TYPE" value="${param.SEARCH_TYPE }"/>
-					</p>
-				</form>
-				
-				<c:if test="${!empty session.USER_NO }">
-					<a href="/net/board/write.do" class="btn" id="write">글쓰기</a>	
-				</c:if>
-              </div>
+								<!-- <h4 class="card-title"> Simple Table</h4> -->
+								<form name="ORDER_TYPE" method="get">
+									<p style="text-align: right;">
+										<select id="ORDER_TYPE" name="ORDER_TYPE"
+											onchange="test(this.form);">
+											<option>-----</option>
+											<option value="DATE"
+												<c:if test="${order_type == 'DATE'}">selected</c:if>>최신순</option>
+											<option value="REPLY"
+												<c:if test="${order_type == 'REPLY'}">selected</c:if>>댓글순</option>
+											<option value="READ"
+												<c:if test="${order_type == 'READ'}">selected</c:if>>조회순</option>
+											<option value="RECOMMEND"
+												<c:if test="${order_type == 'RECOMMEND'}">selected</c:if>>추천순</option>
+										</select> 
+										<input type="hidden" name="IDENTI_TYPE" value=${param.IDENTI_TYPE }> 
+										<input type="hidden" name="KEYWORD" value="${param.KEYWORD }" /> 
+										<input type="hidden" name="SEARCH_TYPE" value="${param.SEARCH_TYPE }" />
+									</p>
+								</form>
 
-			    <!-- 상단바 -->
+								<c:choose>
+									<c:when test="${IDENTI_TYPE eq '1' }">
+										<c:if test="${sessionScope.session.ADMIN == 'Y' }">
+											<a href="/net/board/write.do" class="btn" id="write">글쓰기</a>
+										</c:if>
+									</c:when>
+									<c:otherwise>
+										<c:if test="${!empty session.USER_NO }">
+											<a href="/net/board/write.do" class="btn" id="write">글쓰기</a>
+										</c:if>
+									</c:otherwise>
+								</c:choose>
+							</div>
+
+							<%--  <!-- 상단바 -->
 			    <div class=nav>
 			   		 <div class="col-md-6">
 						<form action="/net/board/openBoardList.do" method="get" align="left">
@@ -94,7 +103,7 @@
 							<input type="submit" value="검색" class="btn bin-info search-btn"/>		
 						</div>
 						</form>
-					</div>
+					</div> --%>
 			    
 			  
 			    
@@ -188,8 +197,7 @@
 														</c:otherwise>
 													</c:choose>	
 												</td>
-												<td>${row.READ_COUNT }</td><<<<<<< master
-												<td>${row.RECOMMEND_COUNT }</td>
+												<td>${row.READ_COUNT }</td>
 												<td><a href="../main/Mypage.do?USER_NO=${row.USER_NO }">${row.NICK_NAME }</a></td>
 
 												<td>${row.BOARD_DATE }</td>
@@ -221,7 +229,7 @@
 							</select>
 							<input type="hidden" id="IDENTI_TYPE" name="IDENTI_TYPE" value="${param.IDENTI_TYPE }"/>
 							<input type="text" id="KEYWORD" name="KEYWORD" value="${keyWord }"></input>
-							<input type="submit" value="검색" class="btn bin-info search-btn"/>		
+							<input type="submit" value="검색" class="btn bin-info search-btn"/>
 						</div>
 					</form>
 					

@@ -80,7 +80,7 @@ function testttt() {
 
 		</tbody>
 	</table>
-	<a href="/net/board/adminList.do" class="btn" id="adminList">목록보기</a>
+	<a href="../board/adminList.do?R_PAG_NUM=1&D_PAG_NUM=1" class="btn" id="adminList">목록보기</a>
 	
 	<!-- 댓글 리스트 -->
 	<div id="reply">

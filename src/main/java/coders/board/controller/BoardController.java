@@ -1,5 +1,6 @@
 package coders.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -75,11 +76,8 @@ public class BoardController {
 
 		}
 
-		//정렬
-		if(request.getParameter("ORDER_TYPE") != null) {
-			mav.addObject("order_type", request.getParameter("ORDER_TYPE"));
-		}
-
+		mav.addObject("list", list);
+		mav.addObject("map", commandMap.getMap());
 		
 		return mav;
 	}
@@ -194,13 +192,25 @@ public class BoardController {
 	
 	//삭제글, 신고글 리스트
 	@RequestMapping(value="/board/adminList.do")
-	public ModelAndView deleteList(CommandMap commandMap) throws Exception {
-		ModelAndView mav = new ModelAndView("/board/admin_list");
-		List<Map<String, Object>> list1 = boardService.selectReportList(commandMap.getMap()); 
-		List<Map<String, Object>> list2 = boardService.selectDeleteList(commandMap.getMap());
+	public ModelAndView adminList(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();	
+		Map<String, Object> rmap = new HashMap<String, Object>();
+		Map<String, Object> dmap = new HashMap<String, Object>();
+		
+		int reportNum = Integer.parseInt(request.getParameter("R_PAG_NUM"));
+		int deleteNum = Integer.parseInt(request.getParameter("D_PAG_NUM"));
+		int reportCount = boardService.countReportList(rmap);
+		int deleteCount = boardService.countDeleteList(dmap);
+		rmap = packaging.Packag(rmap, reportNum, 5, reportCount);
+		dmap = packaging.Packag(dmap, deleteNum, 5, deleteCount);
+		
+		List<Map<String, Object>> list1 = boardService.selectReportList(rmap); 
+		List<Map<String, Object>> list2 = boardService.selectDeleteList(dmap);
 		mav.addObject("list1", list1);
 		mav.addObject("list2", list2);
-		
+		mav.addObject("rmap", rmap);
+		mav.addObject("dmap", dmap);	
+		mav.setViewName("/board/admin_list");
 		return mav;
 	}
 	
