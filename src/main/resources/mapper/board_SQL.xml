@@ -21,6 +21,7 @@ SELECT BOARD.BOARD_NO,BOARD.IDENTI_TYPE,USERS.NICK_NAME,BOARD.TITLE,TO_CHAR(BOAR
 <include refid="common.pagingPre"/>
 <![CDATA[
 SELECT A.BOARD_NO
+	 , A.USER_NO
 	 , A.NICK_NAME
 	 , A.TITLE
      , A.CONTEXT
@@ -31,6 +32,7 @@ SELECT A.BOARD_NO
      , A.RECOMMEND_COUNT
 	 , ROWNUM
 FROM(SELECT BOARD.BOARD_NO
+	 , USERS.USER_NO
      , USERS.NICK_NAME
      , BOARD.TITLE
      , BOARD.CONTEXT
@@ -124,7 +126,7 @@ SELECT COUNT(*) FROM BOARD WHERE IDENTI_TYPE= #{IDENTI_TYPE} AND DEL_GB='N' AND 
 	<!-- 검색 게시글 숫자 -->
 <select id="countsearchborad" parameterType="hashmap" resultType="_int">
 <![CDATA[
-SELECT COUNT(*) FROM BOARD WHERE IDENTI_TYPE= #{IDENTI_TYPE}
+SELECT COUNT(*) FROM BOARD WHERE IDENTI_TYPE= #{IDENTI_TYPE} AND DEL_GB='N' AND REPORT_COUNT<20
 ]]>
    		 <!-- 키워드 -->
 			<if test='SEARCH_TYPE == "TITLE"'>
@@ -149,14 +151,17 @@ SELECT COUNT(*) FROM BOARD WHERE IDENTI_TYPE= #{IDENTI_TYPE}
 			</if>
 		
 		<![CDATA[
- ORDER BY BOARD.BOARD_DATE DESC) A
+ ORDER BY BOARD.BOARD_DATE DESC
 ]]>
+
 </select>
 
 <!-- 게시글 검색-->
 <select id="searchBoard" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre" />
 <![CDATA[
 SELECT A.BOARD_NO
+	 , A.USER_NO
 	 , A.NICK_NAME
 	 , A.TITLE
      , A.CONTEXT
@@ -167,6 +172,7 @@ SELECT A.BOARD_NO
      , A.RECOMMEND_COUNT
 	 , ROWNUM
 FROM(SELECT BOARD.BOARD_NO
+	 , USERS.USER_NO
      , USERS.NICK_NAME
      , BOARD.TITLE
      , BOARD.CONTEXT
@@ -245,6 +251,7 @@ FROM(SELECT BOARD.BOARD_NO
 	<![CDATA[
 ) A	
 ]]>
+<include refid="common.pagingPost" />
 </select>
 
 <!-- 게시글 상세보기 -->

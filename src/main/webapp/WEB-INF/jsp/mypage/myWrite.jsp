@@ -8,49 +8,77 @@
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+
 </head>
-<body class="bg-light">
-	<div class="d-flex" id="wrapper">
-			<div class="db-example">
-				<h4 class="mb-3">작성글</h4>
-				<hr class="my-4">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th scope="col">번호</th>
-							<th scope="col">글제목</th>
-							<th scope="col">작성자</th>
-							<th scope="col">작성일</th>
-							<th scope="col">조회수</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="rows" items="${list}">
-							<tr>
-								<th scope="row">${rows.ROWNUM}</th>
-								<td><a href="../board/detail.do?BOARD_NO=${rows.BOARD_NO}&IDENTI_TYPE=${rows.IDENTI_TYPE}">${rows.TITLE}</a></td>
-								<td>${rows.NICK_NAME}</td>
-								<td>${rows.BOARD_DATE}</td>
-								<td>${rows.READ_COUNT }</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+<body>
+	<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-plain">
+					<div class="card-header">
+						<br />
+						<h4 class="card-title">작성글</h4>
+					</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table">
+								<colgroup>
+									<col width="*" />
+									<col width="*" />
+									<col width="*" />
+									<col width="*" />
+								</colgroup>
+								<thead class=" text2-primary">
+									<tr>
+										<th scope="col">글제목</th>
+										<th scope="col">작성자</th>
+										<th scope="col">작성일</th>
+										<th scope="col">조회수</th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<c:choose>
+										<c:when test="${fn:length(list) > 0}">
+											<c:forEach items="${list }" var="row">
+												<tr>
+													<td><a
+														href="../board/detail.do?BOARD_NO=${row.BOARD_NO}&IDENTI_TYPE=${row.IDENTI_TYPE}">${row.TITLE}</a></td>
+													<td>${row.NICK_NAME}</td>
+													<td>${row.BOARD_DATE}</td>
+													<td>${row.READ_COUNT }</td>
+												</tr>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<tr>
+												<td colspan="4">조회된 결과가 없습니다.</td>
+											</tr>
+										</c:otherwise>
+									</c:choose>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div align="center">
-			<c:if test="${map.startpag>1}">
-				<a
-					href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag-2}">이전</a>
-			</c:if>
-			<c:forEach var="i" begin="${map.startpag }" end="${map.endpage }">
-				<a href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${i}">[${i}]</a>
-			</c:forEach>
-			<c:if test="${smap.endpage<smap.maxpag}">
-				<a
-					href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag+2}">다음</a>
-			</c:if>
-		</div>
-<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+	</div>
+	<div align="center">
+		<c:if test="${map.startpag>1}">
+			<a
+				href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag-2}">이전</a>
+		</c:if>
+		<c:forEach var="i" begin="${map.startpag }" end="${map.endpage }">
+			<a
+				href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${i}">[${i}]</a>
+		</c:forEach>
+		<c:if test="${smap.endpage<smap.maxpag}">
+			<a
+				href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag+2}">다음</a>
+		</c:if>
+	</div>
+	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>
 </html>

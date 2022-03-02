@@ -147,6 +147,10 @@ public class BoardDAO extends AbstractDAO {
 		return (int)selectOne("board.countDeleteList",map);
 	}
 	
+	public int countsearchborad(Map<String, Object> map ) {
+		return (int)selectOne("board.countsearchborad",map);
+	}
+	
 	public int countReportList(Map<String, Object> map) {
 		return (int)selectOne("board.countReportList",map);
 	}
