@@ -56,6 +56,10 @@ public class MainDAO extends AbstractDAO{
 		return (int) selectOne("user.countArlimeList", map);
 	}
 	
+	public int countProjectAlarm(Map<String, Object> map) throws Exception{
+		return (int) selectOne("user.countProjectArList", map);
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> arlimeList(Map<String, Object> map) throws Exception{
 		return (List<Map<String, Object>>)selectList("user.arlimeList", map);

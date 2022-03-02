@@ -66,7 +66,13 @@ public class MainServiceImpl implements MainService{
 	}
 
 	@Override
+	public int countProjectAlarm(Map<String, Object> map) throws Exception {
+		return mainDAO.countProjectAlarm(map);
+	}
+	
+	@Override
 	public List<Map<String, Object>> arlimeList(Map<String, Object> map) throws Exception {
 		return mainDAO.arlimeList(map);
 	}
+
 }

@@ -14,10 +14,10 @@
 					
 							<c:if test="${sessionScope.session!=null}">
 								<li class="nav-item dropdown no-arrow mx-1">
-		                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                            <a class="nav-link dropdown-toggle" href="../Mypage/Notification.do?USER_NO=${sessionScope.session.USER_NO }&amp;B_PAG_NUM=1&amp;P_PAG_NUM=1" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		                                <i class="fas fa-bell fa-fw"></i>
 		                                <!-- Counter - Alerts -->
-		                                <span class="badge badge-danger badge-counter">${sessionScope.pcount }</span>
+		                                <span class="badge badge-danger badge-counter">${sessionScope.Arlimecount }</span>
 		                            </a>
 		                            <!-- Dropdown - Alerts -->
 		                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
