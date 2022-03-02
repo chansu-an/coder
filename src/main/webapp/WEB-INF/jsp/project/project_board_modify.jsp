@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<%@ include file="/WEB-INF/include/include-header2.jspf"%>
 </head>
 <body>
 	<div class="d-flex" id="wrapper">
