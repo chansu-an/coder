@@ -14,37 +14,10 @@
 					
 							<c:if test="${sessionScope.session!=null}">
 								<li class="nav-item dropdown no-arrow mx-1">
-		                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                            <a class="nav-link" href="../Mypage/Notification.do?USER_NO=${sessionScope.session.USER_NO }&B_PAG_NUM=1&P_PAG_NUM=1">
 		                                <i class="fas fa-bell fa-fw"></i>
-		                                <!-- Counter - Alerts -->
 		                                <span class="badge badge-danger badge-counter">${sessionScope.pcount }</span>
 		                            </a>
-		                            <!-- Dropdown - Alerts -->
-		                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-		                                <h6 class="dropdown-header">
-		                                    알람
-		                                </h6>
-		                                <a class="dropdown-item d-flex align-items-center" href="#">
-		                                	<table class="table">
-		                                        <c:choose>
-													<c:when test="${fn:length(sessionScope.list1) > 0}">
-														<c:forEach items="${sessionScope.list1 }" var="row">
-															<tr>
-																<td>${row.TITLE }</td>
-																<td>${row.BOARD_NO }</td>
-															</tr>	
-														</c:forEach>
-													</c:when>
-													<c:otherwise>
-														<tr>
-															<td colspan="4">새로운 알림이 없습니다.</td>
-														</tr>
-													</c:otherwise>
-												</c:choose>		
-											</table>                                        
-		                                </a>
-		                                <a class="dropdown-item text-center small text-gray-500" href="../Mypage/Notification.do?USER_NO=${sessionScope.session.USER_NO }&amp;B_PAG_NUM=1&amp;P_PAG_NUM=1">전체보기</a>
-		                            </div>
 		                        </li>
 								<%-- <li class="nav-item"><a class="nav-link" href="../Mypage/Notification.do?USER_NO=${sessionScope.session.USER_NO }&amp;B_PAG_NUM=1&amp;P_PAG_NUM=1">알림()</a></li> --%>
 								<c:if test="${sessionScope.session.PROFILE=='TEMP'}">
