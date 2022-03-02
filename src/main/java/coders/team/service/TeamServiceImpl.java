@@ -22,10 +22,16 @@ public class TeamServiceImpl implements TeamService {
 
 	@Override
 	public List<Map<String, Object>> selectTeamList(Map<String, Object> map) throws Exception {
-		System.out.println("serviceimpl");
 		return teamDAO.selectTeamList(map);
 	}
-
+	
+	@Override
+	public List<Map<String, Object>> selectTeamCalendar(Map<String, Object> map) throws Exception{
+		System.out.println(map);
+		return teamDAO.selectTeamCalendar(map);
+	}
+	
+	
 	public void insertTeam(Map<String, Object> map, HttpServletRequest request) throws Exception {
 		teamDAO.insertTeam(map);
 

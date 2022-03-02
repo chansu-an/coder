@@ -84,6 +84,7 @@
 
 							<%--  <!-- 상단바 -->
 			    <div class=nav>
+
 			   		 <div class="col-md-6">
 						<form action="/net/board/openBoardList.do" method="get" align="left">
 						<div class="search-wrap">

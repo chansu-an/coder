@@ -25,5 +25,7 @@ public interface MainService {
 	
 	int countAlarm(Map<String, Object> map) throws Exception;
 	
+	int countProjectAlarm(Map<String, Object> map) throws Exception;
+	
 	List<Map<String, Object>> arlimeList(Map<String, Object> map) throws Exception;
 }
