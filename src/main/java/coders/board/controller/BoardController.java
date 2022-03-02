@@ -75,10 +75,8 @@ public class BoardController {
 
 		}
 
-		//정렬
-		if(request.getParameter("ORDER_TYPE") != null) {
-			mav.addObject("order_type", request.getParameter("ORDER_TYPE"));
-		}
+		mav.addObject("list", list);
+		mav.addObject("map", commandMap.getMap());
 
 		
 		return mav;
