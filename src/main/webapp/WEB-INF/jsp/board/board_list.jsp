@@ -74,7 +74,7 @@
               </div>
 
 			    <!-- 상단바 -->
-			    <div class=nav>
+			    <%-- <div class=nav>
 			   		 <div class="col-md-6">
 						<form action="/net/board/openBoardList.do" method="get" align="left">
 						<div class="search-wrap">
@@ -94,7 +94,7 @@
 							<input type="submit" value="검색" class="btn bin-info search-btn"/>		
 						</div>
 						</form>
-					</div>
+					</div> --%>
 			    
 			  
 			    
