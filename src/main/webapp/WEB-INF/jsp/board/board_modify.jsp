@@ -62,7 +62,7 @@
 	</form>
 
 	<a href="#this" class="btn" id="addFile">파일 추가</a>
-	<a href="javascript:window.history.back();" class="btn" id="list">목록으로</a>
+	<a href="javascript:window.history.back();" class="btn" id="list">이전으로</a>
 	<a href="#this" class="btn" id="update">저장하기</a>
 	<a href="#this" class="btn" id="delete">삭제하기</a>
 

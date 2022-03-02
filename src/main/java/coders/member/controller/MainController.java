@@ -1,5 +1,6 @@
 package coders.member.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +53,7 @@ public class MainController {
 	@RequestMapping(value="/main/Login.do", method = RequestMethod.GET)
 	public ModelAndView loginForm(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView("/main/login");
-		
+
 		String naverAuthUrl = naverLoginVO.getAuthorizationUrl(session);
 		
 		if(request.getParameter("checklogin") == null) {
@@ -72,20 +73,24 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 		
 		Map<String, Object> map = mainService.selectLoginUser(commandMap.getMap());
-		int pcount = mainService.countAlarm(map);//알림갯수
-		List<Map<String, Object>> list1 = mainService.arlimeList(map);
-		System.out.println("list1 : " + list1);
+		int bcount = 0;
+		int pcount = 0;
+		List<Map<String, Object>> list1 = new ArrayList<>();
+		
 		if(map == null) {
-			mv.setViewName("redirect:/main/Login.do");
+			mv.setViewName("redirect:/main/Login.do");			
 			mv.addObject("checklogin", false);
 		}else {
+			list1 = mainService.arlimeList(map);//알람 리스트
+			bcount = mainService.countAlarm(map);//게시글 알람 갯수
+			pcount = mainService.countProjectAlarm(map);//프로젝트 알람 갯수
 			mv.setViewName("redirect:/board/mainList.do");
+			session.setAttribute("Arlimecount", pcount + bcount);
+			session.setAttribute("list1", list1);
 		}
 		
 		mv.addObject("user", map);		
 		session.setAttribute("session", map);//로그인 유저 정보 세션에 저장
-		session.setAttribute("pcount", pcount);
-		session.setAttribute("list1", list1);
 		return mv;
 	}
 	

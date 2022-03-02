@@ -33,7 +33,9 @@
 								<input type="hidden" id="IDENTI_TYPE" name="IDENTI_TYPE" value=""/>
 								<select name="select_type" onChange="test(this.options[this.selectedIndex].value);">
 							    <option value="">선택해주세요.</option>
+							    <c:if test="${sessionScope.session.ADMIN == 'Y' }">
 							    <option value="1" >공지사항</option>
+							    </c:if>
 							    <option value="2" >QnA</option>
 							    <option value="3" >자유게시판</option>
 							    <option value="4" >건의사항</option>

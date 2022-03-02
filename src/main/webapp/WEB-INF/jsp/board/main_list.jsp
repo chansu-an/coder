@@ -48,8 +48,8 @@
                     </thead>
                     <tbody>
                       <c:choose>
-								<c:when test="${fn:length(list2) > 0}">
-									<c:forEach items="${list2 }" var="row">
+								<c:when test="${fn:length(list1) > 0}">
+									<c:forEach items="${list1 }" var="row">
 										<tr>
 											<td><a href="/net/board/detail.do?BOARD_NO=${row.BOARD_NO}&IDENTI_TYPE=${row.IDENTI_TYPE}">${row.TITLE }</a></td>
 											<td>${row.NICK_NAME }</td>
