@@ -10,12 +10,30 @@
 	<!-- get파라미터 제거후 새로고침 -->
 	history.replaceState({}, null, location.pathname);
 </script>
-<body>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
+<link href="../css/signin.css" rel="stylesheet">
+<body>
+<main class="form-signin">
+  <form id="frm" name="frm">
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
-                <!-- Page content-->
+    <div class="form-floating">
+      <input type="email" class="form-control focused-email" name="EMAIL" id="EMAIL" placeholder="name@example.com">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control focused-password" name="PASSWORD" id="PASSWORD" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+    <a href="#this" class="btn btn-primary" id="Login">로그인</a>
+	<a href="../main/RegisterForm.do" class="btn btn-primary">회원가입</a><br/>
+	<a href="../main/FindPw.do">비밀번호 찾기</a>
+	<div id="naver_id_login" style="text-align:center"><a href="${url}"><img width="223" src="${pageContext.request.contextPath}/img/naver_Bn_Green.png"/></a></div>
+  </form>
+</main>
+                <!-- Page content
                 <div class="container-fluid">
                     <form id="frm" name="frm">
 						<div align="center">
@@ -26,12 +44,12 @@
 							<br/>
 							<a href="#this" class="btn btn-primary" id="Login">로그인</a>
 							<a href="../main/RegisterForm.do" class="btn btn-primary">회원가입</a>
+							<br/>
+							<a href="../main/FindPw.do">비밀번호 찾기</a>
 						</div>
 						<div id="naver_id_login" style="text-align:center"><a href="${url}"><img width="223" src="${pageContext.request.contextPath}/img/naver_Bn_Green.png"/></a></div>
 					</form>
-						<br/>
-						<a href="../main/FindPw.do">비밀번호 찾기</a>
-                </div>
+                </div>-->
 
 
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
