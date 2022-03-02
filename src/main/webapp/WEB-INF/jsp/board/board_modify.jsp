@@ -87,7 +87,7 @@
 			fn_addFile();
 		});
 		
-		$("a[name^='delete']").on("click", function(e){ //삭제 버튼
+		$("#delete").on("click", function(e){ //삭제 버튼
 			e.preventDefault();
 			fn_deleteFile($(this));
 		});
