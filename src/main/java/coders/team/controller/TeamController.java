@@ -51,6 +51,9 @@ public class TeamController {
 			hash.put("title", list.get(i).get("PD_TITLE"));
 			hash.put("start", list.get(i).get("PD_START"));
 			hash.put("end", list.get(i).get("PD_END"));
+			hash.put("context", list.get(i).get("PD_CONTEXT"));
+			hash.put("ing", list.get(i).get("PD_ING"));
+			hash.put("import", list.get(i).get("PD_IMPORT"));
 			
 			jsonObj = new JSONObject();
 			jsonObj.putAll(hash);

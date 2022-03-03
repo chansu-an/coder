@@ -27,6 +27,8 @@
 						<tr>
 							<th>시작일</th>
 							<td><input type="date" name="PROJECT_START"></td>
+							</tr>
+							<tr>
 							<th>종료일</th>
 							<td><input type="date" name="PROJECT_END"></td>
 						</tr>
@@ -52,7 +54,7 @@
 				<br /> <br /> 
 				<a onclick="fn_addFile()" class="btn"
 					id="addFile">파일 추가</a> 
-					<input type="submit" value="작성하기"> 
+					<input type="submit" class = "btn" value="작성하기"> 
 					<a href="../Project/Project.do" class="btn" id="list">목록으로</a>
 
 			</form>

@@ -34,6 +34,8 @@ public class ProjectController {
 		if (pags != null) {
 			pag = Integer.parseInt(pags);
 		}
+		
+		
 		ModelAndView mav = new ModelAndView("/project/project_board_list");
 		count = projectService.countProjectList(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 5, count);
@@ -50,6 +52,14 @@ public class ProjectController {
 		mav.addObject("list1", list1);
 		mav.addObject("list2", list2);
 		mav.addObject("map", commandMap.getMap());
+		
+		
+		
+		
+		
+		
+		
+		
 		return mav;
 	}
 	@RequestMapping(value = "/Project/ProjectS.do")
@@ -159,5 +169,14 @@ public class ProjectController {
 		return mav;
 
 	}
+	
 
 }
+
+
+
+
+
+
+
+
