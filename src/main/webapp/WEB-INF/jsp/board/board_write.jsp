@@ -10,7 +10,6 @@
 	}	
 	
 </script>
-<script type="text/javascript" src="/net/js/ckeditor/ckeditor.js"></script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
@@ -43,13 +42,8 @@
 						</tr>
 
 						<tr>
-							<td colspan="4" class="view_text">
+							<td colspan="4">
 							<textarea rows="20" cols="100" title="내용" id="CONTEXT" name="CONTEXT"></textarea>
-							<script type="text/javascript">
-							 CKEDITOR.replace('CONTEXT'
-							                , {height: 500                                                  
-							                 });
-							</script>
 							</td>
 						</tr>
 					</tbody>
@@ -73,14 +67,19 @@
 		var file_count = 0;
 		$(document).ready (function(){
 			$('.btnAdd').click(function(){
-				$('.fileDiv').append(					
-					'<input type="file" id="file" name="file_'+(file_count++)+'" >\<button type="button" class="btnRemove">삭제</button><br>'
-				);
-				$('.btnRemove').on('click', function(){
-					$(this).prev().remove();
-					$(this).next().remove();
-					$(this).remove();
-				})
+				if(file_count < 5){
+					$('.fileDiv').append(					
+						'<input type="file" id="file" name="file_'+(file_count++)+'" >\<button type="button" class="btnRemove">삭제</button><br>'
+					);
+					$('.btnRemove').on('click', function(){
+						$(this).prev().remove();
+						$(this).next().remove();
+						$(this).remove();
+						file_count--;
+					})					
+				}else{
+					alert("첨부파일은 최대 5개까지 입니다.");
+				}
 			});
 		});
 		

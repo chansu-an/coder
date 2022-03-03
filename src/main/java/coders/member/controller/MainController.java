@@ -122,8 +122,7 @@ public class MainController {
 		}
 		
 		//데이터베이스에서 사용자 프로필 사진 URL 가져오기
-		Map<String, Object> user_profile_images = mainService.selectLoginUser(map);
-		
+		Map<String, Object> user_profile_images = mainService.selectNaverLogin(map);
 		System.out.println(member_nickname);
 		System.out.println(member_name);
 		System.out.println(member_email);
@@ -132,7 +131,7 @@ public class MainController {
 		mv.addObject("result", apiResult);
 		//프로필 url값
 		mv.addObject("image", member_profile);//네이버 url에서 가져온 사용사 프로필 사진
-		//mv.addObject("userimages", user_profile_images.get("PROFILE"));//데이터 베이스에 저장된 사용자 프로필 url
+		mv.addObject("userimages", user_profile_images.get("PROFILE"));//데이터 베이스에 저장된 사용자 프로필 url
 		
 		session.setAttribute("session", map);
         /* 네이버 로그인 성공 페이지 View 호출 */
@@ -228,9 +227,9 @@ public class MainController {
 	
 	@RequestMapping(value="/main/findPassword.do", method = {RequestMethod.POST, RequestMethod.GET})
 	public void findPassword(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		authKey = mailSendService2.sendAuthMail((String)request.getParameter("EMAIL"));
 		
-		System.out.println("authKey : " + authKey);
+		authKey = mailSendService2.sendAuthMail((String)request.getParameter("EMAIL"));		
+		
 	}
 	
 	@RequestMapping(value="/main/findPasswordConfirm.do", method = {RequestMethod.POST, RequestMethod.GET})
