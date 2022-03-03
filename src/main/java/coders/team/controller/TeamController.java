@@ -52,7 +52,8 @@ public class TeamController {
 			hash.put("start", list.get(i).get("PD_START"));
 			hash.put("end", list.get(i).get("PD_END"));
 			
-			jsonObj = new JSONObject(hash);
+			jsonObj = new JSONObject();
+			jsonObj.putAll(hash);
 			jsonArr.add(jsonObj);
 		}
 		System.out.println(jsonArr);
