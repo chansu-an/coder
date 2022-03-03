@@ -55,7 +55,7 @@ function com(n, m) {
 	<table class="board_view"> 
 		<colgroup> 
 			<col width="15%"/> 
-			<col width="35%"/> 
+			<col width="25%"/> 
 			<col width="15%"/> 
 			<col width="25%"/>
 			<col width="10%"/>
@@ -103,21 +103,18 @@ function com(n, m) {
 	</table> 
 	<br/>
 	<!-- 작성자만 가능 -->
-	<c:if test="${sessionScope.session.USER_NO == map.USER_NO}">
-		<a href="/net/board/modify.do?IDENTI_TYPE=${map.IDENTI_TYPE}&BOARD_NO=${map.BOARD_NO}" class="btn" id="write">수정하기</a>
-	</c:if>
-	<a href="/net/board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE }" class="btn" id="boardList">목록보기</a>
-	
-	
-	<!-- 신고, 추천 -->
-	<!-- 신고하기 누르면 REPORT_COUNT + 1, 추천하기 누르면 RECOMMEND_COUNT + 1 -->
-	<c:if test="${!empty sessionScope.session.USER_NO && map.IDENTI_TYPE != '4' }">
-		<div>
-		<a href="#this" class="btn" id="recommend">추천하기</a>
-		<a href="#this" class="btn" id="report">신고하기</a>	
-		</div>
-	</c:if>
-	
+	<div>
+		<c:if test="${sessionScope.session.USER_NO == map.USER_NO}">
+			<a href="/net/board/modify.do?IDENTI_TYPE=${map.IDENTI_TYPE}&BOARD_NO=${map.BOARD_NO}" class="btn" id="write">수정하기</a>
+		</c:if>
+		<a href="/net/board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE }" class="btn" id="boardList">목록보기</a>	
+		<!-- 신고, 추천 -->
+		<!-- 신고하기 누르면 REPORT_COUNT + 1, 추천하기 누르면 RECOMMEND_COUNT + 1 -->
+		<c:if test="${!empty sessionScope.session.USER_NO && map.IDENTI_TYPE != '4' }">
+			<a href="#this" class="btn" id="recommend">추천하기</a>
+			<a href="#this" class="btn" id="report">신고하기</a>	
+		</c:if>
+	</div>
 	<!-- 댓글 리스트 -->
 	<div id="reply">
 	  <div>댓글 <c:out value="${count}"></c:out></div>

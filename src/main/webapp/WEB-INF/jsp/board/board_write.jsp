@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,6 +10,7 @@
 	}	
 	
 </script>
+<script type="text/javascript" src="/net/js/ckeditor/ckeditor.js"></script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
@@ -44,8 +43,14 @@
 						</tr>
 
 						<tr>
-							<td colspan="2" class="view_text">
-							<textarea rows="20" cols="100" title="내용" id="CONTEXT" name="CONTEXT"></textarea></td>
+							<td colspan="4" class="view_text">
+							<textarea rows="20" cols="100" title="내용" id="CONTEXT" name="CONTEXT"></textarea>
+							<script type="text/javascript">
+							 CKEDITOR.replace('CONTEXT'
+							                , {height: 500                                                  
+							                 });
+							</script>
+							</td>
 						</tr>
 					</tbody>
 				</table>
