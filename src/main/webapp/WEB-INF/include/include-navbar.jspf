@@ -22,14 +22,14 @@
 		                        </li>
 								<%-- <li class="nav-item"><a class="nav-link" href="../Mypage/Notification.do?USER_NO=${sessionScope.session.USER_NO }&amp;B_PAG_NUM=1&amp;P_PAG_NUM=1">알림()</a></li> --%>
 								<c:if test="${sessionScope.session.PROFILE=='TEMP'}">
-									<li class="nav-item">
+									<li class="nav-link">
 										<img src="../img/profile/temp/profile.jpg" width="40" height="10" class="img-thumbnail">
 									</li>
 								</c:if>
 								<c:if test="${sessionScope.session.PROFILE!='TEMP'}">
 
-									<li class="nav-item">
-										<img src="../img/profile/${sessionScope.session.USER_NO}/${sessionScope.session.PROFILE}" width="40" height="10" class="img-thumbnail">
+									<li class="nav-link">
+										<img src="${sessionScope.session.PROFILE}" width="40" height="10" class="img-thumbnail">
 									</li>
 
 								</c:if>

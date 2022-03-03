@@ -13,7 +13,7 @@ public class Packaging {
 		if(end>count) {
 			end = count;
 		}
-		int maxpag =  (count/max==0)?(count/max):(count/max)+1;
+		int maxpag =  (count%max==0)?(count/max):(count/max)+1;
 		int pag = (pagenum%10 == 0)?(pagenum/10):(pagenum/10)+1;
 		int startpag = (pag-1)*10+1;
 		int endpage = startpag+9;
@@ -25,7 +25,6 @@ public class Packaging {
 		map.put("startpag", startpag);
 		map.put("endpage", endpage);
 		map.put("maxpag", maxpag);
-		System.out.println(map);
 		return map;
 	}
 

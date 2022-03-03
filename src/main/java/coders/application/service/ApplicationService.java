@@ -13,4 +13,6 @@ public interface ApplicationService {
 
 	void ProjectApp(Map<String, Object> map) throws Exception; 
 	
+	Map<String, Object> checkapp(Map<String, Object> map )throws Exception;
+	
 }

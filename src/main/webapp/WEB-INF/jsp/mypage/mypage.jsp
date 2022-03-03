@@ -8,7 +8,6 @@
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
-<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
 
 </head>
 <body class="background-color:">
@@ -63,20 +62,25 @@
 				</div>
 			</div>
 		</div>
-		<div align="center">
+		<nav >
+		<ul class="pagination" >
 			<c:if test="${smap.startpag>1}">
-				<a
-					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${smap.startpag-2}&F_PAG_NUM=${param.F_PAG_NUM}">이전</a>
+				<li><a
+					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${smap.startpag-2}&F_PAG_NUM=${param.F_PAG_NUM}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+					</li>
+					
 			</c:if>
 			<c:forEach var="i" begin="${smap.startpag }" end="${smap.endpage }">
-				<a
-					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${i}&F_PAG_NUM=${param.F_PAG_NUM}">[${i}]</a>
+				<li><a
+					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${i}&F_PAG_NUM=${param.F_PAG_NUM}">[${i}]</a></li>
 			</c:forEach>
 			<c:if test="${smap.endpage<smap.maxpag}">
-				<a
-					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${smap.startpag+2}&F_PAG_NUM=${param.F_PAG_NUM}">다음</a>
+				<li><a
+					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${smap.startpag+2}&F_PAG_NUM=${param.F_PAG_NUM}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+			</li>
 			</c:if>
-		</div>
+			</ul>
+		</nav>
 
 
 
@@ -124,6 +128,25 @@
 				</div>
 			</div>
 		</div>
+		<nav>
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 
 		<div align="center">
 			<c:if test="${fmap.startpag>1}">

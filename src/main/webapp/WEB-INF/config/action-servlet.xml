@@ -55,7 +55,7 @@
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
-			<bean class="coders.common.interceptor.NonPageInterceptor"/>
+			<bean class="coders.common.interceptor.AllInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
 </beans>

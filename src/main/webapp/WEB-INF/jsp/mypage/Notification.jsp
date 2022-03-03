@@ -33,7 +33,7 @@
 											<c:forEach items="${list1 }" var="row">
 												<tr>
 													<td><a
-														href="../board/detail.do?BOARD_NO=${row.BOARD_NO}&IDENTI_TYPE=${rows.IDENTI_TYPE}">${rows.TITLE}</a></td>
+														href="../Mypage/ArlistClick.do?BOARD_NO=${row.BOARD_NO}&IDENTI_TYPE=${row.IDENTI_TYPE}">${row.TITLE}</a></td>
 													<td>새로운 댓글이 달렸습니다</td>
 												</tr>
 											</c:forEach>

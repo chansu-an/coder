@@ -52,12 +52,13 @@ public class MypageDAO extends AbstractDAO{
 	public List<Map<String, Object>> selectprojectArList(Map<String, Object> map) throws Exception{
 		return (List<Map<String,Object>>)selectList("user.selectProjectArList", map);
 	}
-	//프로젝트 알림 삭제
+	//작성글 알림 삭제
 	public void clickArlist(Map<String, Object> map) throws Exception{
 		update("user.clickArlist", map);
 	} 
 	
-	//작성글 알림 삭제
+	
+	//프로젝트 알림 삭제
 	public void clickProjectAr(Map<String, Object> map) throws Exception{
 		update("user.clickProjectAr", map);
 	}
@@ -95,6 +96,9 @@ public class MypageDAO extends AbstractDAO{
 	public int countArlimeList(Map<String, Object> map)throws Exception{
 		return (int)selectOne("user.countArlimeList", map);
 	}
-	
+	//유저 신고
+	public void repostUser(Map<String, Object> map)throws Exception{
+		update("user.repostUser", map);
+	}
 
 }

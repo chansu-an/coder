@@ -176,26 +176,22 @@ public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception
 }
 	//작성글 알림 삭제
 	@RequestMapping(value = "/Mypage/ArlistClick.do")
-	public ModelAndView clickArlist(HttpServletRequest request)throws Exception {
+	public ModelAndView clickArlist(CommandMap map)throws Exception {
 		ModelAndView mav = new ModelAndView();
-		Map<String, Object> mapor = new HashMap<String, Object>();
-		String no = request.getParameter("BOARD_NO");
-		String idno = request.getParameter("IDENTI_TYPE");
-		 mapor.put("BOARD_NO", no); 
-		 mapor.put("IDENTI_TYPE",idno);
-		 mypageService.clickArlist(mapor);
+		mypageService.clickArlist(map.getMap());
 		 
-		mav.setViewName("redirect:/board/detail.do?BOARD_NO="+no+"&IDENTI_TYPE="+idno);
+		mav.setViewName("redirect:/board/detail.do?BOARD_NO="+map.get("BOARD_NO")+"&IDENTI_TYPE="+map.get("IDENTI_TYPE"));
 		return mav;
 		
 	}
 	//프로젝트 알림삭제
 	@RequestMapping(value = "/Mypage/ProjectArClick.do")
-	public ModelAndView clickProjectAr(HttpServletRequest request) {
+	public ModelAndView clickProjectAr(CommandMap map,HttpSession session)throws Exception{
 		ModelAndView mav = new ModelAndView();
-		Map<String, Object> mapor = new HashMap<String, Object>();
-		String no = request.getParameter("PROJECT_NO");
-		mav.setViewName("redirect:/Project/Team.do?PROJECT_NO="+no);
+		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
+		map.put("USER_NO", smap.get("USER_NO"));
+		mypageService.clickProjectAr(map.getMap());
+		mav.setViewName("redirect:/Team/List.do?PROJECT_NO="+map.get("PROJECT_NO"));
 		return mav;
 		
 	}
@@ -232,6 +228,11 @@ public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception
 		Map<String, Object> map =(Map<String, Object>)session.getAttribute("session");
 		mypageService.deleteUser(map);
 		return "redirect:/board/mainList.do";
+	}
+	@RequestMapping(value = "/Mypage/RepostUser.do")
+	public String repostUser(CommandMap map)throws Exception{
+		mypageService.repostUser(map.getMap());
+		return "redirect:/Mypage/MypageDetail.do?USER_NO="+map.get("USER_NO");
 	}
 
 }

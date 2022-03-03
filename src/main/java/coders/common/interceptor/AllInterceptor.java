@@ -1,22 +1,26 @@
 package coders.common.interceptor;
 
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import coders.board.service.BoardService;
+import coders.member.service.MainService;
 import coders.mypage.service.MypageService;
 import coders.project.service.ProjectService;
 import coders.team.service.TeamService;
 
-public class NonPageInterceptor implements HandlerInterceptor{
+public class AllInterceptor implements HandlerInterceptor{
 	
 	@Resource(name="boardService")
 	private BoardService boardService;
@@ -26,10 +30,22 @@ public class NonPageInterceptor implements HandlerInterceptor{
 	private ProjectService projectService;
 	@Resource(name = "teamService")
 	private TeamService teamService;
+	@Resource(name="mainService")
+	private MainService mainService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		
+		HttpSession session = request.getSession();
+		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
+		if(smap!=null) {
+			int bcount =mainService.countAlarm(smap);
+			int pcount =mainService.countProjectAlarm(smap);
+			session.setAttribute("Arlimecount", pcount + bcount);
+		}
+		response.setContentType("text/html; charset=UTF-8");
+		
 		String USER_NO = request.getParameter("USER_NO");
 		String PROJECT_NO = request.getParameter("PROJECT_NO");
 		String BOARD_NO = request.getParameter("BOARD_NO");
@@ -40,8 +56,10 @@ public class NonPageInterceptor implements HandlerInterceptor{
 					map = mypageService.selectMypageDetail(map);
 					if(map!=null) {
 						return true;
-					}else {
-						response.sendRedirect("../board/mainList.do");
+					}else {PrintWriter printwriter = response.getWriter();
+						printwriter.print("<script>alert('존재하지 않는 페이지 입니다'); location.href='../board/mainList.do'</script>");
+						printwriter.flush();
+						printwriter.close();
 						return false;
 					}
 					
@@ -56,15 +74,19 @@ public class NonPageInterceptor implements HandlerInterceptor{
 									map = teamService.selectTeamDetail(map);
 									if(map.get("map")!=null) {
 										return true;
-									}else {
-										response.sendRedirect("../board/mainList.do");
+									}else {PrintWriter printwriter = response.getWriter();
+										printwriter.print("<script>alert('존재하지 않는 페이지 입니다'); location.href='../board/mainList.do'</script>");
+										printwriter.flush();
+										printwriter.close();
 										return false;
 									}
 									
 						}
 						return true;
-					}else {
-						response.sendRedirect("../board/mainList.do");
+					}else {PrintWriter printwriter = response.getWriter();
+					printwriter.print("<script>alert('존재하지 않는 페이지 입니다'); location.href='../board/mainList.do'</script>");
+					printwriter.flush();
+					printwriter.close();
 						return false;
 					}
 					
@@ -74,8 +96,10 @@ public class NonPageInterceptor implements HandlerInterceptor{
 					map = boardService.selectBoardDetail(map);
 					if(map!=null) {
 						return true;
-					}else {
-						response.sendRedirect("../board/mainList.do");
+					}else {PrintWriter printwriter = response.getWriter();
+					printwriter.print("<script>alert('존재하지 않는 페이지 입니다'); location.href='../board/mainList.do'</script>");
+					printwriter.flush();
+					printwriter.close();
 						return false;
 					}
 				

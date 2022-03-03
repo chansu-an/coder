@@ -45,7 +45,7 @@
 									<c:forEach items="${list }" var="row">
 										<tr>
 											<td>${row.PROJECT_NO}</td>
-  											<td><a href="#">${row.PROJECT_NAME}</a></td>
+  											<td><a href="../Team/List.do?PROJECT_NO=${row.PROJECT_NO }">${row.PROJECT_NAME}</a></td>
 											<td>${row.PROJECT_START}</td>
 											<td>${row.PROJECT_END}</td>
 										</tr>
