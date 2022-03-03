@@ -33,16 +33,16 @@
             <div class="card">
 							<div class="card-header">
 								<c:choose>
-									<c:when test="${IDENTI_TYPE eq '1' }">
+									<c:when test="${param.IDENTI_TYPE eq '1' }">
 										<h4 class="card-title">공지사항</h4>
 									</c:when>
-									<c:when test="${IDENTI_TYPE eq '2' }">
+									<c:when test="${param.IDENTI_TYPE eq '2' }">
 										<h4 class="card-title">QnA</h4>
 									</c:when>
-									<c:when test="${IDENTI_TYPE eq '3' }">
+									<c:when test="${param.IDENTI_TYPE eq '3' }">
 										<h4 class="card-title">자유게시판</h4>
 									</c:when>
-									<c:when test="${IDENTI_TYPE eq '4' }">
+									<c:when test="${param.IDENTI_TYPE eq '4' }">
 										<h4 class="card-title">건의사항</h4>
 									</c:when>
 								</c:choose>
@@ -69,7 +69,7 @@
 								</form>
 
 								<c:choose>
-									<c:when test="${IDENTI_TYPE eq '1' }">
+									<c:when test="${param.IDENTI_TYPE eq '1' }">
 										<c:if test="${sessionScope.session.ADMIN == 'Y' }">
 											<a href="/net/board/write.do" class="btn" id="write">글쓰기</a>
 										</c:if>
@@ -80,33 +80,7 @@
 										</c:if>
 									</c:otherwise>
 								</c:choose>
-							</div>
-
-							<%--  <!-- 상단바 -->
-			    <div class=nav>
-
-			   		 <div class="col-md-6">
-						<form action="/net/board/openBoardList.do" method="get" align="left">
-						<div class="search-wrap">
-							<select id="SEARCH_TYPE" name="SEARCH_TYPE" onchange="test1(this.value);">
-								<option>검색</option>
-								<option value="TITLE"
-									<c:if test="${searchType == 'TITLE'}">selected</c:if>>제목</option>
-								<option value="CONTEXT"
-									<c:if test="${searchType == 'CONTEXT'}">selected</c:if>>내용</option>
-								<option value="NICKNAME"
-									<c:if test="${searchType == 'NICKNAME'}">selected</c:if>>작성자</option>
-								<option value="T+C"
-									<c:if test="${searchType == 'T+C'}">selected</c:if>>제목+내용</option>
-							</select>
-							<input type="hidden" id="IDENTI_TYPE" name="IDENTI_TYPE" value="${IDENTI_TYPE }"/>
-							<input type="text" id="KEYWORD" name="KEYWORD" value="${keyWord }"></input>
-							<input type="submit" value="검색" class="btn bin-info search-btn"/>		
-						</div>
-						</form>
-					</div> --%>
-			    
-			  
+							</div>		  
 			    
                <!-- 게시판 --> 
 
@@ -115,7 +89,7 @@
                   <table class="table">
 					<c:choose>
 						<%-- 공지사항, QnA, 자유 게시판 --%>
-						<c:when test="${IDENTI_TYPE != '4'}">
+						<c:when test="${param.IDENTI_TYPE != '4'}">
 							<colgroup>
 								<col width="10%" />
 								<col width="*%" />
@@ -141,7 +115,7 @@
 											<tr>
 												<td>${row.ROWNUM }</td>
 												<td><a
-													href="/net/board/detail.do?IDENTI_TYPE=${IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a>
+													href="/net/board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a>
 													[${row.REPLY_COUNT}]</td>
 												<td>${row.READ_COUNT }</td>
 												<td>${row.RECOMMEND_COUNT }</td>
@@ -184,7 +158,7 @@
 											<tr>
 												<td>${row.ROWNUM }</td>
 												<td><a
-													href="/net/board/detail.do?IDENTI_TYPE=${IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a>
+													href="/net/board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a>
 													[${row.REPLY_COUNT}]</td>
 												<td>
 													<c:choose>
