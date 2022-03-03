@@ -43,4 +43,6 @@ public interface MypageService {
 	public int countScrapList(Map<String, Object> map)throws Exception;
 	
 	public int countArlimeList(Map<String, Object> map)throws Exception;
+	
+	public void repostUser(Map<String, Object> map)throws Exception;
 }

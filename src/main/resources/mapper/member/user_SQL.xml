@@ -41,8 +41,8 @@ UPDATE USERS SET PASSWORD = #{PASSWORD}, NICK_NAME= #{NICK_NAME}, PROFILE= #{PRO
 ]]></update>
 <!-- 유저 삭제 -->
 <update id="deleteUser" parameterType="hashmap"><![CDATA[
-UPDATE USERS SET DEL_GB = 'Y', DELDATE = SYSDATE WHERE USER_NO =# {USER_NO}
-]]></update>
+UPDATE USERS SET DEL_GB = 'Y', DELDATE = SYSDATE WHERE USER_NO = #{USER_NO}
+]]></update> 
 <!-- db상의 유저 삭제 -->
 <delete id="realDeleteUser" parameterType="hashmap"><![CDATA[
 DELETE USERS WHERE DEL_DATE+7 < SYSDATE
@@ -168,6 +168,7 @@ UPDATE APPLICATION SET  APPLICATION_AR = 'N' WHERE PROJECT_NO = #{PROJECT_NO} AN
 <update id="clickArlist" parameterType="hashmap"><![CDATA[
 UPDATE BOARD SET  BOARD_AR = 'N' WHERE BOARD_NO = #{BOARD_NO}
 ]]></update>
+
 <!-- 이력서 작성 -->
 <insert id="insertResume" parameterType="hashmap" ><![CDATA[
 INSERT INTO RESUME (RESUME_NO,USER_NO,NAME,TELL,EMAIL,ADDRESS,ADDRESS1,SKILL,BLOG,FILES,ZIPCODE) 

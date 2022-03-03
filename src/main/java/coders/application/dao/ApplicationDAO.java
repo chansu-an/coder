@@ -29,5 +29,10 @@ public class ApplicationDAO extends AbstractDAO {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> checkapp(Map<String, Object> map )throws Exception{
+		return (Map<String, Object>) selectOne("team.checkapp",map);
+	}
+	
 
 }

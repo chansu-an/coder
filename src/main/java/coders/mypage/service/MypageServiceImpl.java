@@ -49,7 +49,6 @@ public class MypageServiceImpl implements MypageService {
 
 	@Override
 	public void clickArlist(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
 		mypageDAO.clickArlist(map);
 	}
 
@@ -123,6 +122,14 @@ public class MypageServiceImpl implements MypageService {
 	public int countArlimeList(Map<String, Object> map) throws Exception {
 		return mypageDAO.countArlimeList(map);
 	}
+
+	@Override
+	public void repostUser(Map<String, Object> map) throws Exception {
+		mypageDAO.repostUser(map);
+		
+	}
+	
+	
 	
 	
 	

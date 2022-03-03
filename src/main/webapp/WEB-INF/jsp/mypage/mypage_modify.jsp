@@ -45,7 +45,7 @@
 						<li class="nav-item"><a class="nav-link" href="../Mypage/Notification.do?USER_NO=${sessionScope.session.USER_NO }&amp;B_PAG_NUM=1&amp;P_PAG_NUM=1">알림()</a></li>
 							<c:if test="${sessionScope.session!=null}">
 							<li class="nav-item">
-									<img src="../img/profile/${param.USER_NO}/${sessionScope.session.PROFILE}" width="40" height="10" class="img-thumbnail">
+									<img src="${sessionScope.session.PROFILE}" width="40" height="10" class="img-thumbnail">
 								</li>
 							<li class="nav-item"><a class="nav-link" href="../main/Mypage.do?USER_NO=${sessionScope.session.USER_NO }">테스트3213님 환영합니다.</a></li>
 							

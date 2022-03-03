@@ -73,22 +73,15 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 		
 		Map<String, Object> map = mainService.selectLoginUser(commandMap.getMap());
-		int bcount = 0;
-		int pcount = 0;
-		List<Map<String, Object>> list1 = new ArrayList<>();
+	
 		
 		if(map == null) {
 			mv.setViewName("redirect:/main/Login.do");			
 			mv.addObject("checklogin", false);
+			return mv;
 		}else {
-			list1 = mainService.arlimeList(map);//알람 리스트
-			bcount = mainService.countAlarm(map);//게시글 알람 갯수
-			pcount = mainService.countProjectAlarm(map);//프로젝트 알람 갯수
 			mv.setViewName("redirect:/board/mainList.do");
-			session.setAttribute("Arlimecount", pcount + bcount);
-			session.setAttribute("list1", list1);
 		}
-		
 		mv.addObject("user", map);		
 		session.setAttribute("session", map);//로그인 유저 정보 세션에 저장
 		return mv;

@@ -19,9 +19,9 @@ public class ProFileUtils {
 		String originalFileName = null;
 		String originalFileExtension = null;
 		String storeFileName = null;
-		String filePath = request.getSession().getServletContext().getRealPath("/")+"\\img\\profile\\";
+		String filePath = request.getSession().getServletContext().getRealPath("/")+"img\\profile\\";
 		filePath =filePath+map.get("USER_NO")+"\\";
-		System.out.println(filePath);
+
 		File file = new File(filePath);
 		
 		if(file.exists()==false) {
@@ -35,7 +35,7 @@ public class ProFileUtils {
 				storeFileName = "profile"+originalFileExtension;
 				file = new File(filePath+storeFileName);
 					multipartFile.transferTo(file);//이부분에서 파일 업로드 됨
-					map.put("PROFILE", storeFileName);}else {
+					map.put("PROFILE", "../img/profile/"+map.get("USER_NO")+"/"+storeFileName);}else {
 						map.put("PROFILE", map.get("PROFILE"));
 					}
 			

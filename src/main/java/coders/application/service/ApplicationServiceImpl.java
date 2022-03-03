@@ -36,4 +36,9 @@ public class ApplicationServiceImpl implements ApplicationService{
 		applicationDAO.ProjectApp(map);
 	}
 	
+	@Override
+	public Map<String, Object> checkapp(Map<String, Object> map) throws Exception {
+		return applicationDAO.checkapp(map);
+	}
+	
 }
