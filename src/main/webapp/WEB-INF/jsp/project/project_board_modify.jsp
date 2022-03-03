@@ -132,7 +132,7 @@
 				<div id="fileDiv">
 					<p>
 						<a href="../Project/Project.do" class="btn" id="list">목록으로</a> <input
-							type="submit" value="수정하기"> <a href="#this" class="btn"
+							type="submit" class = "btn" value="수정하기"> <a href="#this" class="btn"
 							id="addFile">파일추가</a>
 
 					</p>
