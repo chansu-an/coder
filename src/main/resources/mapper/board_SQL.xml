@@ -264,10 +264,13 @@ SELECT BOARD.BOARD_NO,BOARD.IDENTI_TYPE,USERS.NICK_NAME,BOARD.TITLE,BOARD.USER_N
 UPDATE BOARD SET READ_COUNT = READ_COUNT + 1 WHERE BOARD_NO=#{BOARD_NO}
 ]]></update>
 	<!-- 삭제글 리스트 -->
-	<select id="selectDeleteList" parameterType="hashmap"
-		resultType="hashmap"><![CDATA[
+<select id="selectDeleteList" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre" />
+<![CDATA[
 SELECT BOARD.BOARD_NO,USERS.NICK_NAME,BOARD.TITLE,BOARD.READ_COUNT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh24:MI)') "BOARD_DATE",ROWNUM FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.DEL_GB = 'Y'
-]]></select>
+]]>
+<include refid="common.pagingPost" />
+</select>
 <!-- 삭제글 수 -->
 <select id="countDeleteList" parameterType="hashmap" resultType="_int">
 <![CDATA[
@@ -279,10 +282,13 @@ SELECT COUNT(*) FROM BOARD WHERE DEL_GB = 'Y'
 UPDATE BOARD SET DEL_GB = 'N' WHERE BOARD_NO = #{BOARD_NO}
 ]]></update>
 	<!-- 신고글 리스트 -->
-	<select id="selectReportList" parameterType="hashmap"
-		resultType="hashmap"><![CDATA[
+<select id="selectReportList" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre" />
+<![CDATA[
 SELECT BOARD.BOARD_NO,BOARD.REPORT_COUNT,USERS.NICK_NAME,BOARD.TITLE,BOARD.READ_COUNT,TO_CHAR(BOARD.BOARD_DATE,'YY/MM/DD(hh24:MI)') "BOARD_DATE",ROWNUM FROM BOARD INNER JOIN USERS ON BOARD.USER_NO = USERS.USER_NO WHERE BOARD.DEL_GB = 'N' AND BOARD.REPORT_COUNT >= '20'
-]]></select>
+]]>
+<include refid="common.pagingPost" />
+</select>
 <!-- 신고글 갯수 -->
 <select id="countReportList" parameterType="hashmap" resultType="_int">
 <![CDATA[

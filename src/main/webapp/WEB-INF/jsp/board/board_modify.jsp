@@ -77,9 +77,9 @@
 	<br/>
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<script type="text/javascript">
-	var gfv_count = '${fn:length(filelist)+1}';
+	let gfv_count = '${fn:length(filelist)+1}';
+	let file_count = '${fn:length(filelist)}';
 	$(document).ready(function(){
-		
 		$("#update").on("click", function(e){ //저장하기 버튼
 			e.preventDefault();
 			fn_updateBoard();
@@ -92,7 +92,11 @@
 		
 		$("#addFile").on("click", function(e){ //파일 추가 버튼
 			e.preventDefault();
-			fn_addFile();
+			if(file_count < 5){
+				fn_addFile();				
+			}else{
+				alert("첨부파일은 최대 5개까지 입니다.");
+			}
 		});
 		
 		$("#delete").on("click", function(e){ //삭제 버튼
@@ -116,6 +120,7 @@
 	}
 	
 	function fn_addFile(){
+		file_count++;
 		var str = "<p>" +
 				"<input type='file' id='file_"+(gfv_count)+"' name='file_"+(gfv_count)+"'>"+
 				"<a href='#this' class='btn' id='delete_"+(gfv_count)+"' name='delete_"+(gfv_count)+"'>삭제</a>" +
@@ -124,6 +129,7 @@
 		$("#delete_"+(gfv_count++)).on("click", function(e){ //삭제 버튼
 			e.preventDefault();
 			fn_deleteFile($(this));
+			file_count--;
 		});
 	}
 	
@@ -134,6 +140,8 @@
 	function fn_test(test, index){
 		var str1 = "<input type='hidden' id='delete_" + index +"' name='delete_" + index +"' value='" + test + "'/>";
 		$("#fileDiv").append(str1);
+		$("#delete_" + index).parent().remove();
+		file_count--;
 	}
 	
 

@@ -120,26 +120,38 @@
 	<script type="text/javascript">	
 	$(document).ready(function(){
 	  $('#openModalBtn').on('click', function(){
-			 var userId = $("#EMAIL").val();//EMAIL에 입력되는 값
-			 $("input[name=check_email]").val('Y');
-			 
-			 $.ajax({
-				 url : "<c:url value='/main/checkUserNickName.do'/>",
-				 type : "post",
-				 data : userId,
-				 dataType : 'json',
-				 contentType : "application/json; charset=UTF-8",
-				 success : function(result){
-					 if(result == 0){//사용가능한 아이디
-						$('#modalBox2').modal('show');					 
-					 }else{//중복된 아이디
-						$('#modalBox').modal('show');
+		  let emailVal = $("#EMAIL").val();
+		  let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 검증에 사용할 정규식 변수 regExp에 저장
+		  if(emailVal != null && emailVal != ""){
+			  if (emailVal.match(regExp) != null) {
+				 var userId = $("#EMAIL").val();//EMAIL에 입력되는 값
+				 $("input[name=check_email]").val('Y');
+				 
+				 $.ajax({
+					 url : "<c:url value='/main/checkUserNickName.do'/>",
+					 type : "post",
+					 data : userId,
+					 dataType : 'json',
+					 contentType : "application/json; charset=UTF-8",
+					 success : function(result){
+						 if(result == 0){//사용가능한 아이디
+							$('#modalBox2').modal('show');					 
+						 }else{//중복된 아이디
+							$('#modalBox').modal('show');
+						 }
+					 },
+					 error : function(){
+						 alert("서버요청실패");
 					 }
-				 },
-				 error : function(){
-					 alert("서버요청실패");
-				 }
-			 })
+				 })			  
+			  }else{
+				  alert('이메일 형식이 맞지않습니다.');
+			  }			  
+		  }else{
+			  alert('이메일을 입력해주세요.');
+			  $('#EMAIL').focus();
+			  return false;
+		  }
 	  });
 	  // 모달 안의 취소 버튼에 이벤트를 건다.
 	  $('#closeModalBtn').on('click', function(){

@@ -92,10 +92,12 @@
 									<c:choose>
 										<c:when test="${fn:length(list2) > 0}">
 											<c:forEach items="${list2 }" var="row">
+											<tr>
 												<td><a href="/net/board/adminDetail.do?BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a></td>
 												<td>${row.NICK_NAME }</td>
 												<td>${row.BOARD_DATE }</td>
 												<td><a href="/net/board/restore.do?BOARD_NO=${row.BOARD_NO }" class="btn" id="restore">복구하기</a></td>
+											</tr>
 											</c:forEach>
 										</c:when>
 										<c:otherwise>

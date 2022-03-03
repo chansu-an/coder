@@ -1,9 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
 </head>
 <body>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
@@ -13,27 +11,27 @@
                 <div class="container-fluid">
                     <form id="frm" name="frm">
 						<div align="center">
-							<a>Email : </a>
-							<input type="text" name="EMAIL" id="EMAIL" class="focused-email" size="30"><br/>
+							<label for="email" class="form-label">ì´ë©”ì¼ : </label>
+							<input type="text" name="EMAIL" id="EMAIL" class="focused-email" placeholder="you@example.com" size="30">
 							<br/>
-							<a href="#this" class="btn btn-primary" id="Login">ºñ¹Ğ¹øÈ£Ã£±â</a>
+							<a href="#" onclick="verifyEmail();" class="btn btn-primary" id="findPw">ë¹„ë°€ë²ˆí˜¸ì°¾ê¸°</a>
 						</div>						
 					</form>
                 </div>
-    <!-- ¸ğ´Ş¿µ¿ª -->
+    <!-- ëª¨ë‹¬ì˜ì—­ -->
     <div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <!-- <div class="modal-header">
-	        <h4 class="modal-title" id="myModalLabel">¸ğ´Ş Å¸ÀÌÆ²</h4>
+	        <h4 class="modal-title" id="myModalLabel">ëª¨ë‹¬ íƒ€ì´í‹€</h4>
 	      </div> -->
 	      <div class="modal-body">
-	        ÀÓ½Ã ºñ¹Ğ¹øÈ£ : ${authKey }<br/>
-	        ·Î±×ÀÎ ÇÏ½Ã°Ú½À´Ï±î?
+	        ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ : ${authKey }<br/>
+	        ë¡œê·¸ì¸ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
 	      </div>
 	      <div class="modal-footer">
-			<button type="button" class="btn btn-primary" id="confirmModalBtn">È®ÀÎ</button>
-	        <button type="button" class="btn btn-default" id="closeModalBtn">Ãë¼Ò</button>
+			<button type="button" class="btn btn-primary" id="confirmModalBtn">í™•ì¸</button>
+	        <button type="button" class="btn btn-default" id="closeModalBtn">ì·¨ì†Œ</button>
 	      </div>
 	    </div>
 	  </div>
@@ -42,24 +40,10 @@
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 	<script type="text/javascript">
-	$(document).ready(function(){
+	$(document).ready(function(){		
 		if(${!empty authKey}){
 			$('#modalBox').modal('show');
 		}
-		$("#Login").bind("click", function(e){
-			e.preventDefault();
-			let EMAIL = $("#EMAIL").val();
-			$.ajax({
-				 url : "<c:url value='/main/findPassword.do?EMAIL=" + EMAIL + "'/>",
-				 type : "post",
-				 dataType : 'json',
-				 contentType : "application/json; charset=UTF-8",
-				 error : function(){
-					 alert("ÀÔ·ÂÇÏ½Å ÀÌ¸ŞÀÏ·Î ÀÎÁõ ¸ŞÀÏÀ» º¸³Â½À´Ï´Ù.");
-					 return false;
-				 }
-			 })
-		});
 		
 		$('#confirmModalBtn').on('click', function(){
 		  $('#modalBox').modal('hide');
@@ -68,9 +52,32 @@
 		$('#closeModalBtn').on('click', function(){
 		  $('#modalBox').modal('hide');
 		});
+		
 
 	
 	});
+	
+	function verifyEmail(){		
+		let emailVal = $("#EMAIL").val(); 
+		let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // ê²€ì¦ì— ì‚¬ìš©í•  ì •ê·œì‹ ë³€ìˆ˜ regExpì— ì €ì¥ 
+		if (emailVal.match(regExp) != null) {
+			let EMAIL = $("#EMAIL").val();
+			$.ajax({
+				 url : "<c:url value='/main/findPassword.do?EMAIL=" + EMAIL + "'/>",
+				 type : "post",
+				 dataType : 'json',
+				 contentType : "application/json; charset=UTF-8",
+				 error : function(){
+					 alert("ì…ë ¥í•˜ì‹  ì´ë©”ì¼ë¡œ ì¸ì¦ ë©”ì¼ì„ ë³´ëƒˆìŠµë‹ˆë‹¤.");
+					 return false;
+				 }
+			 })
+		}else {
+			alert('ì´ë©”ì¼ í˜•ì‹ì´ ë§ì§€ì•ŠìŠµë‹ˆë‹¤.'); 
+		}
+
+	}
+
 	</script>
 </body>
 </html>

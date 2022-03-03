@@ -246,7 +246,7 @@ public class BoardController {
 	//삭제글 복구하기
 	@RequestMapping(value="/board/restore.do")
 	public ModelAndView restoreBoard(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/board/adminList.do");
+		ModelAndView mav = new ModelAndView("redirect:/board/adminList.do?R_PAG_NUM=1&D_PAG_NUM=1");
 		commandMap.put("BOARD_NO", Integer.parseInt(request.getParameter("BOARD_NO")));
 		commandMap.put("IDENTI_TYPE", request.getParameter("IDENTI_TYPE"));
 			
@@ -268,7 +268,7 @@ public class BoardController {
 	//신고글 복구하기
 	@RequestMapping(value="/board/reset.do")
 	public ModelAndView resetReport(CommandMap commandMap, HttpServletRequest request) throws Exception{
-		ModelAndView mav = new ModelAndView("redirect:/board/adminList.do");
+		ModelAndView mav = new ModelAndView("redirect:/board/adminList.do?R_PAG_NUM=1&D_PAG_NUM=1");
 		commandMap.put("BOARD_NO", Integer.parseInt(request.getParameter("BOARD_NO")));
 		commandMap.put("IDENTI_TYPE", request.getParameter("IDENTI_TYPE"));
 			
