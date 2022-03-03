@@ -12,40 +12,42 @@
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
 		var calendarEl = document.getElementById('calendar'); // new FullCalendar.Calendar(대상 DOM객체, {속성:속성값, 속성2:속성값2..}) 
-$(function(){
-			
-			var request = $.ajax({
-			  url: "../Team/Calendar.do?PROJECT_NO=${param.PROJECT_NO}",
-			  method: "GET",
-			  dataType: "json"
-			});
-			 
-			request.done(function( data ) {
-				console.log(data);
-					
-					var calendarEl = document.getElementById('calendar');
-					
-				    var calendar = new FullCalendar.Calendar(calendarEl, {
-				      initialView: 'dayGridMonth',
-				      headerToolbar: {
-				        left: 'prev,next today',
-				        center: 'title',
-				        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-				      },
-				      eventClick: function(arg) { // 있는 일정 클릭시, 
-				    	 	alert(data.title)
-				    	  },
+		$(function() {
 
-				      events: data
-				    });
-			
-				    calendar.render();								
+			var request = $.ajax({
+				url : "../Team/Calendar.do?PROJECT_NO=${param.PROJECT_NO}",
+				method : "GET",
+				dataType : "json"
 			});
-			 
-			request.fail(function( jqXHR, textStatus ) {
-			  alert( "Request failed: " + textStatus );
+
+			request.done(function(data) {
+				console.log(data);
+
+				var calendarEl = document.getElementById('calendar');
+
+				var calendar = new FullCalendar.Calendar(calendarEl, {
+					local : 'ko',
+					initialView : 'dayGridMonth',
+					headerToolbar : {
+						left : 'prev,next today',
+						center : 'title',
+						right : 'dayGridMonth,timeGridWeek,timeGridDay'
+					},
+					eventClick : function(info) { // 있는 일정 클릭시, 
+						window.alert('Event: ' + info.event.title);
+						
+					},
+					dayMaxEvents: true,
+					events : data
+				});
+
+				calendar.render();
 			});
-});
+
+			request.fail(function(jqXHR, textStatus) {
+				alert("Request failed: " + textStatus);
+			});
+		});
 
 		calendar.render();
 	});
@@ -53,7 +55,6 @@ $(function(){
 </head>
 <body>
 
-	<div id='calendar'></div>
 	<div class="wrapper ">
 
 		<div class="main-panel" id="main-panel">
@@ -67,7 +68,8 @@ $(function(){
 						<div class="card">
 							<div class="card-header">
 								<c:if test="${!empty session.USER_NO }">
-									<a href="../Team/Write.do?PROJECT_NO=${param.PROJECT_NO }" class="btn" id="write">글쓰기</a>
+									<a href="../Team/Write.do?PROJECT_NO=${param.PROJECT_NO }"
+										class="btn" id="write">글쓰기</a>
 								</c:if>
 								<div class="card-body">
 									<div class="table2-responsive">
@@ -151,6 +153,9 @@ $(function(){
 									</div>
 								</div>
 							</div>
+						</div>
+						<div class="card">
+							<div style=" max-width: 1400px; margin: 60px" id='calendar'></div>
 						</div>
 					</div>
 				</div>
