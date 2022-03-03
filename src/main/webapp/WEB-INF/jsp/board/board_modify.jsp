@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="/net/js/ckeditor/ckeditor.js"></script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
@@ -38,7 +39,14 @@
 					<td colspan="3"><input type="text" id="TITLE" name="TITLE" class="wdp_90" value="${map.TITLE }"/></td>
 				</tr>
 				<tr>
-					<td colspan="4"><textarea rows="20" cols="100" title="내용" id="CONTEXT" name="CONTEXT">${map.CONTEXT }</textarea></td>
+					<td colspan="4">
+					<textarea rows="20" cols="100" title="내용" id="CONTEXT" name="CONTEXT">${map.CONTEXT }</textarea>
+						<script type="text/javascript">
+						 CKEDITOR.replace('CONTEXT'
+						                , {height: 500                                                  
+						                 });
+						</script>
+					</td>
 				</tr>
 				<tr>
 					<th scope="row">첨부파일</th>

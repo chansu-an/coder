@@ -139,7 +139,7 @@ public class MainController {
 		mv.addObject("result", apiResult);
 		//프로필 url값
 		mv.addObject("image", member_profile);//네이버 url에서 가져온 사용사 프로필 사진
-		mv.addObject("userimages", user_profile_images.get("PROFILE_IMAGES"));//데이터 베이스에 저장된 사용자 프로필 url
+		//mv.addObject("userimages", user_profile_images.get("PROFILE"));//데이터 베이스에 저장된 사용자 프로필 url
 		
 		session.setAttribute("session", map);
         /* 네이버 로그인 성공 페이지 View 호출 */
