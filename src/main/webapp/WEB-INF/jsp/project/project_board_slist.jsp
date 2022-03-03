@@ -6,7 +6,7 @@
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
-<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+
 </head>
 <body>
 
@@ -23,13 +23,16 @@
 						<div class="card">
 							<div class="card-header">
 								<c:if test="${!empty session.USER_NO }">
-									<a href="../Project/Write.do" class="btn" id="write">글쓰기</a>
+									
 								</c:if>
 							</div>
 							<div align="right">
-							<a href="../Project/ProjectS.do">시작예정</a>
-							<a href="../Project/Project.do">진행중</a>
-							<a href="../Project/ProjectE.do">종료</a>
+							<a href="../Project/ProjectS.do" class = "btn">시작예정 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-plus" viewBox="0 0 16 16">
+  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+  <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4zM8 8a.5.5 0 0 1 .5.5V10H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V11H6a.5.5 0 0 1 0-1h1.5V8.5A.5.5 0 0 1 8 8z"/>
+</svg></a>
+							<a href="../Project/Project.do" class = "btn">진행중</a>
+							<a href="../Project/ProjectE.do" class = "btn">종료</a>
 							<div class="card-body">
 								<div class="table2-responsive">
 									<table class="table">
@@ -51,7 +54,9 @@
 												<th scope="col">인원수</th>
 												<th scope="col">관리자</th>
 											</tr>
+											
 										</thead>
+										
 										<tbody>
 											<c:choose>
 
@@ -73,6 +78,7 @@
 												<c:otherwise>
 													<tr>
 														<td colspan="4">조회된 결과가 없습니다.</td>
+														
 													</tr>
 												</c:otherwise>
 											</c:choose>
@@ -95,6 +101,11 @@
 												value="${keyWord }"></input> <input type="submit" value="검색"
 												class="btn bin-info search-btn" />
 										</div>
+										<div align="left">
+												<a href="../Project/Write.do" class="btn" id="write"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+</svg> 글쓰기</a>
 									</form>
 									<div align="center">
 										<c:if test="${map.startpag>1}">
