@@ -115,7 +115,57 @@ function com(n, m) {
 			<a href="#this" class="btn" id="report">신고하기</a>	
 		</c:if>
 	</div>
+	<br/>
 	<!-- 댓글 리스트 -->
+	
+	<section class="mb-5">
+      <div class="card bg-light">
+        <div class="card-body">
+        	<!-- Single comment-->
+           <c:if test="${bestcomment.RECOMMAND_COUNT != null }">
+           <div class="d-flex">
+              <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>
+                  <div class="ms-3">
+                  <div class="fw-bold">${bestcomment.NICK_NAME} / ${bestcomment.REPLY_DATE }</div>
+                     ${bestcomment.CONTEXT}
+                  </div>
+           </div>
+           <br/> 
+           </c:if>          
+            <!-- Comment with nested comments-->
+            <c:forEach items="${list}" var="row" varStatus="var">
+            	<c:choose>
+	  				<c:when test="${row.DEL_GB == 'N' }">
+	  				<div  onclick="com(${row.RE_NO}, ${var.index })">
+	  				<input type="hidden" id="REF_NO_${var.index }" value="${row.REF_NO}"/>
+			    	<input type="hidden" id="REF_STEP_${var.index }" value="${row.REF_STEP}"/>
+			        	<div class="d-flex mb-4">
+			               <!-- Parent comment-->
+			               <!-- <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div> -->
+			               <div class="ms-3">
+			               <div class="fw-bold">${row.NICK_NAME} / ${row.REPLY_DATE } / ${row.REF_STEP}</div>
+			               ${row.CONTEXT}
+			               </div>
+			               <!-- Child comment 1
+			               <c:if test="${row.REF_STEP > 0 }">
+				               <div class="d-flex mt-4">
+				                   <div class="ms-3">
+					               <div class="fw-bold">${row.NICK_NAME} / ${row.REPLY_DATE } / ${row.REF_STEP}</div>
+					               ${row.CONTEXT}
+				                 </div>
+				               </div>
+			               </c:if>
+			               -->
+		         	 	</div>
+		             </div>
+		             </c:when>
+                </c:choose>
+            </c:forEach>
+            <!-- Comment form-->
+           <form class="mb-4"><textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>                                
+        </div>
+      </div>
+    </section>
 	<div id="reply">
 	  <div>댓글 <c:out value="${count}"></c:out></div>
 	  <ol class="replyList">

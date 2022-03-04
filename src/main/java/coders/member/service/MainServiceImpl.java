@@ -51,6 +51,11 @@ public class MainServiceImpl implements MainService{
 	}
 
 	@Override
+	public Map<String, Object> confirmNaverId(Map<String, Object> map) throws Exception {
+		return mainDAO.confirmNaverId(map);
+	}
+	
+	@Override
 	public Map<String, Object> selectNaverLogin(Map<String, Object> map) throws Exception {
 		return mainDAO.confirmNaverId(map);
 	}
@@ -73,6 +78,16 @@ public class MainServiceImpl implements MainService{
 	@Override
 	public List<Map<String, Object>> arlimeList(Map<String, Object> map) throws Exception {
 		return mainDAO.arlimeList(map);
+	}
+	
+	@Override
+	public void restoreUser(Map<String, Object> map) throws Exception {
+		mainDAO.restoreUser(map);		
+	}
+
+	@Override
+	public void returnUserDisabled(Map<String, Object> map) throws Exception {
+		mainDAO.returnUserDisabled(map);		
 	}
 
 }
