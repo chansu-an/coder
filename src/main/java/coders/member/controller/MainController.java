@@ -117,23 +117,21 @@ public class MainController {
 		map.put("PASSWORD", "1111111");//임의값 넣었음
 		map.put("PROFILE", member_profile);
 		
-		if(mainService.selectNaverLogin(map) == null) {
+		if(mainService.confirmNaverId(map) == null) {
 			mainService.insertUser(map);			
 		}
 		
-		//데이터베이스에서 사용자 프로필 사진 URL 가져오기
-		Map<String, Object> user_profile_images = mainService.selectNaverLogin(map);
-		System.out.println(member_nickname);
-		System.out.println(member_name);
-		System.out.println(member_email);
-		System.out.println(member_profile);
+		//세션에 넣을 user 데이터 담을 Map
+		Map<String, Object> map2 = mainService.selectNaverLogin(map);
+		map2.put("NICK_NAME", member_name);
+		map2.put("PROFILE", member_profile);
+		map2.put("EMAIL", member_email);
 		
 		mv.addObject("result", apiResult);
 		//프로필 url값
-		mv.addObject("image", member_profile);//네이버 url에서 가져온 사용사 프로필 사진
-		mv.addObject("userimages", user_profile_images.get("PROFILE"));//데이터 베이스에 저장된 사용자 프로필 url
-		
-		session.setAttribute("session", map);
+		//mv.addObject("image", member_profile);//네이버 url에서 가져온 사용사 프로필 사진
+		//mv.addObject("userimages", user_profile_images.get("PROFILE"));데이터 베이스에 저장된 사용자 프로필 url
+		session.setAttribute("session", map2);
         /* 네이버 로그인 성공 페이지 View 호출 */
         return mv;
 	}
@@ -192,6 +190,27 @@ public class MainController {
 		
 		mv.addObject("list", list);
 		return mv;
+	}
+	
+	//탈퇴회원(탈퇴 후 7일 이내 / DB에 남아있는 회원) 복구
+	@RequestMapping(value="/main/restoreUser.do")
+	public ModelAndView restoreUser(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView("redirect:/main/UserList.do");
+		commandMap.put("USER_NO", Integer.parseInt(request.getParameter("USER_NO")));
+			
+		mainService.restoreUser(commandMap.getMap());
+			
+		return mav;
+	}
+	//정지회원 복구
+	@RequestMapping(value="/main/returnUserDisabled.do")
+	public ModelAndView returnUserDisabled(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView("redirect:/main/UserList.do");
+		commandMap.put("USER_NO", Integer.parseInt(request.getParameter("USER_NO")));
+			
+		mainService.returnUserDisabled(commandMap.getMap());
+			
+		return mav;
 	}
 	
 	@RequestMapping(value="/main/DeleteUserList.do", method = RequestMethod.GET)

@@ -40,8 +40,8 @@ public class AllInterceptor implements HandlerInterceptor{
 		HttpSession session = request.getSession();
 		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
 		if(smap!=null) {
-			int bcount =mainService.countAlarm(smap);
-			int pcount =mainService.countProjectAlarm(smap);
+			int bcount = mainService.countAlarm(smap);
+			int pcount = mainService.countProjectAlarm(smap);
 			session.setAttribute("Arlimecount", pcount + bcount);
 		}
 		response.setContentType("text/html; charset=UTF-8");

@@ -14,7 +14,7 @@
 		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/openBoardList.do?IDENTI_TYPE=4">건의사항</a>
 		                	<c:if test="${sessionScope.session.ADMIN == 'Y'}">
 		                	<a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/adminList.do?R_PAG_NUM=1&D_PAG_NUM=1">신고관리</a>
-		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">회원관리</a>
+		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../main/UserList.do">회원관리</a>
 		                    </c:if>
 		                </div>
             		</div>

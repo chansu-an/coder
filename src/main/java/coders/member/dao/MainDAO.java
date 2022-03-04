@@ -48,6 +48,11 @@ public class MainDAO extends AbstractDAO{
 		return (Map<String, Object>) selectOne("user.confirmNaverId", map);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> selectNaverLogin(Map<String, Object> map) throws Exception {
+		return (Map<String, Object>) selectOne("user.selectNaverLogin", map);
+	}
+	
 	public void modifyPassword(Map<String, Object> map) throws Exception{
 		update("user.modifyPassword", map);
 	}
@@ -63,5 +68,13 @@ public class MainDAO extends AbstractDAO{
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> arlimeList(Map<String, Object> map) throws Exception{
 		return (List<Map<String, Object>>)selectList("user.arlimeList", map);
+	}
+	
+	public void restoreUser(Map<String, Object> map) throws Exception{
+		update("user.restoreUser", map);
+	}
+
+	public void returnUserDisabled(Map<String, Object> map) {
+		update("user.returnUserDisabled", map);	
 	}
 }

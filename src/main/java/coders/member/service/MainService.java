@@ -19,6 +19,8 @@ public interface MainService {
 	
 	String confirmUser(String ID) throws Exception;
 	
+	Map<String,Object> confirmNaverId(Map<String, Object> map) throws Exception;
+	
 	Map<String,Object> selectNaverLogin(Map<String, Object> map) throws Exception;
 	
 	void modifyPassword(Map<String, Object> map) throws Exception;
@@ -28,4 +30,8 @@ public interface MainService {
 	int countProjectAlarm(Map<String, Object> map) throws Exception;
 	
 	List<Map<String, Object>> arlimeList(Map<String, Object> map) throws Exception;
+	
+	void restoreUser(Map<String, Object> map) throws Exception;
+
+	void returnUserDisabled(Map<String, Object> map) throws Exception;
 }

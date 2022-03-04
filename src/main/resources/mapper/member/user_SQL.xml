@@ -13,15 +13,19 @@ SELECT USER_NO,NICK_NAME,PASSWORD,EMAIL,ACTIVE_SCORE,ADMIN,PROFILE FROM USERS WH
 ]]></select>
 <!-- 유저리스트 -->
 <select id="selectUserList" parameterType="hashmap" resultType="hashmap"><![CDATA[
-SELECT NICK_NAME,PASSWORD,EMAIL,PROFILE,ROWNUM FROM USERS
+SELECT USER_NO,NICK_NAME,EMAIL,DEL_GB,USER_STOP,REPORT_COUNT,ROWNUM FROM USERS
 ]]></select>
 <!-- 중복ID 체크 -->
 <select id="confirmid" parameterType="String" resultType="String"><![CDATA[
 SELECT USER_NO,NICK_NAME,EMAIL FROM USERS WHERE EMAIL =#{ID}
 ]]></select>
 <!-- 네이버 로그인시 중복ID 체크 -->
-<select id="confirmNaverId" parameterType="hashmap" resultType="hashmap"><![CDATA[
+<select id="selectNaverLogin" parameterType="hashmap" resultType="hashmap"><![CDATA[
 SELECT USER_NO,NICK_NAME,EMAIL,PROFILE FROM USERS WHERE EMAIL =#{EMAIL}
+]]></select>
+<!-- 네이버 로그인시 유저번호 -->
+<select id="confirmNaverId" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT USER_NO FROM USERS WHERE EMAIL =#{EMAIL}
 ]]></select>
 <!-- 삭제 유저 리스트 -->
 <select id="selectDeleteUserList" parameterType="hashmap" resultType="hashmap"><![CDATA[
@@ -39,10 +43,14 @@ SELECT USER_NO,NICK_NAME,PASSWORD,EMAIL,ACTIVE_SCORE,ADMIN,PROFILE FROM USERS WH
 <update id="updateMypage" parameterType="hashmap"><![CDATA[
 UPDATE USERS SET PASSWORD = #{PASSWORD}, NICK_NAME= #{NICK_NAME}, PROFILE= #{PROFILE} WHERE USER_NO=#{USER_NO}
 ]]></update>
-<!-- 유저 삭제 -->
+<!-- 유저 탈퇴 -->
 <update id="deleteUser" parameterType="hashmap"><![CDATA[
-UPDATE USERS SET DEL_GB = 'Y', DELDATE = SYSDATE WHERE USER_NO = #{USER_NO}
-]]></update> 
+UPDATE USERS SET DEL_GB = 'Y', DEL_DATE = SYSDATE WHERE USER_NO = #{USER_NO}
+]]></update>
+<!-- 탈퇴 복구 -->
+<update id="restoreUser" parameterType="hashmap"><![CDATA[
+UPDATE USERS SET DEL_GB = 'N', DEL_DATE = NULL WHERE USER_NO = #{USER_NO}
+]]></update>
 <!-- db상의 유저 삭제 -->
 <delete id="realDeleteUser" parameterType="hashmap"><![CDATA[
 DELETE USERS WHERE DEL_DATE+7 < SYSDATE
@@ -50,11 +58,11 @@ DELETE USERS WHERE DEL_DATE+7 < SYSDATE
 
 <!-- 유저 정지 -->
 <update id="updateUserDisabled" parameterType="hashmap"><![CDATA[
-UPDATE USERS SET USER_STOP = 'Y' WHERE USER_NO=#{USERS_NO}
+UPDATE USERS SET USER_STOP = 'Y' WHERE USER_NO = #{USER_NO}
 ]]></update>
 <!-- 정지 해제 -->
 <update id="returnUserDisabled" parameterType="hashmap"><![CDATA[
-UPDATE USERS SET USER_STOP = 'N', REPORT_COUNT = 0 WHERE USER_NO=#{USERS_NO}
+UPDATE USERS SET USER_STOP = 'N', REPORT_COUNT = 0 WHERE USER_NO = #{USER_NO}
 ]]></update>
 <!-- 유저 신고 -->
 <update id="repostUser" parameterType="hashmap"><![CDATA[

@@ -9,18 +9,18 @@
                 <table>
 					<colgroup> 
 						<col width="10%"/> 
-						<col width="*"/> 
-						<col width="15%"/> 
-						<col width="20%"/>
+						<col width="20%"/> 
+						<col width="40%"/>
+						<col width="20%"/> 
 						<col width="20%"/> 
 					</colgroup> 
 					<thead> 
 						<tr> 
 							<th scope="col">번호</th> 
 							<th scope="col">닉네임</th> 
-							<th scope="col">비밀번호</th> 
 							<th scope="col">이메일</th>
-							<th scope="col">프로필</th> 
+							<th scope="col">탈퇴여부</th> 
+							<th scope="col">신고복구</th> 
 						</tr> 
 					</thead> 
 					<tbody>
@@ -30,9 +30,27 @@
 								<tr> 
 									<td>${row.ROWNUM}</td> 
 									<td>${row.NICK_NAME}</td> 
-									<td>${row.PASSWORD}</td> 
 									<td>${row.EMAIL}</td>
-									<td>${row.PROFILE}</td> 
+									<td>
+										<c:choose>
+											<c:when test="${row.DEL_GB == 'Y'}">
+												<a href="/net/main/restoreUser.do?USER_NO=${row.USER_NO }" class="btn" id="restore">복구하기</a>
+											</c:when>
+											<c:otherwise>
+												<input type='button' disabled='disabled' value='일반회원'/>
+											</c:otherwise>
+										</c:choose>
+									</td> 
+									<td>
+										<c:choose>
+											<c:when test="${row.USER_STOP == 'Y'}">
+												<a href="/net/main/returnUserDisabled.do?USER_NO=${row.USER_NO }" class="btn" id="return">정지복구</a>
+											</c:when>
+											<c:otherwise>
+												<input type='button' disabled='disabled' value='일반회원'/>
+											</c:otherwise>
+										</c:choose>
+									</td> 
 								</tr> 
 							</c:forEach> 
 							</c:when> 
@@ -44,7 +62,6 @@
 						</c:choose> 
 					</tbody>
 				</table>
-            <c:out value="${list.PROFILE}"/>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>
