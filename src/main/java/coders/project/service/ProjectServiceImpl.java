@@ -116,7 +116,10 @@ public class ProjectServiceImpl implements ProjectService {
 //		 projectDAO.updateFileList(map);
 //	 }
 
-	
+	@Override
+	public int checkProjectApp(Map<String, Object> map) throws Exception {
+		return projectDAO.checkProjectApp(map);
+	}
 	
 
 }

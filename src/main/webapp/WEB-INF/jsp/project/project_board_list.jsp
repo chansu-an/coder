@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -76,7 +74,7 @@
 																	<td>${row.ROWNUM }</td>
 																	<%-- <td>${row.PROJECT_NAME }</td> --%>
 																	<td><a
-																		href="../Project/Detail.do?PROJECT_NO=${row.PROJECT_NO }">${row.PROJECT_NAME}</a>
+																		href="../Project/Detail.do?PROJECT_NO=${row.PROJECT_NO }&USER_NO=${session.USER_NO}">${row.PROJECT_NAME}</a>
 																	<td>${row.PROJECT_START }</td>
 																	<td>${row.PROJECT_END }</td>
 																	<td>${row.PROJECT_MEMBER }</td>

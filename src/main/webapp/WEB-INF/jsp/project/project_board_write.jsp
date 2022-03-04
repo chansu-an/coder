@@ -12,7 +12,7 @@
 			<h2>프로젝트 작성</h2>
 			<form id="frm" name="frm" method="post" enctype="multipart/form-data">
 			<input type = "hidden" name = "USER_NO" value = "${sessionScope.session.USER_NO }">
-				<table class="project_view">
+				<table class="board_view">
 					<colgroup>
 						<col width="15%" />
 						<col width="*%" />

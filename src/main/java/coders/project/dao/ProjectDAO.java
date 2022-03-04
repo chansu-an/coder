@@ -75,6 +75,9 @@ public class ProjectDAO extends AbstractDAO {
 		public int countProjectlist(Map<String, Object> map)throws Exception{
 			return (int)selectOne("project.countProjectList",map);
 		}
-
+		
+	public int checkProjectApp(Map<String, Object> map) throws Exception {
+		return (int) selectOne("project.checkProjectApp", map);
+	}
 
 }

@@ -40,7 +40,7 @@ public class ApplicationController {
 	}
 	@RequestMapping(value= "/Project/Appjoin.do")
 	public ModelAndView insertProjectApp(HttpSession session,HttpServletRequest request) throws Exception{
-		ModelAndView mav = new ModelAndView("redirect:/Project/Detail.do?PROJECT_NO=" + request.getParameter("PROJECT_NO"));
+		ModelAndView mav = new ModelAndView("redirect:/Project/Detail.do?PROJECT_NO=" + request.getParameter("PROJECT_NO") + "&USER_NO=" + request.getParameter("USER_NO"));
 		Map<String, Object> map = (Map<String, Object>)session.getAttribute("session");
 		map.put("PROJECT_NO",request.getParameter("PROJECT_NO"));
 		applicationService.insertProjectApp(map);

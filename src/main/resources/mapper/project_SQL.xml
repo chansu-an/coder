@@ -76,10 +76,16 @@ INSERT INTO PROJECTBOARDFILES (PBF_NO,PROJECT_NO,PBO_NAME,PBF_SIZE,PBS_NAME)
 INSERT INTO APPLICATION (PROJECT_NO,USER_NO) VALUES (#{PROJECT_NO},#{USER_NO})
 ]]></insert>
 
+<!-- 참가 신청 중복 확인 -->
+<select id="checkProjectApp" parameterType="hashmap" resultType="int">
+<![CDATA[
+	SELECT COUNT(*) FROM APPLICATION WHERE PROJECT_NO=#{PROJECT_NO} AND  USER_NO=#{USER_NO}
+]]></select>
+
 	<!-- 참가 신청확인 -->
 	<select id="selectApp" parameterType="hashmap"
 		resultType="hashmap"><![CDATA[
-	select APPLICATION_ACCEPT FROM APLLICATION WHERE PROJECT_NO=#{PROJECT_NO} AND  USER_NO=#{USER_NO}
+	SELECT APPLICATION_ACCEPT FROM APLLICATION WHERE PROJECT_NO=#{PROJECT_NO} AND  USER_NO=#{USER_NO}
 	]]>
 	</select>
 
