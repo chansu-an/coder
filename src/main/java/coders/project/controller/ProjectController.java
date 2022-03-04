@@ -129,8 +129,11 @@ public class ProjectController {
 	@RequestMapping(value = "/Project/Detail.do")
 	public ModelAndView ProjectDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/project/project_board_detail");
-
+		
+		int checkProject = projectService.checkProjectApp(commandMap.getMap());//참가신청했는지 판별
 		Map<String, Object> map = projectService.selectProjectDetail(commandMap.getMap());
+		
+		mav.addObject("checkProject", checkProject);
 		mav.addObject("map", map.get("map"));
 		mav.addObject("list", map.get("list"));
 		return mav;

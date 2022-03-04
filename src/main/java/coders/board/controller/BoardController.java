@@ -142,7 +142,7 @@ public class BoardController {
 				test = 1;
 			}
 		}		
-
+		System.out.println("list : " + list);
 		mav.addObject("scrapcheck", test);
 		mav.addObject("map", map);
 		mav.addObject("list", list);

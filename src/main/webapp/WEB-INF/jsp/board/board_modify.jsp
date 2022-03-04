@@ -69,11 +69,17 @@
 		</table>
 	</form>
 
-	<a href="#this" class="btn" id="addFile">파일 추가</a>
-	<a href="javascript:window.history.back();" class="btn" id="list">이전으로</a>
+	<a href="#this" class="btn" id="addFile"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-up" viewBox="0 0 16 16">
+  <path d="M8.5 11.5a.5.5 0 0 1-1 0V7.707L6.354 8.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 7.707V11.5z"/>
+  <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+</svg> 파일추가</a>
+	<a href="javascript:window.history.back();" class="btn" id="list"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply-fill" viewBox="0 0 16 16">
+  <path d="M5.921 11.9 1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
+</svg> 이전으로</a>
 	<a href="#this" class="btn" id="update">저장하기</a>
 	<a href="#this" class="btn" id="delete">삭제하기</a>
 
+	<br/>
 	<br/>
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<script type="text/javascript">

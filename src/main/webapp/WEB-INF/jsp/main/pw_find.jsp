@@ -59,23 +59,28 @@
 	
 	function verifyEmail(){		
 		let emailVal = $("#EMAIL").val(); 
-		let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 검증에 사용할 정규식 변수 regExp에 저장 
-		if (emailVal.match(regExp) != null) {
-			let EMAIL = $("#EMAIL").val();
-			$.ajax({
-				 url : "<c:url value='/main/findPassword.do?EMAIL=" + EMAIL + "'/>",
-				 type : "post",
-				 dataType : 'json',
-				 contentType : "application/json; charset=UTF-8",
-				 error : function(){
-					 alert("입력하신 이메일로 인증 메일을 보냈습니다.");
-					 return false;
-				 }
-			 })
+		let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 검증에 사용할 정규식 변수 regExp에 저장
+		if(emailVal != null && emailVal != ""){
+			if (emailVal.match(regExp) != null) {
+				let EMAIL = $("#EMAIL").val();
+				$.ajax({
+					 url : "<c:url value='/main/findPassword.do?EMAIL=" + EMAIL + "'/>",
+					 type : "post",
+					 dataType : 'json',
+					 contentType : "application/json; charset=UTF-8",
+					 error : function(){
+						 alert("입력하신 이메일로 인증 메일을 보냈습니다.");
+						 return false;
+					 }
+				 })
+			}else {
+				alert('이메일 형식이 맞지않습니다.'); 
+			}
 		}else {
-			alert('이메일 형식이 맞지않습니다.'); 
+			alert('이메일을 입력해주세요.');
+			$('#EMAIL').focus();
+			return false;
 		}
-
 	}
 
 	</script>
