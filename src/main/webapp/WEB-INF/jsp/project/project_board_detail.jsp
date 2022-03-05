@@ -137,7 +137,7 @@
 		
 		function check_Project(){
 			if(${checkProject == 0}){
-				window.location.href = "../Project/Appjoin.do?PROJECT_NO=${map.PROJECT_NO}&USER_NO=${session.USER_NO}";
+				window.location.href = "../Project/Appjoin.do?PROJECT_NO=${map.PROJECT_NO}&USER_NO=${sessionScope.session.USER_NO}";
 			}else{
 				alert("참가신청 하셨습니다.");
 			}

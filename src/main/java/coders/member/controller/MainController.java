@@ -123,14 +123,10 @@ public class MainController {
 		
 		//세션에 넣을 user 데이터 담을 Map
 		Map<String, Object> map2 = mainService.selectNaverLogin(map);
-		map2.put("NICK_NAME", member_name);
-		map2.put("PROFILE", member_profile);
-		map2.put("EMAIL", member_email);
-		
-		mv.addObject("result", apiResult);
 		//프로필 url값
 		//mv.addObject("image", member_profile);//네이버 url에서 가져온 사용사 프로필 사진
 		//mv.addObject("userimages", user_profile_images.get("PROFILE"));데이터 베이스에 저장된 사용자 프로필 url
+		System.out.println(map2);
 		session.setAttribute("session", map2);
         /* 네이버 로그인 성공 페이지 View 호출 */
         return mv;
