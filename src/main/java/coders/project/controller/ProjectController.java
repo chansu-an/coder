@@ -132,6 +132,9 @@ public class ProjectController {
 		
 		int checkProject = projectService.checkProjectApp(commandMap.getMap());//참가신청했는지 판별
 		Map<String, Object> map = projectService.selectProjectDetail(commandMap.getMap());
+		if(request.getParameter("END") != null) {//종료된 프로젝트는 참가신청버튼 안보이게 함
+			mav.addObject("end", request.getParameter("END"));
+		}
 		
 		mav.addObject("checkProject", checkProject);
 		mav.addObject("map", map.get("map"));

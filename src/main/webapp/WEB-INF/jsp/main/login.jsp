@@ -13,44 +13,35 @@
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
-<link href="../css/signin.css" rel="stylesheet">
 <body>
-<main class="form-signin">
-  <form id="frm" name="frm">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Coders Login</h5>
+            <form class="form-signin" id="frm" name="frm">
+              <div class="form-label-group">
+                <input type="email" class="form-control focused-email" name="EMAIL" id="EMAIL" placeholder="name@example.com">
+              </div><br/>
 
-    <div class="form-floating">
-      <input type="email" class="form-control focused-email" name="EMAIL" id="EMAIL" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
-    <div class="form-floating">
-      <input type="password" class="form-control focused-password" name="PASSWORD" id="PASSWORD" placeholder="Password">
-      <label for="floatingPassword">Password</label>
-    </div>
-    <a href="#this" class="btn btn-primary" id="Login">로그인</a>
-	<a href="../main/RegisterForm.do" class="btn btn-primary">회원가입</a><br/>
-	<a href="../main/FindPw.do">비밀번호 찾기</a>
-	<div id="naver_id_login" style="text-align:center"><a href="${url}"><img width="223" src="${pageContext.request.contextPath}/img/naver_Bn_Green.png"/></a></div>
-  </form>
-</main>
-                <!-- Page content
-                <div class="container-fluid">
-                    <form id="frm" name="frm">
-						<div align="center">
-							<a>아이디 : </a>
-							<input type="text" name="EMAIL" id="EMAIL" class="focused-email" size="30"><br/>
-							<a>비밀번호 : </a>
-							<input type="password" name="PASSWORD" id="PASSWORD" class="focused-password" size="30">
-							<br/>
-							<a href="#this" class="btn btn-primary" id="Login">로그인</a>
-							<a href="../main/RegisterForm.do" class="btn btn-primary">회원가입</a>
-							<br/>
-							<a href="../main/FindPw.do">비밀번호 찾기</a>
-						</div>
-						<div id="naver_id_login" style="text-align:center"><a href="${url}"><img width="223" src="${pageContext.request.contextPath}/img/naver_Bn_Green.png"/></a></div>
-					</form>
-                </div>-->
+              <div class="form-label-group">
+                <input type="password" class="form-control focused-password" name="PASSWORD" id="PASSWORD" placeholder="Password">
+              </div>
+              
+              <hr/>
 
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" id="Login">Sign in</button>
+              <div id="naver_id_login" style="text-align:center"><a href="${url}"><img width="223" src="${pageContext.request.contextPath}/img/btnG_naver.png"/></a></div>
+              <hr class="my-4"/>
+              Forgot your <a href="../main/FindPw.do">Password</a>?
+              <button type="button" class="btn btn-lg btn-primary btn-block text-uppercase" onclick="window.location.href='../main/RegisterForm.do'">Join</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<script type="text/javascript">

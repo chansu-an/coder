@@ -11,6 +11,7 @@
   <main>
     <div class="row g-5">  
       <div class="col-md-7 col-lg-8">
+      	<br/>
         <h4 class="mb-3">회원가입</h4>
         <form id="regitsterform" method="post" novalidate>
         <input type="hidden" name="check_email" value=""/>
