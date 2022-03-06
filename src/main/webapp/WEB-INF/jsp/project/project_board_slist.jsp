@@ -108,17 +108,25 @@
 </svg> 글쓰기</a>
 									</form>
 									<div align="center">
-										<c:if test="${map.startpag>1}">
-											<a href="../Project/Project.do?PAG_NUM=${map.startpag-2}">이전</a>
-										</c:if>
-										<c:forEach var="i" begin="${map.startpag }"
-											end="${map.endpage }">
-											<a href="../Project/Project.do?PAG_NUM=${i}">[${i}]</a>
-										</c:forEach>
-										<c:if test="${map.endpage<map.maxpag}">
-											<a href="../Project/Project.do?PAG_NUM=${map.startpag+2}">다음</a>
-										</c:if>
-									</div>
+									<nav>
+											<ul class="pagination">
+												<c:if test="${map.startpag>1}">
+													<li><a
+														href="../Project/Project.do?PAG_NUM=${map.startpag-2}"
+														aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+												</c:if>
+												<c:forEach var="i" begin="${map.startpag }"
+													end="${map.endpage }">
+													<li><a href="../Project/Project.do?PAG_NUM=${i}">${i}</a></li>
+												</c:forEach>
+												<c:if test="${map.endpage<map.maxpag}">
+													<li><a
+														href="../Project/Project.do?PAG_NUM=${map.startpag+2}"
+														aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+												</c:if>
+											</ul>
+										</nav>
+										</div>
 								</div>
 							</div>
 						</div>

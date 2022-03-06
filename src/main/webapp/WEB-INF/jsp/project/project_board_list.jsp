@@ -30,15 +30,19 @@
 						<div class="card">
 							<div class="card-header">
 								<c:if test="${!empty session.USER_NO }">
-									
+
 								</c:if>
 								<div align="right">
 									<a href="../Project/ProjectS.do" class="btn">시작예정</a> <a
-										href="../Project/Project.do" class="btn">진행중 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-week" viewBox="0 0 16 16">
-  <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
-  <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
-</svg></a> <a
-										href="../Project/ProjectE.do" class="btn">종료</a>
+										href="../Project/Project.do" class="btn">진행중 <svg
+											xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-calendar2-week"
+											viewBox="0 0 16 16">
+  <path
+												d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z" />
+  <path
+												d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+</svg></a> <a href="../Project/ProjectE.do" class="btn">종료</a>
 									<div class="card-body">
 										<div class="table2-responsive">
 											<table class="table">
@@ -98,7 +102,7 @@
 												<div class="search-wrap">
 													<select id="SEARCH_TYPE" name="SEARCH_TYPE"
 														onchange="test1(this.value);">
-								
+
 														<option value="PROJECT_NAME"
 															<c:if test="${searchType == 'PROJECT_NAME'}">selected</c:if>>제목</option>
 														<option value="PROJECT_CONTEXT"
@@ -107,34 +111,44 @@
 															<c:if test="${searchType == 'NICKNAME'}">selected</c:if>>작성자</option>
 														<option value="T+C"
 															<c:if test="${searchType == 'T+C'}">selected</c:if>>제목+내용</option>
-													</select>
-													<input type="text" id="KEYWORD" name="KEYWORD"
+													</select> <input type="text" id="KEYWORD" name="KEYWORD"
 														value="${keyWord }"></input> <input type="submit"
 														value="검색" class="btn bin-info search-btn" />
-														
+
 												</div>
-												
+
 											</form>
 											<div align="left">
-												<a href="../Project/Write.do" class="btn" id="write"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-</svg> 글쓰기</a>
-											<div align="center">
-												<c:if test="${map.startpag>1}">
-													<a href="../Project/Project.do?PAG_NUM=${map.startpag-2}">이전</a>
-												</c:if>
-												<c:forEach var="i" begin="${map.startpag }"
-													end="${map.endpage }">
-													<a href="../Project/Project.do?PAG_NUM=${i}">[${i}]</a>
-												</c:forEach>
-												<c:if test="${map.endpage<map.maxpag}">
-													<a href="../Project/Project.do?PAG_NUM=${map.startpag+2}">다음</a>
-												</c:if>
+												<a href="../Project/Write.do" class="btn" id="write"> <svg
+														xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														fill="currentColor" class="bi bi-pencil-square"
+														viewBox="0 0 16 16">
+  <path
+															d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+  <path fill-rule="evenodd"
+															d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+</svg> 글쓰기
+												</a>
+												<div align="center">
+												<nav>
+													<ul class="pagination">
+														<c:if test="${map.startpag>1}">
+															<li><a href="../Project/Project.do?PAG_NUM=${map.startpag-2}"  aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+														</c:if>
+														<c:forEach var="i" begin="${map.startpag }"
+															end="${map.endpage }">
+															<li><a href="../Project/Project.do?PAG_NUM=${i}">${i}</a></li>
+														</c:forEach>
+														<c:if test="${map.endpage<map.maxpag}">
+															<li><a href="../Project/Project.do?PAG_NUM=${map.startpag+2}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+														</c:if>
+													</ul>
+												</nav>
+												</div>
 											</div>
 										</div>
-									</div>
 
+									</div>
 								</div>
 							</div>
 						</div>
@@ -142,11 +156,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<%@ include file="/WEB-INF/include/include-body.jspf"%>
-	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
-
-
+		<%@ include file="/WEB-INF/include/include-body.jspf"%>
+		<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>
 </html>
