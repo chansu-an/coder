@@ -65,18 +65,22 @@
           </div>
         </div>
       </div>
-		<div align="center">
+      <div align="center">
+		<nav>
+		<ul class="pagination">
 			<c:if test="${map.startpag>1}">
-				<a
-					href="../Mypage/ProjectList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag-2}">이전</a>
+				<li><a
+					href="../Mypage/ProjectList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag-2}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></a></li>
 			</c:if>
 			<c:forEach var="i" begin="${map.startpag }" end="${map.endpage }">
-				<a href="../Mypage/ProjectList.do?USER_NO=${param.USER_NO}&PAG_NUM=${i}">[${i}]</a>
+				<li><a href="../Mypage/ProjectList.do?USER_NO=${param.USER_NO}&PAG_NUM=${i}">${i}</a></li>
 			</c:forEach>
 			<c:if test="${smap.endpage<smap.maxpag}">
-				<a
-					href="../Mypage/ProjectList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag+2}">다음</a>
+				<li><a
+					href="../Mypage/ProjectList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag+2}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></a></li>
 			</c:if>
+		</ul>
+		</nav>
 		</div>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>

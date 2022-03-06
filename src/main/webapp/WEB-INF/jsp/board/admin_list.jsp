@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -35,11 +36,14 @@
 										<c:when test="${fn:length(list1) > 0}">
 											<c:forEach items="${list1 }" var="row">
 												<tr>
-													<td><a href="/net/board/adminDetail.do?BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a></td>
+													<td><a
+														href="/net/board/adminDetail.do?BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a></td>
 													<td>${row.NICK_NAME }</td>
 													<td>${row.REPORT_COUNT }</td>
 													<td>${row.BOARD_DATE }</td>
-													<td><a href="/net/board/reset.do?BOARD_NO=${row.BOARD_NO }" class="btn" id="reset">복구하기</a></td>
+													<td><a
+														href="/net/board/reset.do?BOARD_NO=${row.BOARD_NO }"
+														class="btn" id="reset">복구하기</a></td>
 												</tr>
 											</c:forEach>
 										</c:when>
@@ -58,15 +62,22 @@
 		</div>
 	</div>
 	<div align="center">
+	<nav>
+			<ul class="pagination">
 		<c:if test="${rmap.startpag>1}">
-			<a href="../board/adminList.do?R_PAG_NUM=${rmap.startpag-2}&D_PAG_NUM=${param.D_PAG_NUM}">이전</a>
+			<li><a
+				href="../board/adminList.do?R_PAG_NUM=${rmap.startpag-2}&D_PAG_NUM=${param.D_PAG_NUM}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 		</c:if>
 		<c:forEach var="i" begin="${rmap.startpag }" end="${rmap.endpage }">
-			<a href="../board/adminList.do?R_PAG_NUM=${i}&D_PAG_NUM=${param.D_PAG_NUM}">[${i}]</a>
+			<li><a
+				href="../board/adminList.do?R_PAG_NUM=${i}&D_PAG_NUM=${param.D_PAG_NUM}">${i}</a></li>
 		</c:forEach>
 		<c:if test="${rmap.endpage<rmap.maxpag}">
-			<a href="../board/adminList.do?R_PAG_NUM=${rmap.startpag+2}&D_PAG_NUM=${param.D_PAG_NUM}">다음</a>
+			<li><a
+				href="../board/adminList.do?R_PAG_NUM=${rmap.startpag+2}&D_PAG_NUM=${param.D_PAG_NUM}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
 		</c:if>
+		</ul>
+		</nav>
 	</div>
 
 	<div class="content">
@@ -92,12 +103,15 @@
 									<c:choose>
 										<c:when test="${fn:length(list2) > 0}">
 											<c:forEach items="${list2 }" var="row">
-											<tr>
-												<td><a href="/net/board/adminDetail.do?BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a></td>
-												<td>${row.NICK_NAME }</td>
-												<td>${row.BOARD_DATE }</td>
-												<td><a href="/net/board/restore.do?BOARD_NO=${row.BOARD_NO }" class="btn" id="restore">복구하기</a></td>
-											</tr>
+												<tr>
+													<td><a
+														href="/net/board/adminDetail.do?BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a></td>
+													<td>${row.NICK_NAME }</td>
+													<td>${row.BOARD_DATE }</td>
+													<td><a
+														href="/net/board/restore.do?BOARD_NO=${row.BOARD_NO }"
+														class="btn" id="restore">복구하기</a></td>
+												</tr>
 											</c:forEach>
 										</c:when>
 										<c:otherwise>
@@ -115,15 +129,22 @@
 		</div>
 	</div>
 	<div align="center">
-		<c:if test="${dmap.startpag>1}">
-			<a href="../board/adminList.do?R_PAG_NUM=${param.R_PAG_NUM}&D_PAG_NUM=${dmap.startpag-2}">이전</a>
-		</c:if>
-		<c:forEach var="i" begin="${dmap.startpag }" end="${dmap.endpage }">
-			<a href="../board/adminList.do?R_PAG_NUM=${param.R_PAG_NUM}&D_PAG_NUM=${i}">[${i}]</a>
-		</c:forEach>
-		<c:if test="${dmap.endpage<dmap.maxpag}">
-			<a href="../board/adminList.do?R_PAG_NUM=${param.R_PAG_NUM}&D_PAG_NUM=${dmap.startpag+2}">다음</a>
-		</c:if>
+		<nav>
+			<ul class="pagination">
+				<c:if test="${dmap.startpag>1}">
+					<li><a
+						href="../board/adminList.do?R_PAG_NUM=${param.R_PAG_NUM}&D_PAG_NUM=${dmap.startpag-2}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+				</c:if>
+				<c:forEach var="i" begin="${dmap.startpag }" end="${dmap.endpage }">
+					<li><a
+						href="../board/adminList.do?R_PAG_NUM=${param.R_PAG_NUM}&D_PAG_NUM=${i}">${i}</a></li>
+				</c:forEach>
+				<c:if test="${dmap.endpage<dmap.maxpag}">
+					<li><a
+						href="../board/adminList.do?R_PAG_NUM=${param.R_PAG_NUM}&D_PAG_NUM=${dmap.startpag+2}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+				</c:if>
+			</ul>
+		</nav>
 	</div>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
