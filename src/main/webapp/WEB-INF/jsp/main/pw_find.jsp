@@ -22,12 +22,11 @@
     <div id="modalBox" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
-	      <!-- <div class="modal-header">
-	        <h4 class="modal-title" id="myModalLabel">모달 타이틀</h4>
-	      </div> -->
+	      <div class="modal-header">
+	        <h4 class="modal-title" id="myModalLabel">비밀번호 찾기</h4>
+	      </div>
 	      <div class="modal-body">
-	        임시 비밀번호 : ${authKey }<br/>
-	        로그인 하시겠습니까?
+	      	입력하신 이메일로 임시 비밀번호를 발급하였습니다.<br/>
 	      </div>
 	      <div class="modal-footer">
 			<button type="button" class="btn btn-primary" id="confirmModalBtn">확인</button>
@@ -41,10 +40,6 @@
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 	<script type="text/javascript">
 	$(document).ready(function(){		
-		if(${!empty authKey}){
-			$('#modalBox').modal('show');
-		}
-		
 		$('#confirmModalBtn').on('click', function(){
 		  $('#modalBox').modal('hide');
 		  window.location.href="/net/main/Login.do";
@@ -69,7 +64,7 @@
 					 dataType : 'json',
 					 contentType : "application/json; charset=UTF-8",
 					 error : function(){
-						 alert("입력하신 이메일로 인증 메일을 보냈습니다.");
+						 $('#modalBox').modal('show');
 						 return false;
 					 }
 				 })

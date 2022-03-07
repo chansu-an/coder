@@ -45,19 +45,12 @@ public class MailSendService2 {
         //인증메일 보내기
         try {
             MailUtils sendMail = new MailUtils(mailSender);
-            sendMail.setSubject("회원가입 이메일 인증");
-            sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
-            .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료후 임시 비밀번호가 발급됩니다.</p>")
-            .append("<a href='http://localhost:9011/net/main/findPasswordConfirm.do?EMAIL=")
-            .append(email)
-            .append("&authKey=")
+            sendMail.setSubject("Coders 임시비밀번호 발급안내");
+            sendMail.setText(new StringBuffer().append("<h1>[비밀번호 찾기]</h1>")
+            .append("<p>아래 비밀번호로 로그인후 비밀번호 변경하시길 권장드립니다.</p>")
+            .append("임시 비밀번호 : ")
             .append(authKey)
-            .append("' target='_black'>이메일 인증 확인</a>")
-            /*
-            .append("'>임시 비밀번호 : ")
-            .append(authKey)
-            .append("</a>")
-            */
+            .append("</a>")            
             .toString());
             sendMail.setFrom("coders1154@gmail.com", "관리자");
             sendMail.setTo(email);
