@@ -60,6 +60,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public Map<String, Object> selectProjectDetail(Map<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String,Object>();
 		Map<String, Object> tempMap = projectDAO.selectProjectDetail(map);
+		System.out.println(map);
 		resultMap.put("map", tempMap);
 		
 		List<Map<String,Object>> list = projectDAO.selectProjectFileList(map);

@@ -112,17 +112,25 @@
   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 </svg> 글쓰기</a>
 									<div align="center">
-										<c:if test="${map.startpag>1}">
-											<a href="../Project/Project.do?PAG_NUM=${map.startpag-2}">이전</a>
-										</c:if>
-										<c:forEach var="i" begin="${map.startpag }"
-											end="${map.endpage }">
-											<a href="../Project/Project.do?PAG_NUM=${i}">[${i}]</a>
-										</c:forEach>
-										<c:if test="${map.endpage<map.maxpag}">
-											<a href="../Project/Project.do?PAG_NUM=${map.startpag+2}">다음</a>
-										</c:if>
-									</div>
+									<nav>
+											<ul class="pagination">
+												<c:if test="${map.startpag>1}">
+													<li><a
+														href="../Project/Project.do?PAG_NUM=${map.startpag-2}"
+														aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+												</c:if>
+												<c:forEach var="i" begin="${map.startpag }"
+													end="${map.endpage }">
+													<li><a href="../Project/Project.do?PAG_NUM=${i}">${i}</a></li>
+												</c:forEach>
+												<c:if test="${map.endpage<map.maxpag}">
+													<li><a
+														href="../Project/Project.do?PAG_NUM=${map.startpag+2}"
+														aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+												</c:if>
+											</ul>
+										</nav>
+										</div>
 								</div>
 							</div>
 						</div>

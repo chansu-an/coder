@@ -1,10 +1,12 @@
 package coders.project.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -128,16 +130,26 @@ public class ProjectController {
 
 //프로젝트 상세보기
 	@RequestMapping(value = "/Project/Detail.do")
-	public ModelAndView ProjectDetail(CommandMap commandMap, HttpServletRequest request) throws Exception {
+	public ModelAndView ProjectDetail(HttpServletRequest request,HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("/project/project_board_detail");
+		Map<String, Object> smap = new HashMap<String, Object>();	
+		if(session.getAttribute("session") != null) {
+			smap = (Map<String, Object>) session.getAttribute("session");
+			smap.put("PROJECT_NO", request.getParameter("PROJECT_NO"));
+		int checkProject = projectService.checkProjectApp(smap);//참가신청했는지 판별
+		mav.addObject("checkProject", checkProject);
+		System.out.println(checkProject);
+		}
+		smap.put("PROJECT_NO", request.getParameter("PROJECT_NO"));
 		
-		int checkProject = projectService.checkProjectApp(commandMap.getMap());//참가신청했는지 판별
-		Map<String, Object> map = projectService.selectProjectDetail(commandMap.getMap());
+		
+		System.out.println(smap);
+		Map<String, Object> map = projectService.selectProjectDetail(smap);
 		if(request.getParameter("END") != null) {//종료된 프로젝트는 참가신청버튼 안보이게 함
 			mav.addObject("end", request.getParameter("END"));
 		}
 		
-		mav.addObject("checkProject", checkProject);
+		
 		mav.addObject("map", map.get("map"));
 		mav.addObject("list", map.get("list"));
 		return mav;
