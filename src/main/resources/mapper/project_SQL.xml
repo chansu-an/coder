@@ -35,13 +35,35 @@ SELECT PBF_NO,PBO_NAME,PBF_SIZE,PBS_NAME FROM PROJECTBOARDFILES WHERE PROJECT_NO
 ]]></select>
 
 	<!-- 현재 진행중인 프로젝트 리스트 -->
-	<select id="selectProjectList" parameterType="hashmap"
-		resultType="hashmap">
-		<include refid="common.pagingPre" />
-		<![CDATA[
-SELECT PROJECT_NO,PROJECTBOARD.PROJECT_NAME,TO_CHAR(PROJECTBOARD.PROJECT_START,'yyyy-MM-dd') "PROJECT_START",TO_CHAR(PROJECTBOARD.PROJECT_END,'yyyy-MM-dd') "PROJECT_END",PROJECTBOARD.PROJECT_MEMBER,PROJECTBOARD.USER_NO,USERS.NICK_NAME,ROWNUM FROM PROJECTBOARD INNER JOIN USERS ON users.user_no = PROJECTBOARD.USER_NO WHERE PROJECTBOARD.DEL_GB='N' AND SYSDATE BETWEEN PROJECT_START AND PROJECT_END
+<select id="selectProjectList" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre" />
+<![CDATA[
+SELECT PROJECT_NO,PROJECTBOARD.PROJECT_NAME,TO_CHAR(PROJECTBOARD.PROJECT_START,'yyyy-MM-dd') "PROJECT_START",TO_CHAR(PROJECTBOARD.PROJECT_END,'yyyy-MM-dd') "PROJECT_END",PROJECTBOARD.PROJECT_MEMBER,PROJECTBOARD.USER_NO,USERS.NICK_NAME,ROWNUM FROM PROJECTBOARD INNER JOIN USERS ON USERS.USER_NO = PROJECTBOARD.USER_NO WHERE PROJECTBOARD.DEL_GB='N' AND SYSDATE BETWEEN PROJECT_START AND PROJECT_END
 ]]>
-		<include refid="common.pagingPost" />
+<!-- 키워드 -->
+   		<choose>
+			<when test='SEARCH_TYPE == "PROJECT_NAME"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "PROJECT_CONTEXT"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%'
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "NICKNAME"'>
+			<![CDATA[
+				AND USERS.NICK_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "T+C"'>
+			<![CDATA[
+				AND (PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' OR PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%') 
+			]]>
+			</when>
+		</choose>
+<include refid="common.pagingPost" />
 	</select>
 	<!-- 현재 진행중인 프로젝트 리스트 -->
 	<select id="countProjectList" parameterType="hashmap"
@@ -49,16 +71,68 @@ SELECT PROJECT_NO,PROJECTBOARD.PROJECT_NAME,TO_CHAR(PROJECTBOARD.PROJECT_START,'
 SELECT COUNT(*) FROM PROJECTBOARD WHERE DEL_GB='N' AND SYSDATE BETWEEN PROJECT_START AND PROJECT_END
 ]]></select>
 	<!-- 시작 예정 프로젝트 리스트 -->
-	<select id="selectProjectSList" parameterType="hashmap"
-		resultType="hashmap"><![CDATA[
-SELECT PROJECT_NO,PROJECTBOARD.PROJECT_NAME,TO_CHAR(PROJECTBOARD.PROJECT_START,'yyyy-MM-dd') "PROJECT_START",TO_CHAR(PROJECTBOARD.PROJECT_END,'yyyy-MM-dd') "PROJECT_END",PROJECTBOARD.PROJECT_MEMBER,PROJECTBOARD.USER_NO,USERS.NICK_NAME,ROWNUM FROM PROJECTBOARD INNER JOIN USERS ON users.user_no = PROJECTBOARD.USER_NO WHERE PROJECTBOARD.DEL_GB='N' AND SYSDATE < PROJECT_START 
-]]></select>
+<select id="selectProjectSList" parameterType="hashmap"	resultType="hashmap">
+<include refid="common.pagingPre" />
+<![CDATA[
+SELECT PROJECT_NO,PROJECTBOARD.PROJECT_NAME,TO_CHAR(PROJECTBOARD.PROJECT_START,'yyyy-MM-dd') "PROJECT_START",TO_CHAR(PROJECTBOARD.PROJECT_END,'yyyy-MM-dd') "PROJECT_END",PROJECTBOARD.PROJECT_MEMBER,PROJECTBOARD.USER_NO,USERS.NICK_NAME,ROWNUM FROM PROJECTBOARD INNER JOIN USERS ON USERS.USER_NO = PROJECTBOARD.USER_NO WHERE PROJECTBOARD.DEL_GB='N' AND SYSDATE < PROJECT_START 
+]]>
+<!-- 키워드 -->
+		<choose>
+			<when test='SEARCH_TYPE == "PROJECT_NAME"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "PROJECT_CONTEXT"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%'
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "NICKNAME"'>
+			<![CDATA[
+				AND USERS.NICK_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "T+C"'>
+			<![CDATA[
+				AND (PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' OR PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%') 
+			]]>
+			</when>
+		</choose>
+<include refid="common.pagingPost" />
+</select>
 
-	<!-- 종료된 프로젝트 리스트 -->
-	<select id="selectProjectEList" parameterType="hashmap"
-		resultType="hashmap"><![CDATA[
-SELECT PROJECT_NO,PROJECTBOARD.PROJECT_NAME,TO_CHAR(PROJECTBOARD.PROJECT_START,'yyyy-MM-dd') "PROJECT_START",TO_CHAR(PROJECTBOARD.PROJECT_END,'yyyy-MM-dd') "PROJECT_END",PROJECTBOARD.PROJECT_MEMBER,PROJECTBOARD.USER_NO,USERS.NICK_NAME,ROWNUM FROM PROJECTBOARD INNER JOIN USERS ON users.user_no = PROJECTBOARD.USER_NO WHERE PROJECTBOARD.DEL_GB='N' AND SYSDATE > PROJECT_END 
-]]></select>
+<!-- 종료된 프로젝트 리스트 -->
+<select id="selectProjectEList" parameterType="hashmap"	resultType="hashmap">
+<include refid="common.pagingPre" />
+<![CDATA[
+SELECT PROJECT_NO,PROJECTBOARD.PROJECT_NAME,TO_CHAR(PROJECTBOARD.PROJECT_START,'yyyy-MM-dd') "PROJECT_START",TO_CHAR(PROJECTBOARD.PROJECT_END,'yyyy-MM-dd') "PROJECT_END",PROJECTBOARD.PROJECT_MEMBER,PROJECTBOARD.USER_NO,USERS.NICK_NAME,ROWNUM FROM PROJECTBOARD INNER JOIN USERS ON USERS.USER_NO = PROJECTBOARD.USER_NO WHERE PROJECTBOARD.DEL_GB='N' AND SYSDATE > PROJECT_END 
+]]>
+<!-- 키워드 -->
+		<choose>
+			<when test='SEARCH_TYPE == "PROJECT_NAME"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "PROJECT_CONTEXT"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%'
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "NICKNAME"'>
+			<![CDATA[
+				AND USERS.NICK_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "T+C"'>
+			<![CDATA[
+				AND (PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' OR PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%') 
+			]]>
+			</when>
+		</choose>
+<include refid="common.pagingPost" />
+</select>
 
 	<!-- 프로젝트 상세보기 -->
 	<select id="selectProjectDetail" parameterType="hashmap"

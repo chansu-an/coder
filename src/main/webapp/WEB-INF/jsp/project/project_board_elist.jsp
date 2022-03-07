@@ -3,6 +3,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script>
+	function test1(f){
+		$('input[name=SEARCH_TYPE]').attr('value',f);
+	}
+</script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
@@ -82,29 +87,27 @@
 											</c:choose>
 										</tbody>
 									</table>
-									<form action="../Project/Project.do" method="get">
+									<form action="../Project/ProjectE.do" method="get">
 										<div class="search-wrap">
-											<select id="SEARCH_TYPE" name="SEARCH_TYPE"
-												onchange="test1(this.value);">
-												<option>검색</option>
+											<select id="SEARCH_TYPE" name="SEARCH_TYPE"	onchange="test1(this.value);">
 												<option value="PROJECT_NAME"
-													<c:if test="${searchType == 'PROJECT_NAME'}">selected</c:if>>제목</option>
+													<c:if test="${param.SEARCH_TYPE == 'PROJECT_NAME'}">selected</c:if>>제목</option>
 												<option value="PROJECT_CONTEXT"
-													<c:if test="${searchType == 'PROJECT_CONTEXT'}">selected</c:if>>내용</option>
+													<c:if test="${param.SEARCH_TYPE == 'PROJECT_CONTEXT'}">selected</c:if>>내용</option>
 												<option value="NICKNAME"
-													<c:if test="${searchType == 'NICKNAME'}">selected</c:if>>작성자</option>
+													<c:if test="${param.SEARCH_TYPE == 'NICKNAME'}">selected</c:if>>작성자</option>
 												<option value="T+C"
-													<c:if test="${searchType == 'T+C'}">selected</c:if>>제목+내용</option>
-											</select><input type="text" id="KEYWORD" name="KEYWORD"
-												value="${keyWord }"></input> <input type="submit" value="검색"
-												class="btn bin-info search-btn" />
+													<c:if test="${param.SEARCH_TYPE == 'T+C'}">selected</c:if>>제목+내용</option>
+											</select>
+											<input type="text" id="KEYWORD" name="KEYWORD" value="${param.KEYWORD }"/>
+											<input type="submit" value="검색" class="btn bin-info search-btn" />														
 										</div>
+									</form>
 										<div align="left">
 												<a href="../Project/Write.do" class="btn" id="write"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 </svg> 글쓰기</a>
-									</form>
 									
 									<div align="center">
 										<c:if test="${map.startpag>1}">
