@@ -12,9 +12,19 @@ INSERT INTO USERS (USER_NO,PASSWORD,NICK_NAME,PROFILE,EMAIL) VALUES (USERS_SEQ.N
 SELECT USER_NO,NICK_NAME,PASSWORD,EMAIL,ACTIVE_SCORE,ADMIN,PROFILE FROM USERS WHERE EMAIL =#{EMAIL} AND PASSWORD=#{PASSWORD}
 ]]></select>
 <!-- 유저리스트 -->
-<select id="selectUserList" parameterType="hashmap" resultType="hashmap"><![CDATA[
+<select id="selectUserList" parameterType="hashmap" resultType="hashmap">
+<include refid="common.pagingPre"/>
+<![CDATA[
 SELECT USER_NO,NICK_NAME,EMAIL,DEL_GB,USER_STOP,REPORT_COUNT,ROWNUM FROM USERS
-]]></select>
+]]>
+<include refid="common.pagingPost"/>
+</select>
+<!-- 유저 수 -->
+<select id="countUser" parameterType="hashmap" resultType="_int">
+<![CDATA[
+SELECT COUNT(*) FROM USERS
+]]>
+</select>
 <!-- 중복ID 체크 -->
 <select id="confirmid" parameterType="String" resultType="String"><![CDATA[
 SELECT USER_NO,NICK_NAME,EMAIL FROM USERS WHERE EMAIL =#{ID}
@@ -65,8 +75,10 @@ UPDATE USERS SET USER_STOP = 'Y' WHERE USER_NO = #{USER_NO}
 UPDATE USERS SET USER_STOP = 'N', REPORT_COUNT = 0 WHERE USER_NO = #{USER_NO}
 ]]></update>
 <!-- 유저 신고 -->
+
 <update id="repostUser" parameterType="hashmap"><![CDATA[
 UPDATE USERS SET REPORT_COUNT = + 1 WHERE USER_NO= #{USER_NO}
+
 ]]></update>
 <!-- 유저 활동점수 증가 -->
 <update id="upActiveScore" parameterType="hashmap"><![CDATA[

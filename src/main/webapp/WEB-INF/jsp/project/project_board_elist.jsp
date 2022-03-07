@@ -50,7 +50,7 @@
 										<table class="table">
 
 											<colgroup>
-												<col width="10%" />
+												<col width="15%" />
 												<col width="*%" />
 												<col width="10%" />
 												<col width="10%" />
