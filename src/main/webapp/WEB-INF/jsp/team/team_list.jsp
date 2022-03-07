@@ -51,6 +51,10 @@
 
 		calendar.render();
 	});
+	
+	function test1(f) {
+		$('input[name=SEARCH_TYPE]').attr('value', f);
+	}
 </script>
 </head>
 <body>
@@ -67,6 +71,7 @@
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-header">
+							<h4 class="card-title">프로젝트 작업일지</h4>
 								<c:if test="${!empty session.USER_NO }">
 									<a href="../Team/Write.do?PROJECT_NO=${param.PROJECT_NO }"
 										class="btn" id="write"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -79,7 +84,7 @@
 										<table class="table">
 
 											<colgroup>
-												<col width="10%" />
+												<col width="15%" />
 												<col width="*%" />
 												<col width="10%" />
 												<col width="10%" />
@@ -101,7 +106,7 @@
 													<c:when test="${fn:length(list) > 0}">
 														<c:forEach items="${list }" var="row">
 															<tr>
-																<td>${row.PD_BOARD_NO}</td>
+																<td>${row.ROWNUM}</td>
 																<%-- <td>${row.PROJECT_NAME }</td> --%>
 																<td><a
 																	href="../Team/Detail.do?PROJECT_NO=${row.PROJECT_NO}&PD_BOARD_NO=${row.PD_BOARD_NO}">${row.PD_TITLE}</a>
@@ -123,24 +128,6 @@
 
 											</tbody>
 										</table>
-										<form action="../Team/List.do" method="get">
-											<div class="search-wrap">
-												<select id="SEARCH_TYPE" name="SEARCH_TYPE"
-													onchange="test1(this.value);">
-													<option>검색</option>
-													<option value="PD_TITLE"
-														<c:if test="${searchType == 'PD_TITLE'}">selected</c:if>>제목</option>
-													<option value="PD_CONTEXT"
-														<c:if test="${searchType == 'PD_CONTEXT'}">selected</c:if>>내용</option>
-													<option value="NICKNAME"
-														<c:if test="${searchType == 'NICKNAME'}">selected</c:if>>작성자</option>
-													<option value="T+C"
-														<c:if test="${searchType == 'T+C'}">selected</c:if>>제목+내용</option>
-												</select><input type="text" id="KEYWORD" name="KEYWORD"
-													value="${keyWord }"></input> <input type="submit"
-													value="검색" class="btn bin-info search-btn" />
-											</div>
-										</form>
 										<%-- <div align="center">
 												<c:if test="${map.startpag>1}">
 													<a href="../Project/Project.do?PAG_NUM=${map.startpag-2}">이전</a>
@@ -154,6 +141,12 @@
 												</c:if>
 											</div> --%>
 									</div>
+									<a href="../Project/Project.do?PROJECT_NO=${param.PROJECT_NO }"class="btn" id="list"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply-fill" viewBox="0 0 16 16">
+  <path d="M5.921 11.9 1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
+</svg> 목록으로</a>
+<a
+                                            href="../Project/Applist.do?PROJECT_NO=${param.PROJECT_NO}">참가자
+                                            리스트</a>
 								</div>
 							</div>
 						</div>

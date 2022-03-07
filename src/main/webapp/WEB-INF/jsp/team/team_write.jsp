@@ -23,35 +23,41 @@
 		<tbody>
 			<tr>
 				<th scope="row">작업일지 제목</th>
-				<td><input type="text" id="TITLE" name=PD_TITLE class="wdp_90"></input></td>
+				<td colspan="4"><input type="text" id="TITLE" name=PD_TITLE class="wdp_90"></input></td>
 			</tr>
 
 			<tr>
 				
-				<th scope="row">진행도 : <select id="PD_ING" name="PD_ING">
+				<th scope="row">진행도</th>
+				<td colspan="4">
+				<select id="PD_ING" name="PD_ING">
 						<option value="start">진행예정</option>
 						<option value="ing">진행중</option>
 						<option value="final">완료</option>
 				</select>
-				
-				</th>
-				<th scope="row">중요도 : <select id="PD_IMPORT" name="PD_IMPORT">
+				</td>
+			</tr>
+			<tr>				
+				<th scope="row">중요도</th>
+				<td colspan="4">
+				<select id="PD_IMPORT" name="PD_IMPORT">
 					<option value="waring">긴급</option>
 					<option value="middle">중간</option>
 					<option value="row">낮음</option>
-				</select></th>
-				
+				</select>
+				</td>
 			</tr>
+				
 			<tr>
 				<th>시작일</th>
-				<td><input type="date" name="PD_START"></td>
+				<td colspan="4"><input type="date" name="PD_START"></td>
 			</tr>
 			<tr>
 				<th>종료일</th>
-				<td><input type="date" name="PD_END"></td>
+				<td colspan="4"><input type="date" name="PD_END"></td>
 			</tr>
 			<tr>
-				<td colspan="2" class="view_text"><textarea rows="20"
+				<td colspan="4" class="view_text"><textarea rows="20"
 						cols="100" title="내용" id="PD_CONTEXT" name="PD_CONTEXT"></textarea></td>
 			</tr>
 		</tbody>
@@ -63,9 +69,11 @@
 
 		</p>
 	</div>
-	<br /> <a onclick="fn_addFile()" class="btn" id="addFile">파일
-		추가</a> <input type="submit" class = "btn" value="작성하기"> <a
-		href="../Team/List.do?PROJECT_NO=${param.PROJECT_NO }"class="btn" id="list">목록으로</a>
+	<br /> <a onclick="fn_addFile()" class="btn" id="addFile">파일추가</a> 
+		<input type="submit" class = "btn" value="작성하기"> 
+		<a href="../Team/List.do?PROJECT_NO=${param.PROJECT_NO }"class="btn" id="list"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply-fill" viewBox="0 0 16 16">
+  <path d="M5.921 11.9 1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
+</svg> 목록으로</a>
 	<br /> <br /> 
 
 </form>

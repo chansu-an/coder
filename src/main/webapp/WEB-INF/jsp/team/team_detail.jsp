@@ -6,62 +6,41 @@
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
-<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 
 
 <body>
-	<div class="wrapper ">
-
-		<div class="main-panel" id="main-panel">
-			<!-- Navbar -->
-			<!-- End Navbar -->
-			<div class="panel-header panel-header-sm"></div>
-			<!-- End Navbar -->
-			<div class="content">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="card">
-							<div class="card-header">
-								<!-- Page content-->
-								<h2>게시판 상세보기</h2>
-								<table class=team_list>
+<table class="board_view">
 									<colgroup>
 										<col width="15%" />
-										<col width="20%" />
+										<col width="30%" />
 										<col width="15%" />
-										<col width="15%" />
-										<col width="15%" />
-										<col width="10%" />
-										<col width="10%" />
-										<col width="10%" />
+										<col width="30%" />
+										<col width="*" />
 									</colgroup>
-									<thead class="text2-primary">
-										<tr>
-											<th scope="col">작업일지 번호</th>
-											<th scope="col">업무제목</th>
-											<th scope="col">작성자</th>
-											<th scope="col">진행도</th>
-											<th scope="col">중요도</th>
-											<th scope="col">시작일</th>
-											<th scope="col">종료일</th>
-											<th scope="col">내용</th>
-										</tr>
-
-									</thead>
 									<tbody>
-										<c:choose>
-											<c:when test="${!empty map}">
-												<tr>
-													<td>${map.PD_BOARD_NO}</td>
-													<td>${map.PD_TITLE}</td>
-													<td>${map.USER_NO}</td>
-													<td>${map.PD_ING}</td>
-													<td>${map.PD_IMPORT}</td>
-													<td>${map.PD_START}</td>
-													<td>${map.PD_END}</td>
-													<td>${map.PD_CONTEXT}</td>
-												</tr>
+										<tr>
+											<th scope="col">업무제목</th>
+											<td>${map.PD_TITLE}</td>
+											<th scope="col">작업일지 번호</th>
+											<td>${map.PD_BOARD_NO}</td>
+										</tr>
+										<tr>
+											<th scope="col">작성자</th>
+											<td>${map.NICK_NAME}</td>
+											<th scope="col">진행도 / 중요도</th>
+											<td>${map.PD_ING} / ${map.PD_IMPORT}</td>										
+										</tr>
+										<tr>
+											<th scope="col">시작일</th>
+											<td>${map.PD_START}</td>
+											<th scope="col">종료일</th>	
+											<td>${map.PD_END}</td>
+										</tr>
+										<tr>
+											<th scope="col">내용</th>
+											<td>${map.PD_CONTEXT}</td>
+										</tr>
 												<tr>
 													<th scope="row">첨부파일</th>
 													<td colspan="3"><c:forEach var="row" items="${list }">
@@ -72,31 +51,22 @@
 																(${row.PF_SIZE }kb)
 															</p>
 														</c:forEach>
-											</c:when>
-											<c:otherwise>
-												<tr>
-													<td colspan="4">조회된 결과가 없습니다.</td>
+													</td>
 												</tr>
-											</c:otherwise>
-										</c:choose>
-
 									</tbody>
 								</table>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 
-	<a href="../Team/Modify.do?PD_BOARD_NO=${map.PD_BOARD_NO}" class="btn"
+	<a href="../Team/Modify.do?PD_BOARD_NO=${map.PD_BOARD_NO}&PROJECT_NO=${param.PROJECT_NO}" class="btn"
 		id="write">수정하기</a>
-	<a href="../Team/List.do?PROJECT_NO=${param.PROJECT_NO }" class="btn"
-		id="list">목록으로</a>
+	<a href="../Team/List.do?PROJECT_NO=${param.PROJECT_NO }" class="btn" id="list"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply-fill" viewBox="0 0 16 16">
+  <path d="M5.921 11.9 1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
+</svg> 목록으로</a>
 	<a
 		href="../Team/Delete.do?PD_BOARD_NO=${map.PD_BOARD_NO}&PROJECT_NO=${param.PROJECT_NO}"
-		class="btn" id="delete">삭제하기</a>
+		class="btn" id="delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+</svg> 삭제하기</a>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>
