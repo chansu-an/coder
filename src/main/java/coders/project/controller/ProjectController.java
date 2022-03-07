@@ -41,6 +41,7 @@ public class ProjectController {
 		ModelAndView mav = new ModelAndView("/project/project_board_list");
 		count = projectService.countProjectList(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 5, count);
+		
 
 		// 추가 02.15
 		/* projectService.insertProject(commandMap.getMap(),request); */

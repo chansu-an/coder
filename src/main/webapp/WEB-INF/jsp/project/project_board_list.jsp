@@ -3,6 +3,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script>
+	function test1(f){
+		$('input[name=SEARCH_TYPE]').attr('value',f);
+	}
+</script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
@@ -104,15 +109,17 @@
 														onchange="test1(this.value);">
 
 														<option value="PROJECT_NAME"
-															<c:if test="${searchType == 'PROJECT_NAME'}">selected</c:if>>제목</option>
+															<c:if test="${param.SEARCH_TYPE == 'PROJECT_NAME'}">selected</c:if>>제목</option>
 														<option value="PROJECT_CONTEXT"
-															<c:if test="${searchType == 'PROJECT_CONTEXT'}">selected</c:if>>내용</option>
+															<c:if test="${param.SEARCH_TYPE == 'PROJECT_CONTEXT'}">selected</c:if>>내용</option>
 														<option value="NICKNAME"
-															<c:if test="${searchType == 'NICKNAME'}">selected</c:if>>작성자</option>
+															<c:if test="${param.SEARCH_TYPE == 'NICKNAME'}">selected</c:if>>작성자</option>
 														<option value="T+C"
-															<c:if test="${searchType == 'T+C'}">selected</c:if>>제목+내용</option>
-													</select> <input type="text" id="KEYWORD" name="KEYWORD"
-														value="${keyWord }"></input> <input type="submit"
+															<c:if test="${param.SEARCH_TYPE == 'T+C'}">selected</c:if>>제목+내용</option>
+													</select>
+													<input type="text" id="KEYWORD" name="KEYWORD"
+														value="${param.KEYWORD }"></input> <input type="submit"
+
 														value="검색" class="btn bin-info search-btn" />
 
 												</div>

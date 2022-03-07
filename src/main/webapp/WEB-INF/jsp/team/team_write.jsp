@@ -13,10 +13,12 @@
 <form id="frm" name="frm" method="post" enctype="multipart/form-data">
 <input type = "hidden" name = "PROJECT_NO" value = "${param.PROJECT_NO}">
 <input type = "hidden" name = "USER_NO" value = "${sessionScope.session.USER_NO}">
-	<table class="project_view">
+	<table class="board_view">
 		<colgroup>
 			<col width="15%" />
-			<col width="*%" />
+			<col width="30%" />
+			<col width="30%" />
+			<col width="25%" />
 		</colgroup>
 		<tbody>
 			<tr>
@@ -26,14 +28,14 @@
 
 			<tr>
 				
-				<th>진행도 : <select id="PD_ING" name="PD_ING">
+				<th scope="row">진행도 : <select id="PD_ING" name="PD_ING">
 						<option value="start">진행예정</option>
 						<option value="ing">진행중</option>
 						<option value="final">완료</option>
 				</select>
 				
 				</th>
-				<th>중요도 : <select id="PD_IMPORT" name="PD_IMPORT">
+				<th scope="row">중요도 : <select id="PD_IMPORT" name="PD_IMPORT">
 					<option value="waring">긴급</option>
 					<option value="middle">중간</option>
 					<option value="row">낮음</option>
@@ -43,6 +45,8 @@
 			<tr>
 				<th>시작일</th>
 				<td><input type="date" name="PD_START"></td>
+			</tr>
+			<tr>
 				<th>종료일</th>
 				<td><input type="date" name="PD_END"></td>
 			</tr>
@@ -59,9 +63,10 @@
 
 		</p>
 	</div>
-	<br /> <br /> <a onclick="fn_addFile()" class="btn" id="addFile">파일
+	<br /> <a onclick="fn_addFile()" class="btn" id="addFile">파일
 		추가</a> <input type="submit" class = "btn" value="작성하기"> <a
 		href="../Team/List.do?PROJECT_NO=${param.PROJECT_NO }"class="btn" id="list">목록으로</a>
+	<br /> <br /> 
 
 </form>
 <%@ include file="/WEB-INF/include/include-body.jspf"%>

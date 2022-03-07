@@ -3,6 +3,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script>
+	function test1(f){
+		$('input[name=SEARCH_TYPE]').attr('value',f);
+	}
+</script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
@@ -137,6 +142,7 @@
 											</ul>
 										</nav>
 										</div>
+
 									</div>
 								</div>
 							</div>
