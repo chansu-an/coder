@@ -28,6 +28,7 @@ import coders.mail.service.MailSendService2;
 import coders.member.NaverLoginVO;
 import coders.member.service.MainService;
 import coders.mypage.service.MypageService;
+import coders.packing.Packaging;
 
 @Controller
 public class MainController {
@@ -49,6 +50,8 @@ public class MainController {
 	private MailSendService mailSendService;
 	@Resource(name="mss2")
 	private MailSendService2 mailSendService2;
+	@Resource(name="Packaging")
+	private Packaging packaging;
 	
 	@RequestMapping(value="/main/Login.do", method = RequestMethod.GET)
 	public ModelAndView loginForm(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception{
@@ -179,13 +182,23 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/main/UserList.do", method = RequestMethod.GET)
-	public ModelAndView userList(CommandMap commandMap) throws Exception{
-		ModelAndView mv = new ModelAndView("/main/userList");
+	public ModelAndView userList(CommandMap commandMap, HttpServletRequest request) throws Exception{
+		ModelAndView mav = new ModelAndView("/main/userList");
+
+		String page = request.getParameter("PAG_NUM");
+		int count;
+		int pag = 1;
+		if(page!=null) {
+			pag = Integer.parseInt(page);
+		}
+		count = mainService.countUser(commandMap.getMap());
+		packaging.Packag(commandMap.getMap(), pag, 10, count);
 		
 		List<Map<String, Object>> list = mainService.selectUserList(commandMap.getMap());
-		
-		mv.addObject("list", list);
-		return mv;
+
+		mav.addObject("list", list);
+		mav.addObject("map", commandMap.getMap());
+		return mav;
 	}
 	
 	//탈퇴회원(탈퇴 후 7일 이내 / DB에 남아있는 회원) 복구
@@ -241,12 +254,18 @@ public class MainController {
 	}
 	
 	@RequestMapping(value="/main/findPassword.do", method = {RequestMethod.POST, RequestMethod.GET})
-	public void findPassword(CommandMap commandMap, HttpServletRequest request) throws Exception {
+	public ModelAndView findPassword(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		
 		authKey = mailSendService2.sendAuthMail((String)request.getParameter("EMAIL"));		
 		
+		commandMap.put("authKey", authKey);
+		mainService.modifyPassword(commandMap.getMap());
+		ModelAndView mv = new ModelAndView("redirect:/main/FindPw.do?authKey=" + authKey);
+		
+		return mv;
 	}
 	
+	/*
 	@RequestMapping(value="/main/findPasswordConfirm.do", method = {RequestMethod.POST, RequestMethod.GET})
 	public ModelAndView findPasswordConfirm(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView("redirect:/main/FindPw.do?authKey=" + request.getParameter("authKey"));
@@ -258,6 +277,6 @@ public class MainController {
 		mainService.modifyPassword(commandMap.getMap());
 		
 		return mv;
-	}
+	}*/
 	
 }
