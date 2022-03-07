@@ -70,19 +70,28 @@
 		<ul class="pagination">
 		<c:if test="${map.startpag>1}">
 			<li><a
-				href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag-2}"  aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+				href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag-10}"  aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 		</c:if>
 		<c:forEach var="i" begin="${map.startpag }" end="${map.endpage }">
-			<li><a
+			<li id="${i}" class=""><a
 				href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${i}">${i}</a></li>
 		</c:forEach>
 		<c:if test="${smap.endpage<smap.maxpag}">
 			<li><a
-				href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag+2}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+				href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}&PAG_NUM=${map.startpag+10}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
 		</c:if>
 	</ul>
 		</nav>
 		</div>
+	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+	<script type="text/javascript">
+	$(window).load (function() {
+		var _ch = 1;
+
+		ch = ${param.PAG_NUM}
+		document.getElementById(ch).className = 'active'
+	});
+	</script>
 </body>
 </html>

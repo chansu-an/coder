@@ -4,8 +4,8 @@
 <html lang="ko">
 <head>
 <script>
-	function test1(f){
-		$('input[name=SEARCH_TYPE]').attr('value',f);
+	function test1(f) {
+		$('input[name=SEARCH_TYPE]').attr('value', f);
 	}
 </script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
@@ -122,26 +122,48 @@
 </svg> 글쓰기
 												</a>
 										</form>
-<div align="center">
-										<nav>
-											<ul class="pagination">
-												<c:if test="${map.startpag>1}">
-													<li><a
-														href="../Project/Project.do?PAG_NUM=${map.startpag-2}"
-														aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-												</c:if>
-												<c:forEach var="i" begin="${map.startpag }"
-													end="${map.endpage }">
-													<li><a href="../Project/Project.do?PAG_NUM=${i}">${i}</a></li>
-												</c:forEach>
-												<c:if test="${map.endpage<map.maxpag}">
-													<li><a
-														href="../Project/Project.do?PAG_NUM=${map.startpag+2}"
-														aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
-												</c:if>
-											</ul>
-										</nav>
-										</div>
+										<div style="padding-left: 50%; padding-right: 50%;">
+												<c:if test="${param.KEYWORD==null}">
+													<nav>
+														<ul class="pagination">
+															<c:if test="${map.startpag>1}">
+																<li><a
+																	href="../Project/Project.do?PAG_NUM=${map.startpag-10}"
+																	aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+															</c:if>
+															<c:forEach var="i" begin="${map.startpag }"
+																end="${map.endpage }">
+																<li id="${i }" class=""><a href="../Project/Project.do?PAG_NUM=${i}">${i}</a></li>
+															</c:forEach>
+															<c:if test="${map.endpage<map.maxpag}">
+																<li><a
+																	href="../Project/Project.do?PAG_NUM=${map.startpag+10}"
+																	aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+															</c:if>
+														</ul>
+													</nav>
+													</c:if>
+													<c:if test="${param.KEYWORD!=null}">
+													<nav>
+														<ul class="pagination">
+															<c:if test="${map.startpag>1}">
+																<li><a
+																	href="../Project/Project.do?PAG_NUM=${map.startpag-10}&KEYWORD=${param.KEYWORD}"
+																	aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+															</c:if>
+															<c:forEach var="i" begin="${map.startpag }"
+																end="${map.endpage }">
+																<li id="${i }" class=""><a href="../Project/Project.do?PAG_NUM=${i}&KEYWORD=${param.KEYWORD}">${i}</a></li>
+															</c:forEach>
+															<c:if test="${map.endpage<map.maxpag}">
+																<li><a
+																	href="../Project/Project.do?PAG_NUM=${map.startpag+10}&KEYWORD=${param.KEYWORD}"
+																	aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+															</c:if>
+														</ul>
+													</nav>
+													</c:if>
+												</div>
 
 									</div>
 								</div>
@@ -153,5 +175,14 @@
 		</div>
 		<%@ include file="/WEB-INF/include/include-body.jspf"%>
 		<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+<script type="text/javascript">
+	$(window).load (function() {
+		var ch = 1;
+
+		ch = ${param.PAG_NUM}
+		document.getElementById(ch).className = 'active'
+	});
+	</script>
 </body>
+
 </html>

@@ -109,7 +109,8 @@
       </div>
       </main> 
     </div>
-<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>>
+	<%@ include file="/WEB-INF/include/include-body.jspf"%>
+	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
     <script type="text/javascript">
     function  test(){
     	var password = document.getElementById("PASSWORD").value;

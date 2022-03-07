@@ -61,7 +61,7 @@
 							onclick="location.href = '../Mypage/insertFollow.do?USER_NO=${param.USER_NO}'"
 							class=" btn btn-primary btn-lg" type="button">팔로우하기</button>
 						<button
-							onclick="location.href = '../Mypage/insertFollow.do?USER_NO=${param.USER_NO}'"
+							onclick="location.href = '../Mypage/RepostUser.do?USER_NO=${param.USER_NO}'"
 							class=" btn btn-primary btn-lg" type="button">신고하기</button>
 					</c:if>
 				</div>
@@ -73,6 +73,7 @@
 
 	</div>
 
+	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>
 </html>

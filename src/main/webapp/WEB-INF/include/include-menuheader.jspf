@@ -4,9 +4,10 @@
 <div class="d-flex" id="wrapper">
             <!-- Sidebar-->
                    	<div class="border-end bg-white" id="sidebar-wrapper">
-		                <div class="sidebar-heading border-bottom bg-light"><a href="/net/board/mainList.do">Coders</a></div>
+		                <div class="sidebar-heading border-bottom bg-light">
+		                <a href="/net/board/mainList.do">Coders</a>
+		                </div>
 		                <div class="list-group list-group-flush">
-		         
 		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/openBoardList.do?IDENTI_TYPE=1">공지사항</a>
 		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/openBoardList.do?IDENTI_TYPE=2">QnA 게시판</a>
 		                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../board/openBoardList.do?IDENTI_TYPE=3">자유게시판</a>
@@ -19,5 +20,4 @@
 		                </div>
             		</div>
             <!-- Page content wrapper-->
-            <div id="page-content-wrapper">
                 <!-- Top navigation-->

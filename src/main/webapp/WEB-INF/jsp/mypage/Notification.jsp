@@ -52,20 +52,20 @@
 			</div>
 		</div>
 	</div>
-	<div align="center">
+	<div  align="center">
 	<nav>
 		<ul class="pagination">
 		<c:if test="${bmap.startpag>1}">
 			<li><a
-				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${bmap.startpag-2}&P_PAG_NUM=${param.P_PAG_NUM}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${bmap.startpag-10}&P_PAG_NUM=${param.P_PAG_NUM}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 		</c:if>
 		<c:forEach var="i" begin="${bmap.startpag }" end="${bmap.endpage }">
-			<li><a
-				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${i}&P_PAG_NUM=${param.P_PAG_NUM}">[${i}]</a></li>
+			<li  id="B_${i}" class=""><a
+				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${i}&P_PAG_NUM=${param.P_PAG_NUM}">${i}</a></li>
 		</c:forEach>
 		<c:if test="${bmap.endpage<bmap.maxpag}">
 			<li><a
-				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${bmap.startpag+2}&P_PAG_NUM=${param.P_PAG_NUM}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${bmap.startpag+10}&P_PAG_NUM=${param.P_PAG_NUM}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
 		</c:if>
 	</ul>
 		</nav>
@@ -118,19 +118,31 @@
 		<ul class="pagination">
 		<c:if test="${pmap.startpag>1}">
 			<li><a
-				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${param.B_PAG_NUM}&P_PAG_NUM=${pmap.startpag-2}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${param.B_PAG_NUM}&P_PAG_NUM=${pmap.startpag-10}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 		</c:if>
 		<c:forEach var="i" begin="${pmap.startpag }" end="${pmap.endpage }">
-			<li><a
+			<li id="P_${i}" class=""><a
 				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${param.B_PAG_NUM}&P_PAG_NUM=${i}">${i}</a></li>
 		</c:forEach>
 		<c:if test="${pmap.endpage<smap.maxpag}">
 			<li><a
-				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${param.B_PAG_NUM}&P_PAG_NUM=${pmap.startpag+2}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${param.B_PAG_NUM}&P_PAG_NUM=${pmap.startpag+10}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
 		</c:if>
 	</ul>
 		</nav>
 		</div>
+	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+	<script type="text/javascript">
+	$(window).load (function() {
+		var B_ch = 1;
+		var P_ch = 1;
+
+		B_ch = ${param.B_PAG_NUM}
+		P_ch = ${param.P_PAG_NUM}
+		document.getElementById('B_'+B_ch).className = 'active'
+			document.getElementById('P_'+P_ch).className = 'active'
+	});
+	</script>
 </body>
 </html>

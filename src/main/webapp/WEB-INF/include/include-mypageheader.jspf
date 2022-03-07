@@ -5,35 +5,34 @@
 		<!-- Sidebar-->
 		<div class="border-end bg-white" id="sidebar-wrapper">
 			<div class="sidebar-heading border-bottom bg-light">
-				<a href="#">CODERS</a>
+				<a href="/net/board/mainList.do">CODERS</a>
 			</div>
 			<div class="list-group list-group-flush">
 				<a
 					class="list-group-item list-group-item-action list-group-item-light p-3"
 					href="../main/Mypage.do?USER_NO=${param.USER_NO}">정보 보기</a> <a
 					class="list-group-item list-group-item-action list-group-item-light p-3"
-					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=1&F_PAG_NUM=1">활동 보기</a>
-			<c:if test="${sessionScope.session!=null}">
-				<c:if test="${param.USER_NO == sessionScope.session.USER_NO}">
-					<form action="../Resume/Detail.do" method="post">
-						<input type="hidden" name="USER_NO" value="${param.USER_NO}">
-						<input type="submit"
-							class="list-group-item list-group-item-action list-group-item-light p-3"
-							value="이력서 보기">
-					</form>
-					<button onclick="deleteUser()"
-						class="list-group-item list-group-item-action list-group-item-light p-3"
-						>회원탈퇴</button>
-				</c:if>
+					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=1&F_PAG_NUM=1">활동
+					보기</a>
+				<c:if test="${sessionScope.session!=null}">
+					<c:if test="${param.USER_NO == sessionScope.session.USER_NO}">
+						<form action="../Resume/Detail.do" method="post">
+							<input type="hidden" name="USER_NO" value="${param.USER_NO}">
+							<input type="submit"
+								class="list-group-item list-group-item-action list-group-item-light p-3"
+								value="이력서 보기">
+						</form>
+						<button onclick="deleteUser()"
+							class="list-group-item list-group-item-action list-group-item-light p-3">회원탈퇴</button>
+					</c:if>
 				</c:if>
 				<a
 					class="list-group-item list-group-item-action list-group-item-light p-3"
-					href="../Mypage/ProjectList.do?USER_NO=${param.USER_NO}">참가 프로젝트</a> <a
+					href="../Mypage/ProjectList.do?USER_NO=${param.USER_NO}">참가
+					프로젝트</a> <a
 					class="list-group-item list-group-item-action list-group-item-light p-3"
 					href="../Mypage/WriteList.do?USER_NO=${param.USER_NO}">작성 글</a>
 			</div>
 		</div>
 		<!-- Page content wrapper-->
-		
-			<!-- Top navigation-->
-			
+		<!-- Top navigation-->

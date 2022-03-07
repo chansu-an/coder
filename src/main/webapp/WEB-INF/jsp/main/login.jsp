@@ -32,9 +32,10 @@
               <hr/>
 
               <button class="btn btn-lg btn-primary btn-block text-uppercase" id="Login">Sign in</button>
-              <div id="naver_id_login" style="text-align:center"><a href="${url}"><img width="223" src="${pageContext.request.contextPath}/img/btnG_naver.png"/></a></div>
+              <div id="naver_id_login" style="text-align:center"><a class="" href="${url}">
+              <img width="100%" height="100%" src="${pageContext.request.contextPath}/img/btnG_naver.png"/></a></div>
               <hr class="my-4"/>
-              Forgot your <a href="../main/FindPw.do">Password</a>?
+              Forgot your <a href="../main/FindPw.do">Password</a>
               <button type="button" class="btn btn-lg btn-primary btn-block text-uppercase" onclick="window.location.href='../main/RegisterForm.do'">Join</button>
             </form>
           </div>

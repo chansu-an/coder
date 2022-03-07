@@ -53,8 +53,8 @@ public class MypageController {
 		
 		int fcount = mypageService.countFollowList(fmap);
 		int scount = mypageService.countScrapList(smap);
-		smap = packaging.Packag(smap,spnum, 2, scount);
-		fmap = packaging.Packag(fmap,fpnum, 2, fcount);
+		smap = packaging.Packag(smap,spnum, 5, scount);
+		fmap = packaging.Packag(fmap,fpnum, 5, fcount);
 		mav.setViewName("mypage/mypage");
 		List<Map<String, Object>> flist = mypageService.selectFollowList(fmap);
 		List<Map<String, Object>> slist = mypageService.selectScrapList(smap);
@@ -162,8 +162,8 @@ public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception
 		int ppnum = Integer.parseInt(request.getParameter("P_PAG_NUM"));
 		int pcount = mypageService.countProjectArList(pmap);
 		int bcount = mypageService.countArlimeList(bmap);
-		bmap = packaging.Packag(bmap, bpnum, 2, bcount);
-		pmap = packaging.Packag(pmap, ppnum, 2, pcount);
+		bmap = packaging.Packag(bmap, bpnum, 5, bcount);
+		pmap = packaging.Packag(pmap, ppnum, 5, pcount);
 		
 		List<Map<String, Object>> list1 = mypageService.selectArlimeList(bmap);
 		List<Map<String, Object>> list2 = mypageService.selectProjetArList(pmap);
@@ -229,10 +229,12 @@ public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception
 		mypageService.deleteUser(map);
 		return "redirect:/board/mainList.do";
 	}
+	
 	@RequestMapping(value = "/Mypage/RepostUser.do")
 	public String repostUser(CommandMap map)throws Exception{
+
 		mypageService.repostUser(map.getMap());
-		return "redirect:/Mypage/MypageDetail.do?USER_NO="+map.get("USER_NO");
+		return "redirect:../board/mainList.do";
 	}
 
 }

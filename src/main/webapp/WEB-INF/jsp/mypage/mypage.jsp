@@ -10,7 +10,7 @@
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 
 </head>
-<body class="background-color:">
+<body class=''>
 
 	<div align="center">
 		<div class="content">
@@ -62,22 +62,22 @@
 				</div>
 			</div>
 		</div>
-		<div align="center">
+		<div style="padding-left: 50%; padding-right: 50%;">
 		<nav >
 		<ul class="pagination">
 			<c:if test="${smap.startpag>1}">
 				<li><a
-					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${smap.startpag-2}&F_PAG_NUM=${param.F_PAG_NUM}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${smap.startpag-10}&F_PAG_NUM=${param.F_PAG_NUM}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
 					</li>
 					
 			</c:if>
 			<c:forEach var="i" begin="${smap.startpag }" end="${smap.endpage }">
-				<li><a
+				<li id="S_${i}" class=""><a
 					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${i}&F_PAG_NUM=${param.F_PAG_NUM}">${i}</a></li>
 			</c:forEach>
 			<c:if test="${smap.endpage<smap.maxpag}">
 				<li><a
-					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${smap.startpag+2}&F_PAG_NUM=${param.F_PAG_NUM}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${smap.startpag+10}&F_PAG_NUM=${param.F_PAG_NUM}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
 			</li>
 			</c:if>
 			</ul>
@@ -131,41 +131,35 @@
 			</div>
 		</div>
 
-  <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="active"><a href="#" >1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-	<div align="center">
+	<div style="padding-left: 50%; padding-right: 50%;">
 		<nav>
 		<ul class="pagination">
 			<c:if test="${fmap.startpag>1}">
 				<li><a
-					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${param.S_PAG_NUM}&F_PAG_NUM=${fmap.startpag-2}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${param.S_PAG_NUM}&F_PAG_NUM=${fmap.startpag-10}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 			</c:if>
 			<c:forEach var="i" begin="${fmap.startpag }" end="${fmap.endpage }">
-				<li><a
+				<li id="F_${i}" class=""><a
 					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${param.S_PAG_NUM}&F_PAG_NUM=${i}">${i}</a></li>
 			</c:forEach>
 			<c:if test="${fmap.endpage<fmap.maxpag}">
 				<li><a
-					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${param.S_PAG_NUM}&F_PAG_NUM=${fmap.startpag+2}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+					href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${param.S_PAG_NUM}&F_PAG_NUM=${fmap.startpag+10}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
 			</c:if>
 		</ul>
 		</nav>
 		</div>
+	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+	<script type="text/javascript">
+	$(window).load (function() {
+		var S_ch = 1;
+		var F_ch =1;
+		S_ch = ${param.S_PAG_NUM}
+		F_ch = ${param.F_PAG_NUM}
+		document.getElementById('S_'+S_ch).className = 'active'
+			document.getElementById('F_'+F_ch).className = 'active'
+	});
+	</script>
 </body>
 </html>
