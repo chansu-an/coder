@@ -20,7 +20,6 @@ function zipcode(){
     }).open();};
 </script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
-<%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 <meta charset="UTF-8">
 <title>이력서 작성</title>
