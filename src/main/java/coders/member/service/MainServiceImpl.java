@@ -90,4 +90,11 @@ public class MainServiceImpl implements MainService{
 		mainDAO.returnUserDisabled(map);		
 	}
 
+	@Override
+	public int countUser(Map<String, Object> map) throws Exception {
+		return mainDAO.countUser(map);
+	}
+	
+	
+
 }
