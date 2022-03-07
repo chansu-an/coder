@@ -75,8 +75,10 @@ UPDATE USERS SET USER_STOP = 'Y' WHERE USER_NO = #{USER_NO}
 UPDATE USERS SET USER_STOP = 'N', REPORT_COUNT = 0 WHERE USER_NO = #{USER_NO}
 ]]></update>
 <!-- 유저 신고 -->
-<update id="reportUser" parameterType="hashmap"><![CDATA[
-UPDATE USERS SET REPORT_COUNT = + 1 WHERE USER_NO=#{USERS_NO}
+
+<update id="repostUser" parameterType="hashmap"><![CDATA[
+UPDATE USERS SET REPORT_COUNT = + 1 WHERE USER_NO= #{USER_NO}
+
 ]]></update>
 <!-- 유저 활동점수 증가 -->
 <update id="upActiveScore" parameterType="hashmap"><![CDATA[

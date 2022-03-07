@@ -47,13 +47,8 @@ public class ProjectController {
 		/* projectService.insertProject(commandMap.getMap(),request); */
 
 		List<Map<String, Object>> list = projectService.selectProjectList(commandMap.getMap());
-		List<Map<String, Object>> list1 = projectService.selectProjectSList(commandMap.getMap());
-		System.out.println(list1);
-		List<Map<String, Object>> list2 = projectService.selectProjectEList(commandMap.getMap());
-		System.out.println(list2);
+
 		mav.addObject("list", list);
-		mav.addObject("list1", list1);
-		mav.addObject("list2", list2);
 		mav.addObject("map", commandMap.getMap());
 		
 		

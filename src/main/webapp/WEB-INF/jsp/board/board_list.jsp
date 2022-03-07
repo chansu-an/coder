@@ -3,19 +3,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<script>
-	function test(f) {
-		f.action = "/net/board/openBoardList.do?IDENTI_TYPE=" + $
-		{
-			IDENTI_TYPE
-		}
-		f.submit();
-	}
 
-	function test1(f) {
-		$('input[name=SEARCH_TYPE]').attr('value', f);
-	}
-</script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
@@ -23,7 +11,6 @@
 <body>
 
 	<div class="wrapper ">
-
 		<div class="main-panel" id="main-panel">
 			<!-- Navbar -->
 			<!-- End Navbar -->
@@ -219,29 +206,29 @@
 												type="submit" value="검색" class="btn bin-info search-btn" />
 										</div>
 									</form>
-
-
-
-									<!-- 페이징 -->
+								</div>
+							</div>
+								<!-- 페이징 -->
 
 
 									<c:if test="${param.KEYWORD==null}">
-										<div align="center">
+										<div style="padding-left: 50%; padding-right: 50%;">
 											<nav>
 												<ul class="pagination">
 													<c:if test="${map.startpag>1}">
 														<li><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-2}&ORDER_TYPE=${param.ORDER_TYPE}"
+															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-10}&ORDER_TYPE=${param.ORDER_TYPE}"
 															aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 													</c:if>
 													<c:forEach var="i" begin="${map.startpag }"
 														end="${map.endpage }">
-														<li><a
+
+														<li  id="${i}" class=""><a
 															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}">${i}</a></li>
 													</c:forEach>
 													<c:if test="${map.endpage<map.maxpag}">
 														<li><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+2}&ORDER_TYPE=${param.ORDER_TYPE}"
+															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+10}&ORDER_TYPE=${param.ORDER_TYPE}"
 															aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
 													</c:if>
 												</ul>
@@ -249,30 +236,28 @@
 										</div>
 									</c:if>
 									<c:if test="${param.KEYWORD!=null}">
-										<div align="center">
+										<div style="padding-left: 50%; padding-right: 50%;">
 											<nav>
-												<ul class="pagination">
+												<ul class="pagination " >
 													<c:if test="${map.startpag>1}">
 														<li><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-2}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE==${param.SEARCH_TYPE}"
+															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-10}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE==${param.SEARCH_TYPE}"
 															aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
 													</c:if>
 													<c:forEach var="i" begin="${map.startpag }"
 														end="${map.endpage }">
-														<li><a
+														<li id="${i}" class=""><a
 															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE=${param.SEARCH_TYPE}">${i}</a></li>
 													</c:forEach>
 													<c:if test="${map.endpage<map.maxpag}">
 														<li><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+2}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE=${param.SEARCH_TYPE}"
+															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+10}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE=${param.SEARCH_TYPE}"
 															aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
 													</c:if>
 												</ul>
 											</nav>
 										</div>
 									</c:if>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -281,6 +266,23 @@
 	</div>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
+<script>
+	function test(f) {
+		f.action = "/net/board/openBoardList.do?IDENTI_TYPE=" + $
+		{
+			IDENTI_TYPE
+		}
+		f.submit();
+	}
 
+	function test1(f) {
+		$('input[name=SEARCH_TYPE]').attr('value', f);
+	}
+	$(window).load (function() {
+		var ch = 1;
+		 ch = ${param.PAG_NUM}
+		document.getElementById(ch).className = 'active'
+	});
+</script>
 </body>
 </html>
