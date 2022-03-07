@@ -217,30 +217,44 @@
 
 					<div align="center">
 					<c:if test="${param.KEYWORD==null}">
-							<c:if test="${map.startpag>1}">
-								<a
-									href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-2}&ORDER_TYPE=${param.ORDER_TYPE}">이전</a>
-							</c:if>
-							<c:forEach var="i" begin="${map.startpag }" end="${map.endpage }">
-								<a href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}">[${i}]</a>
-							</c:forEach>
-							<c:if test="${map.endpage<map.maxpag}">
-								<a
-									href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+2}&ORDER_TYPE=${param.ORDER_TYPE}">다음</a>
-							</c:if>
+							<nav>
+											<ul class="pagination">
+												<c:if test="${map.startpag>1}">
+													<li><a
+														href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-2}&ORDER_TYPE=${param.ORDER_TYPE}"
+														aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+												</c:if>
+												<c:forEach var="i" begin="${map.startpag }"
+													end="${map.endpage }">
+													<li><a href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}">${i}</a></li>
+												</c:forEach>
+												<c:if test="${map.endpage<map.maxpag}">
+													<li><a
+														href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+2}&ORDER_TYPE=${param.ORDER_TYPE}"
+														aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+												</c:if>
+											</ul>
+										</nav>
 					</c:if>
 					<c:if test="${param.KEYWORD!=null}">
-							<c:if test="${map.startpag>1}">
-								<a
-									href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-2}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE==${param.SEARCH_TYPE}">이전</a>
-							</c:if>
-							<c:forEach var="i" begin="${map.startpag }" end="${map.endpage }">
-								<a href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE=${param.SEARCH_TYPE}">[${i}]</a>
-							</c:forEach>
-							<c:if test="${map.endpage<map.maxpag}">
-								<a
-									href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+2}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE=${param.SEARCH_TYPE}">다음</a>
-							</c:if>
+							<nav>
+											<ul class="pagination">
+												<c:if test="${map.startpag>1}">
+													<li><a
+														href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-2}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE==${param.SEARCH_TYPE}"
+														aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+												</c:if>
+												<c:forEach var="i" begin="${map.startpag }"
+													end="${map.endpage }">
+													<li><a href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE=${param.SEARCH_TYPE}">${i}</a></li>
+												</c:forEach>
+												<c:if test="${map.endpage<map.maxpag}">
+													<li><a
+														href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+2}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE=${param.SEARCH_TYPE}"
+														aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+												</c:if>
+											</ul>
+										</nav>
 					</c:if>
 							
 					</div>
