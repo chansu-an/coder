@@ -51,15 +51,6 @@
             -->
           </div>
           <hr class="my-4">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="same-address" required>
-            <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="save-info" required>
-            <label class="form-check-label" for="save-info">Save this information for next time</label>
-          </div>
-          <hr class="my-4">
           <button class="w-100 btn btn-primary btn-lg" id="register_button">회원가입 완료</button>
         </form>
       </div>

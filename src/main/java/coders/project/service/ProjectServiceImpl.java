@@ -48,7 +48,6 @@ public class ProjectServiceImpl implements ProjectService {
 		projectDAO.insertProject(map);
 		
 	 List<Map<String, Object>> list	=fileUtils.parseInsertFileInfo(map, request);
-	 System.out.println(list);
 	 for (int i = 0; i <list.size(); i++) {
 		 projectDAO.insertProjectFile(list.get(i));
 		
@@ -60,7 +59,6 @@ public class ProjectServiceImpl implements ProjectService {
 	public Map<String, Object> selectProjectDetail(Map<String, Object> map) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String,Object>();
 		Map<String, Object> tempMap = projectDAO.selectProjectDetail(map);
-		System.out.println(map);
 		resultMap.put("map", tempMap);
 		
 		List<Map<String,Object>> list = projectDAO.selectProjectFileList(map);
@@ -84,7 +82,6 @@ public class ProjectServiceImpl implements ProjectService {
 		projectDAO.updateProject(map);
 		projectDAO.deleteFileList(map);
 		List<Map<String,Object>>list = fileUtils.parseUpdateFileInfo(map, request); //에러발생  --> 완료 
-		System.out.println(list);
 		Map<String,Object>tempMap = null;
 		for(int i =0,size = list.size(); i<size; i++) {
 			tempMap = list.get(i);
@@ -92,7 +89,6 @@ public class ProjectServiceImpl implements ProjectService {
 				projectDAO.insertProjectFile(tempMap);
 			}
 			else {
-				System.out.println(2);
 				projectDAO.updateFile(tempMap);
 				
 			}

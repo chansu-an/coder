@@ -24,7 +24,7 @@
 							<div class="card-header">
 
 								<!-- Page content-->
-								<h2>게시판 상세보기</h2>
+								<h2>프로젝트 상세보기</h2>
 								<table class=project_board_list>
 
 									<div class="card-body">
