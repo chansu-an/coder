@@ -323,7 +323,7 @@ function com(n, m) {
 				 dataType : 'json',
 				 contentType : "application/json; charset=UTF-8",
 				 success : function(){
-					 alert("추천");
+					 alert("추천완료");
 					 $("#recommend").unbind("click");
 					 $("#recommend_count").load(window.location.href+ " #recommend_count");
 				 },
@@ -341,7 +341,7 @@ function com(n, m) {
 				 dataType : 'json',
 				 contentType : "application/json; charset=UTF-8",
 				 success : function(){
-					 alert("신고");
+					 alert("신고완료");
 					 $("#report").unbind("click");
 					 $("#report_count").load(window.location.href+ " #report_count");
 				 },
