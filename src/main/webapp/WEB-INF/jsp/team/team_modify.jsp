@@ -4,60 +4,12 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
+<%@ include file="/WEB-INF/include/include-menuheader.jspf"%>
+<%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 </head>
 <body>
-	<div class="d-flex" id="wrapper">
-		<!-- Sidebar-->
-		<div class="border-end bg-white" id="sidebar-wrapper">
-			<div class="sidebar-heading border-bottom bg-light">Coders</div>
-			<div class="list-group list-group-flush">
-				<a
-					class="list-group-item list-group-item-action list-group-item-light p-3"
-					href="#!">공지사항</a> <a
-					class="list-group-item list-group-item-action list-group-item-light p-3"
-					href="#!">QnA 게시판</a> <a
-					class="list-group-item list-group-item-action list-group-item-light p-3"
-					href="#!">자유게시판</a> <a
-					class="list-group-item list-group-item-action list-group-item-light p-3"
-					href="#!">프로젝트</a> <a
-					class="list-group-item list-group-item-action list-group-item-light p-3"
-					href="#!">건의사항</a>
-			</div>
-		</div>
-		<!-- Page content wrapper-->
-		<div id="page-content-wrapper">
-			<!-- Top navigation-->
-			<nav
-				class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-				<div class="container-fluid">
-					<button class="btn btn-primary" id="sidebarToggle">Toggle
-						Menu</button>
-					<button class="navbar-toggler" type="button"
-						data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent" aria-expanded="false"
-						aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-							<li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
-							<li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
-							<li class="nav-item dropdown"><a
-								class="nav-link dropdown-toggle" id="navbarDropdown" href="#"
-								role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">Dropdown</a>
-								<div class="dropdown-menu dropdown-menu-end"
-									aria-labelledby="navbarDropdown">
-									<a class="dropdown-item" href="#!">Action</a> <a
-										class="dropdown-item" href="#!">Another action</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#!">Something else here</a>
-								</div></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
-			<form method="post" enctype="multipart/form-data">
+	<form id="frm" name="frm" enctype="multipart/form-data">
+	<input type="hidden" id="PROJECT_NO" name="PROJECT_NO" value="${param.PROJECT_NO }">
 				<h2>게시글 수정</h2>
 				<table class="board_view">
 					<colgroup>
@@ -81,18 +33,18 @@
 								name="PD_TITLE" class="wdp_90" value="${map.PD_TITLE}" /></td>
 						</tr>
 						<tr>
-							<th>진행도 : <select id="PD_ING" name="PD_ING">
-						<option value="start">진행예정</option>
-						<option value="ing">진행중</option>
-						<option value="final">완료</option>
-				</select>
-						</tr>
-						<tr>
-							<th>중요도 : <select id="PD_IMPORT" name="PD_IMPORT">
-					<option value="waring">긴급</option>
-					<option value="middle">중간</option>
-					<option value="row">낮음</option>
-				</select></th>
+							<th scope="row">진행도 : </th>
+							<td><select id="PD_ING" name="PD_ING">
+							<option value="start">진행예정</option>
+							<option value="ing">진행중</option>
+							<option value="final">완료</option>
+							</select></td>
+							<th scope="row">중요도 : </th>
+							<td><select id="PD_IMPORT" name="PD_IMPORT">
+								<option value="waring">긴급</option>
+								<option value="middle">중간</option>
+								<option value="row">낮음</option>
+							</select></td>
 						</tr>
 						<tr>
 							<th scope="row">시작일</th>
@@ -141,26 +93,20 @@
 						</tr>
 					</tbody>
 				</table>
-				<div id="fileDiv">
-					<p>
-						<a href="/net/Project/Team.do" class="btn" id="list">목록으로</a> <input
-							type="submit" value="수정하기"> <a href="#this" class="btn"
-							id="addFile">파일추가</a>
-
-					</p>
-				</div>
-
-
-
+				<a href="#this" class="btn"	id="addFile">파일추가</a>
+				<a href="../Team/Detail.do?PROJECT_NO=${param.PROJECT_NO}&PD_BOARD_NO=${map.PD_BOARD_NO}" class="btn" id="list">목록으로</a> 
+				<a href="#this" class="btn" id="update">수정하기</a> 
 			</form>
-		</div>
-	</div>
 	<br />
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script type="text/javascript">
 		var gfv_count = '${fn:length(list)+1}';
 	
 		$(document).ready(function() {
+			$("#update").on("click", function(e){ //저장하기 버튼
+				e.preventDefault();
+				fn_updateBoard();
+			});
 
 			$("#addFile").on("click", function(e) { //파일 추가 버튼
 				e.preventDefault();
@@ -198,6 +144,12 @@
 		function fn_deleteFile(obj) {
 			--gfv_count
 			obj.parent().remove();
+		}
+		
+		function fn_updateBoard(){
+			var comSubmit = new ComSubmit("frm");
+			comSubmit.setUrl("<c:url value='/Team/Modify.do?PD_BOARD_NO=${map.PD_BOARD_NO}' />");
+			comSubmit.submit();
 		}
 	</script>
 

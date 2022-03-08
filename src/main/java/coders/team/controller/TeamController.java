@@ -74,7 +74,7 @@ public class TeamController {
 	@RequestMapping(value = "/Team/Write.do", method = RequestMethod.POST)
 	public ModelAndView TeamWrite(CommandMap commandMap,HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/Team/List.do?PROJECT_NO="+commandMap.getMap().get("PROJECT_NO"));
-		System.out.println(commandMap.getMap());
+		
 		teamService.insertTeam(commandMap.getMap(), request);
 		
 		return mav;
@@ -87,17 +87,16 @@ public class TeamController {
 		Map<String, Object> map = teamService.selectTeamDetail(commandMap.getMap());
 		mav.addObject("map", map.get("map"));
 		mav.addObject("list", map.get("list"));
-		System.out.println(commandMap.getMap());
+		
 		return mav;
 
 	}
 
 	@RequestMapping(value = "/Team/Modify.do", method = RequestMethod.GET)
-	public ModelAndView TeamModifyForm(CommandMap commandMap) throws Exception {
+	public ModelAndView TeamModifyForm(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/team/team_modify");
-
+		
 		Map<String, Object> map = teamService.selectTeamDetail(commandMap.getMap());
-		System.out.println(commandMap.getMap());
 		mav.addObject("map", map.get("map"));
 		mav.addObject("list",map.get("list"));
 		return mav;
@@ -105,7 +104,7 @@ public class TeamController {
 
 	@RequestMapping(value = "/Team/Modify.do", method = RequestMethod.POST)
 	public ModelAndView TeamModify(CommandMap commandMap,HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/Team/Detail.do");
+		ModelAndView mav = new ModelAndView("redirect:/Team/Detail.do?PROJECT_NO="+request.getParameter("PROJECT_NO"));
 
 		teamService.updateTeam(commandMap.getMap(), request);
 		mav.addObject("PD_BOARD_NO", commandMap.get("PD_BOARD_NO"));

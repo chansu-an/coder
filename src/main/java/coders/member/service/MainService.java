@@ -34,4 +34,6 @@ public interface MainService {
 	void restoreUser(Map<String, Object> map) throws Exception;
 
 	void returnUserDisabled(Map<String, Object> map) throws Exception;
+
+	int countUser(Map<String, Object> map) throws Exception;
 }

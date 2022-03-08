@@ -74,7 +74,11 @@ public class MainDAO extends AbstractDAO{
 		update("user.restoreUser", map);
 	}
 
-	public void returnUserDisabled(Map<String, Object> map) {
+	public void returnUserDisabled(Map<String, Object> map) throws Exception {
 		update("user.returnUserDisabled", map);	
+	}
+
+	public int countUser(Map<String, Object> map) throws Exception {
+		return (int) selectOne("user.countUser", map);
 	}
 }
