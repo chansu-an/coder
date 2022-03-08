@@ -48,7 +48,11 @@
 								<div class="card-body">
 									<div class="table2-responsive">
 										<table class="table">
-
+											<div align="left">
+													<h3>프로젝트 게시판</h3>
+													<div align="right">
+													<h5>종료된 프로젝트입니다.</h5>
+													</div>
 											<colgroup>
 												<col width="15%" />
 												<col width="*%" />
@@ -86,7 +90,7 @@
 													</c:when>
 													<c:otherwise>
 														<tr>
-															<td colspan="4">조회된 결과가 없습니다.</td>
+															<td colspan="10">조회된 결과가 없습니다.</td>
 														</tr>
 
 													</c:otherwise>
@@ -110,17 +114,7 @@
 													value="${keyWord }"></input> <input type="submit"
 													value="검색" class="btn bin-info search-btn" />
 											</div>
-											<div align="left">
-												<a href="../Project/Write.do" class="btn" id="write"> <svg
-														xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-														fill="currentColor" class="bi bi-pencil-square"
-														viewBox="0 0 16 16">
-  <path
-															d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-  <path fill-rule="evenodd"
-															d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
-</svg> 글쓰기
-												</a>
+					
 										</form>
 										<div style="padding-left: 50%; padding-right: 50%;">
 												<c:if test="${param.KEYWORD==null}">
