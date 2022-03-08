@@ -25,7 +25,7 @@ public class CommonTeamController {
 	public void downloadProjectFile(HttpServletRequest request,HttpServletResponse response)throws Exception{
 		Map<String,Object>map1 = new HashMap<String,Object>();
 		map1.put("PF_NO", request.getParameter("PF_NO"));
-		//System.out.println(map1);
+		
 		Map<String,Object>map = commonTeamService.selectTeamFileInfo(map1);
 		String psf_name = (String)map.get("PSF_NAME"); 
 		String pof_name =(String)map.get("POF_NAME");

@@ -102,11 +102,11 @@ public class MainController {
         JSONParser parser = new JSONParser();
 
 		JSONObject jsonObjAll = (JSONObject) parser.parse(apiResult);
-		System.out.println("jsonObjAll: "+jsonObjAll.toJSONString());
+		
 		String result = jsonObjAll.get("response").toString();
 				
 		JSONObject jsonObj = (JSONObject) parser.parse(result);
-		System.out.println("jsonObj: "+jsonObj.toJSONString());
+		
 		
 		String member_nickname = jsonObj.get("nickname").toString();					
 		String member_name = jsonObj.get("name").toString();					
@@ -129,7 +129,7 @@ public class MainController {
 		//프로필 url값
 		//mv.addObject("image", member_profile);//네이버 url에서 가져온 사용사 프로필 사진
 		//mv.addObject("userimages", user_profile_images.get("PROFILE"));데이터 베이스에 저장된 사용자 프로필 url
-		System.out.println(map2);
+		
 		session.setAttribute("session", map2);
         /* 네이버 로그인 성공 페이지 View 호출 */
         return mv;
@@ -264,19 +264,5 @@ public class MainController {
 		
 		return mv;
 	}
-	
-	/*
-	@RequestMapping(value="/main/findPasswordConfirm.do", method = {RequestMethod.POST, RequestMethod.GET})
-	public ModelAndView findPasswordConfirm(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView("redirect:/main/FindPw.do?authKey=" + request.getParameter("authKey"));
-		
-		System.out.println("인증후1 : " + request.getParameter("EMAIL"));
-		System.out.println("인증후2 : " + request.getParameter("authKey"));
-		System.out.println("인증후3 : " + authKey);
-		System.out.println("인증후4 : " + commandMap.getMap());
-		mainService.modifyPassword(commandMap.getMap());
-		
-		return mv;
-	}*/
 	
 }

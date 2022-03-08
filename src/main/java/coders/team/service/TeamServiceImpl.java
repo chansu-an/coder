@@ -27,7 +27,7 @@ public class TeamServiceImpl implements TeamService {
 	
 	@Override
 	public List<Map<String, Object>> selectTeamCalendar(Map<String, Object> map) throws Exception{
-		System.out.println(map);
+		
 		return teamDAO.selectTeamCalendar(map);
 	}
 	
@@ -62,7 +62,7 @@ public class TeamServiceImpl implements TeamService {
 		teamDAO.updateTeam(map);
 		teamDAO.deleteTeamFileList(map);
 		List<Map<String, Object>> list = teamfileUtils.parseUpdateFileInfo(map, request);
-		System.out.println(list);
+		
 		Map<String, Object> tempMap = null;
 		for (int i = 0, size = list.size(); i < size; i++) {
 			tempMap = list.get(i);

@@ -21,12 +21,7 @@ public class BoardFileUtils {
 	
 	private static final String filePath = "D:\\dev\\file\\";
 	
-	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, HttpServletRequest request) throws Exception{
-		Enumeration params = request.getParameterNames();
-		while(params.hasMoreElements()) {
-		  String name = (String) params.nextElement();
-		  System.out.println(name + " : " + request.getParameter(name) + "     "); 
-		}
+	public List<Map<String,Object>> parseInsertFileInfo(Map<String,Object> map, HttpServletRequest request) throws Exception{		
 		
 		
 		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)request;
@@ -76,7 +71,7 @@ public class BoardFileUtils {
     	String originalFileName = null;
     	String originalFileExtension = null;
     	String storedFileName = null;
-    	System.out.println("파일유틸 map : " + map);
+    	
     	
     	List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
         Map<String, Object> listMap = null;        
@@ -93,7 +88,7 @@ public class BoardFileUtils {
         		originalFileName = multipartFile.getOriginalFilename();
         		originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
         		storedFileName = CommonUtils.getRandomString() + originalFileExtension;
-        		System.out.println("map.get(idx) : " + map.get(idx));
+        		
         		multipartFile.transferTo(new File(filePath + storedFileName));
         		listMap = new HashMap<String,Object>();
         		if(map.get(idx) == null) {//신규파일(파일추가)
