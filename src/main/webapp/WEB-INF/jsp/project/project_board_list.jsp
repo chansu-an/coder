@@ -44,6 +44,13 @@
 											<table class="table">
 												
 
+
+												<div align="left">
+													<h3>프로젝트 게시판</h3>
+													<div align="right">
+													<h5>현재 진행중인 프로젝트입니다.</h5>
+													</div>
+												</div>
 												<colgroup>
 													<col width="15%" />
 													<col width="*%" />
@@ -95,7 +102,7 @@
 												<div class="search-wrap">
 													<select id="SEARCH_TYPE" name="SEARCH_TYPE"
 														onchange="test1(this.value);">
-
+															
 														<option value="PROJECT_NAME"
 															<c:if test="${param.SEARCH_TYPE == 'PROJECT_NAME'}">selected</c:if>>제목</option>
 														<option value="PROJECT_CONTEXT"
@@ -104,9 +111,14 @@
 															<c:if test="${param.SEARCH_TYPE == 'NICKNAME'}">selected</c:if>>작성자</option>
 														<option value="T+C"
 															<c:if test="${param.SEARCH_TYPE == 'T+C'}">selected</c:if>>제목+내용</option>
-													</select> <input type="text" id="KEYWORD" name="KEYWORD"
-														value="${param.KEYWORD }"></input> <input type="submit"
-														value="검색" class="btn bin-info search-btn" />
+															
+													</select> 
+													
+													<input type="text"  id="KEYWORD" name="KEYWORD" value="${param.KEYWORD }" ></input>
+													
+														<input type="submit" value="검색" class="btn bin-info search-btn"> 
+														
+														
 
 												</div>
 

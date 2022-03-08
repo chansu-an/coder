@@ -38,7 +38,11 @@
 							<div class="card-body">
 								<div class="table2-responsive">
 									<table class="table">
-
+											<div align="left">
+													<h3>프로젝트 게시판</h3>
+													<div align="right">
+													<h5>시작예정인 프로젝트입니다.</h5>
+													</div>
 										<colgroup>
 											<col width="15%" />
 											<col width="*%" />
@@ -79,7 +83,7 @@
 												</c:when>
 												<c:otherwise>
 													<tr>
-														<td colspan="4">조회된 결과가 없습니다.</td>
+														<td colspan="10">조회된 결과가 없습니다.</td>
 														
 													</tr>
 												</c:otherwise>
