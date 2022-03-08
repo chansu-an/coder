@@ -103,5 +103,12 @@ public class MypageDAO extends AbstractDAO{
 	public int checkFollw(Map<String, Object> map)throws Exception{
 		return (int)selectOne("user.checkFollw",map);
 	}
+	public void deleteFollow(Map<String, Object> map)throws Exception{
+		delete("user.deleteFollow",map);
+	}
+	public void deleteScarap(Map<String, Object> map)throws Exception{
+		delete("user.deleteScarap",map);
+		
+	}
 
 }

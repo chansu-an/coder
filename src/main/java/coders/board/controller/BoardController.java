@@ -127,6 +127,7 @@ public class BoardController {
 		}
 		count = boardService.commentCount(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 5, count);
+
 		
 		boardService.updateHitCnt(commandMap.getMap());//조회수
 		Map<String, Object> map = boardService.selectBoardDetail(commandMap.getMap());
