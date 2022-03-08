@@ -21,7 +21,7 @@
 
 ### 개발 환경
 
- - 프레임 워크 : Spring 4.0.4 Mybatis  
+ - franework : Spring 4.0.4 Mybatis  
  - 개발 언어 : java 11, javaScript, JSP  
  - DB : Oracle 11g  
  - WAS : Tomcat 9.0
