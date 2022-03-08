@@ -10,6 +10,7 @@
 	}	
 	
 </script>
+<script type="text/javascript" src="/net/js/ckeditor/ckeditor.js"></script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
@@ -58,6 +59,11 @@
 						<tr>
 							<td colspan="4">
 							<textarea rows="20" cols="100" title="내용" id="CONTEXT" name="CONTEXT"></textarea>
+							<script type="text/javascript">
+							 CKEDITOR.replace('CONTEXT'
+							                , {height: 500                                                  
+							                 });
+							</script>
 							</td>
 						</tr>
 					</tbody>
@@ -87,6 +93,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 
 		<%@ include file="/WEB-INF/include/include-body.jspf"%>

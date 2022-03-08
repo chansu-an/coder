@@ -81,7 +81,7 @@
 																	<td>${row.PROJECT_START }</td>
 																	<td>${row.PROJECT_END }</td>
 																	<td>${row.PROJECT_MEMBER }</td>
-																	<td>${row.USER_NO }</td>
+																	<td>${row.NICK_NAME }</td>
 																</tr>
 
 															</c:forEach>
