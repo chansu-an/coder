@@ -9,7 +9,20 @@
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 			<!-- Page content-->
-			<h2>프로젝트 작성</h2>
+<body>
+<div class="wrapper ">
+
+		<div class="main-panel" id="main-panel">
+			<!-- Navbar -->
+			<!-- End Navbar -->
+			<div class="panel-header panel-header-sm"></div>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+							<h2>프로젝트 작성</h2>
 			<form id="frm" name="frm" method="post" enctype="multipart/form-data">
 			<input type = "hidden" name = "USER_NO" value = "${sessionScope.session.USER_NO }">
 				<table class="board_view">
@@ -59,7 +72,6 @@
 
 					</p>
 				</div>
-				<br /> <br /> 
 				<a onclick="fn_addFile()" class="btn"
 					id="addFile">파일추가 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
@@ -68,8 +80,15 @@
 					<a href="../Project/Project.do" class="btn" id="list"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply-fill" viewBox="0 0 16 16">
   <path d="M5.921 11.9 1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
 </svg> 목록으로</a>
-
 			</form>
+	<br/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 		<script type="text/javascript">

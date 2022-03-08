@@ -17,13 +17,6 @@
 <body>
 
 	<div class="wrapper ">
-
-
-
-
-
-
-
 		<div class="main-panel" id="main-panel">
 			<!-- Navbar -->
 			<!-- End Navbar -->
@@ -34,9 +27,7 @@
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-header">
-								<c:if test="${!empty session.USER_NO }">
-
-								</c:if>
+								<h2>프로젝트 게시판</h2>
 								<div align="right">
 									<a href="../Project/ProjectS.do" class="btn">시작예정</a> <a
 										href="../Project/Project.do" class="btn">진행중 <svg
@@ -51,11 +42,8 @@
 									<div class="card-body">
 										<div class="table2-responsive">
 											<table class="table">
+												
 
-
-												<div align="left">
-													<h3>프로젝트 게시판</h3>
-												</div>
 												<colgroup>
 													<col width="15%" />
 													<col width="*%" />
@@ -187,6 +175,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
 		<%@ include file="/WEB-INF/include/include-body.jspf"%>
 		<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>

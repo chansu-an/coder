@@ -2,8 +2,6 @@
         </div>
 <script type="text/javascript">
 function cc() {
-	alert(document.body.className == 'sb-sidenav-toggled');
-	alert(document.body.className)
 	if(document.body.className == 'sb-sidenav-toggled'){
 		document.body.className = ''}else{
 	document.body.className = 'sb-sidenav-toggled'}
