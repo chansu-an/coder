@@ -22,6 +22,7 @@ function zipcode(){
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-menuheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
+
 <meta charset="UTF-8">
 <title>이력서 작성</title>
 </head>
@@ -30,7 +31,7 @@ function zipcode(){
   <div class="panel-header panel-header-sm"></div>
   <div class="content" align="center">
 			<div class="card">
-      <div class="card-header"  style="background-color: #A1A1A1">
+      <div class="card-header"  >
         <h4 class="mb-3"><span style="color: black">이력서 작성</span></h4>
         </div>
         <div class="card-body" >
@@ -65,7 +66,7 @@ function zipcode(){
                <input type="text" class="form-control" name="ZIPCODE" id="ZIPCODE" placeholder="우편번호" readonly>
             </div> 
             <div class="col-md-6">
-             <input type="button" value="우편번호검색" onclick="zipcode()">
+             <input class="btn" type="button" value="우편번호검색" onclick="zipcode()">
             </div>
            <div class="col-md-6">
               <label for="address" class="form-label"><span style="color: black">주소</span></label>

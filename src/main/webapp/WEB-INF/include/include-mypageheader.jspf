@@ -4,8 +4,9 @@
 	<div class="d-flex" id="wrapper">
 		<!-- Sidebar-->
 		<div class="border-end bg-white" id="sidebar-wrapper">
-			<div class="sidebar-heading border-bottom bg-light">
-				<a href="/net/board/mainList.do">CODERS</a>
+			<div class=" border-bottom bg-light">
+				<a href="../board/mainList.do"><img 
+					src="${pageContext.request.contextPath}/img/Coders.png"></a>
 			</div>
 			<div class="list-group list-group-flush">
 				<a
@@ -17,8 +18,9 @@
 				<c:if test="${sessionScope.session!=null}">
 					<c:if test="${param.USER_NO == sessionScope.session.USER_NO}">
 						<form action="../Resume/Detail.do" method="post">
-							<input type="hidden" name="USER_NO" value="${param.USER_NO}">
-							<input type="submit"
+							<input type="hidden" name="USER_NO"
+								value="${sessionScope.session.USER_NO}"> <input
+								type="submit"
 								class="list-group-item list-group-item-action list-group-item-light p-3"
 								value="이력서 보기">
 						</form>

@@ -10,6 +10,8 @@
 <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
+		<div class="main-panel" id="main-panel">
+		<div class="panel-header panel-header-sm"></div>
 	<div class="content">
 		<div class="row">
 			<div class="col-md-12">
@@ -51,7 +53,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+
 	<div  align="center">
 	<nav>
 		<ul class="pagination">
@@ -130,6 +132,8 @@
 		</c:if>
 	</ul>
 		</nav>
+		</div>
+		</div>
 		</div>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
