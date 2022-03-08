@@ -12,6 +12,8 @@ public interface BoardService {
 
 	Map<String, Object> selectBoardDetail(Map<String, Object> map) throws Exception;
 	
+	public void updateHitCnt(Map<String, Object> map) throws Exception;
+	
 	Map<String, Object> selectBestComment(Map<String, Object> map) throws Exception;
 
 	void insertBoard(Map<String, Object> map, HttpServletRequest request) throws Exception;
