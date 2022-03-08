@@ -175,7 +175,7 @@ function com(n, m) {
 																<div class="d-flex mb-4">
 																	<!-- Parent comment-->
 																	<div class="ms-3">
-																		<div class="fw-bold">${row.NICK_NAME}/${row.REPLY_DATE }</div>
+																		<div class="fw-bold">${row.NICK_NAME} | ${row.REPLY_DATE }</div>
 																		<div onclick="com(${row.RE_NO}, ${var.index })">${row.CONTEXT}</div>
 																	</div>
 																	<c:if test="${row.USER_NO == sessionScope.session.USER_NO }">
