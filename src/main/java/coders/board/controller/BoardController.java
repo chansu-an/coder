@@ -127,7 +127,6 @@ public class BoardController {
 		}
 		count = boardService.commentCount(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 5, count);
-		
 		Map<String, Object> map = boardService.selectBoardDetail(commandMap.getMap());
 		Map<String, Object> bestcomment = boardService.selectBestComment(commandMap.getMap());//인기 댓글
 		List<Map<String, Object>> list = boardService.selectCommentList(commandMap.getMap());//댓글 리스트
