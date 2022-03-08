@@ -59,7 +59,7 @@
 															<tr>
 																<td>${map.PROJECT_NO}</td>
 																<td><a
-																	href="../Team/List.do?PROJECT_NO=${map.PROJECT_NO}">${map.PROJECT_NAME}</a></td>
+																	href="../Team/List.do?PROJECT_NO=${map.PROJECT_NO}&PROJECT_USER_NO=${map.USER_NO}">${map.PROJECT_NAME}</a></td>
 																<td>${map.NICK_NAME}</td>
 																<td>${map.PROJECT_CONTEXT}</td>
 																<td>${map.PROJECT_START}</td>

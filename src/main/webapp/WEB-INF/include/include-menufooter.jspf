@@ -1,19 +1,24 @@
-            </div>
-        </div>
+
+</div>
+</div>
 <script type="text/javascript">
-function cc() {
-	alert(document.body.className == 'sb-sidenav-toggled');
-	alert(document.body.className)
-	if(document.body.className == 'sb-sidenav-toggled'){
-		document.body.className = ''}else{
-	document.body.className = 'sb-sidenav-toggled'}
-	
-}
+
+	function cc() {
+		if (document.body.className == 'sb-sidenav-toggled') {
+			document.body.className = ''
+		} else {
+			document.body.className = 'sb-sidenav-toggled'
+		}
+
+	}
+
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Core theme JS-->
 <script src="../js/scripts.js"></script>
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/form-validation.js"></script>
 <script src="../js/deleteUser.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

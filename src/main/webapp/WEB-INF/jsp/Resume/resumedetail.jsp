@@ -23,7 +23,7 @@ function deletere() {
 <div class="content">
 
     <div class="card">  
-      <div class="card-header" style="background-color: #A1A1A1">
+      <div class="card-header" >
         <h4 class="mb-3"><span style="color: black">이력서</span></h4>
         </div>
         <div class="card-body" style="padding-bottom: 20px">

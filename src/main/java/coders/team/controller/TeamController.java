@@ -32,6 +32,7 @@ public class TeamController {
 		commandMap.put("PROJECT_NO", request.getParameter("PROJECT_NO"));
 		List<Map<String, Object>> list = teamService.selectTeamList(commandMap.getMap());
 		
+		mav.addObject("project_user_no", request.getParameter("PROJECT_USER_NO"));//참가자 신청리스트 버튼을 프로젝트 작성자만 보이게하기위해 추가
 		mav.addObject("list", list);
 		return mav;
 	}

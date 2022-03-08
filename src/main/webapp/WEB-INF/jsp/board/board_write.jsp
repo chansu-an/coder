@@ -14,19 +14,33 @@
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 <body>
+<div class="wrapper ">
+		<div class="main-panel" id="main-panel">
+			<!-- Navbar -->
+			<!-- End Navbar -->
+			<div class="panel-header panel-header-sm"></div>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+							<h2>게시판 작성</h2>
 <!-- Page content-->
-			<h2>게시판 작성</h2>
 			<form id="frm" name="frm" method="post" enctype="multipart/form-data">
 			<input type="hidden" id="USER_NO" name="USER_NO" value="${sessionScope.session.USER_NO }"/>
 				<table class="board_view">
 					<colgroup>
 						<col width="15%" />
-						<col width="60%" />
+						<col width="30%" />
+						<col width="15%" />
+						<col width="30%" />
 					</colgroup>
 					<tbody>
 						<tr>
 							<th scope="row">제목</th>
 							<td><input type="text" id="TITLE" name="TITLE"></input></td>
+							<th scope="row">게시글 종류</th>
 							<td>
 								<input type="hidden" id="IDENTI_TYPE" name="IDENTI_TYPE" value=""/>
 								<select name="select_type" onChange="test(this.options[this.selectedIndex].value);">
@@ -68,6 +82,12 @@
 			</form>
 
 		<br />
+		</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 		<%@ include file="/WEB-INF/include/include-body.jspf"%>
 		<script type="text/javascript">

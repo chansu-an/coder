@@ -7,7 +7,7 @@
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
                 <!-- Page content-->
-                <div class="container">
+<div class="container">
   <main>
     <div class="row g-5">  
       <div class="col-md-7 col-lg-8">
