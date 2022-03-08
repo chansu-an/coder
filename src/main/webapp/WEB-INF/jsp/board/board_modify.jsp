@@ -9,11 +9,25 @@
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 </head>
 <body>
+<div class="wrapper ">
 
+		<div class="main-panel" id="main-panel">
+			<!-- Navbar -->
+			<!-- End Navbar -->
+			<div class="panel-header panel-header-sm"></div>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<!-- 게시판 -->
+								<h2>게시글 수정</h2>
+								<div class="card-body">
+									<div class="table2-responsive">
         <form id="frm" name="frm" enctype="multipart/form-data">
         <input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE }"/>
         <input type="hidden" name="BOARD_NO" value="${map.BOARD_NO }"/>
-        <h2>게시글 수정</h2>
 		<table class="board_view">
 			<colgroup>
 				<col width="15%"/>
@@ -84,8 +98,15 @@
   <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
 </svg> 삭제하기</a>
 
-	<br/>
-	<br/>
+	</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<script type="text/javascript">
 	let gfv_count = '${fn:length(filelist)+1}';

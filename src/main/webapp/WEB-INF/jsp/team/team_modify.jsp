@@ -8,9 +8,25 @@
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 </head>
 <body>
+<div class="wrapper ">
+
+		<div class="main-panel" id="main-panel">
+			<!-- Navbar -->
+			<!-- End Navbar -->
+			<div class="panel-header panel-header-sm"></div>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-header">
+								<!-- 게시판 -->
+								<h2>작업일지 수정</h2>
+								<div class="card-body">
+									<div class="table2-responsive">
 	<form id="frm" name="frm" enctype="multipart/form-data">
 	<input type="hidden" id="PROJECT_NO" name="PROJECT_NO" value="${param.PROJECT_NO }">
-				<h2>게시글 수정</h2>
+				
 				<table class="board_view">
 					<colgroup>
 						<col width="15%" />
@@ -97,7 +113,15 @@
 				<a href="../Team/Detail.do?PROJECT_NO=${param.PROJECT_NO}&PD_BOARD_NO=${map.PD_BOARD_NO}" class="btn" id="list">목록으로</a> 
 				<a href="#this" class="btn" id="update">수정하기</a> 
 			</form>
-	<br />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<script type="text/javascript">
 		var gfv_count = '${fn:length(list)+1}';
