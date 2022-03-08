@@ -62,7 +62,6 @@ public class BoardController {
 		if(key!=null) {
 			commandMap.put("SEARCH_TYPE", request.getParameter("SEARCH_TYPE"));
 			commandMap.put("KEYWORD", key);
-			System.out.println(commandMap.getMap());
 			count = boardService.countsearchborad(commandMap.getMap());
 			packaging.Packag(commandMap.getMap(), pag, 10, count);
 			
@@ -141,8 +140,7 @@ public class BoardController {
 			if(scrapcount != null) {//스크랩 있을시 
 				test = 1;
 			}
-		}		
-		System.out.println("list : " + list);
+		}	
 		mav.addObject("scrapcheck", test);
 		mav.addObject("map", map);
 		mav.addObject("list", list);
@@ -302,7 +300,7 @@ public class BoardController {
 	@RequestMapping(value="/board/commentInsert.do", method = RequestMethod.POST)
 	public ModelAndView InsertComment(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-		System.out.println("댓글 작성 : " + commandMap.getMap());
+		
 		boardService.insertComment(commandMap.getMap());
 		
 		return mav;

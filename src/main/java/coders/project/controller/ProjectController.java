@@ -76,7 +76,7 @@ public class ProjectController {
 		/* projectService.insertProject(commandMap.getMap(),request); */
 
 		List<Map<String, Object>> list1 = projectService.selectProjectSList(commandMap.getMap());
-		System.out.println(list1);
+		
 		mav.addObject("list1", list1);
 		mav.addObject("map", commandMap.getMap());
 		return mav;
@@ -98,7 +98,7 @@ public class ProjectController {
 		/* projectService.insertProject(commandMap.getMap(),request); */
 
 		List<Map<String, Object>> list2 = projectService.selectProjectEList(commandMap.getMap());
-		System.out.println(list2);
+		
 		mav.addObject("list2", list2);
 		mav.addObject("map", commandMap.getMap());
 		return mav;
@@ -117,7 +117,7 @@ public class ProjectController {
 	@RequestMapping(value = "/Project/Write.do", method = RequestMethod.POST)
 	public ModelAndView ProjectWrite(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/Project/Project.do");
-		System.out.println(commandMap.getMap());
+		
 		projectService.insertProject(commandMap.getMap(), request);
 
 		return mav;
@@ -133,12 +133,12 @@ public class ProjectController {
 			smap.put("PROJECT_NO", request.getParameter("PROJECT_NO"));
 		int checkProject = projectService.checkProjectApp(smap);//참가신청했는지 판별
 		mav.addObject("checkProject", checkProject);
-		System.out.println(checkProject);
+		
 		}
 		smap.put("PROJECT_NO", request.getParameter("PROJECT_NO"));
 		
 		
-		System.out.println(smap);
+		
 		Map<String, Object> map = projectService.selectProjectDetail(smap);
 		if(request.getParameter("END") != null) {//종료된 프로젝트는 참가신청버튼 안보이게 함
 			mav.addObject("end", request.getParameter("END"));

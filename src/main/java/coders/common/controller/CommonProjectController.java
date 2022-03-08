@@ -24,7 +24,7 @@ public class CommonProjectController {
 	public void downloadProjectFile(HttpServletRequest request,HttpServletResponse response)throws Exception{
 		Map<String,Object>map1 = new HashMap<String,Object>();
 		map1.put("PBF_NO", request.getParameter("PBF_NO"));
-		//System.out.println(map1);
+		
 		Map<String,Object>map = commonProjectService.selectProjectFileInfo(map1);
 		String pbs_name = (String)map.get("PBS_NAME"); 
 		String pbo_name =(String)map.get("PBO_NAME");

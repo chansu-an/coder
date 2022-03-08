@@ -138,7 +138,6 @@ public ModelAndView writeList(HttpServletRequest request,HttpSession session )th
 		List<Map<String, Object>> list = mypageService.selectWriteList(mapor);
 		mav.addObject("list",list);
 		mav.addObject("map", mapor);
-		System.out.println(list);
 		mav.setViewName("/mypage/myWrite");
 		return mav;
 }

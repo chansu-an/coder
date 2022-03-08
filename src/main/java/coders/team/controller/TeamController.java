@@ -41,7 +41,7 @@ public class TeamController {
 	@RequestMapping(value = "/Team/Calendar.do", method = RequestMethod.GET)
 	@ResponseBody
 	public List<Map<String, Object>> selectTeamCalendar(CommandMap commandMap,HttpServletRequest request) throws Exception{
-		System.out.println(request.getParameter("PROJECT_NO"));
+		
 		List<Map<String, Object>> list = teamService.selectTeamCalendar(commandMap.getMap());
 		
 		JSONObject jsonObj = new JSONObject();
@@ -60,7 +60,7 @@ public class TeamController {
 			jsonObj.putAll(hash);
 			jsonArr.add(jsonObj);
 		}
-		System.out.println(jsonArr);
+		
 		return jsonArr;
 	}
 

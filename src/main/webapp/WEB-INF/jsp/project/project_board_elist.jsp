@@ -46,7 +46,6 @@
 									<div class="table2-responsive">
 										<table class="table">
 											<div align="left">
-													<h3>프로젝트 게시판</h3>
 													<div align="right">
 													<h5>종료된 프로젝트입니다.</h5>
 													</div>

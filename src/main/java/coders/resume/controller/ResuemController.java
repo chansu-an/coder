@@ -104,7 +104,7 @@ public class ResuemController {
 			ModelAndView mav = new ModelAndView();
 			Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
 			commandMap.put("USER_NO", smap.get("USER_NO"));
-			System.out.println(commandMap.getMap());
+			
 			fileutils.parseInsertFileInfo(commandMap.getMap(), request);
 			resumeService.updateResume(commandMap.getMap());
 			mav.setViewName("redirect:/main/Mypage.do?USER_NO="+smap.get("USER_NO"));
@@ -127,7 +127,7 @@ public class ResuemController {
 		@RequestMapping(value = "/Resume/Filedowload.do")
 		public void dowloadFile(CommandMap commandMap,HttpServletResponse response,HttpServletRequest request)throws Exception{
 			String FileName = String.valueOf(commandMap.getMap().get("FILES")) ;
-			System.out.println(commandMap.getMap());
+			
 			String path = request.getSession().getServletContext().getRealPath("/")+"\\file\\resume\\"+commandMap.getMap().get("USER_NO")+"\\";
 			byte fileByte[] = FileUtils.readFileToByteArray(new File(path+commandMap.getMap().get("FILES")));
 			
