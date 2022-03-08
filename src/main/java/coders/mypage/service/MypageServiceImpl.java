@@ -128,6 +128,13 @@ public class MypageServiceImpl implements MypageService {
 		mypageDAO.repostUser(map);
 		
 	}
+
+	@Override
+	public int checkFollw(Map<String, Object> map) throws Exception {
+		return mypageDAO.checkFollw(map);
+	}
+	
+	
 	
 	
 	

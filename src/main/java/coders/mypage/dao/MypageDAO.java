@@ -100,5 +100,8 @@ public class MypageDAO extends AbstractDAO{
 	public void repostUser(Map<String, Object> map)throws Exception{
 		update("user.repostUser", map);
 	}
+	public int checkFollw(Map<String, Object> map)throws Exception{
+		return (int)selectOne("user.checkFollw",map);
+	}
 
 }

@@ -34,13 +34,27 @@ public class ResuemController {
 	@RequestMapping(value ="/Resume/Detail.do")
 	public ModelAndView selectResumeDetail(CommandMap commandMap,HttpSession session)throws Exception{
 		ModelAndView mav = new ModelAndView();
-		Map<String, Object> map = resumeService.selectResumeDetail(commandMap.getMap());
+		Map<String, Object> cmap = commandMap.getMap();
+		Map<String, Object> map = resumeService.selectResumeDetail(cmap);
+		
+		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
+		if(smap!=null) {
 		//저장된 이력서가 없으면 이력서 작성으로
 		if(map==null) {
-			mav.setViewName("redirect:/Resume/InsertResume.do");
-			return mav;
-		}
-		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
+			int ch1 = Integer.parseInt(cmap.get("USER_NO").toString());
+			int ch2 = Integer.parseInt(smap.get("USER_NO").toString());
+			if(ch1 == ch2) {
+				mav.addObject("msg", "작성된 이력서가 없습니다");
+				mav.addObject("url", "../Resume/InsertResume.do");
+				mav.setViewName("/mypage/redirect");
+			return mav;}else {
+				mav.addObject("msg", "작성된 이력서가 없습니다");
+				mav.addObject("url", "../board/mainList.do");
+				mav.setViewName("/mypage/redirect");
+				return mav;
+			}
+		}}
+		
 		mav.addObject("CHECK", "N");
 		if(smap!=null) {
 			if(map.get("USER_NO").equals(smap.get("USER_NO"))) {

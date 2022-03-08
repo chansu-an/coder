@@ -210,6 +210,12 @@ SELECT USER_NO,NAME,TELL,EMAIL,ADDRESS,ADDRESS1,SKILL,BLOG,FILES,ZIPCODE FROM RE
 <insert id="insertFollow" parameterType="hashmap"><![CDATA[
 INSERT INTO FOLLOW VALUES(#{USER_NO},#{FOLLOWER})
 ]]></insert>
+<!-- 팔로우 유무 확인 -->
+<select id="checkFollw" parameterType="hashmap" resultType="_int"><![CDATA[
+SELECT COUNT(*) FROM FOLLOW WHERE USER_NO = #{USER_NO} AND FOLLOWER = #{FOLLOWER} 
+]]>
+</select>
+
 
 <!-- 이메일 인증후 6자리 난수로 pw변경 -->
 <update id="modifyPassword" parameterType="hashmap" ><![CDATA[

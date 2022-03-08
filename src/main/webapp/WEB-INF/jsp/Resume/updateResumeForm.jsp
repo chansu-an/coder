@@ -30,7 +30,7 @@ function zipcode(){
       <div class="panel-header panel-header-sm"></div>
      <div class="content" align="center">
      <div class="card">
-     <div class="card-header"  style="background-color: #A1A1A1">
+     <div class="card-header" >
         <h4 class="mb-3"><span style="color: black">이력서 작성</span></h4>
         </div>
         <div class="card-body" align="left"> 

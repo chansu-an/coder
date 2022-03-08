@@ -11,8 +11,9 @@
 <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
 
 </head>
-		<!-- Page content wrapper-->
 	<body>
+		<div class="main-panel" id="main-panel">
+		<div class="panel-header panel-header-sm"></div>
 	 <div class="content">
         <div class="row">
           <div class="col-md-12">
@@ -64,7 +65,7 @@
             </div>
           </div>
         </div>
-      </div>
+
       <div  align="center">
 		<nav>
 		<ul class="pagination">
@@ -82,12 +83,13 @@
 		</ul>
 		</nav>
 		</div>
+		</div>
+		</div>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 <script type="text/javascript">
 	$(window).load (function() {
-		var _ch = 1;
-
+		var ch = 1;
 		ch = ${param.PAG_NUM}
 		document.getElementById(ch).className = 'active'
 	});

@@ -45,4 +45,6 @@ public interface MypageService {
 	public int countArlimeList(Map<String, Object> map)throws Exception;
 	
 	public void repostUser(Map<String, Object> map)throws Exception;
+	
+	public int checkFollw(Map<String, Object> map)throws Exception;
 }

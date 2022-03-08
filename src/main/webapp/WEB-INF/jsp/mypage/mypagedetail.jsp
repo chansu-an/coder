@@ -13,7 +13,7 @@
 		<div class="panel-header panel-header-sm"></div>
 		<div class="content" align="center">
 			<div class="card">
-				<div class="card-header" style="background-color: #A1A1A1">
+				<div class="card-header" >
 					<h4 class="card-title" align="left">
 						<span style="color: black">내정보</span>
 					</h4>
@@ -24,12 +24,11 @@
 						<label for="email" class="form-label"><span style="color: black">프로필 사진</span></label>
 						<div>
 							<c:if test="${sessionScope.session.PROFILE=='TEMP'}">
-								<img src="../img/profile/temp/profile.jpg" width="40"
-									height="10" class="img-thumbnail">
+								<img src="../img/profile/temp/profile.jpg"
+									width="250" height="250" class="img-thumbnail">
 							</c:if>
 							<c:if test="${sessionScope.session.PROFILE!='TEMP'}">
-								<img src="${sessionScope.session.PROFILE}" width="40"
-									height="10" class="img-thumbnail">
+								<img  width="250" height="250" src="${sessionScope.session.PROFILE}"  class="img-thumbnail">
 							</c:if>
 						</div>
 					</div>

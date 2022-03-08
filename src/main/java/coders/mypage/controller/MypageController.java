@@ -13,6 +13,7 @@ import coders.packing.Packaging;
 
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,7 +114,7 @@ public ModelAndView projectList(HttpServletRequest request,HttpSession session )
 			pnum = Integer.parseInt(pnums);
 		}
 		int count = mypageService.countProjectList(mapor);
-		mapor = packaging.Packag(mapor, pnum, 2, count);
+		mapor = packaging.Packag(mapor, pnum, 5, count);
 		List<Map<String, Object>> list = mypageService.selectProjectList(mapor);
 		mav.addObject("map", mapor);
 		mav.addObject("list",list);
@@ -133,7 +134,7 @@ public ModelAndView writeList(HttpServletRequest request,HttpSession session )th
 			pnum = Integer.parseInt(pnums);
 		}
 		int count = mypageService.countWriteList(mapor);
-		mapor = packaging.Packag(mapor, pnum, 2, count);
+		mapor = packaging.Packag(mapor, pnum, 5, count);
 		List<Map<String, Object>> list = mypageService.selectWriteList(mapor);
 		mav.addObject("list",list);
 		mav.addObject("map", mapor);
@@ -197,20 +198,27 @@ public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception
 	}
 	//팔로우추가
 	@RequestMapping(value = "/Mypage/insertFollow.do")
-	public String insertFollow(HttpServletRequest request,HttpSession session)throws Exception {
+	public ModelAndView insertFollow(HttpServletRequest request,HttpSession session)throws Exception {
 		String follower = request.getParameter("USER_NO");
+		ModelAndView mav = new ModelAndView();
 		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
-		if(smap==null) {
-			//로그인 안함
-			return "redirect:/main/Mypage.do?USER_NO="+follower;}
-		String user_no	= String.valueOf(smap.get("USER_NO"));
-		if(user_no.equals(follower)) {
-			//자기자신팔로우
-			return "redirect:/main/Mypage.do?USER_NO="+follower;
-		}
 		smap.put("FOLLOWER", follower);
-		mypageService.insertFollow(smap);
-		return "redirect:/main/Mypage.do?USER_NO="+follower;
+		int ch = mypageService.checkFollw(smap);
+		if(ch>0) {
+			mav.addObject("msg", "이미 팔로우 하셨습니다");
+			mav.addObject("url", "../main/Mypage.do?USER_NO="+follower);
+			mav.setViewName("/mypage/redirect");
+			return mav;
+		}else {
+			mypageService.insertFollow(smap);
+			mav.addObject("msg", "팔로우 하셨습니다");
+			mav.addObject("url", "../main/Mypage.do?USER_NO="+follower);
+			mav.setViewName("/mypage/redirect");
+			return mav;}
+			
+
+		
+		
 		
 	}
 	//스크랩추가
@@ -227,14 +235,19 @@ public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception
 	public String deleteUser(HttpSession session)throws Exception{
 		Map<String, Object> map =(Map<String, Object>)session.getAttribute("session");
 		mypageService.deleteUser(map);
-		return "redirect:/board/mainList.do";
+		return "redirect:../main/logout.do";
 	}
 	
 	@RequestMapping(value = "/Mypage/RepostUser.do")
-	public String repostUser(CommandMap map)throws Exception{
-
+	public ModelAndView repostUser(CommandMap map)throws Exception{
+		
 		mypageService.repostUser(map.getMap());
-		return "redirect:../board/mainList.do";
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", "신고하셨습니다");
+		mav.addObject("url", "../board/mainList.do");
+		mav.setViewName("/mypage/redirect");
+		return mav;
+				
 	}
 
 }
