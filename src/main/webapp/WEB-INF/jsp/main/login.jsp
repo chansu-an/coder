@@ -53,7 +53,7 @@
 		}
 		
 		if(${del_gb == 'Y'}){
-			alert("탈퇴한 회원입니다.");
+			alert("사용하실수 없는 아이디입니다.");
 		}
 		
 		$("#Login").on("click", function(e){ //로그인 버튼				

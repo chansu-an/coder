@@ -241,6 +241,9 @@ public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception
 	public ModelAndView repostUser(CommandMap map)throws Exception{
 		
 		mypageService.repostUser(map.getMap());
+		if(mypageService.countUserReport(map.getMap()) != null) {//신고수20회 이상시 유저 정지
+			mypageService.updateUserDisabled(map.getMap());
+		}
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", "신고하셨습니다");
 		mav.addObject("url", "../board/mainList.do");

@@ -9,7 +9,7 @@ INSERT INTO USERS (USER_NO,PASSWORD,NICK_NAME,PROFILE,EMAIL) VALUES (USERS_SEQ.N
 </insert>
 <!-- 로그인 -->
 <select id="login" parameterType="hashmap" resultType="hashmap"><![CDATA[
-SELECT USER_NO,NICK_NAME,PASSWORD,EMAIL,ACTIVE_SCORE,ADMIN,PROFILE,DEL_GB FROM USERS WHERE EMAIL =#{EMAIL} AND PASSWORD=#{PASSWORD}
+SELECT USER_NO,NICK_NAME,PASSWORD,EMAIL,ACTIVE_SCORE,ADMIN,PROFILE,DEL_GB,USER_STOP FROM USERS WHERE EMAIL =#{EMAIL} AND PASSWORD=#{PASSWORD}
 ]]></select>
 <!-- 유저리스트 -->
 <select id="selectUserList" parameterType="hashmap" resultType="hashmap">
@@ -66,6 +66,10 @@ UPDATE USERS SET DEL_GB = 'N', DEL_DATE = NULL WHERE USER_NO = #{USER_NO}
 DELETE USERS WHERE DEL_DATE+7 < SYSDATE
 ]]></delete>
 
+<!-- 유저 정지 횟수 -->
+<select id="countUserReport" parameterType="hashmap" resultType="hashmap"><![CDATA[
+SELECT REPORT_COUNT FROM USERS WHERE USER_NO = #{USER_NO} AND REPORT_COUNT >= 20
+]]></select>
 <!-- 유저 정지 -->
 <update id="updateUserDisabled" parameterType="hashmap"><![CDATA[
 UPDATE USERS SET USER_STOP = 'Y' WHERE USER_NO = #{USER_NO}
@@ -77,7 +81,7 @@ UPDATE USERS SET USER_STOP = 'N', REPORT_COUNT = 0 WHERE USER_NO = #{USER_NO}
 <!-- 유저 신고 -->
 
 <update id="repostUser" parameterType="hashmap"><![CDATA[
-UPDATE USERS SET REPORT_COUNT = + 1 WHERE USER_NO= #{USER_NO}
+UPDATE USERS SET REPORT_COUNT = REPORT_COUNT + 1 WHERE USER_NO= #{USER_NO}
 
 ]]></update>
 <!-- 유저 활동점수 증가 -->

@@ -80,14 +80,13 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 		
 		Map<String, Object> map = mainService.selectLoginUser(commandMap.getMap());
-
 		if(map == null) {
 			mv.setViewName("redirect:/main/Login.do");			
 			mv.addObject("checklogin", false);
 			return mv;
-		}else if(map.get("DEL_GB").equals("Y")){
+		}else if(map.get("DEL_GB").equals("Y") || map.get("USER_STOP").equals("Y")){//정지회원이나 탈퇴회원시
 			mv.setViewName("redirect:/main/Login.do");
-			mv.addObject("del_gb", map.get("DEL_GB"));
+			mv.addObject("del_gb", "Y");
 			return mv;
 		}else {
 			mv.setViewName("redirect:/board/mainList.do");
