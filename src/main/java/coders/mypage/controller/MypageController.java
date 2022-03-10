@@ -248,5 +248,24 @@ public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception
 		return mav;
 				
 	}
+	
+	@RequestMapping(value = "/Mypage/DeleteFollower.do")
+	public ModelAndView deleteFollower(CommandMap map)throws Exception{
+		mypageService.deleteFollow(map.getMap());
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", "팔로우를 해제 했습니다");
+		mav.addObject("url", "../main/Mypage.do?USER_NO="+map.get("USER_NO"));
+		mav.setViewName("/mypage/redirect");
+		return mav;
+	}
+	@RequestMapping(value = "/Mypage/DeleteScarap.do")
+	public ModelAndView deleteScarap(CommandMap map)throws Exception{
+		mypageService.deleteScarap(map.getMap());
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg", "스크랩을 해제 했습니다");
+		mav.addObject("url", "../main/Mypage.do?USER_NO="+map.get("USER_NO"));
+		mav.setViewName("/mypage/redirect");
+		return mav;
+	}
 
 }

@@ -24,7 +24,7 @@ function deletere() {
 
     <div class="card">  
       <div class="card-header" >
-        <h4 class="mb-3"><span style="color: black">이력서</span></h4>
+        <h4 class="mb-3"><span style="color: black"> ${map.USER_NO}이력서</span></h4>
         </div>
         <div class="card-body" style="padding-bottom: 20px">
             <div class="col-md-6" style="padding-bottom: 20px">
@@ -39,7 +39,7 @@ function deletere() {
               <input type="hidden" value="${map.USER_NO}" name="USER_NO">
               <input type="hidden" value="${map.FILES}" name="FILES">
               <div>
-              <button onclick="document.getElementById('Filedowload').submit()">${map.FILES}</button>
+              <button class="btn" onclick="document.getElementById('Filedowload').submit()">첨부파일다운로드</button>
               </div>
               </form>
               </div>
@@ -88,9 +88,10 @@ function deletere() {
            </div>
           <hr class="my-4">
           <div align="center">
-          
+          <c:if test="${map.USER_NO == sessionScope.session.USER_NO}">
           <button class=" btn btn-primary " onclick="location.href='../Resume/UpdateResume.do'" >수정</button>
           <button class=" btn btn-primary " onclick="deletere()" >삭제</button>
+          </c:if>
           </div>
           </div>
           </div>

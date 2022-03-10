@@ -47,4 +47,8 @@ public interface MypageService {
 	public void repostUser(Map<String, Object> map)throws Exception;
 	
 	public int checkFollw(Map<String, Object> map)throws Exception;
+	
+	public void deleteFollow(Map<String, Object> map)throws Exception;
+	
+	public void deleteScarap(Map<String, Object> map)throws Exception;
 }

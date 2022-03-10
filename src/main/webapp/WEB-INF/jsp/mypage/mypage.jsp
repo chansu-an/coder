@@ -40,9 +40,10 @@
 										<c:forEach items="${slist }" var="row">
 											<tr>
 												<td><a
-													href="../board/detail.do?BOARD_NO=${row.BOARD_NO}&IDENTI_TYPE=${row.IDENTI_TYPE}">${row.TITLE }</a></td>
+													href="../board/detail.do?BOARD_NO=${row.BOARD_NO}&IDENTI_TYPE=${row.IDENTI_TYPE}">${row.TITLE }</a><c:if test="${sessionScope.session.USER_NO == param.USER_NO }"><a class="btn" href="../Mypage/DeleteScarap.do?USER_NO=${sessionScope.session.USER_NO}&BOARD_NO=${row.BOARD_NO}">스크랩 해제</a></c:if></td>
 												<td>${row.BOARD_DATE }</td>
 												<td>${row.RECOMMEND_COUNT }</td>
+												
 											</tr>
 										</c:forEach>
 									</c:when>
@@ -97,7 +98,7 @@
 							</colgroup>
 							<thead class=" text2-primary">
 								<tr>
-									<th scope="col">유저이름</th>
+									<th scope="col">닉네임</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -105,7 +106,8 @@
 									<c:when test="${fn:length(flist) > 0}">
 										<c:forEach items="${flist }" var="row">
 											<tr>
-												<td><a href="../main/Mypage.do?USER_NO=${row.FOLLOWER}">${row.NICK_NAME}</a></td>
+												<td><a href="../main/Mypage.do?USER_NO=${row.FOLLOWER}">${row.NICK_NAME}</a><c:if test="${sessionScope.session.USER_NO == param.USER_NO }"><a  class="btn" href="../Mypage/DeleteFollower.do?USER_NO=${sessionScope.session.USER_NO}&FOLLOWER=${row.FOLLOWER}">팔로우 해제</a></c:if></td>
+												
 											</tr>
 										</c:forEach>
 									</c:when>

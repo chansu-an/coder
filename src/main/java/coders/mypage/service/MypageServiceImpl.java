@@ -133,6 +133,16 @@ public class MypageServiceImpl implements MypageService {
 	public int checkFollw(Map<String, Object> map) throws Exception {
 		return mypageDAO.checkFollw(map);
 	}
+
+	@Override
+	public void deleteFollow(Map<String, Object> map) throws Exception {
+		mypageDAO.deleteFollow(map);
+	}
+
+	@Override
+	public void deleteScarap(Map<String, Object> map) throws Exception {
+		mypageDAO.deleteScarap(map);
+	}
 	
 	
 	
