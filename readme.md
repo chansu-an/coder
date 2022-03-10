@@ -17,13 +17,13 @@
 
 ## 수행 목적
 > 학습 내용에 대한 복습 및 구현 실습 포트폴리오 제작 
->  협업중심 프로젝트에 대한 선행 체험 Spring Framework 활용 연습
+> 협업중심 프로젝트에 대한 선행 체험 Spring Framework 활용 연습
 
 
 
 ### 개발 환경
 
- - franework : Spring 4.0.4 Mybatis  
+ - 프레임 워크 : Spring 4.0.4 Mybatis  
  - 개발 언어 : java 11, javaScript, JSP  
  - DB : Oracle 11g  
  - WAS : Tomcat 9.0
