@@ -24,7 +24,7 @@ function deletere() {
 
     <div class="card">  
       <div class="card-header" >
-        <h4 class="mb-3"><span style="color: black"> ${map.USER_NO}이력서</span></h4>
+        <h4 class="mb-3"><span style="color: black">${map.NAME}님의 이력서</span></h4>
         </div>
         <div class="card-body" style="padding-bottom: 20px">
             <div class="col-md-6" style="padding-bottom: 20px">
