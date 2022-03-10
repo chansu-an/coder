@@ -61,6 +61,10 @@
 			<mvc:mapping path="/**/modify.do"/>
 			<bean class="coders.common.interceptor.Modifyinterceptor"/>
 		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/Delete.do"/>
+			<bean class="coders.common.interceptor.Delinterceptor"/>
+		</mvc:interceptor>
 	</mvc:interceptors>
 </beans>
 
