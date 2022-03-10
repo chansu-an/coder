@@ -110,5 +110,15 @@ public class MypageDAO extends AbstractDAO{
 		delete("user.deleteScarap",map);
 		
 	}
+	
+	public void updateUserDisabled(Map<String, Object> map)throws Exception{
+		update("user.updateUserDisabled",map);
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public Map<String, Object> countUserReport(Map<String, Object> map)throws Exception{
+		return (Map<String, Object>)selectOne("user.countUserReport",map);		
+	}
 
 }

@@ -34,11 +34,15 @@
 	<table class="table">
 		<colgroup>
 			<col width="*%" />
+			<col width="30%" />
+			<col width="30%" />
 		</colgroup>
 		<thead class="text2-primary">
 		
 			<tr>
 				<th scope="col">닉네임</th>
+				<th scope="col">수락여부</th>
+				<th scope="col">이력서</th>
 			</tr>
 			</thead>
 	
@@ -50,16 +54,22 @@
 					<c:forEach items="${list}" var="row">
 						<tr>
 							<td>${row.NICK_NAME }</td>
+							
 							<c:if test="${sessionScope.session.USER_NO==map.USER_NO}">
+							<td>
 							<form action="../Project/ProjectApp.do">
 							<input type="hidden" name="USER_NO" value="${row.USER_NO}">
 							<input type="hidden" name="PROJECT_NO" value="${row.PROJECT_NO}">
 							<input type="submit" class="btn" value="수락">
 							</form>
+							
+							</td>
+							<td>
 							<form action = "../Resume/Detail.do">
 							<input type="hidden" name="USER_NO" value="${row.USER_NO}">
 							<input type="submit" class="btn" value="이력서 보기">
 							</form>
+							</td>
 							</c:if>
 						</tr>
 					</c:forEach>

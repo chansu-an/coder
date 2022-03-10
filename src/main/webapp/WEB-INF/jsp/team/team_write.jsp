@@ -23,7 +23,7 @@
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-header">
-							<h2>프로젝트 작성</h2>
+							<h2>작업일지 작성</h2>
 				<!-- Page content-->
 				<form id="frm" name="frm" method="post" enctype="multipart/form-data">
 				<input type = "hidden" name = "PROJECT_NO" value = "${param.PROJECT_NO}">

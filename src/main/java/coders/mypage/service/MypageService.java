@@ -51,4 +51,8 @@ public interface MypageService {
 	public void deleteFollow(Map<String, Object> map)throws Exception;
 	
 	public void deleteScarap(Map<String, Object> map)throws Exception;
+	
+	public void updateUserDisabled(Map<String, Object> map) throws Exception;
+	
+	public Map<String, Object> countUserReport(Map<String, Object> map) throws Exception;
 }

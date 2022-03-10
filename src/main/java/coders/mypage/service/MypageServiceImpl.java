@@ -143,12 +143,18 @@ public class MypageServiceImpl implements MypageService {
 	public void deleteScarap(Map<String, Object> map) throws Exception {
 		mypageDAO.deleteScarap(map);
 	}
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public void updateUserDisabled(Map<String, Object> map) throws Exception {
+		mypageDAO.updateUserDisabled(map);
+		
+	}
+
+	@Override
+	public Map<String, Object> countUserReport(Map<String, Object> map) throws Exception {
+		return mypageDAO.countUserReport(map);
+		
+	}	
 	
 }
 
