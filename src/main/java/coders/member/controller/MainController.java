@@ -65,6 +65,10 @@ public class MainController {
 			mv.addObject("checklogin", request.getParameter("checklogin"));			
 		}
 		
+		if(request.getParameter("del_gb") != null) {
+			mv.addObject("del_gb", request.getParameter("del_gb"));
+		}
+		
 		mv.addObject("url", naverAuthUrl);
 		
 		return mv;
@@ -76,11 +80,14 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 		
 		Map<String, Object> map = mainService.selectLoginUser(commandMap.getMap());
-	
-		
+
 		if(map == null) {
 			mv.setViewName("redirect:/main/Login.do");			
 			mv.addObject("checklogin", false);
+			return mv;
+		}else if(map.get("DEL_GB").equals("Y")){
+			mv.setViewName("redirect:/main/Login.do");
+			mv.addObject("del_gb", map.get("DEL_GB"));
 			return mv;
 		}else {
 			mv.setViewName("redirect:/board/mainList.do");
@@ -220,26 +227,6 @@ public class MainController {
 		mainService.returnUserDisabled(commandMap.getMap());
 			
 		return mav;
-	}
-	
-	@RequestMapping(value="/main/DeleteUserList.do", method = RequestMethod.GET)
-	public ModelAndView deleteUserList(CommandMap commandMap) throws Exception{
-		ModelAndView mv = new ModelAndView("/main/deleteUserList");
-		
-		List<Map<String, Object>> list = mainService.selectDeleteUserList(commandMap.getMap());
-		
-		mv.addObject("list", list);
-		return mv;
-	}
-	
-	@RequestMapping(value="/main/StopUserList.do", method = RequestMethod.GET)
-	public ModelAndView stopUserList(CommandMap commandMap) throws Exception{
-		ModelAndView mv = new ModelAndView("/main/stopUserList");
-		
-		List<Map<String, Object>> list = mainService.selectStopUserList(commandMap.getMap());
-		
-		mv.addObject("list", list);
-		return mv;
 	}
 	
 	@RequestMapping(value="/main/logout.do", method = RequestMethod.GET)

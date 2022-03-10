@@ -31,7 +31,7 @@
               
               <hr/>
 
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" id="Login">Sign in</button>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" id="Login">Sign in</button><br/><br/>
               <div id="naver_id_login" style="text-align:center"><a class="" href="${url}">
               <img width="100%" height="100%" src="${pageContext.request.contextPath}/img/btnG_naver.png"/></a></div>
               <hr class="my-4"/>
@@ -47,12 +47,16 @@
 	<%@ include file="/WEB-INF/include/include-body.jspf" %>
 	<script type="text/javascript">
 	$(document).ready(function(){
-		if(!${checklogin}){
+		if(!${checklogin}){	
 			alert("아이디와 비밀번호가 일치하지 않습니다.");
 			$('.focused-email').focus();
 		}
 		
-		$("#Login").on("click", function(e){ //로그인 버튼		
+		if(${del_gb == 'Y'}){
+			alert("탈퇴한 회원");
+		}
+		
+		$("#Login").on("click", function(e){ //로그인 버튼				
 			e.preventDefault();
 			var ID = $("#EMAIL").val();
 			var PW = $("#PASSWORD").val();

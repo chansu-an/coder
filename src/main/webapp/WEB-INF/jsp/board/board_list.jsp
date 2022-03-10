@@ -36,7 +36,7 @@
 									</c:when>
 								</c:choose>
 
-								<!-- <h4 class="card-title"> Simple Table</h4> -->
+								
 								<form name="ORDER_TYPE" method="get">
 									<p style="text-align: right;">
 										<select id="ORDER_TYPE" name="ORDER_TYPE"
@@ -154,9 +154,17 @@
 															<c:forEach items="${list }" var="row">
 																<tr>
 																	<td>${row.ROWNUM }</td>
-																	<td><a
-																		href="/net/board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a>
-																		[${row.REPLY_COUNT}]</td>
+																	<td>
+																	<c:choose>
+																		<c:when test="${session.ADMIN == 'Y' || row.USER_NO == session.USER_NO}">
+																			<a href="/net/board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a>
+																			[${row.REPLY_COUNT}]
+																		</c:when>
+																		<c:otherwise>
+																			${row.TITLE }[${row.REPLY_COUNT}]
+																		</c:otherwise>
+																	</c:choose>
+																	</td>
 																	<td><c:choose>
 																			<%-- 관리자답변 있을 때 --%>
 																			<c:when test="${row.REPLY_COUNT !=0 }">

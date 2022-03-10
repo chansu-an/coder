@@ -50,6 +50,9 @@
 																	<c:when test="${row.DEL_GB == 'Y'}">
 																		<a href="/net/main/restoreUser.do?USER_NO=${row.USER_NO }" class="btn" id="restore">복구하기</a>
 																	</c:when>
+																	<c:when test="${row.ADMIN == 'Y'}">
+																		<input type='button' disabled='disabled' value='관리자' />
+																	</c:when>
 																	<c:otherwise>
 																		<input type='button' disabled='disabled' value='일반회원' />
 																	</c:otherwise>
@@ -58,9 +61,6 @@
 																	<c:when test="${row.USER_STOP == 'Y'}">
 																		<a href="/net/main/returnUserDisabled.do?USER_NO=${row.USER_NO }" class="btn" id="return">정지복구</a>
 																	</c:when>
-																	<c:otherwise>
-																		<input type='button' disabled='disabled' value='일반회원' />
-																	</c:otherwise>
 																</c:choose></td>
 														</tr>
 													</c:forEach>
