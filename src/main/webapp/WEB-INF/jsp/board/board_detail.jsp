@@ -65,6 +65,9 @@ function com(n, m) {
 									<c:when test="${map.IDENTI_TYPE == '3' }">
 										<h2>자유게시판</h2>
 									</c:when>
+									<c:when test="${map.IDENTI_TYPE == '4' }">
+										<h2>건의사항</h2>
+									</c:when>
 								</c:choose>
 								<!-- 게시판 -->
 
@@ -153,7 +156,6 @@ function com(n, m) {
 													</div>
 												</div>
 												<div class="card-body">
-													<!-- Single comment-->
 													<c:if test="${bestcomment.RECOMMAND_COUNT != null }">
 														<div class="d-flex">
 															<div class="flex-shrink-0">
@@ -166,14 +168,12 @@ function com(n, m) {
 														</div>
 														<br />
 													</c:if>
-													<!-- Comment with nested comments-->
 													<c:forEach items="${list}" var="row" varStatus="var">
 														<c:choose>
 															<c:when test="${row.DEL_GB == 'N' }">
 																<input type="hidden" id="REF_NO_${var.index }" value="${row.REF_NO}" />
 																<input type="hidden" id="REF_STEP_${var.index }" value="${row.REF_STEP}" />
 																<div class="d-flex mb-4">
-																	<!-- Parent comment-->
 																	<div class="ms-3">
 																		<div class="fw-bold">${row.NICK_NAME} | ${row.REPLY_DATE }</div>
 																		<div onclick="com(${row.RE_NO}, ${var.index })">${row.CONTEXT}</div>
@@ -199,7 +199,18 @@ function com(n, m) {
 														</c:choose>
 													</c:forEach>
 													<!-- Comment form-->
-													<c:choose>
+													<c:if test="${!empty sessionScope.session.USER_NO }">
+														<form class="mb-4" action="/net/board/commentInsert.do" method="post">
+															<div class="input-group">
+																<input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}" /> <input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}" /> <input type="hidden" name="USER_NO" value="${session.USER_NO}" />
+																<textarea class="form-control" rows="3" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요."></textarea>
+																<span class="input-group-btn">
+																	<button class="btn btn-default" name="commentInsertBtn">등록</button>
+																</span>
+															</div>
+														</form>
+													</c:if>
+													<%-- <c:choose>
 														<c:when test="${map.IDENTI_TYPE != '4' && !empty sessionScope.session.USER_NO}">
 															<form class="mb-4" action="/net/board/commentInsert.do" method="post">
 																<div class="input-group">
@@ -222,7 +233,7 @@ function com(n, m) {
 																</div>
 															</form>
 														</c:when>
-													</c:choose>
+													</c:choose> --%>
 													<div style="padding-left: 50%; padding-right: 50%;">
                 <nav>
                     <ul class="pagination">

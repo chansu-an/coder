@@ -277,7 +277,7 @@ public class BoardController {
 		return mav;
 	}
 	
-	//신고글 리스트
+	/*신고글 리스트
 	@RequestMapping(value="/board/reportList.do")
 	public ModelAndView reportList(CommandMap commandMap) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/board_list");
@@ -285,7 +285,7 @@ public class BoardController {
 		mav.addObject("list", list);
 		
 		return mav;
-	}
+	}*/
 	
 
 	//글 추천하기
