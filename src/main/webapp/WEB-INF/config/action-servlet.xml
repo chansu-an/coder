@@ -47,6 +47,7 @@
    	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**/write.do"/>
+			<mvc:mapping path="/**/Write.do"/>
 			<bean class="coders.common.interceptor.WriteInterceptor"/>
 		</mvc:interceptor>
 		<mvc:interceptor>
