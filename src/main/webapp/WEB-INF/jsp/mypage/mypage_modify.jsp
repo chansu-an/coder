@@ -36,7 +36,8 @@
 								<label for="address2" class="form-label">프로필사진</label>
 								 <br><input
 									type="hidden" name="PROFILE" value="${map.PROFILE }">
-								<img width="250" height="250" src="${map.PROFILE }"><br>
+									<c:if test="${map.PROFILE == 'TEMP' }"><img width="250" height="250" src="../img/profile/temp/profile.jpg"><br></c:if>
+									<c:if test="${map.PROFILE != 'TEMP' }"><img width="250" height="250" src="${map.PROFILE }"><br></c:if>
 								<label class="btn" for ="input-file">
 								업로드
 								</label>
