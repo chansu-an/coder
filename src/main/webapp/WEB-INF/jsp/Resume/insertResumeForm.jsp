@@ -39,27 +39,27 @@ function zipcode(){
           <div class="row g-3">
             <div class="col-md-6">
               <label for="NAME" class="form-label"><span style="color: black">이름</span></label>
-              <input type = "text" class="form-control" name="NAME" id="NAME" placeholder="이름">
+              <input type = "text" class="form-control" name="NAME" id="NAME" placeholder="이름" required>
               </div>
               <div class="col-md-6">
               <label for="NAME" class="form-label"><span style="color: black">첨부파일</span></label>
-              <input type = "file" class="form-control" name="FILES" id="FILES" placeholder="이름">
+              <input type = "file" class="form-control" name="FILES" id="FILES" placeholder="이름" required>
               </div>
               <div class="col-md-6">
                 <label for="SKILL" class="form-label"><span style="color: black">자신있는기술</span></label>
-              <input type="text" class="form-control" name="SKILL" id="SKILL" placeholder="예:java,javascript...">
+              <input type="text" class="form-control" name="SKILL" id="SKILL" placeholder="예:java,javascript..." required>
               </div>
             <div class="col-md-6">
               <label for="TELL" class="form-label"><span style="color: black">전화번호</span></label>
-               <input type="tel" class="form-control" name="TELL" id="TELL" placeholder="전화번호">
+               <input type="tel" class="form-control" name="TELL" id="TELL" placeholder="전화번호" required>
             </div>
             <div class="col-md-6">
               <label for="email" class="form-label"><span style="color: black">이메일</span></label>
-               <input type="email" class="form-control" name="EMAIL" id="EMAIL" placeholder="이메일">
+               <input type="email" class="form-control" name="EMAIL" id="EMAIL" placeholder="이메일" required>
             </div>
             <div class="col-md-6">
               <label for="BLOG" class="form-label"><span style="color: black">포트폴리오</span></label>
-               <input type="url" class="form-control" name="BLOG" id="BLOG" placeholder="포트폴리오" >
+               <input type="url" class="form-control" name="BLOG" id="BLOG" placeholder="포트폴리오" required>
             </div>
             <div class="col-md-6">
               <label for="zipcode" class="form-label"><span style="color: black">우편번호</span></label>
