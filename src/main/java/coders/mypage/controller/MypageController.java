@@ -147,6 +147,7 @@ public ModelAndView mypageDelete(HttpSession session)throws Exception {
 		ModelAndView mav = new ModelAndView();
 		Map<String, Object> smap = (Map<String, Object>)session.getAttribute("session");
 		mypageService.deleteUser(smap);
+		session.invalidate();
 		mav.setViewName("redirect:../board/mainList.do");
 		return mav;
 }
