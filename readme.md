@@ -1,9 +1,5 @@
 ﻿
  
-<img src="https://img.shields.io/badge/java-#007396?style=flat-square&logo=java&logoColor=red"/>
-
-
-
 ![코더]( https://user-images.githubusercontent.com/83687868/157148403-f140fb5b-e8e9-4d55-9452-2ce54a0c2ae1.png )
 #  Coders
 
