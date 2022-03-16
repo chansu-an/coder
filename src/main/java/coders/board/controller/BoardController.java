@@ -1,5 +1,7 @@
 package coders.board.controller;
 
+import java.net.http.HttpHeaders;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,9 +10,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -116,20 +123,27 @@ public class BoardController {
 	
 	//글 상세보기
 	@RequestMapping(value="/board/detail.do")
-	public ModelAndView selectBoardDetail(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
+	public ModelAndView selectBoardDetail(@RequestParam Map<String, Object> cmap,CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/board_detail");
-			
+		System.out.println(cmap);
+		cmap = commandMap.getMap();
+		System.out.println(cmap);
+		System.out.println(commandMap.getMap());
+
 		int count;
 		String page = request.getParameter("PAG_NUM");
 		int pag = 1;
+		if(page==null) {
+			boardService.updateHitCnt(commandMap.getMap());//조회수
+			
+			}
 		if(page!=null) {
 			pag = Integer.parseInt(page);
 		}
 		count = boardService.commentCount(commandMap.getMap());
 		packaging.Packag(commandMap.getMap(), pag, 5, count);
 
-		
-		boardService.updateHitCnt(commandMap.getMap());//조회수
+		System.out.println(commandMap.getMap());
 		Map<String, Object> map = boardService.selectBoardDetail(commandMap.getMap());
 		Map<String, Object> bestcomment = boardService.selectBestComment(commandMap.getMap());//인기 댓글
 		List<Map<String, Object>> list = boardService.selectCommentList(commandMap.getMap());//댓글 리스트
@@ -299,14 +313,45 @@ public class BoardController {
 	}
 
 	//게시글 댓글 작성
-	@RequestMapping(value="/board/commentInsert.do", method = RequestMethod.POST)
-	public ModelAndView InsertComment(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
-		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-		
+	@RequestMapping(value="/board/commentInsert.do")
+	@ResponseBody
+	public void InsertComment(CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
+	
 		boardService.insertComment(commandMap.getMap());
-		
-		return mav;
 	}
+	
+	 @RequestMapping(value="/board/commentList.do", produces="application/json; charset=utf8")
+	 @ResponseBody
+	  public List<Map<String, Object>> ajax_commentList(CommandMap commandMap, HttpServletRequest request) throws Exception{
+	        
+			JSONObject jsonObj = new JSONObject();
+			JSONArray jsonArr = new JSONArray();
+			HashMap<String, Object> hash = new HashMap<String, Object>();
+			int count = boardService.commentCount(commandMap.getMap());
+			int pag = 1;
+			String page = request.getParameter("PAG_NUM");
+			
+			if(page != null) {
+			 pag = Integer.parseInt(page);}
+			
+			packaging.Packag(commandMap.getMap(), pag, 5, count);
+	        // 해당 게시물 댓글
+	        List<Map<String, Object>> commentVO = boardService.selectCommentList(commandMap.getMap());
+	        
+	        if(commentVO.size() > 0){
+	            for(int i=0; i<commentVO.size(); i++){
+	            	hash = new HashMap<String, Object>(commentVO.get(i));
+	                jsonObj = new JSONObject();
+	    			jsonObj.putAll(hash);
+	    			jsonArr.add(jsonObj);
+	            }
+	            
+	        }
+	             jsonObj.putAll(new HashMap<String, Object>(commandMap.getMap()));
+	             jsonArr.add(jsonObj);
+	        return jsonArr;
+	        
+	    }
 	
 	//게시글 대댓글 작성
 	@RequestMapping(value="/board/commentInsert2.do", method = RequestMethod.POST)
@@ -319,12 +364,11 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="/board/commentDelete.do")
-	public ModelAndView deleteComment(CommandMap commandMap, HttpServletRequest request) throws Exception {
+	public void deleteComment(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/board/detail.do?BOARD_NO=" + request.getParameter("BOARD_NO") + "&IDENTI_TYPE=" + request.getParameter("IDENTI_TYPE"));
-
+		System.out.println(commandMap.getMap());
 		boardService.deleteComment(commandMap.getMap());
 		
-		return mav;
 	}
 	
 	//스크랩 추가하기
