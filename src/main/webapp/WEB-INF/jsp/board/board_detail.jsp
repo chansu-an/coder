@@ -3,36 +3,6 @@
 <html>
 <head>
 <script type="text/javascript">
-var ch = true
-function com(n, m) {
-	let REF_NO2 = $("#REF_NO_" + m).val();
-	let REF_STEP2 = $("#REF_STEP_" + m).val();
-	if(document.getElementById('coms'+n+'commet') != null){
-	$('#coms'+n+'commet').empty();
-	document.getElementById('coms'+n+'commet').id = 'coms'+n
-	}else{	
-        var str = "<label for='content'>대댓글 작성</label>";
-        str +="<form action='../board/commentInsert2.do' method='post'>" ;
-        str +="<div class='input-group'>";
-        str +="<input type='hidden' name='BOARD_NO' value='${map.BOARD_NO}'/>"
-        str +="<input type='hidden' name='IDENTI_TYPE' value='${map.IDENTI_TYPE}'/>"
-        str +="<input type='hidden' name='USER_NO' value='${session.USER_NO}'/>"
-        str +="<input type='hidden' name='REF_NO' value='"+REF_NO2+"'/>"
-        str +="<input type='hidden' name='REF_STEP' value='"+REF_STEP2+"'/>"
-        str +="<textarea class='form-control' rows='3' id='CONTEXT' name='CONTEXT' placeholder='내용을 입력하세요.'></textarea>"
-        str +="<span class='input-group-btn'>"
-        str +="<button class='btn btn-default' name='commentInsertBtn'>등록</button>"
-        str +="</span>"
-        str +="</div>"
-        str +="<br/>"
-        str +="</form>"
-    $("#coms"+n).append(str);
-        document.getElementById('coms'+n).id = 'coms'+n+'commet'
-    }
-        /* document.getElementById('test'+n).className = 'navbar-collapse collapse show';
-         test = false; */
-};
-
 
 </script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
@@ -155,7 +125,7 @@ function com(n, m) {
 														<c:out value="${count}"></c:out>
 													</div>
 												</div>
-												<div class="card-body">
+												<div class="card-body" >
 													<c:if test="${bestcomment.RECOMMAND_COUNT != null }">
 														<div class="d-flex">
 															<div class="flex-shrink-0">
@@ -168,44 +138,15 @@ function com(n, m) {
 														</div>
 														<br />
 													</c:if>
-													<c:forEach items="${list}" var="row" varStatus="var">
-														<c:choose>
-															<c:when test="${row.DEL_GB == 'N' }">
-																<input type="hidden" id="REF_NO_${var.index }" value="${row.REF_NO}" />
-																<input type="hidden" id="REF_STEP_${var.index }" value="${row.REF_STEP}" />
-																<div class="d-flex mb-4">
-																	<div class="ms-3">
-																		<div class="fw-bold">${row.NICK_NAME} | ${row.REPLY_DATE }</div>
-																		<div onclick="com(${row.RE_NO}, ${var.index })">${row.CONTEXT}</div>
-																	</div>
-																	<c:if test="${row.USER_NO == sessionScope.session.USER_NO }">
-			               &nbsp;<a href="/net/board/commentDelete.do?RE_NO=${row.RE_NO }&BOARD_NO=${map.BOARD_NO}&IDENTI_TYPE=${map.IDENTI_TYPE}"><i class="fas fa-trash"></i></a>
-																	</c:if>
-																	<c:if test="${!empty sessionScope.session.USER_NO}">
-						   &nbsp;<a href="#this" onclick="fn_recommendComment(${var.index});"><i class="fas fa-thumbs-up"></i></a>
-																	</c:if>
-																</div>
-																<c:if test="${!empty sessionScope.session.USER_NO }">
-																	<div id="coms${row.RE_NO}"></div>
-																</c:if>
-															</c:when>
-															<c:otherwise>
-																<div class="d-flex mb-4">
-																	<div class="ms-3">
-																		<div class="fw-bold">[삭제된 댓글입니다]</div>
-																	</div>
-																</div>
-															</c:otherwise>
-														</c:choose>
-													</c:forEach>
+													<div id="comlist"></div>
 													<!-- Comment form-->
 													<c:if test="${!empty sessionScope.session.USER_NO }">
-														<form class="mb-4" action="/net/board/commentInsert.do" method="post">
+														<form id="commentForm" class="mb-4" action="/net/board/commentInsert.do" method="post">
 															<div class="input-group">
 																<input type="hidden" name="BOARD_NO" value="${map.BOARD_NO}" /> <input type="hidden" name="IDENTI_TYPE" value="${map.IDENTI_TYPE}" /> <input type="hidden" name="USER_NO" value="${session.USER_NO}" />
 																<textarea class="form-control" rows="3" id="CONTEXT" name="CONTEXT" placeholder="내용을 입력하세요."></textarea>
 																<span class="input-group-btn">
-																	<button class="btn btn-default" name="commentInsertBtn">등록</button>
+																	<button class="btn btn-default" id="comment">등록</button>
 																</span>
 															</div>
 														</form>
@@ -236,22 +177,8 @@ function com(n, m) {
 													</c:choose> --%>
 													<div style="padding-left: 50%; padding-right: 50%;">
                 <nav>
-                    <ul class="pagination">
-                        <c:if test="${pmap.startpag>1}">
-                            <li><a
-                                href="../board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE }&BOARD_NO=${param.BOARD_NO }&PAG_NUM=${pmap.startpag-10}"
-                                aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-                        </c:if>
-                        <c:forEach var="i" begin="${pmap.startpag }"
-                            end="${pmap.endpage }">
-                            <li id ="${i}" class=""><a
-                                href="../board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE }&BOARD_NO=${param.BOARD_NO }&PAG_NUM=${i}">${i}</a></li>
-                        </c:forEach>
-                        <c:if test="${pmap.endpage<pmap.maxpag}">
-                            <li><a
-                                href="../board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE }&BOARD_NO=${param.BOARD_NO }&PAG_NUM=${pmap.startpag+10}"
-                                aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
-                        </c:if>
+                    <ul class="pagination" id="paging">
+                       
                     </ul>
                 </nav>
             </div>
@@ -273,12 +200,123 @@ function com(n, m) {
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 	<script type="text/javascript">
-	
-	$(window).load (function() {
-	    var ch = 1;
-	     ch = ${param.PAG_NUM}
-	    document.getElementById(ch).className = 'active'
+	$(function(){
+		getCommentList(1)
 	});
+	function page(ch) {
+		var c = 1;
+		c =ch
+		getCommentList(c);
+		/* $("#paging").ready(function(){
+		 document.getElementById(c).className = 'active'
+		}) */
+	  
+	    
+	  
+	};
+	function comdelete(no){
+		event.preventDefault();
+		var no = no;
+		$.ajax({
+	        type:'GET',
+	        url : "<c:url value='/board/commentDelete.do'/>",
+	      	data : {
+	      		RE_NO : no
+	      	},success : function(){
+	      		alert(22)
+	      		getCommentList(1)
+	      	},error : function(){
+				alert('11');
+				getCommentList(1)
+			}
+	      	
+	})
+	}
+	function getCommentList(p){
+		
+	    var p = p;
+	    $.ajax({
+	        type:'GET',
+	        url : "<c:url value='/board/commentList.do'/>",
+	        dataType : "json",
+	      	data : {
+	      		BOARD_NO : ${param.BOARD_NO},
+	      		IDENTI_TYPE : ${param.IDENTI_TYPE},
+	      		PAG_NUM :  p
+	      	},
+	        success : function(data){
+	        	 var html = "";
+	        	 var page = "";
+	        	if(data.length > 0){
+	        		
+	                for(i=0; i<5; i++){
+	                	if(data[i].DEL_GB == 'N'){
+	                	html += "<div>"
+	                    html += "<input type='hidden' id=REF_NO_${var.index } value="+data[i].RE_NO+" />";
+	                    html += "<input type='hidden' id=REF_STEP_${var.index } value='"+data[i].REF_STEP+"' />";
+	                    html += "<div class='d-flex mb-4'>";
+	                    html += "<div class='ms-3'>";
+	                    html += "<div class='fw-bold'>"+data[i].NICK_NAME+"|"+ data[i].REPLY_DATE+"</div>";
+	                    html += "<div  onclick = 'com("+i+","+data[i].RE_NO+","+data[i].REF_STEP+")'>"+data[i].CONTEXT+"</div>";
+	                    html += "</div>";
+	                    if(data[i].USER_NO==${sessionScope.session.USER_NO}){
+	                    html += "&nbsp;<a onclick = 'comdelete("+data[i].RE_NO+")'><i class='fas fa-trash'></i></a>";
+	                    html += "</div>";
+	                    html += "<div id='coms"+data[i].RE_NO+"'></div>";
+	                    }else if(${sessionScope.session.USER_NO!=null}){
+	                    html += "&nbsp;<a href='#this' onclick='fn_recommendComment(${var.index});'><i class='fas fa-thumbs-up'></i></a>";
+	                    html += "<div id='coms"+data[i].RE_NO+"'></div>";
+	                    }
+	                    html += "</div>"
+	                    }else{
+	                  	   html += "<div class='d-flex mb-4'>";
+		                   html += "<div class='ms-3'>";
+		                   html += "<div class='fw-bold'>[삭제된 댓글입니다]</div>";
+		                   html += "</div>";
+		                   html += "</div>";
+	                    }
+	                   
+	                }
+	                if(data[5].startpag>1){
+	                   var Previous = data[5].startpag-10
+	                	page += " <li onclick='page("+Previous+")' ><a aria-label='Previous'><span aria-hidden='tru'>&laquo;</span></a></li>";
+	                }for(i=data[5].startpag;i<data[5].endpage;i++){
+	                	page += "<li onclick='page("+i+")' id ="+i+" class='tt'><a>"+i+"</a></li>";
+	                }if(data[5].endpage<data[5].maxpag){
+	                	var next = data[5].startpag+10
+	                	page += "<li onclick='page("+next+")' ><a aria-label='Next'><span aria-hidden='true'>&#187;</span></a></li>";
+	                }
+	                
+	                
+	            } else {
+	                html += "<div>";
+	                html += "<div><table class='table'><h6><strong>등록된 댓글이 없습니다.</strong></h6>";
+	                html += "</table></div>";
+	                html += "</div>";
+	                
+	            }	$("#comlist").html(html)
+	                $("#paging").html(page)
+	            }
+
+	        })}
+	$('#comment').bind("click",function(e){
+		e.preventDefault();
+		$.ajax({
+			type:'POST',
+			url : "<c:url value='/board/commentInsert.do'/>",
+			data : $("#commentForm").serialize(),
+			success : function(data){
+				 getCommentList(1);
+				 $("#CONTEXT").val("");
+			},
+			error : function(){
+				alert('11');
+			}
+			
+		})
+	})
+	
+	
 	
     let check_recommend = true;
 	$(document).ready(function(){
@@ -293,7 +331,6 @@ function com(n, m) {
 						 contentType : "application/json; charset=UTF-8",
 						 success : function(result){
 							 alert("스크랩 취소");
-							 location.reload();
 						 },
 						 error : function(){
 							 alert("");
@@ -402,8 +439,38 @@ function com(n, m) {
 		});
 		++gfv_count
 	}
+    
+    
     </script>
 
 
 </body>
+    <script type="text/javascript">
+    function com(x,y,z) {
+    	if(document.getElementById('coms'+y+'commet') != null){
+    	$('#coms'+y+'commet').empty();
+    	document.getElementById('coms'+y+'commet').id = 'coms'+y
+    	}else{	
+            var str = "<label for='content'>대댓글 작성</label>";
+            str +="<form action='../board/commentInsert2.do' method='post'>" ;
+            str +="<div class='input-group'>";
+            str +="<input type='hidden' name='BOARD_NO' value='${map.BOARD_NO}'/>"
+            str +="<input type='hidden' name='IDENTI_TYPE' value='${map.IDENTI_TYPE}'/>"
+            str +="<input type='hidden' name='USER_NO' value='${session.USER_NO}'/>"
+            str +="<input type='hidden' name='REF_NO' value='"+y+"'/>"
+            str +="<input type='hidden' name='REF_STEP' value='"+z+"'/>"
+            str +="<textarea class='form-control' rows='3' id='CONTEXT' name='CONTEXT' placeholder='내용을 입력하세요.'></textarea>"
+            str +="<span class='input-group-btn'>"
+            str +="<button class='btn btn-default' name='commentInsertBtn'>등록</button>"
+            str +="</span>"
+            str +="</div>"
+            str +="<br/>"
+            str +="</form>"
+        $("#coms"+y).append(str);
+            document.getElementById('coms'+y).id = 'coms'+y+'commet'
+        }
+
+    };
+    </script>
+
 </html>
