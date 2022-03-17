@@ -1,6 +1,8 @@
 package coders.mypage.controller;
 
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -12,6 +14,7 @@ import coders.mypage.service.MypageService;
 import coders.packing.Packaging;
 
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -153,28 +156,58 @@ public ModelAndView mypageDelete(HttpSession session)throws Exception {
 }
 	//알림페이지로
 	@RequestMapping(value = "/Mypage/Notification.do")
-public ModelAndView selectArlimeList(HttpServletRequest request)throws Exception {
-		ModelAndView mav = new ModelAndView();
-		Map<String, Object> bmap = new HashMap<String, Object>();
-		Map<String, Object> pmap = new HashMap<String, Object>();
-		bmap.put("USER_NO", request.getParameter("USER_NO"));
-		pmap.put("USER_NO", request.getParameter("USER_NO"));
-		int bpnum = Integer.parseInt(request.getParameter("B_PAG_NUM"));
-		int ppnum = Integer.parseInt(request.getParameter("P_PAG_NUM"));
-		int pcount = mypageService.countProjectArList(pmap);
+public String selectArlimeList()throws Exception {
+		return "/mypage/Notification";
+}
+	 @RequestMapping(value = "/Mypage/Notpage.do")
+	 @ResponseBody
+public List<Map<String, Object>> notpage(HttpServletRequest request) throws Exception{
+	Map<String, Object> bmap = new HashMap<String, Object>();
+	Map<String, Object> pmap = new HashMap<String, Object>();
+	bmap.put("USER_NO", request.getParameter("USER_NO"));
+	pmap.put("USER_NO", request.getParameter("USER_NO"));
+	String bpn =request.getParameter("B_PAG_NUM");
+	String ppn = request.getParameter("P_PAG_NUM");
+	HashMap<String, Object> hash = new HashMap<String, Object>();
+	JSONObject jsonObj = new JSONObject();
+	JSONArray jsonArr = new JSONArray();
+	if(bpn !=null) {
+		int bpnum = Integer.parseInt(bpn);
 		int bcount = mypageService.countArlimeList(bmap);
 		bmap = packaging.Packag(bmap, bpnum, 5, bcount);
-		pmap = packaging.Packag(pmap, ppnum, 5, pcount);
-		
 		List<Map<String, Object>> list1 = mypageService.selectArlimeList(bmap);
+		if(list1.size()>0) {
+			for(int i = 0; i<list1.size();i++) {
+				hash = new HashMap<String, Object>(list1.get(i));
+				jsonObj = new JSONObject();
+				jsonObj.putAll(hash);
+				jsonArr.add(jsonObj);
+			}
+			jsonObj.putAll(new HashMap<String, Object>(bmap));
+			jsonArr.add(jsonObj);
+		}
+		return jsonArr;
+	}if(ppn!=null) {
+		int ppnum = Integer.parseInt(ppn);
+		int pcount = mypageService.countProjectArList(pmap);
+		pmap = packaging.Packag(pmap, ppnum, 5, pcount);
 		List<Map<String, Object>> list2 = mypageService.selectProjetArList(pmap);
-		mav.addObject("list1", list1);
-		mav.addObject("list2", list2);
-		mav.addObject("bmap", bmap);
-		mav.addObject("pmap", pmap);	
-		mav.setViewName("/mypage/Notification");
-		return mav;
+		if(list2.size()>0) {
+			for(int i = 0; i<list2.size();i++) {
+				hash = new HashMap<String, Object>(list2.get(i));
+				jsonObj = new JSONObject();
+				jsonObj.putAll(hash);
+				jsonArr.add(jsonObj);
+			}
+			jsonObj.putAll(new HashMap<String, Object>(pmap));
+			jsonArr.add(jsonObj);
+			
+		}
+		return jsonArr;
+	}	
+	return null;
 }
+	
 	//작성글 알림 삭제
 	@RequestMapping(value = "/Mypage/ArlistClick.do")
 	public ModelAndView clickArlist(CommandMap map)throws Exception {

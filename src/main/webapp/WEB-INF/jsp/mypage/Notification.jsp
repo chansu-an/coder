@@ -4,10 +4,108 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		b_page(1)
+		p_page(1)
+	})
+
+function b_page(p){
+	
+		    var p = p;
+		    $.ajax({
+		        type:'GET',
+		        url : "<c:url value='/Mypage/Notpage.do'/>",
+		        dataType : "json",
+		      	data :{
+		      		USER_NO : ${sessionScope.session.USER_NO},
+		        	B_PAG_NUM : p
+		      	},
+		        success : function(data){
+		        	 var html = "";
+		        	 var page = "";
+		        	if(data.length > 0){
+		        		
+		                for(i=0; i<5; i++){
+		                	html += "<tr><td><a href='../Mypage/ArlistClick.do?BOARD_NO="+data[i].BOARD_NO+"&IDENTI_TYPE="+data[i].IDENTI_TYPE+"'>"+data[i].TITLE+"</a></td><td>새로운 댓글이 달렸습니다</td></tr>";
+		                    
+		                }
+		                if(data[5].startpag>1){
+		                   var Previous = data[5].startpag-10
+		                	page += " <li onclick='b_page("+Previous+")' ><a aria-label='Previous'><span aria-hidden='tru'>&laquo;</span></a></li>";
+		                }for(i=data[5].startpag;i<data[5].endpage;i++){
+		                	if(p == i){
+		                		page += "<li onclick='p_page("+i+")' id =b_"+i+" class='action'><a>"+i+"</a></li>";
+		                	}else{
+		                	page += "<li onclick='b_page("+i+")' id =b_"+i+" class=''><a>"+i+"</a></li>";}
+		                }if(data[5].endpage<data[5].maxpag){
+		                	var next = data[5].startpag+10
+		                	page += "<li onclick='b_page("+next+")' ><a aria-label='Next'><span aria-hidden='true'>&#187;</span></a></li>";
+		                }
+		                
+		                
+		            } else {
+		                html += "<tr><td></td><td>알림이 없습니다</td></tr>";
+		             
+		                
+		            }	$("#b_comlist").html(html)
+		                $("#b_paging").html(page)
+		            }
+
+		        })
+		     }
+		
+		function p_page(p){
+			
+		    var p = p;
+		    $.ajax({
+		        type:'GET',
+		        url : "<c:url value='/Mypage/Notpage.do'/>",
+		        dataType : "json",
+		      	data : {
+		      		USER_NO : ${sessionScope.session.USER_NO},
+		      		P_PAG_NUM : p
+		      	},
+		        success : function(data){
+		        	 var html = "";
+		        	 var page = "";
+		        	if(data.length > 0){
+		        		
+		                for(i=0; i<5; i++){
+		                	html += "<tr><td><a href='../Mypage/ProjectArClick.do?PROJECT_NO=${"+data[i].PROJECT_NO+"}'>${"+data[i].PROJECT_NAME+"}</a></td><td>새로운 작업일지가 작성되었습니다</td></tr>";
+		                    
+		                }
+		                if(data[5].startpag>1){
+		                   var Previous = data[5].startpag-10
+		                	page += " <li onclick='p_page("+Previous+")' ><a aria-label='Previous'><span aria-hidden='tru'>&laquo;</span></a></li>";
+		                }for(i=data[5].startpag;i<data[5].endpage;i++){
+		                	if(p == i){
+		                		page += "<li onclick='p_page("+i+")' id =p_"+i+" class='action'><a>"+i+"</a></li>";
+		                	}else{
+		                	page += "<li onclick='p_page("+i+")' id =p_"+i+" class='tt'><a>"+i+"</a></li>";}
+		                }if(data[5].endpage<data[5].maxpag){
+		                	var next = data[5].startpag+10
+		                	page += "<li onclick='p_page("+next+")' ><a aria-label='Next'><span aria-hidden='true'>&#187;</span></a></li>";
+		                }
+		                
+		                
+		            } else {
+		                html += "<tr><td></td><td>알림이 없습니다</td></tr>";
+		             
+		                
+		            }	$("#p_comlist").html(html)
+		                $("#p_paging").html(page)
+		            }
+
+		        })}
+		    
+	</script>
 <%@ include file="/WEB-INF/include/include-header2.jspf"%>
 <%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
 <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+
 </head>
 <body>
 		<div class="main-panel" id="main-panel">
@@ -20,7 +118,7 @@
 						<br />
 						<h4 class="card-title">게시판 알림</h4>
 					</div>
-					<div class="card-body">
+					<div class="card-body" id = "content">
 						<div class="table2-responsive">
 							<table class="table">
 								<thead class=" text2-primary">
@@ -29,23 +127,7 @@
 										<th scope="col"></th>
 									</tr>
 								</thead>
-								<tbody>
-									<c:choose>
-										<c:when test="${fn:length(list1) > 0}">
-											<c:forEach items="${list1 }" var="row">
-												<tr>
-													<td><a
-														href="../Mypage/ArlistClick.do?BOARD_NO=${row.BOARD_NO}&IDENTI_TYPE=${row.IDENTI_TYPE}">${row.TITLE}</a></td>
-													<td>새로운 댓글이 달렸습니다</td>
-												</tr>
-											</c:forEach>
-										</c:when>
-										<c:otherwise>
-											<tr>
-												<td colspan="4">조회된 결과가 없습니다.</td>
-											</tr>
-										</c:otherwise>
-									</c:choose>
+								<tbody id="b_comlist">
 								</tbody>
 							</table>
 						</div>
@@ -56,19 +138,7 @@
 
 	<div  align="center">
 	<nav>
-		<ul class="pagination">
-		<c:if test="${bmap.startpag>1}">
-			<li><a
-				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${bmap.startpag-10}&P_PAG_NUM=${param.P_PAG_NUM}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-		</c:if>
-		<c:forEach var="i" begin="${bmap.startpag }" end="${bmap.endpage }">
-			<li  id="B_${i}" class=""><a
-				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${i}&P_PAG_NUM=${param.P_PAG_NUM}">${i}</a></li>
-		</c:forEach>
-		<c:if test="${bmap.endpage<bmap.maxpag}">
-			<li><a
-				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${bmap.startpag+10}&P_PAG_NUM=${param.P_PAG_NUM}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
-		</c:if>
+		<ul class="pagination" id="b_paging">
 	</ul>
 		</nav>
 		</div>
@@ -89,23 +159,7 @@
 										<th scope="col"></th>
 									</tr>
 								</thead>
-								<tbody>
-									<c:choose>
-										<c:when test="${fn:length(list2) > 0}">
-											<c:forEach items="${list2 }" var="row">
-												<tr>
-													<td><a
-														href="../Mypage/ProjectArClick.do?PROJECT_NO=${row.PROJECT_NO}">${row.PROJECT_NAME}</a></td>
-													<td>새로운 작업일지가 작성되었습니다</td>
-												</tr>
-											</c:forEach>
-										</c:when>
-										<c:otherwise>
-											<tr>
-												<td colspan="4">조회된 결과가 없습니다.</td>
-											</tr>
-										</c:otherwise>
-									</c:choose>
+								<tbody id="p_comlist">
 								</tbody>
 							</table>
 						</div>
@@ -117,19 +171,7 @@
 	<div align="center">
 	<nav>
 	
-		<ul class="pagination">
-		<c:if test="${pmap.startpag>1}">
-			<li><a
-				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${param.B_PAG_NUM}&P_PAG_NUM=${pmap.startpag-10}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-		</c:if>
-		<c:forEach var="i" begin="${pmap.startpag }" end="${pmap.endpage }">
-			<li id="P_${i}" class=""><a
-				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${param.B_PAG_NUM}&P_PAG_NUM=${i}">${i}</a></li>
-		</c:forEach>
-		<c:if test="${pmap.endpage<smap.maxpag}">
-			<li><a
-				href="../Mypage/Notification.do?USER_NO=${param.USER_NO}&B_PAG_NUM=${param.B_PAG_NUM}&P_PAG_NUM=${pmap.startpag+10}" aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
-		</c:if>
+		<ul class="pagination" id="p_comlist">
 	</ul>
 		</nav>
 		</div>
@@ -137,16 +179,10 @@
 		</div>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
-	<script type="text/javascript">
-	$(window).load (function() {
-		var B_ch = 1;
-		var P_ch = 1;
 
-		B_ch = ${param.B_PAG_NUM}
-		P_ch = ${param.P_PAG_NUM}
-		document.getElementById('B_'+B_ch).className = 'active'
-			document.getElementById('P_'+P_ch).className = 'active'
-	});
-	</script>
 </body>
+<script type="text/javascript">
+
+		
+</script>
 </html>
