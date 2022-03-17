@@ -4,7 +4,84 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<%@ include file="/WEB-INF/include/include-header2.jspf"%>
+<%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
+<%@ include file="/WEB-INF/include/include-navbar.jspf"%>
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+</head>
+<body>
+		<div class="main-panel" id="main-panel">
+		<div class="panel-header panel-header-sm"></div>
+	<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-plain">
+					<div class="card-header">
+						<br />
+						<h4 class="card-title">게시판 알림</h4>
+					</div>
+					<div class="card-body" id = "content">
+						<div class="table2-responsive">
+							<table class="table">
+								<thead class=" text2-primary">
+									<tr>
+										<th scope="col">글제목</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody id="b_comlist">
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<div  align="center">
+	<nav>
+		<ul class="pagination" id="b_paging">
+	</ul>
+		</nav>
+		</div>
+	<div class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-plain">
+					<div class="card-header">
+						<br />
+						<h4 class="card-title">프로젝트 알림</h4>
+					</div>
+					<div class="card-body">
+						<div class="table2-responsive">
+							<table class="table">
+								<thead class=" text2-primary">
+									<tr>
+										<th scope="col">프로젝트명</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody id="p_comlist">
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div align="center">
+	<nav>
+	
+		<ul class="pagination" id="p_comlist">
+	</ul>
+		</nav>
+		</div>
+		</div>
+		</div>
+	<%@ include file="/WEB-INF/include/include-body.jspf"%>
+	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 	<script type="text/javascript">
 	$(function(){
 		b_page(1)
@@ -101,85 +178,6 @@ function b_page(p){
 		        })}
 		    
 	</script>
-<%@ include file="/WEB-INF/include/include-header2.jspf"%>
-<%@ include file="/WEB-INF/include/include-mypageheader.jspf"%>
-<%@ include file="/WEB-INF/include/include-navbar.jspf"%>
-<link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
-
-</head>
-<body>
-		<div class="main-panel" id="main-panel">
-		<div class="panel-header panel-header-sm"></div>
-	<div class="content">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card card-plain">
-					<div class="card-header">
-						<br />
-						<h4 class="card-title">게시판 알림</h4>
-					</div>
-					<div class="card-body" id = "content">
-						<div class="table2-responsive">
-							<table class="table">
-								<thead class=" text2-primary">
-									<tr>
-										<th scope="col">글제목</th>
-										<th scope="col"></th>
-									</tr>
-								</thead>
-								<tbody id="b_comlist">
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	<div  align="center">
-	<nav>
-		<ul class="pagination" id="b_paging">
-	</ul>
-		</nav>
-		</div>
-	<div class="content">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card card-plain">
-					<div class="card-header">
-						<br />
-						<h4 class="card-title">프로젝트 알림</h4>
-					</div>
-					<div class="card-body">
-						<div class="table2-responsive">
-							<table class="table">
-								<thead class=" text2-primary">
-									<tr>
-										<th scope="col">프로젝트명</th>
-										<th scope="col"></th>
-									</tr>
-								</thead>
-								<tbody id="p_comlist">
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div align="center">
-	<nav>
-	
-		<ul class="pagination" id="p_comlist">
-	</ul>
-		</nav>
-		</div>
-		</div>
-		</div>
-	<%@ include file="/WEB-INF/include/include-body.jspf"%>
-	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
-
 </body>
 <script type="text/javascript">
 
