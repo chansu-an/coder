@@ -18,6 +18,7 @@
 				url : "../Team/Calendar.do?PROJECT_NO=${param.PROJECT_NO}",
 				method : "GET",
 				dataType : "json"
+
 			});
 
 			request.done(function(data) {
@@ -28,17 +29,38 @@
 				var calendar = new FullCalendar.Calendar(calendarEl, {
 					local : 'ko',
 					initialView : 'dayGridMonth',
+
 					headerToolbar : {
 						left : 'prev,next today',
 						center : 'title',
 						right : 'dayGridMonth,timeGridWeek,timeGridDay'
 					},
-					eventClick : function(info) { // 있는 일정 클릭시, 
-						window.alert('Event: ' + info.event.title);
-						
+					slotMinTime : '08:00', // Day 캘린더에서 시작 시간
+					slotMaxTime : '20:00', // Day 캘린더에서 종료 시간
+					dayMaxEvents : true,
+					events : data,
+					eventClick : function(data) {
+						console.log('modal', data);
+						$('#fullCalModal').modal('show');
+						$('#title').html(data.event.title);
+						$('#start').html(data.event.startStr);
+						var endd = new Date(data.event.endStr);
+						endd.setDate(endd.getDate() - 1);
+						var end = endd.getFullYear()
+								+ '-'
+								+ (("00" + (endd.getMonth() + 1).toString())
+										.slice(-2))
+								+ '-'
+								+ (("00" + (endd.getDate()).toString())
+										.slice(-2));
+						$('#end').html(end);
+						$('#imports').html(
+								data.event._def.extendedProps.imports);
+						$('#ing').html(data.event._def.extendedProps.ing);
+						$('#context').html(
+								data.event._def.extendedProps.context);
+
 					},
-					dayMaxEvents: true,
-					events : data
 				});
 
 				calendar.render();
@@ -49,9 +71,8 @@
 			});
 		});
 
-		calendar.render();
 	});
-	
+
 	function test1(f) {
 		$('input[name=SEARCH_TYPE]').attr('value', f);
 	}
@@ -71,9 +92,9 @@
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-header">
-							<h4 class="card-title">프로젝트 작업일지</h4>
+								<h4 class="card-title">프로젝트 작업일지</h4>
 								<c:if test="${!empty session.USER_NO }">
-								
+
 								</c:if>
 								<div class="card-body">
 									<div class="table2-responsive">
@@ -137,27 +158,70 @@
 												</c:if>
 											</div> --%>
 									</div>
-									<a href="../Project/Project.do?PROJECT_NO=${param.PROJECT_NO }"class="btn" id="list"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply-fill" viewBox="0 0 16 16">
-  <path d="M5.921 11.9 1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z"/>
-</svg> 목록으로</a>
-
-<a href="../Project/Applist.do?PROJECT_NO=${param.PROJECT_NO}" class = "btn">참가자 리스트</a>
-									<a href="../Team/Write.do?PROJECT_NO=${param.PROJECT_NO }"
-										class="btn" id="write"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-</svg> 글쓰기</a></div>
+									<a href="../Project/Project.do?PROJECT_NO=${param.PROJECT_NO }"
+										class="btn" id="list"><svg
+											xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-reply-fill"
+											viewBox="0 0 16 16">
+  <path
+												d="M5.921 11.9 1.353 8.62a.719.719 0 0 1 0-1.238L5.921 4.1A.716.716 0 0 1 7 4.719V6c1.5 0 6 0 7 8-2.5-4.5-7-4-7-4v1.281c0 .56-.606.898-1.079.62z" />
+</svg> 목록으로</a> <a href="../Project/Applist.do?PROJECT_NO=${param.PROJECT_NO}"
+										class="btn">참가자 리스트</a> <a
+										href="../Team/Write.do?PROJECT_NO=${param.PROJECT_NO }"
+										class="btn" id="write"> <svg
+											xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-pencil-square"
+											viewBox="0 0 16 16">
+  <path
+												d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+  <path fill-rule="evenodd"
+												d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+</svg> 글쓰기
+									</a>
 								</div>
 							</div>
 						</div>
-						<div class="card">
-							<div style=" max-width: 1400px; margin: 60px" id='calendar'></div>
+					</div>
+					<div class="card">
+						<div style="max-width: 1400px; margin: 60px" id='calendar'></div>
+
+					</div>
+					<div id="fullCalModal" class="modal fade">
+						<div class="modal-dialog">
+							<div class="modal-content">
+
+								<div class="modal-header">
+									<h4 class="modal-title">일정</h4>
+								</div>
+
+								<div class="modal-body">
+
+									제목
+									<h4 id="title"></h4>
+									진행도
+									<h4 id="ing"></h4>
+									중요도
+									<h4 id="imports"></h4>
+									시작일
+									<h4 id="start"></h4>
+									마감일
+									<h4 id="end"></h4>
+									내용
+									<h4 id="context"></h4>
+
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
+				Test
 			</div>
 		</div>
 	</div>
+	</div>
+	</div>
+	</div>
+
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 </body>
