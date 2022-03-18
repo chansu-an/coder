@@ -56,7 +56,7 @@ public class TeamController {
 			hash.put("end", list.get(i).get("PD_END"));
 			hash.put("context", list.get(i).get("PD_CONTEXT"));
 			hash.put("ing", list.get(i).get("PD_ING"));
-			hash.put("import", list.get(i).get("PD_IMPORT"));
+			hash.put("imports", list.get(i).get("PD_IMPORT"));
 			
 			jsonObj = new JSONObject();
 			jsonObj.putAll(hash);
@@ -108,7 +108,7 @@ public class TeamController {
 	@RequestMapping(value = "/Team/Modify.do", method = RequestMethod.POST)
 	public ModelAndView TeamModify(CommandMap commandMap,HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("redirect:/Team/Detail.do?PROJECT_NO="+request.getParameter("PROJECT_NO"));
-
+		System.out.println(commandMap.getMap());
 		teamService.updateTeam(commandMap.getMap(), request);
 		mav.addObject("PD_BOARD_NO", commandMap.get("PD_BOARD_NO"));
 		return mav;
