@@ -7,13 +7,15 @@
 <%@ include file="/WEB-INF/include/include-menuheader.jspf" %>
 <%@ include file="/WEB-INF/include/include-navbar.jspf"%>
                 <!-- Page content-->
+</head>
+<body>
 <div class="container">
   <main>
     <div class="row g-5">  
       <div class="col-md-7 col-lg-8">
       	<br/>
         <h4 class="mb-3">회원가입</h4>
-        <form id="regitsterform" method="post" novalidate>
+        <form id="regitsterform" method="post" class="needs-validation" onSubmit="registerForm()" novalidate>
         <input type="hidden" name="check_email" value=""/>
           <div class="row g-3">
             <div class="col-12">
@@ -31,7 +33,12 @@
             </div>
             <div class="col-12">
               <label for="password" class="form-label">비밀번호</label>
-              <input type="password" class="form-control" name="PASSWORD" id="PASSWORD" required>
+              <input type="password" class="form-control" name="PASSWORD" id="PASSWORD" oninput="checkPW()" required>
+              <div class="invalid-feedback">비밀번호를 입력해주세요</div>
+            </div>
+            <div class="col-12">
+              <label for="password" class="form-label">비밀번호 확인&nbsp;<a id="checkPW2">(비밀번호가 일치하지않습니다.)</a></label>
+              <input type="password" class="form-control" name="PASSWORD2" id="PASSWORD2" oninput="checkPW()" required>              
               <div class="invalid-feedback">비밀번호를 입력해주세요</div>
             </div>
            <!--<div class="col-md-6">
@@ -51,7 +58,8 @@
             -->
           </div>
           <hr class="my-4">
-          <button class="w-100 btn btn-primary btn-lg" id="register_button">회원가입 완료</button>
+          <input type="submit" class="w-100 btn btn-primary btn-lg" value="회원가입 완료"/>
+          <!-- <button class="w-100 btn btn-primary btn-lg" id="register_button">회원가입 완료</button> -->
         </form>
       </div>
     </div>
@@ -109,15 +117,15 @@
 
 <%@ include file="/WEB-INF/include/include-body.jspf" %>
 <%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
-	<script type="text/javascript">	
+	<script type="text/javascript">
+	let checkPw = false;
 	$(document).ready(function(){
-	  $('#openModalBtn').on('click', function(){
+	  $('#openModalBtn').on('click', function(){//ID중복체크 버튼
 		  let emailVal = $("#EMAIL").val();
 		  let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 검증에 사용할 정규식 변수 regExp에 저장
 		  if(emailVal != null && emailVal != ""){
 			  if (emailVal.match(regExp) != null) {
-				 var userId = $("#EMAIL").val();//EMAIL에 입력되는 값
-				 $("input[name=check_email]").val('Y');
+				 var userId = $("#EMAIL").val();//EMAIL에 입력되는 값				 
 				 
 				 $.ajax({
 					 url : "<c:url value='/main/checkUserNickName.do'/>",
@@ -127,7 +135,8 @@
 					 contentType : "application/json; charset=UTF-8",
 					 success : function(result){
 						 if(result == 0){//사용가능한 아이디
-							$('#modalBox2').modal('show');					 
+							$('#modalBox2').modal('show');
+							$("input[name=check_email]").val('Y');
 						 }else{//중복된 아이디
 							$('#modalBox').modal('show');
 						 }
@@ -165,22 +174,42 @@
 	  $('#confirmModalBtn3').on('click', function(){
 		 $('#modalBox3').modal('hide');
 	  });
-	  
-	  
-	  $('#register_button').on('click', function(){//회원가입버튼
-		  
-	  	  if($("input[name=check_email]").val() == 'Y'){
-	  		var comSubmit = new ComSubmit('regitsterform');
-			comSubmit.setUrl("<c:url value='/main/RegisterInsert.do'/>");
-			comSubmit.submit();
-			    
-	  	  }else{
-	  		$('#modalBox3').modal('show');
-	  		return false;
-	  	  }
-			 
-	  });
+	
 	});
+	
+	function registerForm(){
+		if($("#NICK_NAME").val() == "" || $("#PASSWORD").val() == "" || $("#PASSWORD2").val() == "" || !checkPw){
+			alert('입력한 정보 확인');
+			return false;
+		}else{
+			alert("성공");
+			alert($("input[name=check_email]").val());
+			if($("input[name=check_email]").val() == 'Y'){
+		  		var comSubmit = new ComSubmit('regitsterform');
+				comSubmit.setUrl("<c:url value='/main/RegisterInsert.do'/>");
+				comSubmit.submit();
+				    
+		  	}else{
+		  		$('#modalBox3').modal('show');
+		  		return false;
+		  	}		
+		}
+	}
+	
+	function checkPW(){
+		var pw1 = $("#PASSWORD").val();
+		var pw2 = $("#PASSWORD2").val();
+		
+		if(pw1 == pw2 && pw1 != "" && pw2 != ""){
+			$("#checkPW2").empty();
+			$("#checkPW2").append("(비밀번호가 일치합니다.)");
+			checkPw = true;
+		}else{
+			$("#checkPW2").empty();
+			$("#checkPW2").append("(비밀번호가 일치하지않습니다.)");
+			checkPw = false;
+		}
+	}
 			
 	</script>
 </body>

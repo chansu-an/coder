@@ -1,7 +1,5 @@
 package coders.board.controller;
 
-import java.net.http.HttpHeaders;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +33,62 @@ public class BoardController {
 	private Packaging packaging;
 	
 	//글목록 보기 /board/openBoardList.do?IDENTI_TYE=1
-	@RequestMapping(value="/board/openBoardList.do", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	@RequestMapping(value="/board/openBoardList.do", method = RequestMethod.POST)
+	public ModelAndView openBoardList2(@RequestBody Map<String, Object> test, CommandMap commandMap, HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView("jsonView");
+			
+		commandMap.put("IDENTI_TYPE", test.get("IDENTI_TYPE"));
+		commandMap.put("ORDER_TYPE", test.get("ORDER_TYPE"));		
+		String page = request.getParameter("PAG_NUM");
+		int pag = 1;
+		int count;
+		if(page!=null) {
+			pag = Integer.parseInt(page);
+		}
+		//정렬
+		if(test.get("ORDER_TYPE") != null) {
+			commandMap.put("ORDER_TYPE", test.get("ORDER_TYPE"));
+			mav.addObject("order_type", test.get("ORDER_TYPE"));
+		}
+			
+		String key = (String) test.get("SEARCH_TYPE");
+		List<Map<String, Object>> list = null;
+		if(key==null) {
+			count = boardService.countborad(commandMap.getMap());
+			packaging.Packag(commandMap.getMap(), pag, 10, count);
+
+			
+			list = boardService.selectBoardList(commandMap.getMap());
+			if(!list.isEmpty()) {
+				String IDENTI_TYPE = list.get(0).get("IDENTI_TYPE").toString();
+				mav.addObject("IDENTI_TYPE", IDENTI_TYPE);			
+			}
+		}
+
+		//검색기능	
+		if(key!=null) {
+			commandMap.put("KEYWORD", test.get("KEYWORD"));
+			commandMap.put("SEARCH_TYPE", test.get("SEARCH_TYPE"));
+			count = boardService.countsearchborad(commandMap.getMap());
+			packaging.Packag(commandMap.getMap(), pag, 10, count);
+			
+
+			list = boardService.searchBoard(commandMap.getMap());
+			mav.addObject("searchType", test.get("SEARCH_TYPE"));
+			mav.addObject("keyWord", test.get("KEYWORD"));
+
+		}
+		
+			
+		mav.addObject("list", list);
+		mav.addObject("map", commandMap.getMap());
+			
+		return mav;
+	}
+		
+	//글목록 보기 /board/openBoardList.do?IDENTI_TYE=1
+	@RequestMapping(value="/board/openBoardList.do", method = RequestMethod.GET)
 	public ModelAndView openBoardList(CommandMap commandMap, HttpServletRequest request) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/board_list");
 		String page = request.getParameter("PAG_NUM");
@@ -45,48 +97,44 @@ public class BoardController {
 		if(page!=null) {
 			pag = Integer.parseInt(page);
 		}
-		//정렬
-				if(request.getParameter("ORDER_TYPE") != null) {
-					commandMap.put("ORDER_TYPE", request.getParameter("ORDER_TYPE"));
-					mav.addObject("order_type", request.getParameter("ORDER_TYPE"));
-				}
-		
+			//정렬
+		if(request.getParameter("ORDER_TYPE") != null) {
+			commandMap.put("ORDER_TYPE", request.getParameter("ORDER_TYPE"));
+		}
+			
 		String key = request.getParameter("KEYWORD");
 		List<Map<String, Object>> list = null;
 		if(key==null) {
-		count = boardService.countborad(commandMap.getMap());
-		packaging.Packag(commandMap.getMap(), pag, 10, count);
-
-		
-		 list = boardService.selectBoardList(commandMap.getMap());
-				if(!list.isEmpty()) {
-					String IDENTI_TYPE = list.get(0).get("IDENTI_TYPE").toString();
-					mav.addObject("IDENTI_TYPE", IDENTI_TYPE);			
-				}
-}
-
-				//검색기능	
+			count = boardService.countborad(commandMap.getMap());
+			packaging.Packag(commandMap.getMap(), pag, 10, count);
+				
+				
+			list = boardService.selectBoardList(commandMap.getMap());
+			if(!list.isEmpty()) {
+				String IDENTI_TYPE = list.get(0).get("IDENTI_TYPE").toString();
+				mav.addObject("IDENTI_TYPE", IDENTI_TYPE);			
+			}
+		}
+			
+		//검색기능	
 		if(key!=null) {
 			commandMap.put("SEARCH_TYPE", request.getParameter("SEARCH_TYPE"));
 			commandMap.put("KEYWORD", key);
 			count = boardService.countsearchborad(commandMap.getMap());
 			packaging.Packag(commandMap.getMap(), pag, 10, count);
-			
-
+				
+				
 			list = boardService.searchBoard(commandMap.getMap());
 			mav.addObject("searchType", request.getParameter("SEARCH_TYPE"));
 			mav.addObject("keyWord", request.getParameter("KEYWORD"));
-
-		
-		
-
+				
 		}
-
+			
 		mav.addObject("list", list);
 		mav.addObject("map", commandMap.getMap());
-		
+			
 		return mav;
-	}
+	}	
 	
 	//메인에 올라갈 최근 공지, qna 인기글, 자유게시판 인기글
 	@RequestMapping(value="/board/mainList.do", method = RequestMethod.GET)
@@ -125,10 +173,7 @@ public class BoardController {
 	@RequestMapping(value="/board/detail.do")
 	public ModelAndView selectBoardDetail(@RequestParam Map<String, Object> cmap,CommandMap commandMap, HttpServletRequest request, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView("/board/board_detail");
-		System.out.println(cmap);
 		cmap = commandMap.getMap();
-		System.out.println(cmap);
-		System.out.println(commandMap.getMap());
 
 		int count;
 		String page = request.getParameter("PAG_NUM");
