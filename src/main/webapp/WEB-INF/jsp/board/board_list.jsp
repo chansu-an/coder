@@ -39,8 +39,7 @@
 								
 								<form name="ORDER_TYPE" method="get">
 									<p style="text-align: right;">
-										<select id="ORDER_TYPE" name="ORDER_TYPE"
-											onchange="test(this.form);">
+										<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test();">
 											<option>-----</option>
 											<option value="DATE"
 												<c:if test="${order_type == 'DATE'}">selected</c:if>>최신순</option>
@@ -50,11 +49,10 @@
 												<c:if test="${order_type == 'READ'}">selected</c:if>>조회순</option>
 											<option value="RECOMMEND"
 												<c:if test="${order_type == 'RECOMMEND'}">selected</c:if>>추천순</option>
-										</select> <input type="hidden" name="IDENTI_TYPE"
-											value=${param.IDENTI_TYPE }> <input type="hidden"
-											name="KEYWORD" value="${param.KEYWORD }" /> <input
-											type="hidden" name="SEARCH_TYPE"
-											value="${param.SEARCH_TYPE }" />
+										</select> 
+										<%-- <input type="hidden" name="IDENTI_TYPE"	value=${param.IDENTI_TYPE }> 
+										<input type="hidden" name="KEYWORD" value="${param.KEYWORD }" /> 
+										<input type="hidden" name="SEARCH_TYPE"	value="${param.SEARCH_TYPE }" /> --%>
 									</p>
 								</form>
 
@@ -104,7 +102,7 @@
 														<th scope="col">작성일</th>
 													</tr>
 												</thead>
-												<tbody>
+												<tbody id="test12">
 													<c:choose>
 														<c:when test="${fn:length(list) > 0}">
 															<c:forEach items="${list }" var="row">
@@ -127,6 +125,7 @@
 															</tr>
 														</c:otherwise>
 													</c:choose>
+												</tbody>
 											</c:when>
 											<%-- 건의사항 --%>
 											<c:otherwise>
@@ -189,15 +188,13 @@
 															</tr>
 														</c:otherwise>
 													</c:choose>
+												</tbody>
 											</c:otherwise>
 										</c:choose>
 										</tbody>
 									</table>
-
-									<form action="../board/openBoardList.do" method="get">
 										<div class="search-wrap">
-											<select id="SEARCH_TYPE" name="SEARCH_TYPE"
-												onchange="test1(this.value);">
+											<select id="SEARCH_TYPE" name="SEARCH_TYPE">
 												<option value="TITLE"
 													<c:if test="${searchType == 'TITLE'}">selected</c:if>>제목</option>
 												<option value="CONTEXT"
@@ -206,18 +203,37 @@
 													<c:if test="${searchType == 'NICKNAME'}">selected</c:if>>작성자</option>
 												<option value="T+C"
 													<c:if test="${searchType == 'T+C'}">selected</c:if>>제목+내용</option>
-											</select> <input type="hidden" id="IDENTI_TYPE" name="IDENTI_TYPE"
-												value="${param.IDENTI_TYPE }" /> <input type="text"
-												id="KEYWORD" name="KEYWORD" value="${keyWord }"></input> <input
-												type="submit" value="검색" class="btn bin-info search-btn" />
+											</select>
+											<input type="text" id="KEYWORD" name="KEYWORD" value="${keyWord }" onkeypress="if(event.keyCode == 13){test1();}"></input> 
+											<input type="button" value="검색" class="btn bin-info search-btn" onclick="test1();"/>
 										</div>
-									</form>
 								</div>
 							</div>
 								<!-- 페이징 -->
+									<div style="padding-left: 50%; padding-right: 50%;">
+										<nav>
+											<ul class="pagination" id="pageclass2" >
+												<c:if test="${map.startpag>1}">
+														<li><a
+															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-10}&ORDER_TYPE=${param.ORDER_TYPE}"
+															aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+													</c:if>
+													<c:forEach var="i" begin="${map.startpag }"
+														end="${map.endpage }">
 
+														<li  id="${i}" class=""><a
+															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}">${i}</a></li>
+													</c:forEach>
+													<c:if test="${map.endpage<map.maxpag}">
+														<li><a
+															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+10}&ORDER_TYPE=${param.ORDER_TYPE}"
+															aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
+													</c:if>
+											</ul>
+										</nav>
+									</div>
 
-									<c:if test="${param.KEYWORD==null}">
+									<%-- <c:if test="${param.KEYWORD==null}">
 										<div style="padding-left: 50%; padding-right: 50%;">
 											<nav>
 												<ul class="pagination">
@@ -244,26 +260,11 @@
 									<c:if test="${param.KEYWORD!=null}">
 										<div style="padding-left: 50%; padding-right: 50%;">
 											<nav>
-												<ul class="pagination " >
-													<c:if test="${map.startpag>1}">
-														<li><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-10}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE==${param.SEARCH_TYPE}"
-															aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-													</c:if>
-													<c:forEach var="i" begin="${map.startpag }"
-														end="${map.endpage }">
-														<li id="${i}" class=""><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE=${param.SEARCH_TYPE}">${i}</a></li>
-													</c:forEach>
-													<c:if test="${map.endpage<map.maxpag}">
-														<li><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+10}&ORDER_TYPE=${param.ORDER_TYPE}&KEYWORD=${param.KEYWORD}&SEARCH_TYPE=${param.SEARCH_TYPE}"
-															aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
-													</c:if>
+												<ul class="pagination" id="pageclass2" >
 												</ul>
 											</nav>
 										</div>
-									</c:if>
+									</c:if> --%>
 						</div>
 					</div>
 				</div>
@@ -272,23 +273,158 @@
 	</div>
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
-<script>
-	function test(f) {
-		f.action = "/net/board/openBoardList.do?IDENTI_TYPE=" + $
-		{
-			IDENTI_TYPE
-		}
-		f.submit();
-	}
+	<script type="text/javascript">
+		
+	
+		function test(f) {//ORDER_TYPE
+			var IDENTI_TYPE = ${param.IDENTI_TYPE};
+			var ORDER_TYPE = $("#ORDER_TYPE").val();
+			var SEARCH_TYPE = $("#SEARCH_TYPE").val();
+			var KEYWORD = $("#KEYWORD").val();
+			if(!f){
+				var PAG_NUM = 1;	
+			}else{
+				var PAG_NUM = f;				
+			}
+			let dataList = {"IDENTI_TYPE" : IDENTI_TYPE, "ORDER_TYPE" : ORDER_TYPE, "SEARCH_TYPE" : SEARCH_TYPE, "KEYWORD" : KEYWORD};
 
-	function test1(f) {
-		$('input[name=SEARCH_TYPE]').attr('value', f);
-	}
-	$(window).load (function() {
-		var ch = 1;
-		 ch = ${param.PAG_NUM}
-		document.getElementById(ch).className = 'active'
-	});
-</script>
+			$.ajax({				 
+				 url : "<c:url value='/board/openBoardList.do?PAG_NUM=" + PAG_NUM + "'/>",
+				 type : "post",
+				 data : JSON.stringify(dataList),
+				 dataType : 'json',
+				 contentType : "application/json; charset=UTF-8",
+				 success : function(result){
+					 $("#test12").empty();
+					 $("#pageclass2").empty();
+					 var str = "";
+					 var str2 = "";
+					 if(result.list.length < 1){
+						 str = "<tr>" + 
+										"<td colspan='4'>조회된 결과가 없습니다.</td>" + 
+									"</tr>";
+						 $("#test12").append(str);
+					 }else{
+						 $.each(result.list, function(key, value){
+							 str = "<tr>" + 
+											"<td>" + value.ROWNUM + "</td>" + 
+											"<td>" +
+												"<a href='/net/board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE}&BOARD_NO=" + value.BOARD_NO + "' name='title'>" + value.TITLE + "</a>" +
+												"[" + value.REPLY_COUNT + "]" +
+											"</td>" +
+											"<td>" + value.READ_COUNT + "</td>" + 
+											"<td>" + value.RECOMMEND_COUNT + "</td>" +
+											"<td>" +
+												"<a href='../main/Mypage.do?USER_NO=" + value.USER_NO + "' name='title'>" + value.NICK_NAME + "</a>" +										
+											"</td>" +
+											"<td>" + value.BOARD_DATE + "</td>" +
+										"</tr>";
+							$("#test12").append(str); 
+						});
+						if(result.map.startpag > 1){
+							str2 = "<li><a href='#this' onclick='pagingnum(" + (result.map.startpag-10) +")' aria-label='Previous'>"								
+								 + "<span aria-hidden='true'>&laquo;</span></a></li>";
+						}
+						for(var i = result.map.startpag; i <= result.map.endpage; i++){
+							str2 += "<li id=" + i + ">"
+								 + "<a href='#this' onclick='orderpagingnum(" + i + ")'>"
+								 + i + "</a></li>";
+						}
+						if(result.map.endpage < result.map.maxpag){
+							str2 = "<li><a href='#this' onclick='pagingnum(" + (result.map.startpag+10) +")' aria-label='Next'>"
+								 + "<span aria-hidden='true'>&laquo;</span></a></li>";
+						}
+								
+						$("#pageclass2").append(str2);
+					 }
+				 },
+				 error : function(){
+					 alert("서버요청실패");
+				 }
+			 })
+		}
+	
+		function test1(f) { //SEARCH_TYPE
+			var IDENTI_TYPE = ${param.IDENTI_TYPE};
+			var SEARCH_TYPE = $("#SEARCH_TYPE").val();
+			var KEYWORD = $("#KEYWORD").val();
+			if(!f){
+				var PAG_NUM = 1;	
+			}else{
+				var PAG_NUM = f;				
+			}
+			let dataList2 = {"IDENTI_TYPE" : IDENTI_TYPE, "SEARCH_TYPE" : SEARCH_TYPE, "KEYWORD" : KEYWORD};
+			$.ajax({				 
+				 url : "<c:url value='/board/openBoardList.do?PAG_NUM=" + PAG_NUM + "'/>",
+				 type : "post",
+				 data : JSON.stringify(dataList2),
+				 dataType : 'json',
+				 contentType : "application/json; charset=UTF-8",
+				 success : function(result){
+					 $("#test12").empty();
+					 $("#pageclass2").empty();
+					 var str = "";
+					 var str2 = "";
+					 if(result.list.length < 1){
+						 str = "<tr>" + 
+										"<td colspan='4'>조회된 결과가 없습니다.</td>" + 
+									"</tr>";
+						 $("#test12").append(str);
+					 }else{
+						 $.each(result.list, function(key, value){
+							 str = "<tr>" + 
+											"<td>" + value.ROWNUM + "</td>" + 
+											"<td>" +
+												"<a href='/net/board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE}&BOARD_NO=" + value.BOARD_NO + "' name='title'>" + value.TITLE + "</a>" +
+												" [" + value.REPLY_COUNT + "]" +
+											"</td>" +
+											"<td>" + value.READ_COUNT + "</td>" + 
+											"<td>" + value.RECOMMEND_COUNT + "</td>" +
+											"<td>" +
+												"<a href='../main/Mypage.do?USER_NO=" + value.USER_NO + "' name='title'>" + value.NICK_NAME + "</a>" +										
+											"</td>" +
+											"<td>" + value.BOARD_DATE + "</td>" +
+										"</tr>";
+							$("#test12").append(str); 
+						});
+						
+						if(result.map.startpag > 1){
+							str2 = "<li><a href='#this' onclick='pagingnum(" + (result.map.startpag-10) +")' aria-label='Previous'>"								
+								 + "<span aria-hidden='true'>&laquo;</span></a></li>";
+						}
+						for(var i = result.map.startpag; i <= result.map.endpage; i++){
+							str2 += "<li id=" + i + ">"
+								 + "<a href='#this' onclick='pagingnum(" + i + ")'>"
+								 + i + "</a></li>";
+						}
+						if(result.map.endpage < result.map.maxpag){
+							str2 = "<li><a href='#this' onclick='pagingnum(" + (result.map.startpag+10) +")' aria-label='Next'>"
+								 + "<span aria-hidden='true'>&laquo;</span></a></li>";
+						}
+							
+						$("#pageclass2").append(str2);
+					 }
+				 },
+				 error : function(){
+					 alert("서버요청실패");
+				 }
+			 })
+			
+		}
+		
+		function pagingnum(data){
+			test1(data);
+		}
+		
+		function orderpagingnum(data2){
+			test(data2);
+		}
+		
+		$(window).load (function() {
+			var ch = 1;
+			 ch = ${param.PAG_NUM}
+			document.getElementById(ch).className = 'active'
+		});
+	</script>
 </body>
 </html>
