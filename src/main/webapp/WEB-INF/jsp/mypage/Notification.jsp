@@ -89,6 +89,7 @@
 	})
 
 function b_page(p){
+		
 	
 		    var p = p;
 		    $.ajax({
@@ -104,20 +105,20 @@ function b_page(p){
 		        	 var page = "";
 		        	if(data.length > 0){
 		        		
-		                for(i=0; i<5; i++){
+		                for(i=0; i<data.length-1; i++){
 		                	html += "<tr><td><a href='../Mypage/ArlistClick.do?BOARD_NO="+data[i].BOARD_NO+"&IDENTI_TYPE="+data[i].IDENTI_TYPE+"'>"+data[i].TITLE+"</a></td><td>새로운 댓글이 달렸습니다</td></tr>";
 		                    
 		                }
-		                if(data[5].startpag>1){
-		                   var Previous = data[5].startpag-10
+	                if(data[data.length-1].startpag>1){
+		                   var Previous = data[data.length-1].startpag-10
 		                	page += " <li onclick='b_page("+Previous+")' ><a aria-label='Previous'><span aria-hidden='tru'>&laquo;</span></a></li>";
-		                }for(i=data[5].startpag;i<data[5].endpage;i++){
+		                }for(i=data[data.length-1].startpag;i<data[data.length-1].endpage;i++){
 		                	if(p == i){
 		                		page += "<li onclick='p_page("+i+")' id =b_"+i+" class='action'><a>"+i+"</a></li>";
 		                	}else{
 		                	page += "<li onclick='b_page("+i+")' id =b_"+i+" class=''><a>"+i+"</a></li>";}
-		                }if(data[5].endpage<data[5].maxpag){
-		                	var next = data[5].startpag+10
+		                }if(data[data.length-1].endpage<data[data.length-1].maxpag){
+		                	var next = data[data.length-1].startpag+10
 		                	page += "<li onclick='b_page("+next+")' ><a aria-label='Next'><span aria-hidden='true'>&#187;</span></a></li>";
 		                }
 		                
@@ -149,20 +150,20 @@ function b_page(p){
 		        	 var page = "";
 		        	if(data.length > 0){
 		        		
-		                for(i=0; i<5; i++){
+		                for(i=0; i<data.length-1; i++){
 		                	html += "<tr><td><a href='../Mypage/ProjectArClick.do?PROJECT_NO=${"+data[i].PROJECT_NO+"}'>${"+data[i].PROJECT_NAME+"}</a></td><td>새로운 작업일지가 작성되었습니다</td></tr>";
 		                    
 		                }
-		                if(data[5].startpag>1){
-		                   var Previous = data[5].startpag-10
+		                if(data[data.length-1].startpag>1){
+		                   var Previous = data[data.length-1].startpag-10
 		                	page += " <li onclick='p_page("+Previous+")' ><a aria-label='Previous'><span aria-hidden='tru'>&laquo;</span></a></li>";
-		                }for(i=data[5].startpag;i<data[5].endpage;i++){
+		                }for(i=data[data.length-1].startpag;i<data[data.length-1].endpage;i++){
 		                	if(p == i){
 		                		page += "<li onclick='p_page("+i+")' id =p_"+i+" class='action'><a>"+i+"</a></li>";
 		                	}else{
 		                	page += "<li onclick='p_page("+i+")' id =p_"+i+" class='tt'><a>"+i+"</a></li>";}
-		                }if(data[5].endpage<data[5].maxpag){
-		                	var next = data[5].startpag+10
+		                }if(data[data.length-1].endpage<data[data.length-1].maxpag){
+		                	var next = data[data.length-1].startpag+10
 		                	page += "<li onclick='p_page("+next+")' ><a aria-label='Next'><span aria-hidden='true'>&#187;</span></a></li>";
 		                }
 		                

@@ -37,37 +37,64 @@ public class MypageController {
 	@Resource(name="mainService")
 	private MainService mainService;
 	
+	
 	@RequestMapping(value = "/Mypage/MypageDetail.do" )
-	public ModelAndView mypage(HttpSession session,HttpServletRequest request) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		Map<String, Object> fmap = new HashMap<String, Object>();
-		Map<String, Object> smap = new HashMap<String, Object>();
-		fmap.put("USER_NO", request.getParameter("USER_NO"));
-		smap.put("USER_NO", request.getParameter("USER_NO"));
-		int fpnum = 1;
-		String fpnums = request.getParameter("F_PAG_NUM");
-		if(fpnums!=null) {
-			fpnum = Integer.parseInt(fpnums);
-		}
-		int spnum = 1;
-		String spnums = request.getParameter("S_PAG_NUM");
-		if(spnums!=null) {
-			spnum = Integer.parseInt(spnums);
-		}
-		
-		int fcount = mypageService.countFollowList(fmap);
-		int scount = mypageService.countScrapList(smap);
-		smap = packaging.Packag(smap,spnum, 5, scount);
-		fmap = packaging.Packag(fmap,fpnum, 5, fcount);
-		mav.setViewName("mypage/mypage");
-		List<Map<String, Object>> flist = mypageService.selectFollowList(fmap);
-		List<Map<String, Object>> slist = mypageService.selectScrapList(smap);
-		mav.addObject("flist",flist);
-		mav.addObject("slist",slist);
-		mav.addObject("smap", smap);
-		mav.addObject("fmap", fmap);
-		return mav;
+	public String mypage(HttpSession session,HttpServletRequest request) throws Exception {
+	return "mypage/mypage";
 	}
+	
+	 @RequestMapping(value = "/Mypage/Mypageing.do")
+	 @ResponseBody
+	 public List<Map<String, Object>> mypage(HttpServletRequest request) throws Exception{
+		 Map<String, Object> fmap = new HashMap<String, Object>();
+		 Map<String, Object> smap = new HashMap<String, Object>();
+		 fmap.put("USER_NO", request.getParameter("USER_NO"));
+		 smap.put("USER_NO", request.getParameter("USER_NO"));
+		 String fpn =request.getParameter("F_PAG_NUM");
+		String spn = request.getParameter("S_PAG_NUM");
+		HashMap<String, Object> hash = new HashMap<String, Object>();
+		JSONObject jsonObj = new JSONObject();
+		JSONArray jsonArr = new JSONArray();
+		if(fpn !=null) {
+			int fpnum = Integer.parseInt(fpn);
+			int fcount = mypageService.countArlimeList(fmap);
+			fmap = packaging.Packag(fmap, fpnum, 5, fcount);
+			List<Map<String, Object>> list1 = mypageService.selectFollowList(fmap);
+			if(list1.size()>0) {
+				for(int i = 0; i<list1.size();i++) {
+					hash = new HashMap<String, Object>(list1.get(i));
+					jsonObj = new JSONObject();
+					jsonObj.putAll(hash);
+					jsonArr.add(jsonObj);
+				}
+				jsonObj = new JSONObject();
+				jsonObj.putAll(fmap);
+				jsonArr.add(jsonObj);
+			}
+			
+			return jsonArr;
+		}if(spn!=null) {
+			int spnum = Integer.parseInt(spn);
+			int scount = mypageService.countProjectArList(smap);
+			smap = packaging.Packag(smap, spnum, 5, scount);
+			List<Map<String, Object>> list2 = mypageService.selectScrapList(smap);
+			if(list2.size()>0) {
+				for(int i = 0; i<list2.size();i++) {
+					hash = new HashMap<String, Object>(list2.get(i));
+					jsonObj = new JSONObject();
+					jsonObj.putAll(hash);
+					jsonArr.add(jsonObj);
+				}
+				jsonObj = new JSONObject();
+				jsonObj.putAll(smap);
+				jsonArr.add(jsonObj);
+			
+			}
+			return jsonArr;
+		}	
+		return null;
+	 }
+	
 	//유저 상세정보
 	@RequestMapping(value = "/main/Mypage.do")
 	public ModelAndView mypageDetail(HttpServletRequest request,HttpSession session) throws Exception {
@@ -183,9 +210,12 @@ public List<Map<String, Object>> notpage(HttpServletRequest request) throws Exce
 				jsonObj.putAll(hash);
 				jsonArr.add(jsonObj);
 			}
-			jsonObj.putAll(new HashMap<String, Object>(bmap));
+			jsonObj = new JSONObject();
+			jsonObj.putAll(bmap);
+			System.out.println(jsonObj);
 			jsonArr.add(jsonObj);
 		}
+		System.out.println(jsonArr);
 		return jsonArr;
 	}if(ppn!=null) {
 		int ppnum = Integer.parseInt(ppn);
@@ -199,10 +229,12 @@ public List<Map<String, Object>> notpage(HttpServletRequest request) throws Exce
 				jsonObj.putAll(hash);
 				jsonArr.add(jsonObj);
 			}
-			jsonObj.putAll(new HashMap<String, Object>(pmap));
+			jsonObj = new JSONObject();
+			jsonObj.putAll(pmap);
 			jsonArr.add(jsonObj);
 			
 		}
+		System.out.println(jsonArr);
 		return jsonArr;
 	}	
 	return null;
