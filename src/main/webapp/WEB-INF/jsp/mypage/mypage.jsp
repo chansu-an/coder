@@ -34,25 +34,8 @@
 									<th scope="col">추천수</th>
 								</tr>
 							</thead>
-							<tbody>
-								<c:choose>
-									<c:when test="${fn:length(slist) > 0}">
-										<c:forEach items="${slist }" var="row">
-											<tr>
-												<td><a
-													href="../board/detail.do?BOARD_NO=${row.BOARD_NO}&IDENTI_TYPE=${row.IDENTI_TYPE}">${row.TITLE }</a><c:if test="${sessionScope.session.USER_NO == param.USER_NO }"><a class="btn" href="../Mypage/DeleteScarap.do?USER_NO=${sessionScope.session.USER_NO}&BOARD_NO=${row.BOARD_NO}">스크랩 해제</a></c:if></td>
-												<td>${row.BOARD_DATE }</td>
-												<td>${row.RECOMMEND_COUNT }</td>
-												
-											</tr>
-										</c:forEach>
-									</c:when>
-									<c:otherwise>
-										<tr>
-											<td colspan="4">조회된 결과가 없습니다.</td>
-										</tr>
-									</c:otherwise>
-								</c:choose>
+							<tbody id="s_list">
+								
 							</tbody>
 						</table>
 					</div>
@@ -60,24 +43,8 @@
 			</div>
 			<div style="padding-left: 50%; padding-right: 50%;">
 				<nav>
-					<ul class="pagination">
-						<c:if test="${smap.startpag>1}">
-							<li><a
-								href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${smap.startpag-10}&F_PAG_NUM=${param.F_PAG_NUM}"
-								aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
-							</li>
-
-						</c:if>
-						<c:forEach var="i" begin="${smap.startpag }"
-							end="${smap.endpage }">
-							<li id="S_${i}" class=""><a
-								href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${i}&F_PAG_NUM=${param.F_PAG_NUM}">${i}</a></li>
-						</c:forEach>
-						<c:if test="${smap.endpage<smap.maxpag}">
-							<li><a
-								href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${smap.startpag+10}&F_PAG_NUM=${param.F_PAG_NUM}"
-								aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-						</c:if>
+					<ul class="pagination" id="s_page">
+						
 					</ul>
 				</nav>
 			</div>
@@ -101,22 +68,8 @@
 									<th scope="col">닉네임</th>
 								</tr>
 							</thead>
-							<tbody>
-								<c:choose>
-									<c:when test="${fn:length(flist) > 0}">
-										<c:forEach items="${flist }" var="row">
-											<tr>
-												<td><a href="../main/Mypage.do?USER_NO=${row.FOLLOWER}">${row.NICK_NAME}</a><c:if test="${sessionScope.session.USER_NO == param.USER_NO }"><a  class="btn" href="../Mypage/DeleteFollower.do?USER_NO=${sessionScope.session.USER_NO}&FOLLOWER=${row.FOLLOWER}">팔로우 해제</a></c:if></td>
-												
-											</tr>
-										</c:forEach>
-									</c:when>
-									<c:otherwise>
-										<tr>
-											<td colspan="4">조회된 결과가 없습니다.</td>
-										</tr>
-									</c:otherwise>
-								</c:choose>
+							<tbody id="f_list">
+								
 							</tbody>
 						</table>
 					</div>
@@ -126,22 +79,8 @@
 
 			<div style="padding-left: 50%; padding-right: 50%;">
 				<nav>
-					<ul class="pagination">
-						<c:if test="${fmap.startpag>1}">
-							<li><a
-								href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${param.S_PAG_NUM}&F_PAG_NUM=${fmap.startpag-10}"
-								aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-						</c:if>
-						<c:forEach var="i" begin="${fmap.startpag }"
-							end="${fmap.endpage }">
-							<li id="F_${i}" class=""><a
-								href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${param.S_PAG_NUM}&F_PAG_NUM=${i}">${i}</a></li>
-						</c:forEach>
-						<c:if test="${fmap.endpage<fmap.maxpag}">
-							<li><a
-								href="../Mypage/MypageDetail.do?USER_NO=${param.USER_NO}&S_PAG_NUM=${param.S_PAG_NUM}&F_PAG_NUM=${fmap.startpag+10}"
-								aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
-						</c:if>
+					<ul class="pagination" id="f_page">
+					
 					</ul>
 				</nav>
 			</div>
@@ -151,14 +90,103 @@
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 	<script type="text/javascript">
-		$(window).load(function() {
-			var S_ch = 1;
-			var F_ch = 1;
-			S_ch = ${param.S_PAG_NUM}
-			F_ch = ${param.F_PAG_NUM}
-			document.getElementById('S_' + S_ch).className = 'active'
-			document.getElementById('F_' + F_ch).className = 'active'
-		});
+	$(function(){
+		s_page(1)
+		f_page(1)
+	})
+
+	
+	function f_page(p){
+		
+		var p = p;
+	    $.ajax({
+	        type:'GET',
+	        url : "<c:url value='../Mypage/Mypageing.do'/>",
+	        dataType : "json",
+	      	data :{
+	      		USER_NO : ${param.USER_NO},
+	        	F_PAG_NUM : p
+	      	},
+	        success : function(data){
+	        	 let html = "";
+	        	 let page = "";
+	        	if(data.length > 0){	
+	                for(i=0; i<data.length-1; i++){
+	                	html += "<tr><td><a href'../main/Mypage.do?USER_NO="+data[i].FOLLOWER+"'>"+data[i].NICK_NAME+"</a><c:if test='${sessionScope.session.USER_NO == param.USER_NO }'><a  class='btn' href='../Mypage/DeleteFollower.do?USER_NO=${sessionScope.session.USER_NO}&FOLLOWER="+data[i].FOLLOWER+"'>팔로우 해제</a></c:if></td></tr>";
+	                    
+	                }
+	                if(data[data.length-1].startpag>1){
+	                   var Previous = data.startpag-10
+	                	page += " <li onclick='f_page("+Previous+")' ><a aria-label='Previous'><span aria-hidden='tru'>&laquo;</span></a></li>";
+	                }for(i=data[data.length-1].startpag;i<data[data.length-1].endpage;i++){
+	                	if(p == i){
+	                		page += "<li onclick='f_page("+i+")' id =b_"+i+" class='action'><a>"+i+"</a></li>";
+	                	}else{
+	                	page += "<li onclick='f_page("+i+")' id =b_"+i+" class=''><a>"+i+"</a></li>";}
+	                }if(data[data.length-1].endpage<data[data.length-1].maxpag){
+	                	var next = data[data.length-1].startpag+10
+	                	page += "<li onclick='f_page("+next+")' ><a aria-label='Next'><span aria-hidden='true'>&#187;</span></a></li>";
+	                }
+	                
+	                
+	            } else {
+	                html += "<tr><td colspan='4'>조회된 결과가 없습니다</td></tr>";
+	             
+	                
+	            }	$("#f_list").html(html)
+	                $("#f_page").html(page)
+	            }, error : function(request,error){
+	            	alert("code:"+request.status+"\n"+"error:"+error);
+				 }
+
+	        })
+	     }
+	
+	function s_page(p){
+		
+		var p = p;
+	    $.ajax({
+	        type:'GET',
+	        url : "<c:url value='../Mypage/Mypageing.do'/>",
+	        dataType : "json",
+	      	data : {
+	      		USER_NO : ${param.USER_NO},
+	      		S_PAG_NUM : p
+	      	},
+	        success : function(data){
+	        	let html = "";
+	        	let page = "";
+	        	if(data.length > 0){
+	        		alert(data.length)
+	                for(i=0; i<data.length-1; i++){
+	                	html += "<tr><td><a href='../board/detail.do?BOARD_NO="+data[i].BOARD_NO+"&IDENTI_TYPE="+data[i].IDENTI_TYPE+"'>"+data[i].TITLE+"</a><c:if test='${sessionScope.session.USER_NO == param.USER_NO }'><a class='btn' href='../Mypage/DeleteScarap.do?USER_NO=${sessionScope.session.USER_NO}&BOARD_NO="+data[i].BOARD_NO+"'>스크랩 해제</a></c:if></td><td>"+data[i].BOARD_DATE+"</td><td>"+data[i].RECOMMEND_COUNT+"</td></tr>";
+	                    
+	                }
+	                if(data[data.length-1].startpag>1){
+	                   var Previous = data[data.length-1].startpag-10
+	                	page += " <li onclick='s_page("+Previous+")' ><a aria-label='Previous'><span aria-hidden='tru'>&laquo;</span></a></li>";
+	                }for(i=data[data.length-1].startpag;i<data[data.length-1].endpage;i++){
+	                	if(p == i){
+	                		page += "<li onclick='s_page("+i+")' id =p_"+i+" class='action'><a>"+i+"</a></li>";
+	                	}else{
+	                	page += "<li onclick='s_page("+i+")' id =p_"+i+" class='tt'><a>"+i+"</a></li>";}
+	                }if(data[data.length-1].endpage<data[data.length-1].maxpag){
+	                	var next = data[data.length-1].startpag+10
+	                	page += "<li onclick='s_page("+next+")' ><a aria-label='Next'><span aria-hidden='true'>&#187;</span></a></li>";
+	                }
+	                
+	                
+	            } else {
+	                html += "<tr><td colspan='4'>조회된 결과가 없습니다</td></tr>";
+	             
+	                
+	            }	$("#s_list").html(html)
+	                $("#s_page").html(page)
+	            }, error : function(request,error){
+	            	alert("code:"+request.status+"\n"+"error:"+error);
+				 }
+
+	        })}
 	</script>
 </body>
 </html>

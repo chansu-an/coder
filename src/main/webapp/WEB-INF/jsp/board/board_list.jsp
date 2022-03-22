@@ -39,7 +39,7 @@
 								
 								<form name="ORDER_TYPE" method="get">
 									<p style="text-align: right;">
-										<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test();">
+										<select id="ORDER_TYPE" name="ORDER_TYPE" onchange="test(1);">
 											<option>-----</option>
 											<option value="DATE"
 												<c:if test="${order_type == 'DATE'}">selected</c:if>>최신순</option>
@@ -103,28 +103,6 @@
 													</tr>
 												</thead>
 												<tbody id="test12">
-													<c:choose>
-														<c:when test="${fn:length(list) > 0}">
-															<c:forEach items="${list }" var="row">
-																<tr>
-																	<td>${row.ROWNUM }</td>
-																	<td><a
-																		href="/net/board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a>
-																		[${row.REPLY_COUNT}]</td>
-																	<td>${row.READ_COUNT }</td>
-																	<td>${row.RECOMMEND_COUNT }</td>
-																	<td><a
-																		href="../main/Mypage.do?USER_NO=${row.USER_NO }">${row.NICK_NAME }</a></td>
-																	<td>${row.BOARD_DATE }</td>
-																</tr>
-															</c:forEach>
-														</c:when>
-														<c:otherwise>
-															<tr>
-																<td colspan="4">조회된 결과가 없습니다.</td>
-															</tr>
-														</c:otherwise>
-													</c:choose>
 												</tbody>
 											</c:when>
 											<%-- 건의사항 --%>
@@ -147,47 +125,8 @@
 														<th scope="col">작성일</th>
 													</tr>
 												</thead>
-												<tbody>
-													<c:choose>
-														<c:when test="${fn:length(list) > 0}">
-															<c:forEach items="${list }" var="row">
-																<tr>
-																	<td>${row.ROWNUM }</td>
-																	<td>
-																	<c:choose>
-																		<c:when test="${session.ADMIN == 'Y' || row.USER_NO == session.USER_NO}">
-																			<a href="/net/board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE}&BOARD_NO=${row.BOARD_NO}">${row.TITLE }</a>
-																			[${row.REPLY_COUNT}]
-																		</c:when>
-																		<c:otherwise>
-																			${row.TITLE }[${row.REPLY_COUNT}]
-																		</c:otherwise>
-																	</c:choose>
-																	</td>
-																	<td><c:choose>
-																			<%-- 관리자답변 있을 때 --%>
-																			<c:when test="${row.REPLY_COUNT !=0 }">
-															답변완료
-														</c:when>
-																			<%-- 관리자답변 없을 때 --%>
-																			<c:otherwise>
-															답변대기
-														</c:otherwise>
-																		</c:choose></td>
-																	<td>${row.READ_COUNT }</td>
-																	<td><a
-																		href="../main/Mypage.do?USER_NO=${row.USER_NO }">${row.NICK_NAME }</a></td>
-
-																	<td>${row.BOARD_DATE }</td>
-																</tr>
-															</c:forEach>
-														</c:when>
-														<c:otherwise>
-															<tr>
-																<td colspan="4">조회된 결과가 없습니다.</td>
-															</tr>
-														</c:otherwise>
-													</c:choose>
+												<tbody id="test123">
+												
 												</tbody>
 											</c:otherwise>
 										</c:choose>
@@ -205,7 +144,7 @@
 													<c:if test="${searchType == 'T+C'}">selected</c:if>>제목+내용</option>
 											</select>
 											<input type="text" id="KEYWORD" name="KEYWORD" value="${keyWord }" onkeypress="if(event.keyCode == 13){test1();}"></input> 
-											<input type="button" value="검색" class="btn bin-info search-btn" onclick="test1();"/>
+											<input type="button" value="검색" class="btn bin-info search-btn" onclick="test(1);"/>
 										</div>
 								</div>
 							</div>
@@ -213,58 +152,10 @@
 									<div style="padding-left: 50%; padding-right: 50%;">
 										<nav>
 											<ul class="pagination" id="pageclass2" >
-												<c:if test="${map.startpag>1}">
-														<li><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-10}&ORDER_TYPE=${param.ORDER_TYPE}"
-															aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-													</c:if>
-													<c:forEach var="i" begin="${map.startpag }"
-														end="${map.endpage }">
-
-														<li  id="${i}" class=""><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}">${i}</a></li>
-													</c:forEach>
-													<c:if test="${map.endpage<map.maxpag}">
-														<li><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+10}&ORDER_TYPE=${param.ORDER_TYPE}"
-															aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
-													</c:if>
+												
 											</ul>
 										</nav>
 									</div>
-
-									<%-- <c:if test="${param.KEYWORD==null}">
-										<div style="padding-left: 50%; padding-right: 50%;">
-											<nav>
-												<ul class="pagination">
-													<c:if test="${map.startpag>1}">
-														<li><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag-10}&ORDER_TYPE=${param.ORDER_TYPE}"
-															aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-													</c:if>
-													<c:forEach var="i" begin="${map.startpag }"
-														end="${map.endpage }">
-
-														<li  id="${i}" class=""><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${i}&ORDER_TYPE=${param.ORDER_TYPE}">${i}</a></li>
-													</c:forEach>
-													<c:if test="${map.endpage<map.maxpag}">
-														<li><a
-															href="../board/openBoardList.do?IDENTI_TYPE=${param.IDENTI_TYPE}&PAG_NUM=${map.startpag+10}&ORDER_TYPE=${param.ORDER_TYPE}"
-															aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
-													</c:if>
-												</ul>
-											</nav>
-										</div>
-									</c:if>
-									<c:if test="${param.KEYWORD!=null}">
-										<div style="padding-left: 50%; padding-right: 50%;">
-											<nav>
-												<ul class="pagination" id="pageclass2" >
-												</ul>
-											</nav>
-										</div>
-									</c:if> --%>
 						</div>
 					</div>
 				</div>
@@ -274,28 +165,28 @@
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 	<script type="text/javascript">
-		
+	$(function(){
+		test(1)
+	});
 	
 		function test(f) {//ORDER_TYPE
 			var IDENTI_TYPE = ${param.IDENTI_TYPE};
 			var ORDER_TYPE = $("#ORDER_TYPE").val();
 			var SEARCH_TYPE = $("#SEARCH_TYPE").val();
 			var KEYWORD = $("#KEYWORD").val();
-			if(!f){
-				var PAG_NUM = 1;	
-			}else{
-				var PAG_NUM = f;				
-			}
+			var PAG_NUM = f;
+		
 			let dataList = {"IDENTI_TYPE" : IDENTI_TYPE, "ORDER_TYPE" : ORDER_TYPE, "SEARCH_TYPE" : SEARCH_TYPE, "KEYWORD" : KEYWORD};
 
 			$.ajax({				 
-				 url : "<c:url value='/board/openBoardList.do?PAG_NUM=" + PAG_NUM + "'/>",
+				 url : "<c:url value='/board/openBoardList.do?PAG_NUM="+f+"'/>",
 				 type : "post",
 				 data : JSON.stringify(dataList),
 				 dataType : 'json',
 				 contentType : "application/json; charset=UTF-8",
 				 success : function(result){
 					 $("#test12").empty();
+					 $("#test123").empty();
 					 $("#pageclass2").empty();
 					 var str = "";
 					 var str2 = "";
@@ -306,36 +197,43 @@
 						 $("#test12").append(str);
 					 }else{
 						 $.each(result.list, function(key, value){
-							 str = "<tr>" + 
-											"<td>" + value.ROWNUM + "</td>" + 
-											"<td>" +
-												"<a href='/net/board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE}&BOARD_NO=" + value.BOARD_NO + "' name='title'>" + value.TITLE + "</a>" +
-												"[" + value.REPLY_COUNT + "]" +
-											"</td>" +
-											"<td>" + value.READ_COUNT + "</td>" + 
-											"<td>" + value.RECOMMEND_COUNT + "</td>" +
-											"<td>" +
-												"<a href='../main/Mypage.do?USER_NO=" + value.USER_NO + "' name='title'>" + value.NICK_NAME + "</a>" +										
-											"</td>" +
-											"<td>" + value.BOARD_DATE + "</td>" +
-										"</tr>";
-							$("#test12").append(str); 
+							 str += "<tr>"  
+							 str +="<td>" + value.ROWNUM + "</td>" 
+							 str +="<td>" 
+							 str +="<a href='/net/board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE}&BOARD_NO=" + value.BOARD_NO + "' name='title'>" + value.TITLE + "</a>" 
+							 str +="[" + value.REPLY_COUNT + "]" +"</td>"
+											if(${param.IDENTI_TYPE == 4}){
+												if(value.READ_COUNT!=0){
+							str +="<td>답변완료</td>"}else{
+								str +="<td>답변대기</td>"}
+						 }
+							 str +="<td>" + value.READ_COUNT + "</td>"  
+							 str +="<td>" + value.RECOMMEND_COUNT + "</td>" 
+							 str +="<td>" 
+							 str +="<a href='../main/Mypage.do?USER_NO=" + value.USER_NO + "' name='title'>" + value.NICK_NAME + "</a>" 										
+							 str +="</td>" 
+							 str +="<td>" + value.BOARD_DATE + "</td>" 
+							 str +="</tr>";
+											if(IDENTI_TYPE=='4'){
+												$("#test123").html(str);
+											}else{
+							$("#test12").html(str); }
 						});
 						if(result.map.startpag > 1){
-							str2 = "<li><a href='#this' onclick='pagingnum(" + (result.map.startpag-10) +")' aria-label='Previous'>"								
+							str2 = "<li><a onclick='test(" + (result.map.startpag-10) +")' aria-label='Previous'>"								
 								 + "<span aria-hidden='true'>&laquo;</span></a></li>";
 						}
 						for(var i = result.map.startpag; i <= result.map.endpage; i++){
 							str2 += "<li id=" + i + ">"
-								 + "<a href='#this' onclick='orderpagingnum(" + i + ")'>"
+								 + "<a onclick='test(" + i + ")'>"
 								 + i + "</a></li>";
 						}
 						if(result.map.endpage < result.map.maxpag){
-							str2 = "<li><a href='#this' onclick='pagingnum(" + (result.map.startpag+10) +")' aria-label='Next'>"
+							str2 = "<li><a ' onclick='test(" + (result.map.startpag+10) +")' aria-label='Next'>"
 								 + "<span aria-hidden='true'>&laquo;</span></a></li>";
 						}
 								
-						$("#pageclass2").append(str2);
+						$("#pageclass2").html(str2);
 					 }
 				 },
 				 error : function(){
@@ -343,88 +241,13 @@
 				 }
 			 })
 		}
+		
 	
-		function test1(f) { //SEARCH_TYPE
-			var IDENTI_TYPE = ${param.IDENTI_TYPE};
-			var SEARCH_TYPE = $("#SEARCH_TYPE").val();
-			var KEYWORD = $("#KEYWORD").val();
-			if(!f){
-				var PAG_NUM = 1;	
-			}else{
-				var PAG_NUM = f;				
-			}
-			let dataList2 = {"IDENTI_TYPE" : IDENTI_TYPE, "SEARCH_TYPE" : SEARCH_TYPE, "KEYWORD" : KEYWORD};
-			$.ajax({				 
-				 url : "<c:url value='/board/openBoardList.do?PAG_NUM=" + PAG_NUM + "'/>",
-				 type : "post",
-				 data : JSON.stringify(dataList2),
-				 dataType : 'json',
-				 contentType : "application/json; charset=UTF-8",
-				 success : function(result){
-					 $("#test12").empty();
-					 $("#pageclass2").empty();
-					 var str = "";
-					 var str2 = "";
-					 if(result.list.length < 1){
-						 str = "<tr>" + 
-										"<td colspan='4'>조회된 결과가 없습니다.</td>" + 
-									"</tr>";
-						 $("#test12").append(str);
-					 }else{
-						 $.each(result.list, function(key, value){
-							 str = "<tr>" + 
-											"<td>" + value.ROWNUM + "</td>" + 
-											"<td>" +
-												"<a href='/net/board/detail.do?IDENTI_TYPE=${param.IDENTI_TYPE}&BOARD_NO=" + value.BOARD_NO + "' name='title'>" + value.TITLE + "</a>" +
-												" [" + value.REPLY_COUNT + "]" +
-											"</td>" +
-											"<td>" + value.READ_COUNT + "</td>" + 
-											"<td>" + value.RECOMMEND_COUNT + "</td>" +
-											"<td>" +
-												"<a href='../main/Mypage.do?USER_NO=" + value.USER_NO + "' name='title'>" + value.NICK_NAME + "</a>" +										
-											"</td>" +
-											"<td>" + value.BOARD_DATE + "</td>" +
-										"</tr>";
-							$("#test12").append(str); 
-						});
-						
-						if(result.map.startpag > 1){
-							str2 = "<li><a href='#this' onclick='pagingnum(" + (result.map.startpag-10) +")' aria-label='Previous'>"								
-								 + "<span aria-hidden='true'>&laquo;</span></a></li>";
-						}
-						for(var i = result.map.startpag; i <= result.map.endpage; i++){
-							str2 += "<li id=" + i + ">"
-								 + "<a href='#this' onclick='pagingnum(" + i + ")'>"
-								 + i + "</a></li>";
-						}
-						if(result.map.endpage < result.map.maxpag){
-							str2 = "<li><a href='#this' onclick='pagingnum(" + (result.map.startpag+10) +")' aria-label='Next'>"
-								 + "<span aria-hidden='true'>&laquo;</span></a></li>";
-						}
-							
-						$("#pageclass2").append(str2);
-					 }
-				 },
-				 error : function(){
-					 alert("서버요청실패");
-				 }
-			 })
-			
-		}
 		
-		function pagingnum(data){
-			test1(data);
-		}
 		
-		function orderpagingnum(data2){
-			test(data2);
-		}
+	
 		
-		$(window).load (function() {
-			var ch = 1;
-			 ch = ${param.PAG_NUM}
-			document.getElementById(ch).className = 'active'
-		});
+		
 	</script>
 </body>
 </html>

@@ -123,7 +123,7 @@ public class BoardController {
 			count = boardService.countsearchborad(commandMap.getMap());
 			packaging.Packag(commandMap.getMap(), pag, 10, count);
 				
-				
+			System.out.println(commandMap.getMap());
 			list = boardService.searchBoard(commandMap.getMap());
 			mav.addObject("searchType", request.getParameter("SEARCH_TYPE"));
 			mav.addObject("keyWord", request.getParameter("KEYWORD"));
