@@ -12,7 +12,9 @@
 <div class="container">
   <main>
     <div class="row g-5">  
-      <div class="col-md-7 col-lg-8">
+      <div class="col-md-7 col-lg-8 mx-auto">
+      <div class="card card-signin my-5">
+          <div class="card-body">
       	<br/>
         <h4 class="mb-3">회원가입</h4>
         <form id="regitsterform" method="post" class="needs-validation" onSubmit="registerForm()" novalidate>
@@ -63,6 +65,8 @@
           <!-- <button class="w-100 btn btn-primary btn-lg" id="register_button">회원가입 완료</button> -->
         </form>
       </div>
+    </div>
+    </div>
     </div>
   </main> 
 </div>
