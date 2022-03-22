@@ -223,10 +223,10 @@
 	      	data : {
 	      		RE_NO : no
 	      	},success : function(){
-	      		alert(22)
+
 	      		getCommentList(1)
 	      	},error : function(){
-				alert('11');
+
 				getCommentList(1)
 			}
 	      	
@@ -249,7 +249,7 @@
 	        	 var page = "";
 	        	if(data.length > 0){
 	        		
-	                for(i=0; i<5; i++){
+	                for(i=0; i<data.length-1; i++){
 	                	if(data[i].DEL_GB == 'N'){
 	                	html += "<div>"
 	                    html += "<input type='hidden' id=REF_NO_${var.index } value="+data[i].RE_NO+" />";
@@ -277,13 +277,13 @@
 	                    }
 	                   
 	                }
-	                if(data[5].startpag>1){
-	                   var Previous = data[5].startpag-10
+	                if(data[data.length-1].startpag>1){
+	                   var Previous = data[data.length-1].startpag-10
 	                	page += " <li onclick='page("+Previous+")' ><a aria-label='Previous'><span aria-hidden='tru'>&laquo;</span></a></li>";
-	                }for(i=data[5].startpag;i<data[5].endpage;i++){
+	                }for(var i=data[data.length-1].startpag;i<=data[data.length-1].endpage;i++){
 	                	page += "<li onclick='page("+i+")' id ="+i+" class='tt'><a>"+i+"</a></li>";
-	                }if(data[5].endpage<data[5].maxpag){
-	                	var next = data[5].startpag+10
+	                }if(data[data.length-1].endpage<data[data.length-1].maxpag){
+	                	var next = data[data.length-1].startpag+10
 	                	page += "<li onclick='page("+next+")' ><a aria-label='Next'><span aria-hidden='true'>&#187;</span></a></li>";
 	                }
 	                
@@ -310,7 +310,6 @@
 				 $("#CONTEXT").val("");
 			},
 			error : function(){
-				alert('11');
 			}
 			
 		})
@@ -333,7 +332,6 @@
 							 alert("스크랩 취소");
 						 },
 						 error : function(){
-							 alert("");
 						 }
 					 })					
 				}else{
@@ -426,7 +424,7 @@
     
     function fn_addFile(){if(gfv_count>=4){
 		return;
-		}alert(gfv_count)
+		}
 		var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
 		
 		$("#fileDiv").append(str);

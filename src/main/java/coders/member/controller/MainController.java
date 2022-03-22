@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -217,6 +218,34 @@ public class MainController {
 		mav.addObject("map", commandMap.getMap());
 		return mav;
 	}
+	@RequestMapping(value = "/main/Userpage.do")
+	 @ResponseBody
+	 public List<Map<String, Object>> Projectpage(HttpServletRequest request) throws Exception{
+		 Map<String, Object> wmap = new HashMap<String, Object>();
+		 String wpn =request.getParameter("PAG_NUM");
+		HashMap<String, Object> hash = new HashMap<String, Object>();
+		JSONObject jsonObj = new JSONObject();
+		JSONArray jsonArr = new JSONArray();
+		if(wpn !=null) {
+			
+			int fpnum = Integer.parseInt(wpn);
+			int fcount = mainService.countUser(wmap);
+			wmap = packaging.Packag(wmap, fpnum, 5, fcount);
+			List<Map<String, Object>> list1 = mainService.selectUserList(wmap);
+			if(list1.size()>0) {
+				for(int i = 0; i<list1.size();i++) {
+					hash = new HashMap<String, Object>(list1.get(i));
+					jsonObj = new JSONObject();
+					jsonObj.putAll(hash);
+					jsonArr.add(jsonObj);
+				}
+				jsonObj = new JSONObject();
+				jsonObj.putAll(wmap);
+				jsonArr.add(jsonObj);
+			}
+			return jsonArr;
+		}
+		return null;}
 	
 	//탈퇴회원(탈퇴 후 7일 이내 / DB에 남아있는 회원) 복구
 	@RequestMapping(value="/main/restoreUser.do")

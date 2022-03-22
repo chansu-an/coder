@@ -272,6 +272,56 @@ public class BoardController {
 		mav.setViewName("/board/admin_list");
 		return mav;
 	}
+	 @RequestMapping(value = "/board/adminpage.do")
+	 @ResponseBody
+public List<Map<String, Object>> notpage(HttpServletRequest request) throws Exception{
+	Map<String, Object> bmap = new HashMap<String, Object>();
+	Map<String, Object> pmap = new HashMap<String, Object>();
+	String bpn =request.getParameter("D_PAG_NUM");
+	String ppn = request.getParameter("R_PAG_NUM");
+	HashMap<String, Object> hash = new HashMap<String, Object>();
+	JSONObject jsonObj = new JSONObject();
+	JSONArray jsonArr = new JSONArray();
+	if(bpn !=null) {
+		int bpnum = Integer.parseInt(bpn);
+		int bcount = boardService.countDeleteList(bmap);
+		bmap = packaging.Packag(bmap, bpnum, 5, bcount);
+		List<Map<String, Object>> list1 = boardService.selectDeleteList(bmap);
+		if(list1.size()>0) {
+			for(int i = 0; i<list1.size();i++) {
+				hash = new HashMap<String, Object>(list1.get(i));
+				jsonObj = new JSONObject();
+				jsonObj.putAll(hash);
+				jsonArr.add(jsonObj);
+			}
+			jsonObj = new JSONObject();
+			jsonObj.putAll(bmap);
+			jsonArr.add(jsonObj);
+		}
+		return jsonArr;
+	}
+	
+	if(ppn!=null) {
+		int ppnum = Integer.parseInt(ppn);
+		int pcount = boardService.countReportList(pmap);
+		pmap = packaging.Packag(pmap, ppnum, 5, pcount);
+		List<Map<String, Object>> list2 = boardService.selectReportList(pmap);
+		if(list2.size()>0) {
+			for(int i = 0; i<list2.size();i++) {
+				hash = new HashMap<String, Object>(list2.get(i));
+				jsonObj = new JSONObject();
+				jsonObj.putAll(hash);
+				jsonArr.add(jsonObj);
+			}
+			jsonObj = new JSONObject();
+			jsonObj.putAll(pmap);
+			jsonArr.add(jsonObj);
+			
+		}
+		return jsonArr;
+	
+}return null;
+	}
 	
 	//신고글, 삭제글 상세보기
 	@RequestMapping(value="/board/adminDetail.do")
@@ -301,6 +351,7 @@ public class BoardController {
 	      
 	   return mav;
 	}
+	
 		
 	//삭제글 복구하기
 	@RequestMapping(value="/board/restore.do")
@@ -392,8 +443,10 @@ public class BoardController {
 	            }
 	            
 	        }
+	        	jsonObj = new JSONObject();
 	             jsonObj.putAll(new HashMap<String, Object>(commandMap.getMap()));
 	             jsonArr.add(jsonObj);
+	             System.out.println(jsonArr);
 	        return jsonArr;
 	        
 	    }

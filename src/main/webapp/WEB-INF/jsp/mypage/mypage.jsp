@@ -118,7 +118,7 @@
 	                if(data[data.length-1].startpag>1){
 	                   var Previous = data.startpag-10
 	                	page += " <li onclick='f_page("+Previous+")' ><a aria-label='Previous'><span aria-hidden='tru'>&laquo;</span></a></li>";
-	                }for(i=data[data.length-1].startpag;i<data[data.length-1].endpage;i++){
+	                }for(var i=data[data.length-1].startpag;i<=data[data.length-1].endpage;i++){
 	                	if(p == i){
 	                		page += "<li onclick='f_page("+i+")' id =b_"+i+" class='action'><a>"+i+"</a></li>";
 	                	}else{
@@ -165,7 +165,7 @@
 	                if(data[data.length-1].startpag>1){
 	                   var Previous = data[data.length-1].startpag-10
 	                	page += " <li onclick='s_page("+Previous+")' ><a aria-label='Previous'><span aria-hidden='tru'>&laquo;</span></a></li>";
-	                }for(i=data[data.length-1].startpag;i<data[data.length-1].endpage;i++){
+	                }for(var i=data[data.length-1].startpag;i<=data[data.length-1].endpage;i++){
 	                	if(p == i){
 	                		page += "<li onclick='s_page("+i+")' id =p_"+i+" class='action'><a>"+i+"</a></li>";
 	                	}else{

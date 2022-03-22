@@ -143,9 +143,9 @@ function testttt() {
 												</c:forEach>
 											</div>
 										</div>
-									</section>
+							</section>
 								</div>
-							</div>
+							</div>		
 						</div>
 					</div>
 				</div>
