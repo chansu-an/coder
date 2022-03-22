@@ -8,9 +8,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import coders.common.common.CommandMap;
@@ -29,80 +32,109 @@ public class ProjectController {
 
 //	프로젝트 리스트
 	@RequestMapping(value = "/Project/Project.do")
-	public ModelAndView ProjectList(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		int count;
-		int pag = 1;
-		String pags = request.getParameter("PAG_NUM");
-		if (pags != null) {
-			pag = Integer.parseInt(pags);
-		}
-		
-		
-		ModelAndView mav = new ModelAndView("/project/project_board_list");
-		count = projectService.countProjectList(commandMap.getMap());
-		packaging.Packag(commandMap.getMap(), pag, 5, count);
-		
-
-		// 추가 02.15
-		/* projectService.insertProject(commandMap.getMap(),request); */
-
-		List<Map<String, Object>> list = projectService.selectProjectList(commandMap.getMap());
-
-		mav.addObject("list", list);
-		mav.addObject("map", commandMap.getMap());
-		
-		
-		
-		
-		
-		
-		
-		
-		return mav;
+	public String ProjectList(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		return "/project/project_board_list";
 	}
+	 @RequestMapping(value = "/Project/Projectpage.do")
+	 @ResponseBody
+	 public List<Map<String, Object>> Projectpage(HttpServletRequest request) throws Exception{
+		 Map<String, Object> wmap = new HashMap<String, Object>();
+		 wmap.put("KEYWORD", request.getParameter("KEYWORD"));
+		 wmap.put("SEARCH_TYPE", request.getParameter("SEARCH_TYPE"));
+		 String wpn =request.getParameter("PAG_NUM");
+		HashMap<String, Object> hash = new HashMap<String, Object>();
+		JSONObject jsonObj = new JSONObject();
+		JSONArray jsonArr = new JSONArray();
+		if(wpn !=null) {
+			
+			int fpnum = Integer.parseInt(wpn);
+			int fcount = projectService.countProjectList(wmap);
+			wmap = packaging.Packag(wmap, fpnum, 5, fcount);
+			List<Map<String, Object>> list1 = projectService.selectProjectList(wmap);
+			if(list1.size()>0) {
+				for(int i = 0; i<list1.size();i++) {
+					hash = new HashMap<String, Object>(list1.get(i));
+					jsonObj = new JSONObject();
+					jsonObj.putAll(hash);
+					jsonArr.add(jsonObj);
+				}
+				jsonObj = new JSONObject();
+				jsonObj.putAll(wmap);
+				jsonArr.add(jsonObj);
+			}
+			return jsonArr;
+		}
+		return null;
+	 }
 	@RequestMapping(value = "/Project/ProjectS.do")
-	public ModelAndView ProjectListS(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		int count;
-		int pag = 1;
-		String pags = request.getParameter("PAG_NUM");
-		if (pags != null) {
-			pag = Integer.parseInt(pags);
-		}
-		ModelAndView mav = new ModelAndView("/project/project_board_slist");
-		count = projectService.countProjectList(commandMap.getMap());
-		packaging.Packag(commandMap.getMap(), pag, 5, count);
-
-		// 추가 02.15
-		/* projectService.insertProject(commandMap.getMap(),request); */
-
-		List<Map<String, Object>> list1 = projectService.selectProjectSList(commandMap.getMap());
-		
-		mav.addObject("list1", list1);
-		mav.addObject("map", commandMap.getMap());
-		return mav;
+	public String ProjectListS(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		return "/project/project_board_slist";
 	}
+	@RequestMapping(value = "/Project/ProjectSpage.do")
+	 @ResponseBody
+	 public List<Map<String, Object>> ProjectS(HttpServletRequest request) throws Exception{
+		 Map<String, Object> wmap = new HashMap<String, Object>();
+		 wmap.put("KEYWORD", request.getParameter("KEYWORD"));
+		 wmap.put("SEARCH_TYPE", request.getParameter("SEARCH_TYPE"));
+		 String wpn =request.getParameter("PAG_NUM");
+		HashMap<String, Object> hash = new HashMap<String, Object>();
+		JSONObject jsonObj = new JSONObject();
+		JSONArray jsonArr = new JSONArray();
+		if(wpn !=null) {
+			int fpnum = Integer.parseInt(wpn);
+			int fcount = projectService.countProjectSlist(wmap);
+			wmap = packaging.Packag(wmap, fpnum, 5, fcount);
+			List<Map<String, Object>> list1 = projectService.selectProjectList(wmap);
+			if(list1.size()>0) {
+				for(int i = 0; i<list1.size();i++) {
+					hash = new HashMap<String, Object>(list1.get(i));
+					jsonObj = new JSONObject();
+					jsonObj.putAll(hash);
+					jsonArr.add(jsonObj);
+				}
+				jsonObj = new JSONObject();
+				jsonObj.putAll(wmap);
+				jsonArr.add(jsonObj);
+			}
+			return jsonArr;
+		}
+		return null;
+	 }
 	
 	@RequestMapping(value = "/Project/ProjectE.do")
-	public ModelAndView ProjectListeE(CommandMap commandMap, HttpServletRequest request) throws Exception {
-		int count;
-		int pag = 1;
-		String pags = request.getParameter("PAG_NUM");
-		if (pags != null) {
-			pag = Integer.parseInt(pags);
-		}
-		ModelAndView mav = new ModelAndView("/project/project_board_elist");
-		count = projectService.countProjectList(commandMap.getMap());
-		packaging.Packag(commandMap.getMap(), pag, 5, count);
-
-		// 추가 02.15
-		/* projectService.insertProject(commandMap.getMap(),request); */
-
-		List<Map<String, Object>> list2 = projectService.selectProjectEList(commandMap.getMap());
-		
-		mav.addObject("list2", list2);
-		mav.addObject("map", commandMap.getMap());
-		return mav;
+	public String ProjectListeE(CommandMap commandMap, HttpServletRequest request) throws Exception {
+		return "/project/project_board_elist";
 	}
+	@RequestMapping(value = "/Project/ProjectEpage.do")
+	 @ResponseBody
+	 public List<Map<String, Object>> ProjectE(HttpServletRequest request) throws Exception{
+		 Map<String, Object> wmap = new HashMap<String, Object>();
+		 wmap.put("KEYWORD", request.getParameter("KEYWORD"));
+		 wmap.put("SEARCH_TYPE", request.getParameter("SEARCH_TYPE"));
+		 String wpn =request.getParameter("PAG_NUM");
+		HashMap<String, Object> hash = new HashMap<String, Object>();
+		JSONObject jsonObj = new JSONObject();
+		JSONArray jsonArr = new JSONArray();
+		if(wpn !=null) {
+			int fpnum = Integer.parseInt(wpn);
+			int fcount = projectService.countProjectElist(wmap);
+			wmap = packaging.Packag(wmap, fpnum, 5, fcount);
+			List<Map<String, Object>> list1 = projectService.selectProjectList(wmap);
+			if(list1.size()>0) {
+				for(int i = 0; i<list1.size();i++) {
+					hash = new HashMap<String, Object>(list1.get(i));
+					jsonObj = new JSONObject();
+					jsonObj.putAll(hash);
+					jsonArr.add(jsonObj);
+				}
+				jsonObj = new JSONObject();
+				jsonObj.putAll(wmap);
+				jsonArr.add(jsonObj);
+			}
+			return jsonArr;
+		}
+		return null;
+	 }
 	
 
 //프로젝트 작성폼

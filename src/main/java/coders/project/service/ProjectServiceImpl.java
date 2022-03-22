@@ -117,6 +117,20 @@ public class ProjectServiceImpl implements ProjectService {
 	public int checkProjectApp(Map<String, Object> map) throws Exception {
 		return projectDAO.checkProjectApp(map);
 	}
+
+	@Override
+	public int countProjectSlist(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return projectDAO.countProjectSlist(map);
+	}
+
+	@Override
+	public int countProjectElist(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return projectDAO.countProjectElist(map);
+	}
+	
+	
 	
 
 }

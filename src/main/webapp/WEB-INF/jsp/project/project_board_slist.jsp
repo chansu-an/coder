@@ -62,34 +62,10 @@
 											
 										</thead>
 										
-										<tbody>
-											<c:choose>
-
-												<c:when test="${fn:length(list1) > 0}">
-													<!-- 진행예정 프로젝트 -->
-													<c:forEach items="${list1 }" var="row">
-														<tr>
-															<td>${row.ROWNUM }</td>
-															<%-- <td>${row.PROJECT_NAME }</td> --%>
-															<td><a
-																href="../Project/Detail.do?PROJECT_NO=${row.PROJECT_NO }&USER_NO=${session.USER_NO}">${row.PROJECT_NAME}</a>
-															<td>${row.PROJECT_START }</td>
-															<td>${row.PROJECT_END }</td>
-															<td>${row.PROJECT_MEMBER }</td>
-															<td>${row.NICK_NAME }</td>
-														</tr>
-													</c:forEach>
-												</c:when>
-												<c:otherwise>
-													<tr>
-														<td colspan="10">조회된 결과가 없습니다.</td>
-														
-													</tr>
-												</c:otherwise>
-											</c:choose>
+										<tbody id ="p_list">>
+											
 										</tbody>
 									</table>
-									<form action="../Project/ProjectS.do" method="get">
 										<div class="search-wrap">
 											<select id="SEARCH_TYPE" name="SEARCH_TYPE"	onchange="test1(this.value);">
 												<option value="PROJECT_NAME"
@@ -102,56 +78,20 @@
 													<c:if test="${param.SEARCH_TYPE == 'T+C'}">selected</c:if>>제목+내용</option>
 											</select>
 											<input type="text" id="KEYWORD" name="KEYWORD" value="${param.KEYWORD }"/>
-											<input type="submit" value="검색" class="btn bin-info search-btn" />
+											<input type="submit" onclick="page(1)" value="검색" class="btn bin-info search-btn" />
 														
 										</div>												
-									</form>
 										<div align="left">
 												<a href="../Project/Write.do" class="btn" id="write"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 </svg> 글쓰기</a>
 									<div style="padding-left: 50%; padding-right: 50%;">
-												<c:if test="${param.KEYWORD==null}">
 													<nav>
-														<ul class="pagination">
-															<c:if test="${map.startpag>1}">
-																<li><a
-																	href="../Project/Project.do?PAG_NUM=${map.startpag-10}"
-																	aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-															</c:if>
-															<c:forEach var="i" begin="${map.startpag }"
-																end="${map.endpage }">
-																<li id="${i }" class=""><a href="../Project/Project.do?PAG_NUM=${i}">${i}</a></li>
-															</c:forEach>
-															<c:if test="${map.endpage<map.maxpag}">
-																<li><a
-																	href="../Project/Project.do?PAG_NUM=${map.startpag+10}"
-																	aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
-															</c:if>
+														<ul class="pagination" id="p_page">
+															
 														</ul>
 													</nav>
-													</c:if>
-													<c:if test="${param.KEYWORD!=null}">
-													<nav>
-														<ul class="pagination">
-															<c:if test="${map.startpag>1}">
-																<li><a
-																	href="../Project/Project.do?PAG_NUM=${map.startpag-10}&KEYWORD=${param.KEYWORD}"
-																	aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-															</c:if>
-															<c:forEach var="i" begin="${map.startpag }"
-																end="${map.endpage }">
-																<li><a href="../Project/Project.do?PAG_NUM=${i}&KEYWORD=${param.KEYWORD}">${i}</a></li>
-															</c:forEach>
-															<c:if test="${map.endpage<map.maxpag}">
-																<li id="${i }" class=""><a
-																	href="../Project/Project.do?PAG_NUM=${map.startpag+10}&KEYWORD=${param.KEYWORD}"
-																	aria-label="Next"><span aria-hidden="true">&laquo;</span></a></li>
-															</c:if>
-														</ul>
-													</nav>
-													</c:if>
 												</div>
 											</div>
 										</div>
@@ -167,12 +107,62 @@
 	<%@ include file="/WEB-INF/include/include-body.jspf"%>
 	<%@ include file="/WEB-INF/include/include-menufooter.jspf"%>
 <script type="text/javascript">
-	$(window).load (function() {
-		var ch = 1;
+$(function() {
+	page(1);
+});
 
-		ch = ${param.PAG_NUM}
-		document.getElementById(ch).className = 'active'
-	});
+function page(p){
+	
+	var p = p;
+	var key = $("#KEYWORD").val();
+	var SEARCH = $("#SEARCH_TYPE").val();
+    $.ajax({
+        type:'GET',
+        url : "<c:url value='/Project/ProjectSpage.do'/>",
+        dataType : 'json',
+      	data : {
+      		KEYWORD : key,
+      		PAG_NUM : p,
+      		SEARCH_TYPE : SEARCH
+      	},
+        success : function(data){
+        	let html = "";
+        	let page = "";
+        	if(data.length > 0){
+                for(i=0; i<data.length-1; i++){
+                	html += "<tr><td>"+data[i].ROWNUM+"</td>";
+                	html +="<td><a href='../Project/Detail.do?PROJECT_NO=${"+data[i].PROJECT_NO+"}&USER_NO=${session.USER_NO}&END=end'>"+data[i].PROJECT_NAME+"</a>";
+                	html +="<td>"+data[i].PROJECT_START+"</td>";
+                	html +="<td>"+data[i].PROJECT_END+"</td>";
+                	html +="<td>"+data[i].PROJECT_MEMBER+"</td>";
+                	html +="<td>"+data[i].NICK_NAME+"</td></tr>";
+                    
+                }
+                if(data[data.length-1].startpag>1){
+                   var Previous = data[data.length-1].startpag-10
+                	page += " <li onclick='s_page("+Previous+")' ><a aria-label='Previous'><span aria-hidden='tru'>&laquo;</span></a></li>";
+                }for(var i=data[data.length-1].startpag;i<=data[data.length-1].endpage;i++){
+                	if(p == i){
+                		page += "<li onclick='page("+i+")' id =p_"+i+" class='action'><a>"+i+"</a></li>";
+                	}else{
+                	page += "<li onclick='page("+i+")' id =p_"+i+" class='tt'><a>"+i+"</a></li>";}
+                }if(data[data.length-1].endpage<data[data.length-1].maxpag){
+                	var next = data[data.length-1].startpag+10
+                	page += "<li onclick='page("+next+")' ><a aria-label='Next'><span aria-hidden='true'>&#187;</span></a></li>";
+                }
+                
+                
+            } else {
+                html += "<tr><td colspan='4'>조회된 결과가 없습니다</td></tr>";
+             
+                
+            }	$("#p_list").html(html)
+                $("#p_page").html(page)
+            }, error : function(request,error){
+            	alert("code:"+request.status+"\n"+"error:"+error);
+			 }
+
+        })}
 	</script>
 </body>
 </html>

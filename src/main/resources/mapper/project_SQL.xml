@@ -26,7 +26,10 @@ UPDATE PROJECTBOARDFILES SET DEL_GB = 'Y' WHERE PROJECT_NO = #{PROJECT_NO}
 	<!-- 프로젝트 파일수정 -->
 	<update id="updateFile" parameterType="hashmap"><![CDATA[
 UPDATE PROJECTBOARDFILES SET DEL_GB = 'N' WHERE PBF_NO = #{FILE_PBF_NO}
-]]></update>
+	
+]]>
+
+</update>
 
 	<!-- 프로젝트 파일 -->
 	<select id="selectProjectFile" parameterType="hashmap"
@@ -69,7 +72,86 @@ SELECT PROJECT_NO,PROJECTBOARD.PROJECT_NAME,TO_CHAR(PROJECTBOARD.PROJECT_START,'
 	<select id="countProjectList" parameterType="hashmap"
 		resultType="_int"><![CDATA[
 SELECT COUNT(*) FROM PROJECTBOARD WHERE DEL_GB='N' AND SYSDATE BETWEEN PROJECT_START AND PROJECT_END
-]]></select>
+]]>
+<choose>
+			<when test='SEARCH_TYPE == "PROJECT_NAME"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "PROJECT_CONTEXT"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%'
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "NICKNAME"'>
+			<![CDATA[
+				AND USERS.NICK_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "T+C"'>
+			<![CDATA[
+				AND (PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' OR PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%') 
+			]]>
+			</when>
+		</choose>
+		</select>
+<!-- 시작 예정 프로젝트 숫자 -->
+	<select id="countProjectSList" parameterType="hashmap"
+		resultType="_int"><![CDATA[
+SELECT COUNT(*) FROM PROJECTBOARD WHERE DEL_GB='N' AND SYSDATE < PROJECT_START 
+]]>
+<choose>
+			<when test='SEARCH_TYPE == "PROJECT_NAME"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "PROJECT_CONTEXT"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%'
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "NICKNAME"'>
+			<![CDATA[
+				AND USERS.NICK_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "T+C"'>
+			<![CDATA[
+				AND (PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' OR PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%') 
+			]]>
+			</when>
+		</choose>
+</select>
+<!-- 종료된 프로젝트 숫자 -->
+	<select id="countProjectEList" parameterType="hashmap"
+		resultType="_int"><![CDATA[
+SELECT COUNT(*) FROM PROJECTBOARD WHERE DEL_GB='N' AND SYSDATE > PROJECT_END
+]]>
+<choose>
+			<when test='SEARCH_TYPE == "PROJECT_NAME"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "PROJECT_CONTEXT"'>
+			<![CDATA[
+				AND PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%'
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "NICKNAME"'>
+			<![CDATA[
+				AND USERS.NICK_NAME LIKE '%'||#{KEYWORD}||'%' 
+			]]>
+			</when>
+			<when test='SEARCH_TYPE == "T+C"'>
+			<![CDATA[
+				AND (PROJECTBOARD.PROJECT_NAME LIKE '%'||#{KEYWORD}||'%' OR PROJECTBOARD.PROJECT_CONTEXT LIKE '%'||#{KEYWORD}||'%') 
+			]]>
+			</when>
+		</choose>
+</select>
 	<!-- 시작 예정 프로젝트 리스트 -->
 <select id="selectProjectSList" parameterType="hashmap"	resultType="hashmap">
 <include refid="common.pagingPre" />

@@ -133,44 +133,73 @@ public ModelAndView mypageModify(HttpServletRequest request,CommandMap commandMa
 }
 	//참가프로젝트리스트
 	@RequestMapping(value = "/Mypage/ProjectList.do")
-public ModelAndView projectList(HttpServletRequest request,HttpSession session )throws Exception {
-		ModelAndView mav = new ModelAndView();
-		Map<String, Object> mapor = new HashMap<String, Object>();
-		String user_no = request.getParameter("USER_NO");
-		mapor.put("USER_NO", user_no);
-		int pnum = 1;
-		String pnums = request.getParameter("PAG_NUM");
-		if(pnums!=null) {
-			pnum = Integer.parseInt(pnums);
-		}
-		int count = mypageService.countProjectList(mapor);
-		mapor = packaging.Packag(mapor, pnum, 5, count);
-		List<Map<String, Object>> list = mypageService.selectProjectList(mapor);
-		mav.addObject("map", mapor);
-		mav.addObject("list",list);
-		mav.setViewName("/mypage/myProject");
-		return mav;
+public String projectList(HttpServletRequest request,HttpSession session )throws Exception {
+		return "/mypage/myProject";
 }
+	@RequestMapping(value = "/Mypage/Project.do")
+	@ResponseBody
+	 public List<Map<String, Object>> Projectlist(HttpServletRequest request) throws Exception{
+		 Map<String, Object> wmap = new HashMap<String, Object>();
+		 wmap.put("USER_NO", request.getParameter("USER_NO"));
+		 String wpn =request.getParameter("PAG_NUM");
+		HashMap<String, Object> hash = new HashMap<String, Object>();
+		JSONObject jsonObj = new JSONObject();
+		JSONArray jsonArr = new JSONArray();
+		if(wpn !=null) {
+			int fpnum = Integer.parseInt(wpn);
+			int fcount = mypageService.countProjectList(wmap);
+			wmap = packaging.Packag(wmap, fpnum, 5, fcount);
+			List<Map<String, Object>> list1 = mypageService.selectProjectList(wmap);
+			if(list1.size()>0) {
+				for(int i = 0; i<list1.size();i++) {
+					hash = new HashMap<String, Object>(list1.get(i));
+					jsonObj = new JSONObject();
+					jsonObj.putAll(hash);
+					jsonArr.add(jsonObj);
+				}
+				jsonObj = new JSONObject();
+				jsonObj.putAll(wmap);
+				jsonArr.add(jsonObj);
+			}
+			return jsonArr;
+		
+		}
+		return null;
+	 }
 	//작성글 리스트
 	@RequestMapping(value = "/Mypage/WriteList.do")
-public ModelAndView writeList(HttpServletRequest request,HttpSession session )throws Exception {
-		ModelAndView mav = new ModelAndView();
-		Map<String, Object> mapor = new HashMap<String, Object>();
-		String user_no = request.getParameter("USER_NO");
-		mapor.put("USER_NO",user_no);
-		int pnum = 1;
-		String pnums = request.getParameter("PAG_NUM");
-		if(pnums!=null) {
-			pnum = Integer.parseInt(pnums);
-		}
-		int count = mypageService.countWriteList(mapor);
-		mapor = packaging.Packag(mapor, pnum, 5, count);
-		List<Map<String, Object>> list = mypageService.selectWriteList(mapor);
-		mav.addObject("list",list);
-		mav.addObject("map", mapor);
-		mav.setViewName("/mypage/myWrite");
-		return mav;
+public String writeList()throws Exception {
+		return "/mypage/myWrite";
 }
+	 @RequestMapping(value = "/Mypage/Writepage.do")
+	 @ResponseBody
+	 public List<Map<String, Object>> writelist(HttpServletRequest request) throws Exception{
+		 Map<String, Object> wmap = new HashMap<String, Object>();
+		 wmap.put("USER_NO", request.getParameter("USER_NO"));
+		 String wpn =request.getParameter("PAG_NUM");
+		HashMap<String, Object> hash = new HashMap<String, Object>();
+		JSONObject jsonObj = new JSONObject();
+		JSONArray jsonArr = new JSONArray();
+		if(wpn !=null) {
+			int fpnum = Integer.parseInt(wpn);
+			int fcount = mypageService.countWriteList(wmap);
+			wmap = packaging.Packag(wmap, fpnum, 5, fcount);
+			List<Map<String, Object>> list1 = mypageService.selectWriteList(wmap);
+			if(list1.size()>0) {
+				for(int i = 0; i<list1.size();i++) {
+					hash = new HashMap<String, Object>(list1.get(i));
+					jsonObj = new JSONObject();
+					jsonObj.putAll(hash);
+					jsonArr.add(jsonObj);
+				}
+				jsonObj = new JSONObject();
+				jsonObj.putAll(wmap);
+				jsonArr.add(jsonObj);
+			}
+			return jsonArr;
+		}
+		return null;
+	 }
 	//유저삭제
 	@RequestMapping(value = "/Mypage/UserDelete.do")
 public ModelAndView mypageDelete(HttpSession session)throws Exception {
@@ -212,12 +241,11 @@ public List<Map<String, Object>> notpage(HttpServletRequest request) throws Exce
 			}
 			jsonObj = new JSONObject();
 			jsonObj.putAll(bmap);
-			System.out.println(jsonObj);
 			jsonArr.add(jsonObj);
 		}
-		System.out.println(jsonArr);
 		return jsonArr;
-	}if(ppn!=null) {
+	}
+	if(ppn!=null) {
 		int ppnum = Integer.parseInt(ppn);
 		int pcount = mypageService.countProjectArList(pmap);
 		pmap = packaging.Packag(pmap, ppnum, 5, pcount);
@@ -233,12 +261,11 @@ public List<Map<String, Object>> notpage(HttpServletRequest request) throws Exce
 			jsonObj.putAll(pmap);
 			jsonArr.add(jsonObj);
 			
-		}
-		System.out.println(jsonArr);
-		return jsonArr;
-	}	
-	return null;
-}
+		
+	}	return jsonArr;
+	
+}return null;
+	}
 	
 	//작성글 알림 삭제
 	@RequestMapping(value = "/Mypage/ArlistClick.do")
@@ -280,11 +307,6 @@ public List<Map<String, Object>> notpage(HttpServletRequest request) throws Exce
 			mav.addObject("url", "../main/Mypage.do?USER_NO="+follower);
 			mav.setViewName("/mypage/redirect");
 			return mav;}
-			
-
-		
-		
-		
 	}
 	//스크랩추가
 	@RequestMapping(value = "/Mypage/insertScrap.do")

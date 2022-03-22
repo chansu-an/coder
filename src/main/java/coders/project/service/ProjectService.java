@@ -38,4 +38,10 @@ public interface ProjectService {
 //		void updateFileList(Map<String, Object> map) throws Exception;
 //	
 	int checkProjectApp(Map<String, Object> map) throws Exception;
+	
+	public int countProjectSlist(Map<String, Object> map)throws Exception;
+	
+	public int countProjectElist(Map<String, Object> map)throws Exception;
+	
+	
 }
