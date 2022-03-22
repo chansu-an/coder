@@ -170,12 +170,23 @@ public class MainController {
 		ModelAndView mv = new ModelAndView("redirect:/main/Login.do");
 		
 		commandMap.put("PROFILE", "TEMP");
-		mailSendService.sendAuthMail((String)request.getParameter("EMAIL"));
+		
 		mainService.insertUser(commandMap.getMap());
 		
 		return mv;
 	}
 	
+	@RequestMapping(value="/main/checkEmail.do", method = RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView checkEmail(@RequestBody String EMAIL, HttpServletRequest request) throws Exception{
+		ModelAndView mv = new ModelAndView("jsonView");
+		
+		String checkauthkey = mailSendService.sendAuthMail(EMAIL);
+		
+		mv.addObject("checkauthkey", checkauthkey);
+		
+		return mv;
+	}	
 	
 	@RequestMapping(value="/main/FindPw.do", method = RequestMethod.GET)
 	public ModelAndView findPw(CommandMap commandMap, HttpServletRequest request) throws Exception{

@@ -49,8 +49,7 @@ public class MailSendService2 {
             sendMail.setText(new StringBuffer().append("<h1>[비밀번호 찾기]</h1>")
             .append("<p>아래 비밀번호로 로그인후 비밀번호 변경하시길 권장드립니다.</p>")
             .append("임시 비밀번호 : ")
-            .append(authKey)
-            .append("</a>")            
+            .append(authKey)         
             .toString());
             sendMail.setFrom("coders1154@gmail.com", "관리자");
             sendMail.setTo(email);
