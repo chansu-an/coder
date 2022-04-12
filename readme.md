@@ -96,7 +96,7 @@
 ![erd](https://user-images.githubusercontent.com/83687868/157590560-3d99c724-1d59-4ccf-9b3b-6776b1c69653.png)
 
 
-## Author
+## Developer
 - 개발자
  
 - 안찬수
