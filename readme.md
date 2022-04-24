@@ -84,7 +84,7 @@
 
 ### 3. 캘린더 일정 관리
 ![캘린더](https://user-images.githubusercontent.com/83687868/157590015-5b3e437e-8f4d-46b4-b146-7cc6b36689e8.PNG)
-### 4. 스트랩 및 팔로우 기능
+### 4. 스크랩 및 팔로우 기능
 ![스트랩 및 팔로우](https://user-images.githubusercontent.com/83687868/157590330-4f4ef463-0698-4da6-958d-83edb2535043.PNG)
 
 ### 5. 내 활동 및 참가 프로젝트
